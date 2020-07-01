@@ -1,0 +1,15 @@
+<div id="js-merge-ideas-actions" class="hide js-bulk-action-form">
+  <%= form_tag(ideas_merge_path, method: :post, id: "js-form-merge-ideas", class: "flex--cc flex-gap--1") do %>
+    <div class="checkboxes hide">
+      <% ideas.each do |idea| %>
+        <%= check_box_tag "idea_ids[]", idea.id, false, class: "js-check-all-idea js-idea-id-#{idea.id}" %>
+      <% end %>
+    </div>
+
+    <%= bulk_components_select((current_component.siblings + [current_component])) %>
+
+    <%= submit_tag(t("decidim.ideas.admin.ideas.index.merge_button"), id: "js-submit-merge-ideas", class: "button small button--simple float-left") %>
+
+    <button id="js-cancel-merge-ideas" class="button tiny clear compact js-cancel-bulk-action" type="button"><%= t("decidim.ideas.admin.ideas.index.cancel") %></button>
+  <% end %>
+</div>

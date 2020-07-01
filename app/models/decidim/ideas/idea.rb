@@ -1,0 +1,400 @@
+# frozen_string_literal: true
+
+module Decidim
+  module Ideas
+    # The data store for a Idea in the Decidim::Ideas component.
+    class Idea < Ideas::ApplicationRecord
+      include Decidim::Resourceable
+      include Decidim::Coauthorable
+      include Decidim::HasComponent
+      include Decidim::Ideas::AreaScopable
+      include Decidim::HasReference
+      include Decidim::HasCategory
+      include Decidim::Reportable
+      include Decidim::HasAttachments
+      include Decidim::Followable
+      include Decidim::Ideas::CommentableIdea
+      include Decidim::Searchable
+      include Decidim::Traceable
+      include Decidim::Loggable
+      include Decidim::Fingerprintable
+      include Decidim::DataPortability
+      include Decidim::Hashtaggable
+      include Decidim::Amendable
+
+      has_paper_trail(
+        versions: { class_name: "Decidim::Ideas::IdeaVersion" },
+        meta: {
+          related_changes: proc { |idea| idea.generate_related_changes }
+        }
+      )
+
+      attr_accessor :pending_image, :pending_attachments
+
+      POSSIBLE_STATES = %w(not_answered evaluating accepted rejected withdrawn).freeze
+
+      fingerprint fields: [:title, :body]
+
+      amendable(
+        fields: [:title, :body],
+        form: "Decidim::Ideas::IdeaForm"
+      )
+
+      component_manifest_name "ideas"
+
+      has_many :votes,
+               -> { final },
+               foreign_key: "decidim_idea_id",
+               class_name: "Decidim::Ideas::IdeaVote",
+               dependent: :destroy,
+               counter_cache: "idea_votes_count"
+
+      validates :title, :body, presence: true
+
+      geocoded_by :address, http_headers: ->(idea) { { "Referer" => idea.component.organization.host } }
+
+      scope :answered, -> { where.not(answered_at: nil) }
+      scope :not_answered, -> { where(answered_at: nil) }
+
+      scope :state_not_published, -> { where(state_published_at: nil) }
+      scope :state_published, -> { where.not(state_published_at: nil).where.not(state: nil) }
+
+      scope :accepted, -> { state_published.where(state: "accepted") }
+      scope :rejected, -> { state_published.where(state: "rejected") }
+      scope :evaluating, -> { state_published.where(state: "evaluating") }
+      scope :withdrawn, -> { where(state: "withdrawn") }
+      scope :except_rejected, -> { where.not(state: "rejected").or(state_not_published) }
+      scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
+      scope :drafts, -> { where(published_at: nil) }
+      scope :except_drafts, -> { where.not(published_at: nil) }
+      scope :published, -> { where.not(published_at: nil) }
+      scope :citizens_origin, lambda {
+        where.not(coauthorships_count: 0)
+             .joins(:coauthorships)
+             .where.not(decidim_coauthorships: { decidim_author_type: "Decidim::Organization" })
+      }
+      scope :user_group_origin, lambda {
+        where.not(coauthorships_count: 0)
+             .joins(:coauthorships)
+             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
+             .where.not(decidim_coauthorships: { decidim_user_group_id: nil })
+      }
+
+      acts_as_list scope: :decidim_component_id
+
+      searchable_fields(
+        {
+          scope_id: :area_scope_id,
+          participatory_space: { component: :participatory_space },
+          D: :search_body,
+          A: :search_title,
+          datetime: :published_at
+        },
+        index_on_create: ->(idea) { idea.visible? },
+        index_on_update: ->(idea) { idea.visible? }
+      )
+
+      def self.log_presenter_class_for(_log)
+        Decidim::Ideas::AdminLog::IdeaPresenter
+      end
+
+      # Returns a collection scoped by an author.
+      # Overrides this method in DataPortability to support Coauthorable.
+      def self.user_collection(author)
+        return unless author.is_a?(Decidim::User)
+
+        joins(:coauthorships)
+          .where("decidim_coauthorships.coauthorable_type = ?", name)
+          .where("decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ", author.id, author.class.base_class.name)
+      end
+
+      def self.retrieve_ideas_for(component)
+        Decidim::Ideas::Idea.where(component: component).joins(:coauthorships)
+                            .includes(:votes)
+                            .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
+                            .not_hidden
+                            .published
+                            .except_withdrawn
+      end
+
+      def self.newsletter_participant_ids(component)
+        ideas = retrieve_ideas_for(component).uniq
+
+        coauthors_recipients_ids = ideas.map { |p| p.notifiable_identities.pluck(:id) }.flatten.compact.uniq
+
+        participants_has_voted_ids = Decidim::Ideas::IdeaVote.joins(:idea).where(idea: ideas).joins(:author).map(&:decidim_author_id).flatten.compact.uniq
+
+        (participants_has_voted_ids + coauthors_recipients_ids).flatten.compact.uniq
+      end
+
+      def image
+        attachments.where(weight: 0).first
+      end
+
+      def actual_attachments
+        attachments.where("weight > 0")
+      end
+
+      # All the attachments that are photos for this process.
+      #
+      # Returns an Array<Attachment>
+      def photos
+        @photos ||= actual_attachments.select(&:photo?).reject { |p| p == image }
+      end
+
+      # All the attachments that are documents for this process.
+      #
+      # Returns an Array<Attachment>
+      def documents
+        @documents ||= actual_attachments.includes(:attachment_collection).select(&:document?)
+      end
+
+      # Public: Updates the vote count of this idea.
+      #
+      # Returns nothing.
+      def update_votes_count
+        update_columns(idea_votes_count: votes.count)
+      end
+
+      # Public: Check if the user has voted the idea.
+      #
+      # Returns Boolean.
+      def voted_by?(user)
+        IdeaVote.where(idea: self, author: user).any?
+      end
+
+      # Public: Checks if the idea has been published or not.
+      #
+      # Returns Boolean.
+      def published?
+        published_at.present?
+      end
+
+      # Public: Returns the published state of the idea.
+      #
+      # Returns Boolean.
+      def state
+        return amendment.state if emendation?
+        return nil unless published_state? || withdrawn?
+
+        super
+      end
+
+      # This is only used to define the setter, as the getter will be overriden below.
+      alias_attribute :internal_state, :state
+
+      # Public: Returns the internal state of the idea.
+      #
+      # Returns Boolean.
+      def internal_state
+        return amendment.state if emendation?
+
+        self[:state]
+      end
+
+      # Public: Checks if the organization has published the state for the idea.
+      #
+      # Returns Boolean.
+      def published_state?
+        emendation? || state_published_at.present?
+      end
+
+      # Public: Checks if the organization has given an answer for the idea.
+      #
+      # Returns Boolean.
+      def answered?
+        answered_at.present?
+      end
+
+      # Public: Checks if the author has withdrawn the idea.
+      #
+      # Returns Boolean.
+      def withdrawn?
+        internal_state == "withdrawn"
+      end
+
+      # Public: Checks if the organization has accepted a idea.
+      #
+      # Returns Boolean.
+      def accepted?
+        state == "accepted"
+      end
+
+      # Public: Checks if the organization has rejected a idea.
+      #
+      # Returns Boolean.
+      def rejected?
+        state == "rejected"
+      end
+
+      # Public: Checks if the organization has marked the idea as evaluating it.
+      #
+      # Returns Boolean.
+      def evaluating?
+        state == "evaluating"
+      end
+
+      # Public: Overrides the `reported_content_url` Reportable concern method.
+      def reported_content_url
+        ResourceLocatorPresenter.new(self).url
+      end
+
+      # Public: The maximum amount of votes allowed for this idea.
+      #
+      # Returns an Integer with the maximum amount of votes, nil otherwise.
+      def maximum_votes
+        maximum_votes = component.settings.threshold_per_idea
+        return nil if maximum_votes.zero?
+
+        maximum_votes
+      end
+
+      # Public: The maximum amount of votes allowed for this idea. 0 means infinite.
+      #
+      # Returns true if reached, false otherwise.
+      def maximum_votes_reached?
+        return false unless maximum_votes
+
+        votes.count >= maximum_votes
+      end
+
+      # Public: Can accumulate more votres than maximum for this idea.
+      #
+      # Returns true if can accumulate, false otherwise
+      def can_accumulate_supports_beyond_threshold
+        component.settings.can_accumulate_supports_beyond_threshold
+      end
+
+      # Checks whether the user can edit the given idea.
+      #
+      # user - the user to check for authorship
+      def editable_by?(user)
+        return true if draft?
+
+        !published_state? && !copied_from_other_component? && created_by?(user)
+      end
+
+      # Checks whether the user can withdraw the given idea.
+      #
+      # user - the user to check for withdrawability.
+      def withdrawable_by?(user)
+        user && !withdrawn? && authored_by?(user) && !copied_from_other_component?
+      end
+
+      # Public: Whether the idea is a draft or not.
+      def draft?
+        published_at.nil?
+      end
+
+      # method for sort_link by number of comments
+      ransacker :commentable_comments_count do
+        query = <<-SQL
+        (SELECT COUNT(decidim_comments_comments.id)
+         FROM decidim_comments_comments
+         WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
+         AND decidim_comments_comments.decidim_commentable_type = 'Decidim::Ideas::Idea'
+         GROUP BY decidim_comments_comments.decidim_commentable_id
+         )
+        SQL
+        Arel.sql(query)
+      end
+
+      ransacker :state_published do
+        Arel.sql("CASE
+          WHEN EXISTS (
+            SELECT 1 FROM decidim_amendments
+            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
+            AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+          ) THEN 0
+          WHEN state_published_at IS NULL AND answered_at IS NOT NULL THEN 2
+          WHEN state_published_at IS NOT NULL THEN 1
+          ELSE 0 END
+        ")
+      end
+
+      ransacker :state do
+        Arel.sql("CASE WHEN state = 'withdrawn' THEN 'withdrawn' WHEN state_published_at IS NULL THEN NULL ELSE state END")
+      end
+
+      ransacker :id_string do
+        Arel.sql(%{cast("decidim_ideas_ideas"."id" as text)})
+      end
+
+      ransacker :is_emendation do |_parent|
+        query = <<-SQL
+        (
+          SELECT EXISTS (
+            SELECT 1 FROM decidim_amendments
+            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
+            AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+          )
+        )
+        SQL
+        Arel.sql(query)
+      end
+
+      def self.export_serializer
+        Decidim::Ideas::IdeaSerializer
+      end
+
+      def self.data_portability_images(user)
+        user_collection(user).map { |p| p.attachments.collect(&:file) }
+      end
+
+      # Public: Overrides the `allow_resource_permissions?` Resourceable concern method.
+      def allow_resource_permissions?
+        component.settings.resources_permissions_enabled
+      end
+
+      def process_amendment_state_change!
+        return unless %w(accepted rejected evaluating withdrawn).member?(amendment.state)
+
+        PaperTrail.request(enabled: false) do
+          update!(
+            state: amendment.state,
+            state_published_at: Time.current
+          )
+        end
+      end
+
+      def generate_related_changes
+        final = {}.tap do |changes|
+          if categorization.saved_changes && categorization.saved_changes["decidim_category_id"].present?
+            changes["decidim_category_id"] = categorization.saved_changes["decidim_category_id"]
+          end
+          if pending_image.present? && pending_image != image
+            changes["image"] = [
+              {id: image.id, title: image.title},
+              {id: pending_image.id, title: pending_image.title}
+            ]
+          end
+          if pending_attachments.present?
+            pending_attachments.reject! { |a| attachments.include?(a) }
+
+            attachment_changes = []
+            pending_attachments.map do |attachment|
+              old = attachments.find_by(weight: attachment.weight)
+              old_val = old ? {id: old.id, title: old.title} : nil
+              attachment_changes << [
+                old_val,
+                {id: attachment.id, title: attachment.title}
+              ]
+            end
+
+            changes["attachments"] = attachment_changes
+          end
+        end
+
+        return nil if final.empty?
+
+        PaperTrail.serializer.dump(final)
+      end
+
+      private
+
+      def copied_from_other_component?
+        linked_resources(:ideas, "copied_from_component").any?
+      end
+    end
+  end
+end

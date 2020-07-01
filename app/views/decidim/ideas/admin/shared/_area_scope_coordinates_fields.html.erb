@@ -1,0 +1,24 @@
+<% scopes.each do |scope| %>
+  <%
+  scope_name_prefix ||= ""
+  scope_name = translated_attribute(scope.name)
+  %>
+
+  <div class="area-scope-coordinate-field" data-scope-id="<%= scope.id %>">
+    <label for="<%= "#{input_name_prefix}[scope.id]" %>"><%= scope_name_prefix + scope_name %></label>
+    <input type="text" name="<%= "#{input_name_prefix}[#{scope.id}]" %>" value="<%= value[scope.id.to_s] %>">
+  </div>
+
+  <% if scope.children.any? %>
+    <%
+    sub_prefix = "#{scope_name} / "
+    sub_prefix = "#{scope_name_prefix}#{sub_prefix}" unless scope_name_prefix.blank?
+    %>
+    <%= render partial: "decidim/ideas/admin/shared/area_scope_coordinates_fields", locals: {
+      scopes: scope.children,
+      input_name_prefix: input_name_prefix,
+      value: value,
+      scope_name_prefix: sub_prefix
+    } %>
+  <% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="area-scope-coordinates">
+  <% if parent %>
+    <%= render partial: "decidim/ideas/admin/shared/area_scope_coordinates_fields", locals: {
+      scopes: parent.children,
+      input_name_prefix: input_name_prefix,
+      value: value
+    } %>
+  <% else %>
+    <%= t("decidim.ideas.admin.area_scopes.choose_parent") %>
+  <% end %>
+</div>

@@ -1,0 +1,14 @@
+<div id="js-publish-answers-actions" class="hide js-bulk-action-form">
+  <%= form_tag(publish_answers_ideas_path, method: :post, remote: true, id: "js-form-publish-answers", class: "flex--cc flex-gap--1") do %>
+    <div class="checkboxes hide">
+      <% ideas.each do |idea| %>
+        <%= check_box_tag "idea_ids[]", idea.id, false, class: "js-check-all-idea js-idea-id-#{idea.id}" %>
+      <% end %>
+    </div>
+    <p><%= t("decidim.ideas.admin.ideas.publish_answers.number_of_ideas", number: '<span id="js-form-publish-answers-number"></span>').html_safe %></p>
+
+    <%= submit_tag(t("decidim.ideas.admin.ideas.index.publish"), id: "js-submit-publish-answers", class: "button small button--simple float-left") %>
+
+    <button id="js-cancel-publish-answers" class="button tiny clear compact js-cancel-bulk-action" type="button"><%= t("decidim.ideas.admin.ideas.index.cancel") %></button>
+  <% end %>
+</div>

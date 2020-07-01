@@ -1,0 +1,45 @@
+<% add_decidim_meta_tags({
+  description: present(@idea).body,
+  title: present(@idea).title,
+  url: idea_url(@idea.id)
+}) %>
+
+<%
+edit_link(
+  resource_locator(@idea).edit,
+  :edit,
+  :idea,
+  idea: @idea
+)
+%>
+
+<%
+extra_admin_link(
+  resource_locator(@idea).show(anchor: "idea-answer"),
+  :create,
+  :idea_answer,
+  { idea: @idea },
+  { name: t(".answer"), icon: "comment-square" }
+)
+%>
+
+<%= render partial: "voting_rules" %>
+<%= emendation_announcement_for @idea %>
+<div class="row column view-header">
+  <%= link_to :ideas, class: "small hollow" do %>
+    <%= icon "chevron-left", class: "icon--small" %>
+    <%= t(".back_to_list") %>
+  <% end %>
+</div>
+
+<%= render partial: "idea_full", locals: { idea: @idea, show_actions: true } %>
+
+<%= comments_for @idea %>
+
+<%=
+  render partial: "decidim/shared/flag_modal", locals: {
+    reportable: @idea,
+    form: @report_form,
+    url: decidim.report_path(sgid: @idea.to_sgid.to_s)
+  }
+%>

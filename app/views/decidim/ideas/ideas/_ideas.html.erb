@@ -1,0 +1,28 @@
+<div class="collection-sort-controls row small-up-1 medium-up-3 card-grid">
+  <div class="column">
+    <%= order_selector available_orders, i18n_scope: "decidim.ideas.ideas.orders" %>
+  </div>
+
+  <div class="column">
+    <%= render partial: "decidim/shared/results_per_page" %>
+  </div>
+</div>
+
+<div class="row small-up-1 medium-up-2 card-grid">
+  <%= render @ideas %>
+</div>
+
+<div class="row">
+  <div class="columns mediumlarge-8 large-9">
+    <% if @ideas.empty? %>
+      <div class="callout secondary">
+        <% if params[:filter].present? %>
+          <p><%= t(".empty_filters") %></p>
+        <% else %>
+          <p><%= t(".empty") %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= decidim_paginate @ideas %>

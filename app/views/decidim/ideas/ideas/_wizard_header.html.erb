@@ -1,0 +1,31 @@
+<% if translated_attribute(component_settings.new_idea_help_text).present? && @step != :step_4 %>
+  <%= render partial: "decidim/shared/announcement", locals: { announcement: component_settings.new_idea_help_text } %>
+<% elsif @step == :step_4 %>
+  <%
+    locals = {
+      callout_class: "warning",
+      announcement: t("decidim.ideas.ideas.preview.idea_edit_before_minutes", count: component_settings.idea_edit_before_minutes)
+    }
+  %>
+  <%= render partial: "decidim/shared/announcement", locals: locals %>
+<% end %>
+
+<% if idea_wizard_step_help_text?(@step) %>
+  <div class="idea_wizard_help_text">
+    <% callout_step_help_text_class ||= nil %>
+    <%= render partial: "decidim/shared/announcement", locals: { announcement: component_settings.try("idea_wizard_#{@step}_help_text"), callout_class: callout_step_help_text_class } %>
+  </div>
+<% end %>
+
+<h2 class="section-heading">
+  <%= idea_wizard_step_title action_name %>
+  <%= "(#{@similar_ideas.count})" if @similar_ideas.present? %>
+</h2>
+
+<div class="hide-for-large m-bottom">
+  <%= idea_wizard_current_step_of(@step) %>
+
+  <ol id="steps" class="wizard__steps steps-toggle is-hidden" data-toggler=".is-hidden">
+    <%= idea_wizard_stepper(@step) %>
+  </ol>
+</div>

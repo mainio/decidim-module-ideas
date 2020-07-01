@@ -1,0 +1,22 @@
+<div class="column">
+  <article class="card card--idea">
+    <div class="card__content">
+      <div class="card__header">
+        <%= link_to idea, target: "_blank" do %>
+          <h5 class="card__title"><%= decidim_html_escape(present(idea).title).html_safe %></h5>
+        <% end %>
+        <%= cell("decidim/coauthorships", idea, has_actions: false, context: { current_user: current_user }) %>
+
+        <div class="tech-info tech-info--text-left">
+          <%= t("decidim.ideas.ideas.idea.creation_date", date: l(idea.created_at, format: :decidim_short)) %>
+        </div>
+        <%= resource_reference(idea, class: "tech-info--text-left") %>
+      </div>
+
+      <%== cell("decidim/ideas/idea_m", idea).badge %>
+
+      <p><%= truncate(present(idea).body(strip_tags: true), length: 100) %></p>
+      <%= cell "decidim/tags", idea, context: { extra_classes: ["tags--idea"] } %>
+    </div>
+  </article>
+</div>

@@ -1,0 +1,3 @@
+<% if idea.published_state? || idea.withdrawn? %>
+  <span class="<%= idea_state_badge_css_class(idea.state) %> label idea-status"><%= humanize_idea_state idea.state %></span>
+<% end %>

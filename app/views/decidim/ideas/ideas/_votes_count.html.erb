@@ -1,0 +1,14 @@
+<% if !current_settings.votes_hidden? && current_component.participatory_space.can_participate?(current_user) %>
+  <% progress ||= idea.idea_votes_count || 0 %>
+  <% total ||= idea.maximum_votes || 0 %>
+  <% subtitle_text = progress >= total ? t("decidim.ideas.ideas.votes_count.most_popular_idea") : t("decidim.ideas.ideas.votes_count.need_more_votes") %>
+  <%= cell(
+    "decidim/progress_bar",
+    progress,
+    total: total,
+    units_name: "decidim.ideas.ideas.votes_count.count",
+    element_id: "idea-#{idea.id}-votes-count",
+    subtitle_text: subtitle_text,
+    small: from_ideas_list
+  ) %>
+<% end %>

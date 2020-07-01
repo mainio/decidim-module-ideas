@@ -1,0 +1,26 @@
+.idea-form-container{
+  margin-top: 2rem;
+
+  .mentions__container,
+  .hashtags__container{
+    span.form-error{
+      color: $input-error-color;
+    }
+  }
+
+  .field-info{
+    padding: $input-padding;
+
+    &.field-info-with-icon{
+      position: relative;
+      padding-left: 2rem;
+
+      .icon{
+        position: absolute;
+        left: 0;
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+  }
+}

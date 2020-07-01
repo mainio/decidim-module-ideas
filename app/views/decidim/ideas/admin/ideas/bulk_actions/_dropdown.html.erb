@@ -1,0 +1,46 @@
+<div id="js-bulk-actions-wrapper">
+  <button
+    id="js-bulk-actions-button"
+    class="button button--nomargin tiny success light dropdown hide"
+    type="button"
+    data-toggle="js-bulk-actions-dropdown">
+    <%= t("decidim.ideas.admin.ideas.index.actions") %>
+  </button>
+
+  <div
+    id="js-bulk-actions-dropdown"
+    class="dropdown-pane"
+    data-position="bottom"
+    data-alignment="right"
+    data-dropdown="dropdown"
+    data-auto-focus="false"
+    data-events="resize">
+    <ul class="list-reset">
+      <li>
+        <button type="button" data-action="recategorize-ideas">
+          <%= t("decidim.ideas.admin.ideas.index.change_category") %>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-action="scope-change-ideas">
+          <%= t("decidim.ideas.admin.ideas.index.change_scope") %>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-action="merge-ideas">
+          <%= t("decidim.ideas.admin.ideas.index.merge") %>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-action="split-ideas">
+          <%= t("decidim.ideas.admin.ideas.index.split") %>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-action="publish-answers">
+          <%= t("decidim.ideas.admin.ideas.index.publish_answers") %>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

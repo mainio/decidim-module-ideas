@@ -1,0 +1,219 @@
+<% if form.object.respond_to?(:amendable_gid) %>
+  <%= form.hidden_field :amendable_gid %>
+<% end %>
+
+<% if current_organization.user_groups_enabled? && user_signed_in? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
+  <div class="row">
+    <div class="columns large-6">
+      <div class="field">
+        <%= user_group_select_field form, :user_group_id %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="field hashtags__container">
+  <%= form.plain_label :title %>
+
+  <div class="row">
+    <div class="columns large-8">
+      <%= form.text_field :title, class: "js-hashtags", label: false, hashtaggable: true, value: form_presenter.title %>
+    </div>
+    <div class="columns large-4">
+      <div id="idea_title_characters" class="field-info"></div>
+    </div>
+  </div>
+</div>
+
+<% if show_terms %>
+  <%= form.check_box :terms_agreed %>
+<% else %>
+  <%= form.hidden_field :terms_agreed %>
+<% end %>
+
+<div class="field hashtags__container">
+  <%= text_editor_for_idea_body(form) %>
+  <div id="idea_body_characters" class="field-info text-right"></div>
+</div>
+
+<% if @form.component_automatic_hashtags.any? %>
+  <div class="field">
+    <%= form.label :automatic_hashtags %>
+    <div class="checkboxes hashtags">
+      <% @form.component_automatic_hashtags.each do |hashtag| %>
+        <label>
+          <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if @form.component_suggested_hashtags.any? %>
+  <div class="field">
+    <%= form.label :suggested_hashtags %>
+    <div class="checkboxes hashtags">
+      <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
+        option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
+      end %>
+    </div>
+  </div>
+<% end %>
+
+<% if component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id) %>
+  <%= form.plain_label :area_scope_id %>
+
+  <div class="row">
+    <div class="columns large-6">
+      <div class="field">
+        <%= area_scopes_picker_field form, :area_scope_id, root: false, options: { label: false } %>
+      </div>
+    </div>
+    <div class="columns large-6">
+      <div class="field-info field-info-with-icon">
+        <%= link_to info_path("areas"), class: "info-modal-link" do %>
+          <%= icon "information", aria_hidden: true %>
+          <%= t(".show_areas_info_text") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if component_settings.geocoding_enabled? %>
+  <%= form.plain_label :address, show_required: false %>
+
+  <div class="row">
+    <div class="columns large-8">
+      <div class="field" id="address_input">
+        <div class="input-group">
+          <span class="input-group-label">
+            <%= icon "map-marker", aria_hidden: true %>
+          </span>
+          <%= form.text_field :address, label: false, class: "input-group-field", data: {
+            "coordinates-url": geocoding_path,
+            "address-url": reverse_geocoding_path
+          } %>
+          <div class="input-group-button">
+            <%= form.button t(".address_lookup_button"), type: :button, id: "address_lookup", class: "button secondary" %>
+          </div>
+        </div>
+        <%= form.hidden_field :latitude %>
+        <%= form.hidden_field :longitude %>
+      </div>
+    </div>
+    <div class="columns large-4">
+      <div class="field-info">
+        <%= link_to t(".reset_field"), "#", class: "reset-input", data: { target: "#idea_address" } %>
+      </div>
+    </div>
+  </div>
+
+  <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil do %>
+    <%= stylesheet_link_tag "decidim/map" %>
+    <%= javascript_include_tag "decidim/ideas/map" %>
+  <% end %>
+<% end %>
+
+<% if @form.categories&.any? %>
+  <%= form.plain_label :category_id %>
+
+  <div class="row">
+    <div class="columns large-6">
+      <div class="field">
+        <%= form.categories_select :category_id, @form.categories, disable_parents: false, label: false, prompt: t(".select_a_category") %>
+      </div>
+    </div>
+    <div class="columns large-6">
+      <div class="field-info field-info-with-icon">
+        <%= link_to info_path("categories"), class: "info-modal-link" do %>
+          <%= icon "information", aria_hidden: true %>
+          <%= t(".show_categories_info_text") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if component_settings.image_allowed? || component_settings.attachments_allowed? %>
+<div class="row">
+  <div class="columns">
+    <% if component_settings.image_allowed? && component_settings.attachments_allowed? %>
+      <p><%= t(".files_info_images_and_attachments") %></p>
+    <% elsif component_settings.image_allowed? %>
+      <p><%= t(".files_info_images") %></p>
+    <% elsif component_settings.attachments_allowed? %>
+      <p><%= t(".files_info_attachments") %></p>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<% if component_settings.image_allowed? %>
+  <fieldset>
+    <legend><%= t(".image_legend") %></legend>
+    <%= form.fields_for :image, @form.image do |nested_form| %>
+      <div class="row">
+        <div class="columns large-6">
+          <div class="field">
+            <%= nested_form.text_field :title %>
+          </div>
+
+          <div class="field">
+            <%= nested_form.upload :file, optional: false %>
+            <% if @form.errors[:image].present? %>
+              <% @form.errors[:image].each do |message| %>
+                <small class="form-error is-visible">
+                  <%= message %>
+                </small>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </fieldset>
+<% end %>
+
+<% if component_settings.attachments_allowed? %>
+  <fieldset>
+    <legend><%= t(".attachment_legend") %></legend>
+    <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
+      <div class="row">
+        <div class="columns large-6">
+          <div class="field">
+            <%= nested_form.text_field :title %>
+          </div>
+
+          <div class="field">
+            <%= nested_form.upload :file, optional: false %>
+            <% if @form.errors[:attachment].present? %>
+              <% @form.errors[:attachment].each do |message| %>
+                <small class="form-error is-visible">
+                  <%= message %>
+                </small>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </fieldset>
+<% end %>
+
+<%= javascript_include_tag "decidim/ideas/idea_form" %>
+
+<%
+js_options = {
+  messages: {
+    charactersUsed: t(".characters_used")
+  }
+}
+%>
+<script>
+$(function() {
+  DecidimIdeas.configure(<%== js_options.to_json %>);
+  DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_characters"));
+  DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_characters"));
+});
+</script>

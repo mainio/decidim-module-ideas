@@ -1,0 +1,12 @@
+<ul id="ideas_list">
+  <% decorated_ideas do |idea| %>
+    <li>
+      <label><input type="checkbox" data-picker-text="<%= idea.id_and_title(html_escape: true) %>" data-picker-url="<%= picker_path %>" value="<%= idea.id %>" data-picker-choose> <%= idea.id_and_title(html_escape: true) %> (<%= idea.reference %>)</label>
+    </li>
+  <% end %>
+  <% if more_ideas? %>
+    <li><div class="callout warning"><%= t("ideas_picker.more_ideas", scope: "decidim.ideas", number: more_ideas_count) %></div>
+    </li>
+  <% end %>
+</ul>
+<div id="no_ideas" class="callout warning"><%= t("ideas_picker.no_ideas", scope: "decidim.ideas") %></div>

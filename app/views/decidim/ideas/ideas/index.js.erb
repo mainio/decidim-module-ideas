@@ -1,0 +1,10 @@
+var $ideas = $('#ideas');
+var $ideasCount = $('#ideas-count');
+var $orderFilterInput = $('.order_filter');
+
+$ideas.html('<%= j(render partial: "ideas").strip.html_safe %>');
+$ideasCount.html('<%= j(render partial: "count").strip.html_safe %>');
+$orderFilterInput.val('<%= order %>');
+
+var $dropdownMenu = $('.dropdown.menu', $ideas);
+$dropdownMenu.foundation();

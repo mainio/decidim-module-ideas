@@ -1,0 +1,34 @@
+<div class="card card--action card--list">
+  <% resources.each do |idea| %>
+    <div class="card--list__item">
+      <div class="card--list__text">
+        <%= link_to resource_locator(idea).path do %>
+          <%= icon "ideas", class: "card--list__icon", remove_icon_class: true %>
+        <% end %>
+        <div>
+          <%= link_to resource_locator(idea).path, class: "card__link" do %>
+            <h5 class="card--list__heading"><%== decidim_html_escape(present(idea).title) %></h5>
+          <% end %>
+          <% present(idea) do |idea| %>
+            <div class="author">
+              <span class="author__avatar">
+                <%= image_tag idea.author.avatar_url %>
+              </span>
+              <span class="author__name">
+                <strong><%= idea.author.name %></strong>
+                <%= idea.author.nickname %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <% if !current_settings.try(:votes_hidden?) && !idea.component.current_settings.votes_hidden? %>
+        <div class="card--list__data">
+          <span class="card--list__data__number">
+            <%= idea.votes.size %>
+          </span> <%= t(".idea_votes", count: idea.votes.size) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
