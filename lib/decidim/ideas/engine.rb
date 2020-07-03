@@ -43,6 +43,7 @@ module Decidim
       initializer "decidim_ideas.assets" do |app|
         app.config.assets.precompile += %w(decidim_ideas_manifest.js
                                            decidim/ideas/idea_form.js
+                                           decidim/ideas/ideas_list.js
                                            decidim/ideas/utils.js)
       end
 

@@ -107,15 +107,16 @@ en:
             comments_enabled: Comments enabled
             default_map_center_coordinates: Default map center coordinates (latitude,longitude)
             geocoding_enabled: Geocoding enabled
-            minimum_votes_per_user: Minimum supports per user
-            new_idea_help_text: New idea help text
             idea_answering_enabled: Idea answering enabled
             idea_edit_before_minutes: Ideas can be edited by authors before this many minutes passes
             idea_length: Maximum idea body length
             idea_limit: Idea limit per participant
+            idea_listing_intro: Idea listing page intro text
             idea_title_length: Maximum idea title length
             image_allowed: Allow image
             materials_text: Materials text
+            minimum_votes_per_user: Minimum supports per user
+            new_idea_help_text: New idea help text
             resources_permissions_enabled: Actions permissions can be set for each idea
             threshold_per_idea: Threshold per idea
             vote_limit: Support limit per participant
@@ -440,6 +441,7 @@ en:
           my_ideas: My ideas
           origin: Origin
           related_to: Related to
+          reset: Clear filters
           search: Search
           state: Status
           type: Type
@@ -462,8 +464,12 @@ en:
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
         index:
+          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
+          leave_your_idea: Submit your own idea!
           new_idea: New idea
+          title: Browse ideas
           see_all_withdrawn: See all withdrawn ideas
+          subtitle: On this page you can browse all the ideas
           view_idea: View idea
         linked_ideas:
           idea_votes:
