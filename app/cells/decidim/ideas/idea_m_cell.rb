@@ -91,7 +91,7 @@ module Decidim
       end
 
       def resource_image_path
-        model.attachments.first.url if has_image?
+        model.image.thumbnail_url if has_image?
       end
     end
   end
