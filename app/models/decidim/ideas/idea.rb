@@ -15,7 +15,7 @@ module Decidim
       include Decidim::Followable
       include Decidim::Ideas::CommentableIdea
       include Decidim::Searchable
-      include Decidim::Traceable
+      include Decidim::Ideas::Traceability
       include Decidim::Loggable
       include Decidim::Fingerprintable
       include Decidim::DataPortability
@@ -41,6 +41,14 @@ module Decidim
       )
 
       component_manifest_name "ideas"
+
+      # Redefine the attachments association so that we can take control of the
+      # uploaders related to the attachments.
+      has_many :attachments,
+               class_name: "Decidim::Ideas::Attachment",
+               dependent: :destroy,
+               inverse_of: :attached_to,
+               as: :attached_to
 
       has_many :votes,
                -> { final },
