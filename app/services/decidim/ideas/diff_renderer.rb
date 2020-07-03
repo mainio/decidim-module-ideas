@@ -83,8 +83,8 @@ module Decidim
             final[:category_id] = {
               type: :category,
               label: I18n.t(:decidim_category_id, scope: i18n_scope),
-              old_value: translated_attribute(old_cat.name),
-              new_value: translated_attribute(new_cat.name)
+              old_value: translated_attribute(old_cat&.name),
+              new_value: translated_attribute(new_cat&.name)
             }
           end
         end

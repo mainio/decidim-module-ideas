@@ -8,7 +8,8 @@ module Decidim
 
       def related_changes
         value = super
-        return nil if value.empty?
+        return {} unless value
+        return {} if value.empty?
 
         PaperTrail.serializer.load(value)
       end
