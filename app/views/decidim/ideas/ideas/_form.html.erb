@@ -26,7 +26,7 @@
 </div>
 
 <% if show_terms %>
-  <%= form.check_box :terms_agreed %>
+  <%= form.check_box :terms_agreed, required: true %>
 <% else %>
   <%= form.hidden_field :terms_agreed %>
 <% end %>
