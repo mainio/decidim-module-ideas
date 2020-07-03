@@ -42,6 +42,15 @@ module Decidim
       def publish_idea
         title = reset(:title)
         body = reset(:body)
+        address = reset(:address)
+        latitude = reset(:latitude)
+        longitude = reset(:longitude)
+        area_scope_id = reset(:area_scope_id)
+        category = @idea.category
+
+        PaperTrail.request(enabled: false) do
+          @idea.categorization.destroy!
+        end
 
         Decidim.traceability.perform_action!(
           "publish",
@@ -49,7 +58,16 @@ module Decidim
           @current_user,
           visibility: "public-only"
         ) do
-          @idea.update title: title, body: body, published_at: Time.current
+          @idea.update(
+            title: title,
+            body: body,
+            address: address,
+            latitude: latitude,
+            longitude: longitude,
+            area_scope_id: area_scope_id,
+            category: category,
+            published_at: Time.current
+          )
         end
       end
 
