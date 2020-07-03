@@ -42,6 +42,7 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :area_scope_parent_id, type: :idea_area_scope, default: nil
     settings.attribute :area_scope_coordinates, type: :idea_area_scope_coordinates, default: {}
     settings.attribute :announcement, type: :text, translated: true, editor: true
+    settings.attribute :idea_listing_intro, type: :text, translated: true, editor: true
     settings.attribute :new_idea_help_text, type: :text, translated: true, editor: true
     settings.attribute :materials_text, type: :text, translated: true, editor: true
     settings.attribute :areas_info_intro, type: :string, translated: true
