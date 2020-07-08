@@ -116,29 +116,29 @@ sv:
             minimum_votes_per_user: Minsta antal stöd per användare
             new_idea_help_text: Ny idéhjälptext
             resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för varje idé
-            threshold_per_idea: Threshold per idea
-            vote_limit: Support limit per participant
+            threshold_per_idea: Tröskel per idé
+            vote_limit: Stödgräns per deltagare
           step:
-            amendment_creation_enabled: Amendment creation enabled
-            amendment_creation_enabled_help: Participant can amend ideas.
-            amendment_promotion_enabled: Amendment promotion enabled
-            amendment_promotion_enabled_help: Emandation authors will be able to promote to Idea the rejected emendation.
-            amendment_reaction_enabled: Amendment reaction enabled
-            amendment_reaction_enabled_help: Idea's authors will be able to accept or reject Participant's emendations.
-            amendments_visibility: Amendments visibility
+            amendment_creation_enabled: Skapa ändringar är aktiverat
+            amendment_creation_enabled_help: Deltagare kan ändra idéer.
+            amendment_promotion_enabled: Annonsering av ändringar är aktiverat
+            amendment_promotion_enabled_help: Författare av ändringsidé kommer att kunna lägga fram det avvisade ändringsidén som en idé.
+            amendment_reaction_enabled: Reagera på ändringar är aktiverat
+            amendment_reaction_enabled_help: Idéförfattarna kan anta eller avvisa deltagarnas ändringsidé.
+            amendments_visibility: Ändringens synlighet
             amendments_visibility_choices:
-              all: Amendments are visible to all
-              participants: Amendments are visible only to their authors
-            amendments_visibility_help: If the option "Amendments are visible only to their authors" is selected, participant must be logged in to see the amendments made.
-            announcement: Announcement
-            automatic_hashtags: Hashtags added to all ideas
-            comments_blocked: Comments blocked
-            creation_enabled: Idea creation enabled
-            idea_answering_enabled: Idea answering enabled
-            publish_answers_immediately: Publish idea answers immediately
-            suggested_hashtags: Hashtags suggested to participants for new ideas
-            votes_blocked: Supports blocked
-            votes_enabled: Supports enabled
+              all: Ändringsförslag är synliga för alla
+              participants: Ändringsförslag är endast synliga för författarna
+            amendments_visibility_help: Om alternativet "Ändringsförslag visas endast för sina författare" är markerat måste deltagaren vara inloggad för att kunna se ändringarna.
+            announcement: Meddelande
+            automatic_hashtags: Hashtags läggs till i alla idéer
+            comments_blocked: Kommentarer blockerade
+            creation_enabled: Skapande av idéer aktiverat
+            idea_answering_enabled: Svar på idéer aktiverat
+            publish_answers_immediately: Publicera idésvar omedelbart
+            suggested_hashtags: Förslag på hashtags för nya idéer till deltagare
+            votes_blocked: Stöder blockerad
+            votes_enabled: Stöd aktiverat
             votes_hidden: Stöd dolda (om stöd är aktiverade, kommer detta att gömma antalet stöd)
     events:
       ideas:
@@ -207,7 +207,7 @@ sv:
           notification_title: Området för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
         voting_enabled:
           email_intro: 'Du kan stödja idéer i %{participatory_space_title}! Börja delta på den här sidan:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}. Du kan sluta ta emot notifikationer vid föregående länk.
           email_subject: Idea support has started for %{participatory_space_title}
           notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     gamification:
@@ -339,82 +339,82 @@ sv:
             success: "%{number} idéer har importerats"
           new:
             create: Importera idéer
-            no_components: There are no other idea components in this participatory space to import the ideas from.
-            select_component: Please select a component
-            select_states: Check the status of the ideas to import
+            no_components: Det finns inga andra idékomponenter i detta deltagarutrymme att importera idéerna från.
+            select_component: Var god välj en komponent
+            select_states: Kontrollera tillstånden för de idéer som ska importeras
         ideas_merges:
           create:
-            invalid: There was a problem merging the selected ideas.
-            success: Successfully merged the ideas into a new one.
+            invalid: Det fanns ett fel att slå samman de valda idéerna.
+            success: Idéerna har sammanfogats till en ny idé.
         ideas_splits:
           create:
-            invalid: There was a problem spliting the selected ideas.
-            success: Successfully splitted the ideas into new ones.
+            invalid: Det fanns ett fel att slå samman de valda idéerna.
+            success: Idéerna har sammanfogats till en ny idé.
       admin_log:
         idea:
-          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} idea on the %{space_name} space"
-          publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
-          update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
+          answer: "%{user_name} svarade på idén %{resource_name} på utrymmet %{space_name}"
+          create: "%{user_name} skapade idén %{resource_name} på utrymmet %{space_name}"
+          publish_answer: "%{user_name} publicerade svaret på idén %{resource_name} i utrymmet %{space_name}"
+          update: "%{user_name} uppdaterade idén %{resource_name} på utrymmet %{space_name}"
       answers:
-        accepted: Possible
-        evaluating: Evaluating
-        not_answered: Not answered
-        rejected: Not possible
-        withdrawn: Withdrawn
+        accepted: Möjlig
+        evaluating: Utvärderas
+        not_answered: Ej besvarade
+        rejected: Inte möjligt
+        withdrawn: Tillbakadragna
       application_helper:
         filter_category_values:
-          all: All
+          all: Alla
         filter_origin_values:
-          all: All
-          citizens: Citizens
-          user_groups: Groups
+          all: Alla
+          citizens: Medborgare
+          user_groups: Grupper
         filter_state_values:
-          accepted: Possible
-          all: All
-          evaluating: Evaluating
-          not_answered: Not answered
-          rejected: Not possible
+          accepted: Möjlig
+          all: Alla
+          evaluating: Utvärderas
+          not_answered: Ej besvarade
+          rejected: Inte möjligt
         filter_type_values:
-          all: All
-          amendments: Amendments
-          ideas: Ideas
+          all: Alla
+          amendments: Ändringar
+          ideas: Idéer
       create:
-        error: There was a problem saving the idea.
-        success: Idea successfully created. Saved as a Draft.
+        error: Det uppstod ett problem med att spara idén.
+        success: Idén har skapats. Den är sparat som ett utkast.
       last_activity:
-        new_idea_at_html: "<span>New idea at %{link}</span>"
+        new_idea_at_html: "<span>Ny idé på %{link}</span>"
       models:
         idea:
           fields:
-            area_scope: Area
-            category: Theme
-            comments: Comments
+            area_scope: Område
+            category: Tema
+            comments: Kommentarer
             id: ID
-            official_idea: Official idea
-            published_answer: Published answer
-            published_at: Published at
-            scope: Scope
+            official_idea: Officiell idé
+            published_answer: Publicerat svar
+            published_at: Publikationsdatum
+            scope: Tema
             state: Status
-            title: Title
-            votes: Supports
+            title: Titel
+            votes: Stödjer
       new:
-        limit_reached: You can't create new ideas since you've exceeded the limit.
+        limit_reached: Du kan inte skapa nya idéer eftersom du har överskridit gränsen.
       idea_votes:
         create:
-          error: There was a problem supporting the idea.
+          error: Det uppstod ett problem med att stödja idéen.
       ideas:
         compare:
-          continue: Continue
-          no_similars_found: Well done! No similar ideas found
-          title: Similar ideas
+          continue: Fortsätt
+          no_similars_found: Bra gjort! Hittade inga liknande idéer
+          title: Liknande idéer
         complete:
-          send: Send
-          title: Complete your idea
+          send: Skicka
+          title: Komplettera din idé
         count:
           ideas_count:
-            one: "%{count} idea"
-            other: "%{count} ideas"
+            one: "%{count} idé"
+            other: "%{count} idéer"
         edit:
           back: Tillbaka till föregående sida
           send: Spara
