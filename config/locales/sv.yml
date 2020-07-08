@@ -2,56 +2,56 @@ sv:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Choose an area for the idea
-        address: Add an optional neighbourhood for the idea or a more specific address
-        answer: Answer
-        answered_at: Answered at
-        automatic_hashtags: Hashtags automatically added
-        body: Idea description
-        decidim_category_id: Choose a theme for the idea
-        has_address: Has address
-        latitude: Latitude
-        longitude: Longitude
-        state: State
-        suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read the conditions for ideas
-        title: Idea title
-        user_group_id: Create idea as
+        area_scope_id: Välj ett område för idén
+        address: Lägg till ett valfritt grannskap för idén eller en mer specifik adress
+        answer: Svara
+        answered_at: Besvarad
+        automatic_hashtags: Hashtags läggs till automatiskt
+        body: Idébeskrivning
+        decidim_category_id: Välj ett tema för idén
+        has_address: Har adress
+        latitude: Latitud
+        longitude: Longitud
+        state: Status
+        suggested_hashtags: Föreslagna hashtags
+        terms_agreed: Jag har läst gränsvillkoren för idéer
+        title: Idé namn
+        user_group_id: Skapa idé som
       idea_answer:
-        answer: Answer
+        answer: Svara
       ideas_copy:
-        copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
-        origin_component_id: Component to copy the ideas from
+        copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
+        origin_component_id: Komponent för att kopiera idéer från
       ideas_import:
-        import_ideas: Import ideas
-        keep_authors: Keep original authors
+        import_ideas: Importera idéer
+        keep_authors: Behåll originalförfattare
       idea_attachment:
-        title: Attachment title
-        file: Attachment file
+        title: Bilagans titel
+        file: Bilagans fil
       idea_image_attachment:
-        title: Image title
-        file: Image file
+        title: Bildtitel
+        file: Bildfil
     errors:
       models:
         idea:
           attributes:
             attachment:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Måste bifogas igen
             body:
-              cant_be_equal_to_template: cannot be equal to the template
-              identical: AND title cannot be identical
+              cant_be_equal_to_template: kan inte vara detsamma som mallen
+              identical: OCH titeln kan inte vara identisk
             image:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Måste bifogas igen
             title:
-              identical: AND body cannot be identical
+              identical: OCH innehållet kan inte vara identiskt
     models:
-      decidim/ideas/accepted_idea_event: Idea gone through
-      decidim/ideas/admin/update_idea_category_event: Idea theme changed
-      decidim/ideas/admin/update_idea_scope_event: Idea scope changed
-      decidim/ideas/creation_enabled_event: Idea creation enabled
-      decidim/ideas/evaluating_idea_event: Idea is being evaluated
-      decidim/ideas/idea_mentioned_event: Idea mentioned
-      decidim/ideas/publish_idea_event: Idea published
+      decidim/ideas/accepted_idea_event: Idé gick vidare
+      decidim/ideas/admin/update_idea_category_event: Idétema ändrat
+      decidim/ideas/admin/update_idea_scope_event: Idétema ändrat
+      decidim/ideas/creation_enabled_event: Skapande av idéer aktiverat
+      decidim/ideas/evaluating_idea_event: Idén beräknas
+      decidim/ideas/idea_mentioned_event: Idé nämnd
+      decidim/ideas/publish_idea_event: Idé publicerad
       decidim/ideas/rejected_idea_event: Idea did not go through
       decidim/ideas/voting_enabled_event: Idea voting enabled
   activerecord:
