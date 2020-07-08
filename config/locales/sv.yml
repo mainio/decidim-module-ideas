@@ -429,55 +429,55 @@ sv:
           sign_in_before_submitting: Du måste logga in innan du skickar in en idé
           you_can_invite_others: Om du skickar in en idé som grupp kan du bjuda in andra att samarbeta på idén
         filters:
-          activity: My activity
-          all: All
-          all_area_scopes: All areas
-          all_categories: All themes
-          area_scope: Area
-          amendment_type: Type
-          category: Theme
-          my_ideas: My ideas
-          origin: Origin
-          related_to: Related to
-          reset: Clear filters
-          search: Search
+          activity: Min aktivitet
+          all: Alla
+          all_area_scopes: Alla områden
+          all_categories: Alla teman
+          area_scope: Område
+          amendment_type: Typ
+          category: Tema
+          my_ideas: Mina idéer
+          origin: Ursprung
+          related_to: Relaterade till
+          reset: Rensa filter
+          search: Sök
           state: Status
-          type: Type
-          voted: Supported
+          type: Typ
+          voted: Stöds
         filters_small_view:
-          close_modal: Close modal
-          filter: Filter
-          filter_by: Filter by
-          unfold: Unfold
+          close_modal: Stäng fönstret
+          filter: Filtrera
+          filter_by: Filtrera efter
+          unfold: Öppna
         form:
-          address_lookup_button: Lookup
-          attachment_legend: "Add an attachment for the idea"
-          characters_used: "%count%/%total% characters used"
-          files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
-          files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          image_legend: "Add an image for the idea"
-          reset_field: Reset field
-          select_a_category: Choose a theme for the idea
-          show_areas_info_text: Check which neighborhood belong to different major districts
-          show_categories_info_text: Check what the themes consist of
+          address_lookup_button: Slå upp
+          attachment_legend: "Lägg till en bilaga till idén"
+          characters_used: "%count%/%total% tecken används"
+          files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
+          files_info_images: Du kan lägga till en bild till idén som kommer att visas med idén. Du måste lägga till en titel till bilden.
+          files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
+          image_legend: "Lägg till en bild för idén"
+          reset_field: Återställ fältet
+          select_a_category: Välj ett tema för idén
+          show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
+          show_categories_info_text: Kontrollera vad teman består av
         index:
-          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
-          leave_your_idea: Submit your own idea!
-          new_idea: New idea
-          title: Browse ideas
-          see_all_withdrawn: See all withdrawn ideas
-          subtitle: On this page you can browse all the ideas
-          view_idea: View idea
+          description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
+          leave_your_idea: Skicka in din egen idé!
+          new_idea: Ny idé
+          title: Bläddra bland idéer
+          see_all_withdrawn: Se alla tillbakadragna idéer
+          subtitle: På den här sidan kan du bläddra bland alla idéer
+          view_idea: Visa idé
         linked_ideas:
           idea_votes:
-            one: support
-            other: supports
+            one: stöd
+            other: stödjer
         map:
           dynamic:
-            skip_button: Skip map
+            skip_button: Hoppa över karta
         new:
-          back: Back to previous page
+          back: Tillbaka till föregående sida
           get_help: Get help
           material_title: Information to support ideation
           need_help: Need help?
@@ -541,44 +541,44 @@ sv:
           count:
             one: Support
             other: Supports
-          most_popular_idea: Most popular idea
-          need_more_votes: Need more supports
+          most_popular_idea: Mest populära idén
+          need_more_votes: Behöver fler stöd
         voting_rules:
           can_accumulate_supports_beyond_threshold:
-            description: Each idea can accumulate more than %{limit} supports
+            description: Varje idé kan samla mer än %{limit} stöd
           minimum_votes_per_user:
-            description: You must distribute a minimum of %{votes} supports among different ideas.
-            given_enough_votes: You've given enough supports.
-            supports_remaining: You have to support %{remaining_votes} more ideas for your supports to be taken into account.
+            description: Du måste fördela minst %{votes} stöd mellan olika idéer.
+            given_enough_votes: Du har gett tillräckligt med stöd.
+            supports_remaining: Du måste rösta %{remaining_votes} ytterligare idéer för att dina röster ska beaktas.
           idea_limit:
-            description: You can create up to %{limit} ideas.
+            description: Du kan skapa upp till %{limit} idéer.
           threshold_per_idea:
-            description: In order to be validated ideas need to reach %{limit} supports
-          title: 'Supports are subject to the following rules:'
+            description: För att valideras måste idéer nå stöd från %{limit}
+          title: 'Stöden måste följa följande regler:'
           vote_limit:
-            description: You can support up to %{limit} ideas.
-            left: Remaining
-            votes: Supports
+            description: Du kan stödja upp till %{limit} idéer.
+            left: Återstående
+            votes: Stödjer
         wizard_steps:
-          see_steps: see steps
-          step_1: Create your idea
-          step_2: Compare
-          step_3: Complete
-          step_4: Publish your idea
-          step_of: Step %{current_step_num} of %{total_steps}
+          see_steps: visa steg
+          step_1: Skapa din idé
+          step_2: Jämför
+          step_3: Fullfölja
+          step_4: Publicera din idé
+          step_of: Steg %{current_step_num} av %{total_steps}
       ideas_picker:
-        choose_ideas: Choose ideas
-        close: Close
-        more_ideas: There are %{number} more ideas. Refine your search to locate them.
-        no_ideas: No ideas match your search criteria or there isn't any ideas.
+        choose_ideas: Välj idéer
+        close: Stäng
+        more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
+        no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       info:
         show:
-          back: Back to previous page
+          back: Tillbaka till föregående sida
       publish:
-        error: There was a problem publishing the idea.
-        success: Idea successfully published.
+        error: Det uppstod ett problem med att publicera idéen.
+        success: Idén har publicerats.
       publish_answers:
-        success: Ideas answers successfully published.
+        success: Svar på idéer har publicerats.
       update:
         error: There was a problem saving the idea.
         success: Idea successfully updated.
