@@ -1,0 +1,626 @@
+sv:
+  activemodel:
+    attributes:
+      idea:
+        area_scope_id: Choose an area for the idea
+        address: Add an optional neighbourhood for the idea or a more specific address
+        answer: Answer
+        answered_at: Answered at
+        automatic_hashtags: Hashtags automatically added
+        body: Idea description
+        decidim_category_id: Choose a theme for the idea
+        has_address: Has address
+        latitude: Latitude
+        longitude: Longitude
+        state: State
+        suggested_hashtags: Suggested hashtags
+        terms_agreed: I have read the conditions for ideas
+        title: Idea title
+        user_group_id: Create idea as
+      idea_answer:
+        answer: Answer
+      ideas_copy:
+        copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
+        origin_component_id: Component to copy the ideas from
+      ideas_import:
+        import_ideas: Import ideas
+        keep_authors: Keep original authors
+      idea_attachment:
+        title: Attachment title
+        file: Attachment file
+      idea_image_attachment:
+        title: Image title
+        file: Image file
+    errors:
+      models:
+        idea:
+          attributes:
+            attachment:
+              needs_to_be_reattached: Needs to be reattached
+            body:
+              cant_be_equal_to_template: cannot be equal to the template
+              identical: AND title cannot be identical
+            image:
+              needs_to_be_reattached: Needs to be reattached
+            title:
+              identical: AND body cannot be identical
+    models:
+      decidim/ideas/accepted_idea_event: Idea gone through
+      decidim/ideas/admin/update_idea_category_event: Idea theme changed
+      decidim/ideas/admin/update_idea_scope_event: Idea scope changed
+      decidim/ideas/creation_enabled_event: Idea creation enabled
+      decidim/ideas/evaluating_idea_event: Idea is being evaluated
+      decidim/ideas/idea_mentioned_event: Idea mentioned
+      decidim/ideas/publish_idea_event: Idea published
+      decidim/ideas/rejected_idea_event: Idea did not go through
+      decidim/ideas/voting_enabled_event: Idea voting enabled
+  activerecord:
+    models:
+      decidim/ideas/idea:
+        one: Idea
+        other: Ideas
+      decidim/ideas/idea_vote:
+        one: Support
+        other: Supports
+  decidim:
+    admin:
+      filters:
+        is_emendation_true:
+          label: Type
+          values:
+            'false': Ideas
+            'true': Amendments
+        search_placeholder:
+          id_string_or_title_cont: Search %{collection} by ID or title.
+        state_eq:
+          label: State
+          values:
+            evaluating: Evaluating
+            withdrawn: Withdrawn
+        state_null:
+          label: Status
+          values:
+            'true': Not answered
+    components:
+      ideas:
+        actions:
+          amend: Amend
+          create: Create
+          vote: Support
+          withdraw: Withdraw
+        name: Ideas
+        settings:
+          global:
+            amendments_enabled: Amendments enabled
+            amendments_enabled_help: If active, configure Amendment features for each step.
+            area_scope_parent_id: Areas parent scope
+            area_scope_coordinates: Area scope coordinates (latitude,longitude)
+            areas_info_intro: Areas information intro
+            areas_info_text: Areas information text
+            announcement: Announcement
+            attachments_allowed: Allow attachments
+            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
+            categories_info_intro: Themes information intro
+            categories_info_text: Themes information text
+            comments_enabled: Comments enabled
+            default_map_center_coordinates: Default map center coordinates (latitude,longitude)
+            geocoding_enabled: Geocoding enabled
+            idea_answering_enabled: Idea answering enabled
+            idea_edit_before_minutes: Ideas can be edited by authors before this many minutes passes
+            idea_length: Maximum idea body length
+            idea_limit: Idea limit per participant
+            idea_listing_intro: Idea listing page intro text
+            idea_title_length: Maximum idea title length
+            image_allowed: Allow image
+            materials_text: Materials text
+            minimum_votes_per_user: Minimum supports per user
+            new_idea_help_text: New idea help text
+            resources_permissions_enabled: Actions permissions can be set for each idea
+            threshold_per_idea: Threshold per idea
+            vote_limit: Support limit per participant
+          step:
+            amendment_creation_enabled: Amendment creation enabled
+            amendment_creation_enabled_help: Participant can amend ideas.
+            amendment_promotion_enabled: Amendment promotion enabled
+            amendment_promotion_enabled_help: Emandation authors will be able to promote to Idea the rejected emendation.
+            amendment_reaction_enabled: Amendment reaction enabled
+            amendment_reaction_enabled_help: Idea's authors will be able to accept or reject Participant's emendations.
+            amendments_visibility: Amendments visibility
+            amendments_visibility_choices:
+              all: Amendments are visible to all
+              participants: Amendments are visible only to their authors
+            amendments_visibility_help: If the option "Amendments are visible only to their authors" is selected, participant must be logged in to see the amendments made.
+            announcement: Announcement
+            automatic_hashtags: Hashtags added to all ideas
+            comments_blocked: Comments blocked
+            creation_enabled: Idea creation enabled
+            idea_answering_enabled: Idea answering enabled
+            publish_answers_immediately: Publish idea answers immediately
+            suggested_hashtags: Hashtags suggested to participants for new ideas
+            votes_blocked: Supports blocked
+            votes_enabled: Supports enabled
+            votes_hidden: Supports hidden (if supports are enabled, checking this will hide the number of supports)
+    events:
+      ideas:
+        creation_enabled:
+          email_intro: 'You can now create new ideas in %{participatory_space_title}! Start participating in this page:'
+          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_subject: Ideas now available in %{participatory_space_title}
+          notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+        idea_accepted:
+          affected_user:
+            email_intro: 'Your idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_outro: You have received this notification because you are an author of "%{resource_title}".
+            email_subject: Your idea went through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> went through.
+          follower:
+            email_intro: 'The idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
+            email_subject: A idea you're following went through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea went through.
+        idea_evaluating:
+          affected_user:
+            email_intro: 'Your idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_outro: You have received this notification because you are an author of "%{resource_title}".
+            email_subject: Your idea is being evaluated
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
+          follower:
+            email_intro: 'The idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
+            email_subject: A idea you're following is being evaluated
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
+        idea_mentioned:
+          email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
+          email_outro: You have received this notification because you are an author of "%{resource_title}".
+          email_subject: Your idea "%{mentioned_idea_title}" has been mentioned
+          notification_title: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.
+        idea_published:
+          email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new idea called "%{resource_title}". Check it out and contribute:'
+          email_outro: You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.
+          email_subject: New idea "%{resource_title}" by %{author_nickname}
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+        idea_published_for_space:
+          email_intro: The idea "%{resource_title}" has been added to "%{participatory_space_title}" that you are following.
+          email_outro: You have received this notification because you are following "%{participatory_space_title}". You can stop receiving notifications following the previous link.
+          email_subject: New idea "%{resource_title}" added to %{participatory_space_title}
+          notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
+        idea_rejected:
+          affected_user:
+            email_intro: 'Your idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_outro: You have received this notification because you are an author of "%{resource_title}".
+            email_subject: Your idea did not go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> did not go through.
+          follower:
+            email_intro: 'The idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
+            email_subject: A idea you're following did not go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea did not go through.
+        idea_update_category:
+          email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
+          email_outro: You have received this notification because you are the author of the idea.
+          email_subject: The %{resource_title} idea theme has been updated
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea theme has been updated by an admin.
+        idea_update_area_scope:
+          email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
+          email_outro: You have received this notification because you are the author of the idea.
+          email_subject: The %{resource_title} idea area has been updated
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
+        voting_enabled:
+          email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
+          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_subject: Idea support has started for %{participatory_space_title}
+          notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+    gamification:
+      badges:
+        accepted_ideas:
+          conditions:
+            - Choose the participation space of your interest with submission for ideas enabled
+            - Try to make ideas that can be carried out. This way they are more likely to go through.
+          description: This badge is granted when you actively participate with new ideas and these go through.
+          description_another: This participant had %{score} ideas that went through.
+          description_own: You got %{score} ideas that went through.
+          name: Accepted ideas
+          next_level_in: Get %{score} more ideas through to reach the next level!
+          unearned_another: This participant has not yet had any ideas that went through.
+          unearned_own: You got no ideas that went through yet.
+        idea_votes:
+          conditions:
+            - Browse and spend some time reading other people's ideas
+            - Give support to the ideas you like or find interesting
+          description: This badge is granted when you support other people's ideas.
+          description_another: This participant has given support to %{score} ideas.
+          description_own: You have given support to %{score} ideas.
+          name: Idea supports
+          next_level_in: Give support to %{score} more ideas to reach the next level!
+          unearned_another: This participant hasn't given support to any ideas yet.
+          unearned_own: You have given support to no ideas yet.
+        ideas:
+          conditions:
+            - Choose the participation space of your interest with submission for ideas enabled
+            - Create a new idea
+          description: This badge is granted when you actively participate with new ideas.
+          description_another: This participant has created %{score} ideas.
+          description_own: You have created %{score} ideas.
+          name: Ideas
+          next_level_in: Create %{score} more ideas to reach the next level!
+          unearned_another: This participant hasn't created any ideas yet.
+          unearned_own: You have created no ideas yet.
+    ideas:
+      actions:
+        answer_idea: Answer idea
+        edit_idea: Edit idea
+        import: Import from another component
+        new: New idea
+        show: Show idea
+        title: Actions
+      admin:
+        actions:
+          preview: Preview
+        area_scopes:
+          choose_parent: Choose an area scope parent first
+        exports:
+          comments: Comments
+          ideas: Ideas
+        models:
+          idea:
+            name: Idea
+        idea_answers:
+          form:
+            accepted: Possible
+            answer_idea: Answer
+            evaluating: Evaluating
+            rejected: Not possible
+            title: Answer for idea %{title}
+        ideas:
+          answer:
+            invalid: There's been a problem answering this idea
+            success: Idea successfully answered
+          create:
+            invalid: There's been a problem creating this idea
+            success: Idea successfully created
+          edit:
+            title: Update idea
+            update: Update
+          form:
+            attachment_legend: "Add an attachment for the idea"
+            image_legend: "Add an image for the idea"
+            select_a_category: Choose a theme for the idea
+          index:
+            actions: Actions
+            cancel: Cancel
+            change_category: Change theme
+            change_scope: Change scope
+            merge: Merge into a new one
+            merge_button: Merge
+            publish: Publish
+            publish_answers: Publish answers
+            select_component: Select a component
+            selected: selected
+            split: Split ideas
+            split_button: Split
+            title: Ideas
+            update: Update
+            update_scope_button: Update Scope
+          new:
+            create: Create
+            title: Create idea
+          publish_answers:
+            number_of_ideas: Answers for %{number} ideas will be published.
+            select_a_idea: Please select an idea
+          show:
+            amendments_count: Amendments count
+            authors: Authors
+            body: Body
+            comments_count: Comments count
+            comments_negative_count: Against
+            comments_neutral_count: Neutral
+            comments_positive_count: Favor
+            created_at: Creation date
+            documents: Documents
+            link: Link
+            photos: Photos
+            ideas: Ideas
+            ranking: "%{ranking} of %{total}"
+            votes_count: Supports count
+            votes_ranking: Ranking by supports
+          update_category:
+            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
+            select_a_category: Please select a theme
+            select_a_idea: Please select an idea
+            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
+          update_area_scope:
+            invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
+            select_a_idea: Please select an idea
+            select_a_scope: Please select an area
+            success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
+        ideas_imports:
+          create:
+            invalid: There was a problem importing the ideas
+            success: "%{number} ideas successfully imported"
+          new:
+            create: Import ideas
+            no_components: There are no other idea components in this participatory space to import the ideas from.
+            select_component: Please select a component
+            select_states: Check the status of the ideas to import
+        ideas_merges:
+          create:
+            invalid: There was a problem merging the selected ideas.
+            success: Successfully merged the ideas into a new one.
+        ideas_splits:
+          create:
+            invalid: There was a problem spliting the selected ideas.
+            success: Successfully splitted the ideas into new ones.
+      admin_log:
+        idea:
+          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name} space"
+          create: "%{user_name} created the %{resource_name} idea on the %{space_name} space"
+          publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
+          update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
+      answers:
+        accepted: Possible
+        evaluating: Evaluating
+        not_answered: Not answered
+        rejected: Not possible
+        withdrawn: Withdrawn
+      application_helper:
+        filter_category_values:
+          all: All
+        filter_origin_values:
+          all: All
+          citizens: Citizens
+          user_groups: Groups
+        filter_state_values:
+          accepted: Possible
+          all: All
+          evaluating: Evaluating
+          not_answered: Not answered
+          rejected: Not possible
+        filter_type_values:
+          all: All
+          amendments: Amendments
+          ideas: Ideas
+      create:
+        error: There was a problem saving the idea.
+        success: Idea successfully created. Saved as a Draft.
+      last_activity:
+        new_idea_at_html: "<span>New idea at %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Area
+            category: Theme
+            comments: Comments
+            id: ID
+            official_idea: Official idea
+            published_answer: Published answer
+            published_at: Published at
+            scope: Scope
+            state: Status
+            title: Title
+            votes: Supports
+      new:
+        limit_reached: You can't create new ideas since you've exceeded the limit.
+      idea_votes:
+        create:
+          error: There was a problem supporting the idea.
+      ideas:
+        compare:
+          continue: Continue
+          no_similars_found: Well done! No similar ideas found
+          title: Similar ideas
+        complete:
+          send: Send
+          title: Complete your idea
+        count:
+          ideas_count:
+            one: "%{count} idea"
+            other: "%{count} ideas"
+        edit:
+          back: Back to previous page
+          send: Save
+          title: Edit idea
+        edit_draft:
+          discard: Discard this draft
+          discard_confirmation: Are you sure you want to discard this idea draft?
+          send: Preview
+          title: Edit Idea Draft
+        edit_view:
+          sign_in: Sign in
+          sign_in_before_submitting: You need to sign in before submitting an idea
+          you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
+        filters:
+          activity: My activity
+          all: All
+          all_area_scopes: All areas
+          all_categories: All themes
+          area_scope: Area
+          amendment_type: Type
+          category: Theme
+          my_ideas: My ideas
+          origin: Origin
+          related_to: Related to
+          reset: Clear filters
+          search: Search
+          state: Status
+          type: Type
+          voted: Supported
+        filters_small_view:
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          unfold: Unfold
+        form:
+          address_lookup_button: Lookup
+          attachment_legend: "Add an attachment for the idea"
+          characters_used: "%count%/%total% characters used"
+          files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
+          files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
+          files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
+          image_legend: "Add an image for the idea"
+          reset_field: Reset field
+          select_a_category: Choose a theme for the idea
+          show_areas_info_text: Check which neighborhood belong to different major districts
+          show_categories_info_text: Check what the themes consist of
+        index:
+          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
+          leave_your_idea: Submit your own idea!
+          new_idea: New idea
+          title: Browse ideas
+          see_all_withdrawn: See all withdrawn ideas
+          subtitle: On this page you can browse all the ideas
+          view_idea: View idea
+        linked_ideas:
+          idea_votes:
+            one: support
+            other: supports
+        map:
+          dynamic:
+            skip_button: Skip map
+        new:
+          back: Back to previous page
+          get_help: Get help
+          material_title: Information to support ideation
+          need_help: Need help?
+          send: Continue
+          title: Submit your idea!
+        orders:
+          label: 'Order ideas by:'
+          most_commented: Most commented
+          most_followed: Most followed
+          most_voted: Most supported
+          oldest: Oldest
+          random: Random
+          recent: Recent
+          with_more_authors: With most authors
+        preview:
+          description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
+          modify: Modify the idea
+          idea_edit_before_minutes:
+            one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
+            other: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
+          publish: Publish
+          title: Preview your idea
+        idea:
+          creation_date: 'Creation: %{date}'
+          view_idea: View idea
+        idea_full:
+          changes_at_title: Changes at title
+          comments: Comments
+          edit_idea: Edit idea
+        ideas:
+          empty: There are no ideas yet
+          empty_filters: There isn't any idea with this criteria
+        show:
+          answer: Answer
+          back_to: Back to
+          back_to_list: Back to list
+          changes_at_title: Amendment to "%{title}"
+          link_to_promoted_emendation_help_text: This idea is a promoted emendation
+          link_to_promoted_emendation_text: See the rejected emendation.
+          link_to_idea_from_emendation_help_text: This is a rejected emendation
+          link_to_idea_from_emendation_text: See the Idea
+          idea_accepted_reason: 'This idea went through because:'
+          idea_in_evaluation_reason: This idea is being evaluated
+          idea_rejected_reason: 'This idea did not go through because:'
+          read_less: Read less
+          read_more: Read more
+          report: Report
+          withdraw_btn_hint: You can withdraw your idea if you change your mind, as long as you have not received any support. The idea is not deleted, it will appear in the list of withdrawn ideas.
+          withdraw_confirmation: Are you sure you want to withdraw this idea?
+          withdraw_idea: Withdraw idea
+        tags:
+          changed_from: "(changed from <u>%{previous_name}</u> by an administrator)"
+        vote_button:
+          already_voted: Already supported
+          already_voted_hover: Withdraw support
+          maximum_votes_reached: Support limit reached
+          no_votes_remaining: No supports remaining
+          vote: Support
+          votes_blocked: Supports disabled
+        votes_count:
+          count:
+            one: Support
+            other: Supports
+          most_popular_idea: Most popular idea
+          need_more_votes: Need more supports
+        voting_rules:
+          can_accumulate_supports_beyond_threshold:
+            description: Each idea can accumulate more than %{limit} supports
+          minimum_votes_per_user:
+            description: You must distribute a minimum of %{votes} supports among different ideas.
+            given_enough_votes: You've given enough supports.
+            supports_remaining: You have to support %{remaining_votes} more ideas for your supports to be taken into account.
+          idea_limit:
+            description: You can create up to %{limit} ideas.
+          threshold_per_idea:
+            description: In order to be validated ideas need to reach %{limit} supports
+          title: 'Supports are subject to the following rules:'
+          vote_limit:
+            description: You can support up to %{limit} ideas.
+            left: Remaining
+            votes: Supports
+        wizard_steps:
+          see_steps: see steps
+          step_1: Create your idea
+          step_2: Compare
+          step_3: Complete
+          step_4: Publish your idea
+          step_of: Step %{current_step_num} of %{total_steps}
+      ideas_picker:
+        choose_ideas: Choose ideas
+        close: Close
+        more_ideas: There are %{number} more ideas. Refine your search to locate them.
+        no_ideas: No ideas match your search criteria or there isn't any ideas.
+      info:
+        show:
+          back: Back to previous page
+      publish:
+        error: There was a problem publishing the idea.
+        success: Idea successfully published.
+      publish_answers:
+        success: Ideas answers successfully published.
+      update:
+        error: There was a problem saving the idea.
+        success: Idea successfully updated.
+      update_draft:
+        error: There was a problem saving the idea draft.
+        success: Idea draft successfully updated.
+      versions:
+        index:
+          title: Versions
+        ideas:
+          back_to_resource: Go back to idea
+      withdraw:
+        errors:
+          has_supports: This idea can not be withdrawn because it already has supports.
+    metrics:
+      accepted_ideas:
+        description: Number of possible ideas
+        object: ideas
+        title: Possible ideas
+      ideas:
+        description: Number of ideas
+        object: ideas
+        title: Ideas
+      votes:
+        description: Number of supports to ideas
+        object: supports
+        title: Supports
+    participatory_processes:
+      participatory_process_groups:
+        highlighted_ideas:
+          ideas: Ideas
+      statistics:
+        ideas_accepted: Possible ideas
+        ideas_count: Ideas
+    participatory_spaces:
+      highlighted_ideas:
+        see_all: See all (%{count})
+    resource_links:
+      copied_from_component:
+        idea_idea: Related ideas
+      included_projects:
+        project_result: 'Results appearing in this plan:'
+      included_ideas:
+        idea_project: 'Idea appearing in these plan:'
+        idea_result: 'Idea appearing in these results:'
