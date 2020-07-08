@@ -85,37 +85,37 @@ sv:
       ideas:
         actions:
           amend: Ändra
-          create: Create
-          vote: Support
-          withdraw: Withdraw
-        name: Ideas
+          create: Skapa
+          vote: Stöd
+          withdraw: Dra tillbaka
+        name: Idéer
         settings:
           global:
-            amendments_enabled: Amendments enabled
-            amendments_enabled_help: If active, configure Amendment features for each step.
-            area_scope_parent_id: Areas parent scope
-            area_scope_coordinates: Area scope coordinates (latitude,longitude)
-            areas_info_intro: Areas information intro
-            areas_info_text: Areas information text
-            announcement: Announcement
-            attachments_allowed: Allow attachments
-            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
-            categories_info_intro: Themes information intro
-            categories_info_text: Themes information text
-            comments_enabled: Comments enabled
-            default_map_center_coordinates: Default map center coordinates (latitude,longitude)
-            geocoding_enabled: Geocoding enabled
-            idea_answering_enabled: Idea answering enabled
-            idea_edit_before_minutes: Ideas can be edited by authors before this many minutes passes
-            idea_length: Maximum idea body length
-            idea_limit: Idea limit per participant
-            idea_listing_intro: Idea listing page intro text
-            idea_title_length: Maximum idea title length
-            image_allowed: Allow image
-            materials_text: Materials text
-            minimum_votes_per_user: Minimum supports per user
-            new_idea_help_text: New idea help text
-            resources_permissions_enabled: Actions permissions can be set for each idea
+            amendments_enabled: Ändringsförslag är möjliga
+            amendments_enabled_help: Om aktivt, konfigurera ändringsfunktioner till varje steg.
+            area_scope_parent_id: Områdens överordnade omfattning
+            area_scope_coordinates: Områdeskoordinater (latitud,longitud)
+            areas_info_intro: Informationsintro för områden
+            areas_info_text: Informationstext för områden
+            announcement: Meddelande
+            attachments_allowed: Tillåt bilagor
+            can_accumulate_supports_beyond_threshold: Kan samla in stöd bortom tröskeln
+            categories_info_intro: Teman information intro
+            categories_info_text: Teman informationstext
+            comments_enabled: Kommentarer tillåtna
+            default_map_center_coordinates: Standard kartcenter koordinater (latitud,longitud)
+            geocoding_enabled: Geokodning aktiverad
+            idea_answering_enabled: Svar på idéer aktiverat
+            idea_edit_before_minutes: Idéer kan redigeras av författare inom så här många minuter
+            idea_length: Maximal längd på idéens innehåll
+            idea_limit: Idégräns per användare
+            idea_listing_intro: Idé lista sida intro text
+            idea_title_length: Maximal längd på idéens titel
+            image_allowed: Tillåt bild
+            materials_text: Material text
+            minimum_votes_per_user: Minsta antal stöd per användare
+            new_idea_help_text: Ny idéhjälptext
+            resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för varje idé
             threshold_per_idea: Threshold per idea
             vote_limit: Support limit per participant
           step:
@@ -580,47 +580,47 @@ sv:
       publish_answers:
         success: Svar på idéer har publicerats.
       update:
-        error: There was a problem saving the idea.
-        success: Idea successfully updated.
+        error: Det uppstod ett problem med att spara idén.
+        success: Idén har uppdaterats.
       update_draft:
-        error: There was a problem saving the idea draft.
-        success: Idea draft successfully updated.
+        error: Det uppstod ett problem med att spara idéutkastet.
+        success: Idéutkastet har uppdaterats.
       versions:
         index:
-          title: Versions
+          title: Versioner
         ideas:
-          back_to_resource: Go back to idea
+          back_to_resource: Gå tillbaka till idé
       withdraw:
         errors:
-          has_supports: This idea can not be withdrawn because it already has supports.
+          has_supports: Denna idé kan inte dras tillbaka eftersom den redan har stöd.
     metrics:
       accepted_ideas:
-        description: Number of possible ideas
-        object: ideas
-        title: Possible ideas
+        description: Antal möjliga idéer
+        object: idéer
+        title: Möjliga idéer
       ideas:
-        description: Number of ideas
-        object: ideas
-        title: Ideas
+        description: Antal idéer
+        object: idéer
+        title: Idéer
       votes:
-        description: Number of supports to ideas
-        object: supports
-        title: Supports
+        description: Antal stöd till idéer
+        object: stödjer
+        title: Stödjer
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
-          ideas: Ideas
+          ideas: Idéer
       statistics:
-        ideas_accepted: Possible ideas
-        ideas_count: Ideas
+        ideas_accepted: Möjliga idéer
+        ideas_count: Idéer
     participatory_spaces:
       highlighted_ideas:
-        see_all: See all (%{count})
+        see_all: Visa alla (%{count})
     resource_links:
       copied_from_component:
-        idea_idea: Related ideas
+        idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Results appearing in this plan:'
+        project_result: 'Resultat som ingår i denna plan:'
       included_ideas:
-        idea_project: 'Idea appearing in these plan:'
-        idea_result: 'Idea appearing in these results:'
+        idea_project: 'Resultat som ingår i dessa planer:'
+        idea_result: 'Idé som ingår i dessa resultat:'
