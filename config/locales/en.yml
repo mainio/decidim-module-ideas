@@ -220,7 +220,7 @@ en:
           description: This badge is granted when you actively participate with new ideas and these go through.
           description_another: This participant had %{score} ideas that went through.
           description_own: You got %{score} ideas that went through.
-          name: Accepted ideas
+          name: Possible ideas
           next_level_in: Get %{score} more ideas through to reach the next level!
           unearned_another: This participant has not yet had any ideas that went through.
           unearned_own: You got no ideas that went through yet.
@@ -623,5 +623,5 @@ en:
       included_projects:
         project_result: 'Results appearing in this plan:'
       included_ideas:
-        idea_project: 'Idea appearing in these plan:'
+        idea_project: 'Idea appearing in these plans:'
         idea_result: 'Idea appearing in these results:'
