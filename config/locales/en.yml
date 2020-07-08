@@ -4,7 +4,6 @@ en:
     attributes:
       idea:
         area_scope_id: Choose an area for the idea
-        Lisää halutessasi idealle kaupunginosa tai tarkempi osoite:
         address: Add an optional neighbourhood for the idea or a more specific address
         answer: Answer
         answered_at: Answered at
@@ -214,7 +213,7 @@ en:
           notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     gamification:
       badges:
-        accepted_ides:
+        accepted_ideas:
           conditions:
           - Choose the participation space of your interest with submission for ideas enabled
           - Try to make ideas that can be carried out. This way they are more likely to go through.
@@ -330,11 +329,11 @@ en:
             select_a_category: Please select a theme
             select_a_idea: Please select an idea
             success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
-          update_scope:
-            invalid: 'These ideas already had the %{subject_name} scope: %{ideas}.'
+          update_area_scope:
+            invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
             select_a_idea: Please select an idea
-            select_a_scope: Please select a scope
-            success: 'Ideas successfully updated to the %{subject_name} scope: %{ideas}.'
+            select_a_scope: Please select an area
+            success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
         ideas_imports:
           create:
             invalid: There was a problem importing the ideas
@@ -399,7 +398,7 @@ en:
             scope: Scope
             state: Status
             title: Title
-            votes: Votes
+            votes: Supports
       new:
         limit_reached: You can't create new ideas since you've exceeded the limit.
       idea_votes:
@@ -493,7 +492,7 @@ en:
           oldest: Oldest
           random: Random
           recent: Recent
-          with_more_authors: With more authors
+          with_more_authors: With most authors
         preview:
           description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
           modify: Modify the idea
@@ -510,7 +509,7 @@ en:
           comments: Comments
           edit_idea: Edit idea
         ideas:
-          empty: There is no idea yet
+          empty: There are no ideas yet
           empty_filters: There isn't any idea with this criteria
         show:
           answer: Answer
@@ -541,8 +540,8 @@ en:
           votes_blocked: Supports disabled
         votes_count:
           count:
-            one: SUPPORT
-            other: SUPPORTS
+            one: Support
+            other: Supports
           most_popular_idea: Most popular idea
           need_more_votes: Need more supports
         voting_rules:
@@ -599,7 +598,7 @@ en:
       accepted_ideas:
         description: Number of possible ideas
         object: ideas
-        title: Accepted ideas
+        title: Possible ideas
       ideas:
         description: Number of ideas
         object: ideas
@@ -622,7 +621,7 @@ en:
       copied_from_component:
         idea_idea: Related ideas
       included_projects:
-        project_result: 'Results appearing in this project:'
+        project_result: 'Results appearing in this plan:'
       included_ideas:
-        idea_project: 'Idea appearing in these projects:'
+        idea_project: 'Idea appearing in these plan:'
         idea_result: 'Idea appearing in these results:'
