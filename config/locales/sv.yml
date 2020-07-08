@@ -52,39 +52,39 @@ sv:
       decidim/ideas/evaluating_idea_event: Idén beräknas
       decidim/ideas/idea_mentioned_event: Idé nämnd
       decidim/ideas/publish_idea_event: Idé publicerad
-      decidim/ideas/rejected_idea_event: Idea did not go through
-      decidim/ideas/voting_enabled_event: Idea voting enabled
+      decidim/ideas/rejected_idea_event: Idén gick inte vidare
+      decidim/ideas/voting_enabled_event: Omröstningar om idéer aktiverat
   activerecord:
     models:
       decidim/ideas/idea:
-        one: Idea
-        other: Ideas
+        one: Idé
+        other: Idéer
       decidim/ideas/idea_vote:
-        one: Support
-        other: Supports
+        one: Stöd
+        other: Stödjer
   decidim:
     admin:
       filters:
         is_emendation_true:
-          label: Type
+          label: Typ
           values:
-            'false': Ideas
-            'true': Amendments
+            'false': Idéer
+            'true': Ändringar
         search_placeholder:
-          id_string_or_title_cont: Search %{collection} by ID or title.
+          id_string_or_title_cont: Sök %{collection} efter ID eller titel.
         state_eq:
-          label: State
+          label: Status
           values:
-            evaluating: Evaluating
-            withdrawn: Withdrawn
+            evaluating: Utvärderas
+            withdrawn: Tillbakadragna
         state_null:
           label: Status
           values:
-            'true': Not answered
+            'true': Ej besvarade
     components:
       ideas:
         actions:
-          amend: Amend
+          amend: Ändra
           create: Create
           vote: Support
           withdraw: Withdraw
@@ -139,24 +139,24 @@ sv:
             suggested_hashtags: Hashtags suggested to participants for new ideas
             votes_blocked: Supports blocked
             votes_enabled: Supports enabled
-            votes_hidden: Supports hidden (if supports are enabled, checking this will hide the number of supports)
+            votes_hidden: Stöd dolda (om stöd är aktiverade, kommer detta att gömma antalet stöd)
     events:
       ideas:
         creation_enabled:
-          email_intro: 'You can now create new ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: Ideas now available in %{participatory_space_title}
-          notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          email_intro: 'Nu kan du skapa nya idéer på %{participatory_space_title}! Börja delta på den här sidan:'
+          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}. Du kan sluta ta emot notifikationer vid föregående länk.
+          email_subject: Skapande av idéer aktiverat i %{participatory_space_title}
+          notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" went through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea went through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> went through.
+            email_intro: 'Din idé "%{resource_title}" gick vidare. Du kan läsa svaret på den här sidan:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_subject: Din idé gick vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> gick vidare.
           follower:
-            email_intro: 'The idea "%{resource_title}" went through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following went through
+            email_intro: 'Din idé "%{resource_title}" gick vidare. Du kan läsa svaret på den här sidan:'
+            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
+            email_subject: En idé du följer gick vidare
             notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea went through.
         idea_evaluating:
           affected_user:
