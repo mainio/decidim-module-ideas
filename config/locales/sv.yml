@@ -201,12 +201,12 @@ sv:
           email_subject: Temat för idén %{resource_title} har uppdaterats
           notification_title: Temat för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
         idea_update_area_scope:
-          email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea area has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
+          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
+          email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
+          email_subject: Temat för idén %{resource_title} har uppdaterats
+          notification_title: Området för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
         voting_enabled:
-          email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
+          email_intro: 'Du kan stödja idéer i %{participatory_space_title}! Börja delta på den här sidan:'
           email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
           email_subject: Idea support has started for %{participatory_space_title}
           notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
@@ -279,66 +279,66 @@ sv:
             invalid: There's been a problem creating this idea
             success: Idea successfully created
           edit:
-            title: Update idea
-            update: Update
+            title: Uppdatera idé
+            update: Uppdatera
           form:
-            attachment_legend: "Add an attachment for the idea"
-            image_legend: "Add an image for the idea"
-            select_a_category: Choose a theme for the idea
+            attachment_legend: "Lägg till en bilaga till idén"
+            image_legend: "Lägg till en bild för idén"
+            select_a_category: Välj ett tema för idén
           index:
-            actions: Actions
-            cancel: Cancel
-            change_category: Change theme
-            change_scope: Change scope
-            merge: Merge into a new one
-            merge_button: Merge
-            publish: Publish
-            publish_answers: Publish answers
-            select_component: Select a component
-            selected: selected
-            split: Split ideas
-            split_button: Split
-            title: Ideas
-            update: Update
-            update_scope_button: Update Scope
+            actions: Funktioner
+            cancel: Avbryt
+            change_category: Ändra tema
+            change_scope: Ändra omfång
+            merge: Slå samman till ett nytt
+            merge_button: Slå ihop
+            publish: Publicera
+            publish_answers: Publicera svar
+            select_component: Välj en komponent
+            selected: vald
+            split: Dela upp idéer
+            split_button: Dela upp
+            title: Idéer
+            update: Uppdatera
+            update_scope_button: Uppdatera omfång
           new:
-            create: Create
-            title: Create idea
+            create: Skapa
+            title: Skapa idé
           publish_answers:
-            number_of_ideas: Answers for %{number} ideas will be published.
-            select_a_idea: Please select an idea
+            number_of_ideas: Svaren på %{number} idéer kommer att publiceras.
+            select_a_idea: Välj en idé
           show:
-            amendments_count: Amendments count
-            authors: Authors
-            body: Body
-            comments_count: Comments count
-            comments_negative_count: Against
+            amendments_count: Antal ändringar
+            authors: Författare
+            body: Innehåll
+            comments_count: Antal kommentarer
+            comments_negative_count: Mot
             comments_neutral_count: Neutral
-            comments_positive_count: Favor
-            created_at: Creation date
-            documents: Documents
-            link: Link
-            photos: Photos
-            ideas: Ideas
-            ranking: "%{ranking} of %{total}"
-            votes_count: Supports count
-            votes_ranking: Ranking by supports
+            comments_positive_count: För
+            created_at: Skapandedatum
+            documents: Dokument
+            link: Länk
+            photos: Bilder
+            ideas: Idéer
+            ranking: "%{ranking} av %{total}"
+            votes_count: Antal stöd
+            votes_ranking: Sortera efter stöd
           update_category:
-            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
-            select_a_category: Please select a theme
-            select_a_idea: Please select an idea
-            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
+            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            select_a_category: Välj ett tema
+            select_a_idea: Välj en idé
+            success: 'Idéer som har uppdaterats till omfånget %{subject_name}: %{ideas}.'
           update_area_scope:
-            invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
-            select_a_idea: Please select an idea
-            select_a_scope: Please select an area
-            success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
+            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            select_a_idea: Välj en idé
+            select_a_scope: Välj ett område
+            success: 'Idéer som har uppdaterats till området %{subject_name}: %{ideas}.'
         ideas_imports:
           create:
-            invalid: There was a problem importing the ideas
-            success: "%{number} ideas successfully imported"
+            invalid: Det uppstod ett problem med att importera idéerna
+            success: "%{number} idéer har importerats"
           new:
-            create: Import ideas
+            create: Importera idéer
             no_components: There are no other idea components in this participatory space to import the ideas from.
             select_component: Please select a component
             select_states: Check the status of the ideas to import
@@ -416,18 +416,18 @@ sv:
             one: "%{count} idea"
             other: "%{count} ideas"
         edit:
-          back: Back to previous page
-          send: Save
-          title: Edit idea
+          back: Tillbaka till föregående sida
+          send: Spara
+          title: Redigera idé
         edit_draft:
-          discard: Discard this draft
-          discard_confirmation: Are you sure you want to discard this idea draft?
-          send: Preview
-          title: Edit Idea Draft
+          discard: Släng utkastet
+          discard_confirmation: Är du säker på att du vill slänga detta utkast?
+          send: Förhandsgranska
+          title: Redigera idéutkast
         edit_view:
-          sign_in: Sign in
-          sign_in_before_submitting: You need to sign in before submitting an idea
-          you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
+          sign_in: Logga in
+          sign_in_before_submitting: Du måste logga in innan du skickar in en idé
+          you_can_invite_others: Om du skickar in en idé som grupp kan du bjuda in andra att samarbeta på idén
         filters:
           activity: My activity
           all: All
