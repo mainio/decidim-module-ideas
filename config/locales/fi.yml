@@ -219,7 +219,7 @@ fi:
           description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita ja ne etenevät jatkoon.
           description_another: Tällä käyttäjällä on %{score} jatkoon edennyttä ideaa.
           description_own: Olet saanut %{score} ideaa jatkoon.
-          name: Hyväksytyt ideat
+          name: Possible ideas
           next_level_in: Saa vielä %{score} ideaa jatkoon noustaksesi seuraavalle tasolle!
           unearned_another: Tällä käyttäjällä ei ole vielä yhtään hyväksyttyä ideaa.
           unearned_own: Sinulla ei ole vielä hyväksyttyjä ideoita.
@@ -622,5 +622,5 @@ fi:
       included_projects:
         project_result: 'Tulokset, jotka sisältyvät tähän suunnitelmaan:'
       included_ideas:
-        idea_project: 'Idea esiintyy seuraavissa suunnitelmissa:'
+        idea_project: 'Idea appearing in these plans:'
         idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
