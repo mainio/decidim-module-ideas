@@ -157,49 +157,49 @@ sv:
             email_intro: 'Din idé "%{resource_title}" gick vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
             email_subject: En idé du följer gick vidare
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea went through.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> gick vidare.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea is being evaluated
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
+            email_intro: 'Din idé "%{resource_title}" utvärderas för närvarande. Du kan söka efter ett svar på den här sidan:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_subject: Din idé utvärderas
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
           follower:
-            email_intro: 'The idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following is being evaluated
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
+            email_intro: 'Idén "%{resource_title}" utvärderas för närvarande. Du kan söka efter ett svar på den här sidan:'
+            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
+            email_subject: En idé som du följer utvärderas
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
         idea_mentioned:
-          email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
-          email_outro: You have received this notification because you are an author of "%{resource_title}".
-          email_subject: Your idea "%{mentioned_idea_title}" has been mentioned
-          notification_title: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.
+          email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i denna grupp</a> i kommentarerna.
+          email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+          email_subject: Din idé "%{mentioned_idea_title}" har nämnts
+          notification_title: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_path}">i denna grupp</a> i kommentarerna.
         idea_published:
-          email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new idea called "%{resource_title}". Check it out and contribute:'
-          email_outro: You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" by %{author_nickname}
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+          email_intro: '%{author_name} %{author_nickname}, som du följer, har publicerat en ny idé som heter "%{resource_title}". Ta en titt och bidra:'
+          email_outro: Du har fått den här notifikationen eftersom du följer %{author_nickname}. Du kan sluta ta emot notifikationer vid föregående länk.
+          email_subject: Ny idé "%{resource_title}" av %{author_nickname}
+          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> publicerades av <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         idea_published_for_space:
-          email_intro: The idea "%{resource_title}" has been added to "%{participatory_space_title}" that you are following.
-          email_outro: You have received this notification because you are following "%{participatory_space_title}". You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" added to %{participatory_space_title}
-          notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
+          email_intro: Idén "%{resource_title}" har lagts till i "%{participatory_space_title}" som du följer.
+          email_outro: Du har fått det här meddelandet eftersom du följer "%{participatory_space_title}". Du kan sluta att ta emot meddelanden genom att följa föregående länk.
+          email_subject: Ny idé "%{resource_title}" lades till %{participatory_space_title}
+          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> har lagts till i %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" did not go through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea did not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> did not go through.
+            email_intro: 'Din idé "%{resource_title}" gick inte vidare. Du kan läsa svaret på denna sida:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_subject: Din idé gick inte vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> gick inte vidare.
           follower:
-            email_intro: 'The idea "%{resource_title}" did not go through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following did not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea did not go through.
+            email_intro: 'Idén "%{resource_title}" gick inte vidare. Du kan läsa svaret på denna sida:'
+            email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}". Klicka på länken ovan för att sluta följa det.
+            email_subject: En idé du följer gick inte vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> gick inte vidare.
         idea_update_category:
-          email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea theme has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea theme has been updated by an admin.
+          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
+          email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
+          email_subject: Temat för idén %{resource_title} har uppdaterats
+          notification_title: Temat för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
         idea_update_area_scope:
           email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
           email_outro: You have received this notification because you are the author of the idea.
