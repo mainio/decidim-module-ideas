@@ -219,7 +219,7 @@ sv:
           description: Detta märke beviljas när du aktivt deltar med nya idéer som går vidare.
           description_another: Denna deltagare hade %{score} idéer som gick vidare.
           description_own: Du fick %{score} idéer som gick vidare.
-          name: Possible ideas
+          name: Möjliga idéer
           next_level_in: Få %{score} fler idéer antagna för att nå nästa nivå!
           unearned_another: Denna deltagare hade inga idéer som gick vidare.
           unearned_own: Du fick inga idéer som gick vidare.
@@ -622,5 +622,5 @@ sv:
       included_projects:
         project_result: 'Resultat som ingår i denna plan:'
       included_ideas:
-        idea_project: 'Idea appearing in these plans:'
+        idea_project: 'Resultat som ingår i dessa planer:'
         idea_result: 'Idé som ingår i dessa resultat:'
