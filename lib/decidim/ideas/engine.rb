@@ -44,6 +44,7 @@ module Decidim
         app.config.assets.precompile += %w(decidim_ideas_manifest.js
                                            decidim/ideas/idea_form.js
                                            decidim/ideas/ideas_list.js
+                                           decidim/ideas/map.js
                                            decidim/ideas/utils.js)
       end
 
