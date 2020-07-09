@@ -7,7 +7,7 @@ module Decidim
       private
 
       def build_image
-        @image = Attachment.new(
+        @image = Decidim::Ideas::Attachment.new(
           title: @form.image.title,
           file: @form.image.file,
           weight: 0,
