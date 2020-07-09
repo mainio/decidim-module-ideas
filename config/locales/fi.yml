@@ -8,6 +8,7 @@ fi:
         answered_at: Vastausaika
         automatic_hashtags: Automaattisesti lisätyt hashtag-tunnisteet
         body: Idean kuvaus
+        category_id: Choose a theme for the idea
         decidim_category_id: Valitse idealle teema
         has_address: Idealla on osoite
         latitude: Leveysaste
@@ -93,6 +94,7 @@ fi:
           global:
             amendments_enabled: Muutokset käytössä
             amendments_enabled_help: Jos käytössä, määritä asetukset kullekin vaiheelle.
+            amendments_wizard_help_text: Amendments Wizard help text
             area_scope_parent_id: Alueiden ylätason teema
             area_scope_coordinates: Alueiden teemojen koordinaatit (pituusaste,leveysaste)
             areas_info_intro: Alueiden tietoikkunan intro
