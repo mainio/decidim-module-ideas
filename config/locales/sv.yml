@@ -8,6 +8,7 @@ sv:
         answered_at: Besvarad
         automatic_hashtags: Hashtags läggs till automatiskt
         body: Idébeskrivning
+        category_id: Välj ett tema för idén
         decidim_category_id: Välj ett tema för idén
         has_address: Har adress
         latitude: Latitud
@@ -93,6 +94,7 @@ sv:
           global:
             amendments_enabled: Ändringsförslag är möjliga
             amendments_enabled_help: Om aktivt, konfigurera ändringsfunktioner till varje steg.
+            amendments_wizard_help_text: Hjälptext för guiden för ändringsförslag
             area_scope_parent_id: Områdens överordnade omfattning
             area_scope_coordinates: Områdeskoordinater (latitud,longitud)
             areas_info_intro: Informationsintro för områden
