@@ -29,9 +29,9 @@ module Decidim
         maximum: ->(record) { record.component.settings.idea_length }
       }
       validates :address, geocoding: true, if: ->(form) { Decidim.geocoder.present? && form.needs_geocoding? }
-      validates :category_id, presence: true
+      validates :category_id, presence: true, if: ->(form) { form.categories_available? }
       validates :category, presence: true, if: ->(form) { form.category_id.present? }
-      validates :area_scope_id, presence: true
+      validates :area_scope_id, presence: true, if: ->(form) { form.areas_enabled? }
       validates :area_scope, presence: true, if: ->(form) { form.area_scope_id.present? }
 
       validate :idea_length
@@ -99,6 +99,14 @@ module Decidim
         suggested_hashtags.member?(hashtag)
       end
 
+      def areas_enabled?
+        current_component.settings.geocoding_enabled?
+      end
+
+      def categories_available?
+        categories&.any?
+      end
+
       def component_automatic_hashtags
         @component_automatic_hashtags ||= ordered_hashtag_list(current_component.current_settings.automatic_hashtags)
       end
@@ -118,6 +126,7 @@ module Decidim
 
       def area_scope_belongs_to_parent_scope
         return unless area_parent_scope
+        return unless area_scope
 
         errors.add(:area_scope_id, :invalid) if !area_parent_scope.ancestor_of?(area_scope)
       end
