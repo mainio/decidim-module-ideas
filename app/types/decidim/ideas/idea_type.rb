@@ -10,7 +10,6 @@ module Decidim
       implements Decidim::Core::CoauthorableInterface
       implements Decidim::Core::CategorizableInterface
       implements Decidim::Core::ScopableInterface
-      implements Decidim::Core::AttachableInterface
       implements Decidim::Core::FingerprintInterface
       implements Decidim::Core::AmendableInterface
       implements Decidim::Core::AmendableEntityInterface
@@ -21,6 +20,7 @@ module Decidim
       field :title, String, description: "This idea's title", null: false
       field :body, String, description: "This idea's body", null: false
       field :image, Decidim::Core::AttachmentType, "This object's attachments", null: true
+      field :attachments, [Decidim::Core::AttachmentType], "This object's attachments", null: true
       field :areaScope, Decidim::Core::ScopeApiType, method: :area_scope, null: true do
         description "The object's scope"
       end
@@ -47,6 +47,10 @@ module Decidim
 
       field :voteCount, Integer, resolver_method: :vote_count, null: true do
         description "The total amount of votes the idea has received"
+      end
+
+      def attachments
+        object.actual_attachments
       end
 
       def coordinates
