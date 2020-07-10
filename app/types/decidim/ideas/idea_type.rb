@@ -32,7 +32,7 @@ module Decidim
       end
 
       field :reference, String, description: "This idea's unique reference", null: true
-      field :state, String, description: "The answer status in which idea is in", null: true
+      field :state, String, description: "The answer status in which idea is in (null|accepted|rejected|evaluating|withdrawn)", null: true
       field :answer, Decidim::Core::TranslatedFieldType, null: true do
         description "The answer feedback for the status for this idea"
       end
