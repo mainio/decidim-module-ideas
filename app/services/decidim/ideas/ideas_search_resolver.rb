@@ -10,7 +10,7 @@ module Decidim
       argument :order, IdeaInputSort, description: "Provides several methods to order the results", required: false
       argument :filter, IdeaInputFilter, description: "Provides several methods to filter the results", required: false
 
-      def resolve(order:, filter:)
+      def resolve(order: nil, filter: nil)
         @query = Idea
                    .where(component: object)
                    .published
