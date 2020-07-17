@@ -54,7 +54,11 @@ module Decidim
       end
 
       def geocoder
-        @geocoder ||= Decidim::Ideas.geocoding_utility.new(
+        map_utility.geocoder
+      end
+
+      def map_utility
+        @map_utility ||= Decidim::Ideas.map_utility.new(
           organization: current_organization
         )
       end
