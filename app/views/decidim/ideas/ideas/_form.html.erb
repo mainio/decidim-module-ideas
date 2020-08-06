@@ -95,7 +95,7 @@
             "address-url": reverse_geocoding_path
           } %>
           <div class="input-group-button">
-            <%= form.button t(".address_lookup_button"), type: :button, id: "address_lookup", class: "button secondary" %>
+            <%= form.button t(".address_lookup_button"), type: :button, id: "address_lookup", class: "button primary hollow" %>
           </div>
         </div>
         <%= form.hidden_field :latitude %>
@@ -109,10 +109,7 @@
     </div>
   </div>
 
-  <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil do %>
-    <%= stylesheet_link_tag "decidim/map" %>
-    <%= javascript_include_tag "decidim/ideas/map" %>
-  <% end %>
+  <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil %>
 <% end %>
 
 <% if @form.categories&.any? %>

@@ -8,8 +8,6 @@ module Decidim
       include IdeaVotesHelper
       include ::Decidim::EndorsableHelper
       include ::Decidim::FollowableHelper
-      include Decidim::MapHelper
-      include Decidim::Ideas::MapHelper
       include ControlVersionHelper
       include Decidim::RichTextEditorHelper
       include Decidim::CheckBoxesTreeHelper

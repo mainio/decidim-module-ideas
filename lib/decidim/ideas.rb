@@ -6,7 +6,6 @@ require_relative "ideas/admin"
 require_relative "ideas/admin_engine"
 require_relative "ideas/component_settings_extensions"
 require_relative "ideas/component"
-require_relative "ideas/map"
 require "acts_as_list"
 
 module Decidim
@@ -17,16 +16,6 @@ module Decidim
     autoload :IdeaSerializer, "decidim/ideas/idea_serializer"
 
     include ActiveSupport::Configurable
-
-    # Public Setting that defines the library that is used for managing maps and
-    # geocoding. This will take care of configuring the map layer according to
-    # the underlying map service provider. The available features may slightly
-    # differ depending on the map service in use which is why there is an
-    # additional layer for the map functionality to ensure an uniform API for
-    # the mapping functionality.
-    config_accessor :map_utility do
-      Decidim::Ideas::Map::Here
-    end
 
     # Public Setting that defines the similarity minimum value to consider two
     # ideas similar. Defaults to 0.25.

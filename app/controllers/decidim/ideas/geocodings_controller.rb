@@ -5,7 +5,7 @@ module Decidim
     class GeocodingsController < Decidim::Ideas::ApplicationController
       include Decidim::ApplicationHelper
 
-      before_action :prepare_geocoder, only: [:new, :reverse]
+      before_action :ensure_geocoder!, only: [:create, :reverse]
 
       def create
         enforce_permission_to :create, :idea
@@ -49,18 +49,18 @@ module Decidim
 
       private
 
-      def prepare_geocoder
-        geocoder.prepare!
+      def ensure_geocoder!
+        return if geocoder.present?
+
+        # This prevents the action being processed.
+        render json: {
+          success: false,
+          result: { }
+        }
       end
 
       def geocoder
-        map_utility.geocoder
-      end
-
-      def map_utility
-        @map_utility ||= Decidim::Ideas.map_utility.new(
-          organization: current_organization
-        )
+        Decidim::Map.geocoding(organization: current_organization)
       end
     end
   end

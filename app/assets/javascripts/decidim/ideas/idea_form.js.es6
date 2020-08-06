@@ -2,6 +2,8 @@
 // = require decidim/ideas/info_modals
 
 ((exports) => {
+  const $ = exports.$; // eslint-disable-line
+
   const DEFAULT_MESSAGES = {
     charactersUsed: "%count%/%total% characters used"
   };
@@ -116,6 +118,7 @@
         if (resp.success) {
           $latitude.val(resp.result.lat);
           $longitude.val(resp.result.lng);
+
           $map.trigger("coordinates.decidim.ideas", [{
             lat: resp.result.lat,
             lng: resp.result.lng
@@ -187,7 +190,7 @@
     $input.data("characters-counter", counter)
   };
 
-  exports.$(() => {
+  $(() => {
     bindFormValidation();
     bindAddressLookup();
   });
