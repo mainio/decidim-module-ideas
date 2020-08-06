@@ -12,17 +12,15 @@
   <%= render @ideas %>
 </div>
 
-<div class="row">
-  <div class="columns mediumlarge-8 large-9">
-    <% if @ideas.empty? %>
-      <div class="callout secondary">
-        <% if params[:filter].present? %>
-          <p><%= t(".empty_filters") %></p>
-        <% else %>
-          <p><%= t(".empty") %></p>
-        <% end %>
-      </div>
-    <% end %>
+<% if @ideas.empty? %>
+  <div class="row columns">
+    <div class="callout secondary">
+      <% if params[:filter].present? %>
+        <p><%= t(".empty_filters") %></p>
+      <% else %>
+        <p><%= t(".empty") %></p>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 <%= decidim_paginate @ideas %>
