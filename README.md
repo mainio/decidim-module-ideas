@@ -4,6 +4,12 @@
 
 **NOTE: This module is currently work in progress, THERE CAN STILL BE BUGS**
 
+Currently this module depends on these changes being in the core:
+
+https://github.com/decidim/decidim/pull/6340
+
+Please port these changes to your instance before trying this out.
+
 A [Decidim](https://github.com/decidim/decidim) module for creating ideas in
 participatory budgeting. The base of the ideas component is extremely similar to
 the core proposals module which you should primarily use if you want to
