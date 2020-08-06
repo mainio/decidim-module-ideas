@@ -172,6 +172,15 @@ module Decidim
 
       private
 
+      def layout
+        case action_name
+        when "new", "create", "edit", "edit_draft", "update", "preview"
+          "decidim/ideas/participatory_space_plain"
+        else
+          super
+        end
+      end
+
       def search_klass
         IdeaSearch
       end
