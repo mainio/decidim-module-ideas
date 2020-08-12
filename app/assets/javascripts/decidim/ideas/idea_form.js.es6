@@ -165,6 +165,22 @@
       $longitude.val(coordinates.lng).attr("value", coordinates.lng);
     });
 
+    // Listen for the autocompletion event from Tribute
+    $address.on("tribute-replaced", (ev) => {
+      const selected = ev.detail.item.original;
+      if (selected.coordinates) {
+        $latitude.val(selected.coordinates[0]).attr("value", selected.coordinates[0]);
+        $longitude.val(selected.coordinates[1]).attr("value", selected.coordinates[1]);
+
+        $map.trigger("coordinates.decidim.ideas", [{
+          lat: selected.coordinates[0],
+          lng: selected.coordinates[1]
+        }]);
+      } else {
+        performCoordinatesLookup();
+      }
+    });
+
     $("#address_lookup").on("click.decidim.ideas", (ev) => {
       ev.preventDefault();
       performCoordinatesLookup();
