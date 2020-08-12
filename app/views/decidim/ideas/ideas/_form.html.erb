@@ -90,7 +90,7 @@
           <span class="input-group-label">
             <%= icon "map-marker", aria_hidden: true %>
           </span>
-          <%= form.text_field :address, label: false, class: "input-group-field", data: {
+          <%= form.geocoding_field :address, label: false, class: "input-group-field", data: {
             "coordinates-url": geocoding_path,
             "address-url": reverse_geocoding_path
           } %>
