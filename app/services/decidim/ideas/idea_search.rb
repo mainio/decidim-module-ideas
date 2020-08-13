@@ -20,8 +20,8 @@ module Decidim
       # Handle the search_text filter
       def search_search_text
         query
-          .where("title ILIKE ?", "%#{search_text}%")
-          .or(query.where("body ILIKE ?", "%#{search_text}%"))
+          .where("decidim_ideas_ideas.title ILIKE ?", "%#{search_text}%")
+          .or(query.where("decidim_ideas_ideas.body ILIKE ?", "%#{search_text}%"))
       end
 
       # Handle the origin filter
