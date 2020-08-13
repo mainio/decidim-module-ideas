@@ -470,7 +470,7 @@ fi:
           title: Tutustu ideoihin
           see_all_withdrawn: Näytä kaikki peruutetut ideat
           subtitle: Tällä sivulla voit tutkia muiden ideoita
-          view_idea: Näytä idea
+          view_idea: Tutustu ideaan
         linked_ideas:
           idea_votes:
             one: kannatus
@@ -505,10 +505,22 @@ fi:
         idea:
           creation_date: 'Julkaisuaika: %{date}'
           view_idea: Näytä idea
+        idea_actions:
+          share: Jaa idea
+          show_comments: Katso idean kommentit
+          show_on_map: Katso idea kartalla
+          print: Tulosta idea
+          flag: Ilmianna idea
+        idea_controls:
+          edit_idea: Muokkaa ideaa
+          manage_idea: Hallinnoi ideaa
+          withdraw_confirmation_html: Haluatko varmasti peruuttaa tämän idean?<br><br><strong>Tätä toimintoa ei voi peruuttaa!</strong>
+          withdraw_idea: Peruuta idea
         idea_full:
           changes_at_title: Muutokset nimessä
           comments: Kommentit
           edit_idea: Muokkaa ideaa
+          show_versions: Näytä versiohistoria
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla

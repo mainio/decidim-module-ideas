@@ -506,10 +506,22 @@ en:
         idea:
           creation_date: 'Creation: %{date}'
           view_idea: View idea
+        idea_actions:
+          share: Share idea
+          show_comments: Show idea comments
+          show_on_map: Show idea on map
+          print: Print idea
+          flag: Report idea
+        idea_controls:
+          edit_idea: Edit idea
+          manage_idea: Manage idea
+          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
+          withdraw_idea: Withdraw idea
         idea_full:
           changes_at_title: Changes at title
           comments: Comments
           edit_idea: Edit idea
+          show_versions: Show version history
         ideas:
           empty: There are no ideas yet
           empty_filters: There isn't any idea with this criteria

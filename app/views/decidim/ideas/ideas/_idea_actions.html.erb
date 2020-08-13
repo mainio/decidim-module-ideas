@@ -1,0 +1,49 @@
+<ul class="actionbox-links">
+  <% if show_actions %>
+    <li>
+      <button type="button" class="link action-link" data-open="socialShare" aria-haspopup="true">
+        <%= icon "share", role: "img", "aria-hidden": true %>
+        <span class="link-text"><%= t ".share" %></span>
+      </button>
+    </li>
+    <li>
+      <%= link_to "#comments", class: "action-link" do %>
+        <%= icon "comment-square", role: "img", "aria-hidden": true %>
+        <span class="link-text"><%= t ".show_comments" %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if component_settings.geocoding_enabled? && idea.address.present? %>
+    <li>
+      <%= link_to idea_map_link(idea), class: "action-link", target: "_blank" do %>
+        <%= icon "map-marker", role: "img", "aria-hidden": true %>
+        <span class="link-text"><%= t ".show_on_map" %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if false %>
+    <li>
+     <button type="button" class="link action-link">
+        <%= icon "print", role: "img", "aria-hidden": true %>
+        <span class="link-text"><%= t ".print" %></span>
+     </button>
+    </li>
+  <% end %>
+  <% if show_actions %>
+    <li>
+    <button type="button" class="link action-link" data-open="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-controls="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-haspopup="true">
+      <%= icon "flag", role: "img", "aria-hidden": true %>
+      <span class="link-text"><%= t ".flag" %></span>
+    </button>
+    </li>
+  <% end %>
+</ul>
+
+<% if show_actions %>
+  <%= render partial: "share_modal" %>
+  <%= render partial: "decidim/shared/flag_modal", locals: {
+    reportable: idea,
+    form: @report_form,
+    url: decidim.report_path(sgid: idea.to_sgid.to_s)
+  } %>
+<% end %>

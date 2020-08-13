@@ -1,97 +1,100 @@
-<% if idea.image %>
+
+<div class="resource-intro">
+  <div class="row" data-equalizer>
+    <div class="columns mediumlarge-7">
+      <div class="resource-image" data-equalizer-watch>
+        <% if idea.image %>
+          <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+        <% else %>
+          <%= image_tag "decidim/ideas/idea-default.jpg", class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+        <% end %>
+      </div>
+    </div>
+    <div class="columns mediumlarge-4">
+      <div class="actionbox" data-equalizer-watch>
+        <%= render partial: "idea_actions", locals: { idea: idea, show_actions: show_actions } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if show_actions && allowed_to?(:edit, :idea, idea: idea) %>
   <div class="row">
     <div class="columns">
-      <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+      <%= render partial: "idea_controls", locals: { idea: idea } %>
     </div>
   </div>
 <% end %>
 
-<div class="row">
-    <div class="columns large-12">
+<div class="resource-details">
+  <div class="row">
+    <div class="columns mediumlarge-7">
+      <div class="resource-details-row">
+        <div class="resource-detail">#<%= idea.id %></div>
+        <div class="resource-detail">
+          <% if has_visible_area_scope?(idea) %>
+            <%= translated_attribute(idea.area_scope.name) %>
+          <% end %>
+        </div>
+      </div>
+      <% if component_settings.geocoding_enabled? && idea.address.present? %>
+        <div class="resource-details-row">
+          <div class="resource-detail"><%= idea.address %></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="columns mediumlarge-4 text-right">
+      <div class="resource-details-row">
+        <div class="resource-detail"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
+      </div>
+      <% if idea.category.present? %>
+        <div class="resource-details-row">
+          <div class="resource-detail"><%= translated_attribute(idea.category.name) %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="resource-title">
+  <div class="row">
+    <div class="columns mediumlarge-7">
       <% if @idea.emendation? %>
         <h3 class="heading3"><%= t(".changes_at_title", title: present(@idea.amendable).title(links: true, html_escape: true)) %></h3>
       <% else %>
         <h3 class="heading3"><%= present(@idea).title(links: true, html_escape: true) %></h3>
       <% end %>
-      <%= cell("decidim/coauthorships", @idea, has_actions: true, size: 3, context: { current_user: current_user }) %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="columns mediumlarge-8">
-    <div class="section">
-      <% if idea.emendation? %>
-        <%= cell("decidim/diff", idea_presenter.versions.last) %>
-      <% else %>
-        <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
-        <%= render_idea_body(idea) %>
-      <% end %>
-      <% if component_settings.geocoding_enabled? %>
-        <%= render partial: "decidim/shared/static_map", locals: { icon_name: "ideas", geolocalizable: idea } %>
-      <% end %>
-      <%= cell "decidim/ideas/idea_tags", idea %>
     </div>
+    <div class="columns mediumlarge-4 text-right">
+      <%= t("version", scope: "decidim.versions.resource_version", number: idea.versions_count) %>
 
-    <%= cell("decidim/announcement", idea_reason_callout_args) if idea.answered? && idea.published_state? %>
-
-    <%= linked_resources_for idea, :results, "included_ideas" %>
-    <%= linked_resources_for idea, :projects, "included_ideas" %>
-    <%= linked_resources_for idea, :ideas, "copied_from_component" %>
-
-    <%= amendments_for idea %>
-  </div>
-
-  <div class="columns mediumlarge-4 large-3">
-    <% if show_actions %>
-        <% if idea.amendable? && allowed_to?(:edit, :idea, idea: idea) %>
-          <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button secondary hollow expanded button-sc button--icon follow-button" %>
-        <% elsif idea.emendation? %>
-          <%= amend_button_for idea %>
-        <% end %>
-
-        <%= emendation_actions_for idea %>
-
-      <% if current_settings.votes_enabled? || current_user %>
-        <% if idea.withdrawn? %>
-          <div class="card">
-            <div class="card__content">
-              <% if current_settings.votes_enabled? %>
-                <%= render partial: "votes_count", locals: { idea: idea, from_ideas_list: false } %>
-              <% end %>
-            </div>
-          </div>
-        <% else %>
-          <div class="card">
-            <div class="card__content">
-              <% if current_settings.votes_enabled? %>
-                <%= render partial: "votes_count", locals: { idea: idea, from_ideas_list: false } %>
-                <%= render partial: "vote_button", locals: { idea: idea, from_ideas_list: false } %>
-              <% end %>
-              <div class="row collapse buttons__row">
-                <div class="column collapse">
-                  <%= link_to "#comments", class: "button small compact hollow secondary button--nomargin expanded" do %>
-                      <%= icon "comment-square", class: "icon--small", aria_label: t(".comments"), role: "img" %> <%= idea.comments.count %>
-                  <% end %>
-                </div>
-              </div>
-              <br>
-              <%= follow_button_for(idea) %>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <%= amenders_list_for(idea) %>
-
-    <%= resource_reference(idea) %>
-    <%= resource_version(idea_presenter, versions_path: idea_versions_path(idea)) %>
-    <%= cell("decidim/fingerprint", idea) %>
-
-    <% if show_actions %>
-      <%= render partial: "decidim/shared/share_modal" %>
-      <%= cell "decidim/ideas/idea_link_to_rejected_emendation", idea %>
-    <% end %>
+      <%= link_to(t(".show_versions"), idea_versions_path(idea)) %>
+    </div>
   </div>
 </div>
-<%= attachments_for idea %>
+
+<div class="resource-body">
+  <div class="row">
+    <div class="columns">
+      <div class="section">
+        <%= cell("decidim/coauthorships", idea, has_actions: true, size: 3, context: { current_user: current_user }) %>
+
+        <% if idea.emendation? %>
+          <%= cell("decidim/diff", idea_presenter.versions.last) %>
+        <% else %>
+          <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
+          <%= render_idea_body(idea) %>
+        <% end %>
+      </div>
+
+      <%= attachments_for idea %>
+      <%= cell("decidim/announcement", idea_reason_callout_args) if idea.answered? && idea.published_state? %>
+
+      <%= linked_resources_for idea, :results, "included_ideas" %>
+      <%= linked_resources_for idea, :projects, "included_ideas" %>
+      <%= linked_resources_for idea, :ideas, "copied_from_component" %>
+
+      <%= amendments_for idea %>
+    </div>
+  </div>
+</div>

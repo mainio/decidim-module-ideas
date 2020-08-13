@@ -1,0 +1,20 @@
+<div class="resource-control-panel text-center">
+  <div class="title h3"><%= t ".manage_idea" %></div>
+
+  <div class="resource-controls">
+    <% if idea.amendable? %>
+      <div class="resource-control">
+        <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button large hollow" %>
+      </div>
+    <% elsif idea.emendation? %>
+      <div class="resource-control">
+        <%= amend_button_for idea %>
+      </div>
+    <% end %>
+    <div class="resource-control">
+      <%= action_authorized_link_to :withdraw, withdraw_idea_path(idea), method: :put, class: "button large hollow", data: { confirm: t(".withdraw_confirmation_html") } do %>
+        <%= t(".withdraw_idea") %>
+      <% end %>
+    </div>
+  </div>
+</div>

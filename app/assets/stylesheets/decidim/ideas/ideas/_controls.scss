@@ -1,0 +1,15 @@
+.resource-control-panel{
+  border: 3px solid $primary;
+  padding: 2rem;
+}
+
+.resource-controls{
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.resource-control{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

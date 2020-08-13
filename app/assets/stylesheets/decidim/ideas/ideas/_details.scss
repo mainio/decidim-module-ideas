@@ -1,0 +1,8 @@
+.resource-detail{
+  display: inline;
+  margin-left: 1rem;
+
+  &:first-child{
+    margin-left: 0;
+  }
+}

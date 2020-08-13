@@ -1,0 +1,43 @@
+.actionbox{
+  background: $primary;
+  padding: 2rem;
+
+  &,
+  a,
+  .link{
+    color: $white;
+    font-weight: $global-weight-normal;
+  }
+
+  .actionbox-links{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .action-link{
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+    font-size: 1.3rem;
+
+    &:hover,
+    &:focus{
+      text-decoration: none;
+
+      .link-text{
+        text-decoration: underline;
+      }
+    }
+
+    .icon{
+      width: 30px;
+      height: 30px;
+      margin-right: 1rem;
+    }
+
+    .link-text{
+      // TODO
+    }
+  }
+}

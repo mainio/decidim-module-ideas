@@ -28,6 +28,19 @@ module Decidim
         }
       end
 
+      def idea_map_link(resource, options = {})
+        @map_utility_static ||= Decidim::Map.static(
+          organization: current_organization
+        )
+        return "#" unless @map_utility_static
+
+        @map_utility_static.link(
+          latitude: resource.latitude,
+          longitude: resource.longitude,
+          options: options
+        )
+      end
+
       def idea_reason_callout_class
         case @idea.state
         when "accepted"
