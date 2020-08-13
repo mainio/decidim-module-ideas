@@ -506,21 +506,21 @@ fi:
           creation_date: 'Julkaisuaika: %{date}'
           view_idea: Näytä idea
         idea_actions:
-          share: Share idea
-          show_comments: Show idea comments
-          show_on_map: Show idea on map
-          print: Print idea
-          flag: Report idea
+          share: Jaa idea
+          show_comments: Katso idean kommentit
+          show_on_map: Katso idea kartalla
+          print: Tulosta idea
+          flag: Ilmianna idea
         idea_controls:
-          edit_idea: Edit idea
-          manage_idea: Manage idea
-          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
-          withdraw_idea: Withdraw idea
+          edit_idea: Muokkaa ideaa
+          manage_idea: Hallinnoi ideaa
+          withdraw_confirmation_html: Haluatko varmasti peruuttaa tämän idean?<br><br><strong>Tätä toimintoa ei voi peruuttaa!</strong>
+          withdraw_idea: Peruuta idea
         idea_full:
           changes_at_title: Muutokset nimessä
           comments: Kommentit
           edit_idea: Muokkaa ideaa
-          show_versions: Show version history
+          show_versions: Näytä versiohistoria
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
