@@ -506,21 +506,21 @@ sv:
           creation_date: 'Skapat: %{date}'
           view_idea: Visa idé
         idea_actions:
-          share: Share idea
-          show_comments: Show idea comments
-          show_on_map: Show idea on map
-          print: Print idea
-          flag: Report idea
+          share: Dela idén
+          show_comments: Visa idéens kommentarer
+          show_on_map: Visa idén på kartan
+          print: Skriv ut idén
+          flag: Uttryck idén
         idea_controls:
-          edit_idea: Edit idea
-          manage_idea: Manage idea
-          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
-          withdraw_idea: Withdraw idea
+          edit_idea: Redigera idé
+          manage_idea: Hantera idé
+          withdraw_confirmation_html: Är du säker på att du vill dra tillbaka den här idén?<br><br><strong> Den här åtgärden kan inte avbrytas!</strong>
+          withdraw_idea: Dra tillbaka idén
         idea_full:
           changes_at_title: Ändringar vid titel
           comments: Kommentarer
           edit_idea: Redigera idé
-          show_versions: Show version history
+          show_versions: Visa versionshistorik
         ideas:
           empty: Det finns inga idéer ännu
           empty_filters: Det finns ingen idé med dessa kriterier
