@@ -505,10 +505,22 @@ fi:
         idea:
           creation_date: 'Julkaisuaika: %{date}'
           view_idea: Näytä idea
+        idea_actions:
+          share: Share idea
+          show_comments: Show idea comments
+          show_on_map: Show idea on map
+          print: Print idea
+          flag: Report idea
+        idea_controls:
+          edit_idea: Edit idea
+          manage_idea: Manage idea
+          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
+          withdraw_idea: Withdraw idea
         idea_full:
           changes_at_title: Muutokset nimessä
           comments: Kommentit
           edit_idea: Muokkaa ideaa
+          show_versions: Show version history
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
