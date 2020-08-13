@@ -157,7 +157,7 @@
           </div>
 
           <div class="field">
-            <%= nested_form.upload :file, optional: false %>
+            <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
             <% if @form.errors[:image].present? %>
               <% @form.errors[:image].each do |message| %>
                 <small class="form-error is-visible">
