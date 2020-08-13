@@ -1,4 +1,5 @@
 var $ideas = $('#ideas');
+var $map = $('#map');
 var $ideasCount = $('#ideas-count');
 var $orderFilterInput = $('.order_filter');
 
@@ -8,3 +9,10 @@ $orderFilterInput.val('<%= order %>');
 
 var $dropdownMenu = $('.dropdown.menu', $ideas);
 $dropdownMenu.foundation();
+
+var mapController = $map.data("map-controller");
+if (mapController) {
+  var ideasData = JSON.parse('<%== escape_javascript ideas_data_for_map(@ideas.select(&:geocoded?)).to_json %>');
+  mapController.clearMarkers();
+  mapController.addMarkers(ideasData);
+}
