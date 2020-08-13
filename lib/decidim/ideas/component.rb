@@ -27,7 +27,7 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :minimum_votes_per_user, type: :integer, default: 0
     settings.attribute :idea_limit, type: :integer, default: 0
     settings.attribute :idea_title_length, type: :integer, default: 150
-    settings.attribute :idea_length, type: :integer, default: 500
+    settings.attribute :idea_length, type: :integer, default: 1000
     settings.attribute :threshold_per_idea, type: :integer, default: 0
     settings.attribute :can_accumulate_supports_beyond_threshold, type: :boolean, default: false
     settings.attribute :idea_answering_enabled, type: :boolean, default: true
