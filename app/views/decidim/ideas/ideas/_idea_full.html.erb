@@ -44,9 +44,11 @@
       <% end %>
     </div>
     <div class="columns mediumlarge-4 text-right">
-      <div class="resource-details-row">
-        <div class="resource-detail"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
-      </div>
+      <% if idea.published? %>
+        <div class="resource-details-row">
+          <div class="resource-detail"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
+        </div>
+      <% end %>
       <% if idea.category.present? %>
         <div class="resource-details-row">
           <div class="resource-detail"><%= translated_attribute(idea.category.name) %></div>
@@ -66,9 +68,10 @@
       <% end %>
     </div>
     <div class="columns mediumlarge-4 text-right">
-      <%= t("version", scope: "decidim.versions.resource_version", number: idea.versions_count) %>
-
-      <%= link_to(t(".show_versions"), idea_versions_path(idea)) %>
+      <% if idea.published? %>
+        <%= t("version", scope: "decidim.versions.resource_version", number: idea.versions_count) %>
+        <%= link_to(t(".show_versions"), idea_versions_path(idea)) %>
+      <% end %>
     </div>
   </div>
 </div>
