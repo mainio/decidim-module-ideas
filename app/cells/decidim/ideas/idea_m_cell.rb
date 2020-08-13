@@ -8,6 +8,8 @@ module Decidim
     class IdeaMCell < Decidim::CardMCell
       include IdeaCellsHelper
 
+      property :area_scope
+
       def badge
         render if has_badge?
       end
@@ -18,6 +20,15 @@ module Decidim
         options[:preview]
       end
 
+      def render_column?
+        !context[:no_column].presence
+      end
+
+      # Don't display the authors on the card.
+      def has_authors?
+        false
+      end
+
       def title
         decidim_html_escape(present(model).title)
       end
@@ -26,8 +37,20 @@ module Decidim
         decidim_sanitize(present(model).body)
       end
 
+      def category
+        translated_attribute(model.category.name) if has_category?
+      end
+
+      def category_class
+        "card__category--#{model.category.id}" if has_category?
+      end
+
       def has_state?
         model.published?
+      end
+
+      def has_category?
+        model.category.present?
       end
 
       def has_badge?

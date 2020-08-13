@@ -67,7 +67,7 @@ module Decidim
         when "withdrawn"
           ["alert"]
         else
-          ["muted"]
+          [""]
         end
       end
     end
