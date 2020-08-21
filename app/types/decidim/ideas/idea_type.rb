@@ -13,7 +13,6 @@ module Decidim
       implements Decidim::Core::FingerprintInterface
       implements Decidim::Core::AmendableInterface
       implements Decidim::Core::AmendableEntityInterface
-      implements Decidim::Core::TraceableInterface
       implements Decidim::Core::TimestampsInterface
 
       field :id, ID, null: false
@@ -47,6 +46,15 @@ module Decidim
 
       field :voteCount, Integer, resolver_method: :vote_count, null: true do
         description "The total amount of votes the idea has received"
+      end
+
+      # Modifies Decidim::Core::TraceableInterface because we use different
+      # version type in order to add our customizations.
+      field :versionsCount, Integer, method: :versions_count, null: false do
+        description "Total number of versions"
+      end
+      field :versions, [Decidim::Ideas::IdeaVersionType], null: false do
+        description "This object's versions"
       end
 
       def coordinates
