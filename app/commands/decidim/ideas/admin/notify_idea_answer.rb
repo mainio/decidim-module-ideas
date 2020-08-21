@@ -43,7 +43,7 @@ module Decidim
           if idea.accepted?
             publish_event(
               "decidim.events.ideas.idea_accepted",
-              Decidim::Idea::AcceptedIdeaEvent
+              Decidim::Ideas::AcceptedIdeaEvent
             )
           elsif idea.rejected?
             publish_event(
