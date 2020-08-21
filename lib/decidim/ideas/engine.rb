@@ -54,6 +54,12 @@ module Decidim
         end
       end
 
+      initializer "decidim_ideas.mutation_extensions" do
+        Decidim::Api::MutationType.define do
+          MutationExtensions.define(self)
+        end
+      end
+
       initializer "decidim_ideas.mentions_listener" do
         Decidim::Comments::CommentCreation.subscribe do |data|
           ideas = data.dig(:metadatas, :idea).try(:linked_ideas)
