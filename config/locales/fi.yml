@@ -20,6 +20,7 @@ fi:
         user_group_id: Luo idea käyttäjänä
       idea_answer:
         answer: Vastaa
+        internal_state: State
       ideas_copy:
         copy_ideas: Ymmärrän, että tämä tuo kaikki ideat valitusta komponentista tähän komponenttiin ja tätä toimintoa ei voi peruuttaa.
         origin_component_id: Komponentti, josta ideat kopioidaan
@@ -427,7 +428,7 @@ fi:
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
-          sign_in: Kirjaudu sisään
+          sign_in: Kirjaudu issään
           sign_in_before_submitting: Ennen idean jättämistä sinun tulee kirjautua sisään
           you_can_invite_others: Mikäli haluatte jättää idean porukalla, voi kutsua muita idean tekijöiksi idean jättämisen jälkeen
         filters:
@@ -470,7 +471,7 @@ fi:
           title: Tutustu ideoihin
           see_all_withdrawn: Näytä kaikki peruutetut ideat
           subtitle: Tällä sivulla voit tutkia muiden ideoita
-          view_idea: Tutustu ideaan
+          view_idea: Näytä idea
         linked_ideas:
           idea_votes:
             one: kannatus
