@@ -80,8 +80,6 @@
   <div class="row">
     <div class="columns">
       <div class="section">
-        <%= cell("decidim/coauthorships", idea, has_actions: true, size: 3, context: { current_user: current_user }) %>
-
         <% if idea.emendation? %>
           <%= cell("decidim/diff", idea_presenter.versions.last) %>
         <% else %>
