@@ -21,6 +21,7 @@ en:
         user_group_id: Create idea as
       idea_answer:
         answer: Answer
+        internal_state: State
       ideas_copy:
         copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
         origin_component_id: Component to copy the ideas from
