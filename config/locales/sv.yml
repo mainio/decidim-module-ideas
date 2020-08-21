@@ -20,6 +20,7 @@ sv:
         user_group_id: Skapa idé som
       idea_answer:
         answer: Svara
+        internal_state: State
       ideas_copy:
         copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
         origin_component_id: Komponent för att kopiera idéer från
