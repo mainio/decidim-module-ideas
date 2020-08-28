@@ -428,7 +428,7 @@ fi:
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
-          sign_in: Kirjaudu issään
+          sign_in: Kirjaudu sisään
           sign_in_before_submitting: Ennen idean jättämistä sinun tulee kirjautua sisään
           you_can_invite_others: Mikäli haluatte jättää idean porukalla, voi kutsua muita idean tekijöiksi idean jättämisen jälkeen
         filters:
