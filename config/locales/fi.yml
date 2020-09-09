@@ -528,7 +528,7 @@ fi:
         show:
           answer: Vastaa
           back_to: Takaisin
-          back_to_list: Takaisin listaan
+          back_to_list: See other ideas
           changes_at_title: Muutokset kohteessa "%{title}"
           link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen muutoksesta
           link_to_promoted_emendation_text: Näytä hylätty muutos.
