@@ -528,7 +528,7 @@ sv:
         show:
           answer: Svara
           back_to: Tillbaka till
-          back_to_list: Tillbaka till listan
+          back_to_list: Visa andra idéer
           changes_at_title: Ändring till %{title}
           link_to_promoted_emendation_help_text: Denna idé är ett annonserat ändringsförslag
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.

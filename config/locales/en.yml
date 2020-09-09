@@ -529,7 +529,7 @@ en:
         show:
           answer: Answer
           back_to: Back to
-          back_to_list: Back to list
+          back_to_list: See other ideas
           changes_at_title: Amendment to "%{title}"
           link_to_promoted_emendation_help_text: This idea is a promoted emendation
           link_to_promoted_emendation_text: See the rejected emendation.
