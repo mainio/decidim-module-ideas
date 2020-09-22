@@ -215,7 +215,7 @@ fi:
           notification_title: Voit nyt <a href="%{resource_path}">kannattaa ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
-        idea: Ideas
+        idea: Ideat
     gamification:
       badges:
         accepted_ideas:
