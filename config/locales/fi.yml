@@ -213,6 +213,9 @@ fi:
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta %{participatory_space_title}. Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
           email_subject: Ideoiden kannattaminen on alkanut kohteessa %{participatory_space_title}
           notification_title: Voit nyt <a href="%{resource_path}">kannattaa ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+    filters:
+      linked_classes:
+        idea: Ideat
     gamification:
       badges:
         accepted_ideas:

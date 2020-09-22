@@ -214,6 +214,9 @@ en:
           email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
           email_subject: Idea support has started for %{participatory_space_title}
           notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+    filters:
+      linked_classes:
+        idea: Ideas
     gamification:
       badges:
         accepted_ideas:
