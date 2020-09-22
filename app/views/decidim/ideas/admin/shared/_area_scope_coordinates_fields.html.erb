@@ -5,8 +5,8 @@
   %>
 
   <div class="area-scope-coordinate-field" data-scope-id="<%= scope.id %>">
-    <label for="<%= "#{input_name_prefix}[scope.id]" %>"><%= scope_name_prefix + scope_name %></label>
-    <input type="text" name="<%= "#{input_name_prefix}[#{scope.id}]" %>" value="<%= value[scope.id.to_s] %>">
+    <label for="<%= "#{input_name_prefix}_#{scope.id}" %>"><%= scope_name_prefix + scope_name %></label>
+    <input id="<%= "#{input_name_prefix}_#{scope.id}" %>" type="text" name="<%= "#{input_name_prefix}[#{scope.id}]" %>" value="<%= value[scope.id.to_s] %>">
   </div>
 
   <% if scope.children.any? %>
