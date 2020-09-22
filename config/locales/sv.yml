@@ -215,7 +215,7 @@ sv:
           notification_title: Du kan nu börja att <a href="%{resource_path}">stödja idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
-        idea: Ideas
+        idea: Idéer
     gamification:
       badges:
         accepted_ideas:
