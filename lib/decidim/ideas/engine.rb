@@ -183,6 +183,10 @@ module Decidim
           metric_operation.manager_class = "Decidim::Ideas::Metrics::IdeaFollowersMetricMeasure"
         end
       end
+
+      initializer "decidim_ideas.plans_integration" do
+        Decidim::Plans.api_resource_link_types << Decidim::Ideas::IdeaType
+      end
     end
   end
 end
