@@ -185,7 +185,9 @@ module Decidim
       end
 
       initializer "decidim_ideas.plans_integration" do
-        Decidim::Plans.api_resource_link_types << Decidim::Ideas::IdeaType
+        Decidim::Plans::ResourceLinkSubject.class_eval do
+          possible_types(Decidim::Ideas::IdeaType)
+        end
       end
     end
   end
