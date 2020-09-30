@@ -28,6 +28,7 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :idea_limit, type: :integer, default: 0
     settings.attribute :idea_title_length, type: :integer, default: 150
     settings.attribute :idea_length, type: :integer, default: 1000
+    settings.attribute :idea_edit_before_minutes, type: :integer, default: 60
     settings.attribute :threshold_per_idea, type: :integer, default: 0
     settings.attribute :can_accumulate_supports_beyond_threshold, type: :boolean, default: false
     settings.attribute :idea_answering_enabled, type: :boolean, default: true
@@ -45,6 +46,8 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :idea_listing_intro, type: :text, translated: true, editor: true
     settings.attribute :new_idea_help_text, type: :text, translated: true, editor: true
     settings.attribute :materials_text, type: :text, translated: true, editor: true
+    settings.attribute :terms_intro, type: :string, translated: true
+    settings.attribute :terms_text, type: :text, translated: true, editor: true
     settings.attribute :areas_info_intro, type: :string, translated: true
     settings.attribute :areas_info_text, type: :text, translated: true, editor: true
     settings.attribute :categories_info_intro, type: :string, translated: true

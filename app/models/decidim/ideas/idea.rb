@@ -279,7 +279,7 @@ module Decidim
       def editable_by?(user)
         return true if draft?
 
-        !published_state? && !copied_from_other_component? && created_by?(user)
+        !published_state? && within_edit_time_limit? && !copied_from_other_component? && created_by?(user)
       end
 
       # Checks whether the user can withdraw the given idea.
@@ -292,6 +292,15 @@ module Decidim
       # Public: Whether the idea is a draft or not.
       def draft?
         published_at.nil?
+      end
+
+      # Checks whether the idea is inside the time window to be editable or not
+      # once published.
+      def within_edit_time_limit?
+        return true if draft?
+
+        limit = updated_at + component.settings.idea_edit_before_minutes.minutes
+        Time.current < limit
       end
 
       # method for sort_link by number of comments

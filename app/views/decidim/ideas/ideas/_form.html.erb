@@ -2,6 +2,12 @@
   <%= form.hidden_field :amendable_gid %>
 <% end %>
 
+<div class="row columns">
+  <div class="lead">
+    <p><%= t(".required_fields_text") %></p>
+  </div>
+</div>
+
 <% if current_organization.user_groups_enabled? && user_signed_in? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
   <div class="row">
     <div class="columns large-6">
@@ -20,20 +26,28 @@
       <%= form.text_field :title, class: "js-hashtags", label: false, hashtaggable: true, value: form_presenter.title %>
     </div>
     <div class="columns large-4">
-      <div id="idea_title_characters" class="field-info"></div>
+      <div id="idea_title_character_counter" class="field-info"></div>
     </div>
   </div>
 </div>
 
 <% if show_terms %>
-  <%= form.check_box :terms_agreed, required: true %>
+  <div class="field field-terms">
+    <%= form.check_box :terms_agreed, required: true %>
+    <div class="field-info field-info-with-icon">
+      <%= link_to info_path("terms"), class: "info-modal-link" do %>
+        <%= icon "information", aria_hidden: true %>
+        <%= t(".show_terms_info_text") %>
+      <% end %>
+    </div>
+  </div>
 <% else %>
   <%= form.hidden_field :terms_agreed %>
 <% end %>
 
 <div class="field hashtags__container">
   <%= text_editor_for_idea_body(form) %>
-  <div id="idea_body_characters" class="field-info text-right"></div>
+  <div id="idea_body_character_counter" class="field-info text-right"></div>
 </div>
 
 <% if @form.component_automatic_hashtags.any? %>
@@ -112,13 +126,13 @@
   <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil %>
 <% end %>
 
-<% if @form.categories&.any? %>
+<% if @form.top_categories&.any? %>
   <%= form.plain_label :category_id %>
 
   <div class="row">
     <div class="columns large-6">
       <div class="field">
-        <%= form.categories_select :category_id, @form.categories, disable_parents: false, label: false, prompt: t(".select_a_category") %>
+        <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, label: false, prompt: t(".select_a_category") %>
       </div>
     </div>
     <div class="columns large-6">
@@ -129,6 +143,24 @@
         <% end %>
       </div>
     </div>
+  </div>
+
+  <div id="idea-subcategory">
+    <% @form.top_categories.each do |category| %>
+      <% next if category.subcategories.blank? %>
+
+      <div class="subcategories hide" data-parent="<%= category.id %>">
+        <%= form.plain_label :sub_category_id %>
+
+        <div class="row">
+          <div class="columns large-6">
+            <div class="field">
+              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, label: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% end %>
 
@@ -147,55 +179,117 @@
 <% end %>
 
 <% if component_settings.image_allowed? %>
-  <fieldset>
-    <legend><%= t(".image_legend") %></legend>
-    <%= form.fields_for :image, @form.image do |nested_form| %>
-      <div class="row">
-        <div class="columns large-6">
-          <div class="field">
-            <%= nested_form.text_field :title %>
-          </div>
-
-          <div class="field">
-            <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
-            <% if @form.errors[:image].present? %>
-              <% @form.errors[:image].each do |message| %>
-                <small class="form-error is-visible">
-                  <%= message %>
-                </small>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+  <div class="field attachment-button">
+    <button class="button hollow primary" data-open="image-modal"><%= t(".image_legend") %></button>
+    <% if @form.errors[:image].present? %>
+      <% @form.errors[:image].each do |message| %>
+        <small class="form-error is-visible">
+          <%= message %>
+        </small>
+      <% end %>
     <% end %>
-  </fieldset>
+    <%
+    image_present = file_is_present?(form, :image)
+    %>
+    <div class="ml-2 attachment-added<%= " hide" unless image_present %>">
+      <strong><%= t(".image_added") %></strong>
+    </div>
+    <div class="attachment-fields"<%== ' data-file-present="true"' if image_present %>>
+      <%= form.fields_for :image, @form.image do |nested_form| %>
+        <div class="field">
+          <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
+          <span class="form-error form-error-general" role="alert"><%= t(".attachment_file_required") %></span>
+
+          <% if @form.errors[:image].present? %>
+            <% @form.errors[:image].each do |message| %>
+              <small class="form-error is-visible">
+                <%= message %>
+              </small>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= nested_form.text_field :title %>
+          <span class="form-error form-error-general" role="alert"><%= t(".attachment_title_required") %></span>
+        </div>
+
+        <div class="text-center">
+          <button class="link mr-2 cancel-attachment" data-close><%= t(".cancel") %></button>
+          <button class="button primary add-attachment mb-0"><%= t(".add_image") %></button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="reveal" id="image-modal" data-reveal>
+    <div class="reveal__header">
+      <h3 class="reveal__title"><%= t(".image_legend") %></h3>
+      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
+        type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="row columns reveal__content"></div>
+  </div>
 <% end %>
 
 <% if component_settings.attachments_allowed? %>
-  <fieldset>
-    <legend><%= t(".attachment_legend") %></legend>
-    <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
-      <div class="row">
-        <div class="columns large-6">
-          <div class="field">
-            <%= nested_form.text_field :title %>
-          </div>
-
-          <div class="field">
-            <%= nested_form.upload :file, optional: false %>
-            <% if @form.errors[:attachment].present? %>
-              <% @form.errors[:attachment].each do |message| %>
-                <small class="form-error is-visible">
-                  <%= message %>
-                </small>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+  <div class="field attachment-button">
+    <button class="button hollow primary" data-open="attachment-modal"><%= t(".attachment_legend") %></button>
+    <% if @form.errors[:image].present? %>
+      <% @form.errors[:image].each do |message| %>
+        <small class="form-error is-visible">
+          <%= message %>
+        </small>
+      <% end %>
     <% end %>
-  </fieldset>
+    <%
+    attachment_present = file_is_present?(form, :attachment)
+    %>
+    <div class="ml-2 attachment-added<%= " hide" unless attachment_present%>">
+      <strong><%= t(".attachment_added") %></strong>
+    </div>
+    <div class="attachment-fields"<%== ' data-file-present="true"' if attachment_present %>>
+      <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
+        <div class="field">
+          <%= nested_form.upload :file, optional: false %>
+          <span class="form-error form-error-general" role="alert"><%= t(".attachment_file_required") %></span>
+
+          <% if @form.errors[:attachment].present? %>
+            <% @form.errors[:attachment].each do |message| %>
+              <small class="form-error is-visible">
+                <%= message %>
+              </small>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= nested_form.text_field :title %>
+          <span class="form-error form-error-general" role="alert"><%= t(".attachment_title_required") %></span>
+        </div>
+
+        <div class="text-center">
+          <button class="link mr-2 cancel-attachment" data-close><%= t(".cancel") %></button>
+          <button class="button primary add-attachment mb-0"><%= t(".add_attachment") %></button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="reveal" id="attachment-modal" data-reveal>
+    <div class="reveal__header">
+      <h3 class="reveal__title"><%= t(".attachment_legend") %></h3>
+      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
+        type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="row columns reveal__content"></div>
+  </div>
 <% end %>
 
 <%= javascript_include_tag "decidim/ideas/idea_form" %>
@@ -210,7 +304,7 @@ js_options = {
 <script>
 $(function() {
   DecidimIdeas.configure(<%== js_options.to_json %>);
-  DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_characters"));
-  DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_characters"));
+  DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_character_counter"));
+  DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_character_counter"));
 });
 </script>

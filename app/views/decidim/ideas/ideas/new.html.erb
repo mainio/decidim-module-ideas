@@ -20,7 +20,7 @@
     </div>
     <div class="columns large-4">
       <% if translated_attribute(component_settings.materials_text).present? %>
-        <div class="card">
+        <div class="card border-primary">
           <div class="card__content">
             <h3><%= t(".material_title") %></h3>
             <%= decidim_sanitize translated_attribute(component_settings.materials_text) %>
@@ -29,11 +29,11 @@
       <% end %>
 
       <% if translated_attribute(component_settings.materials_text).present? %>
-        <div class="card text-center">
+        <div class="card border-primary text-center">
           <div class="card__content">
             <h3><%= t(".need_help") %></h3>
             <p>
-              <%= link_to t(".get_help"), decidim.pages_path, target: "_blank", class: "button hollow" %>
+              <%= link_to t(".get_help"), decidim.pages_path, target: "_blank", class: "button hollow primary" %>
             </p>
           </div>
         </div>

@@ -1,11 +1,11 @@
 <% unless user_signed_in? %>
   <div class="row">
     <div class="columns large-8 large-push-2">
-      <div class="card text-center">
+      <div class="card border-primary text-center">
         <div class="card__content">
           <p class="lead"><%= t(".sign_in_before_submitting") %></p>
           <p>
-            <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large", data: { "redirect_url" => new_idea_path } do %>
+            <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large primary", data: { "redirect_url" => new_idea_path } do %>
               <%= t(".sign_in") %>
             <% end %>
           </p>
@@ -21,8 +21,12 @@
       <%= render partial: "form", locals: { form: form, show_terms: show_terms } %>
 
       <% if user_signed_in? %>
-        <div class="actions">
-          <%= form.submit button_text, class: "button expanded mt-s mb-none", data: { disable: true } %>
+        <div class="actions text-center">
+          <% if @idea.persisted? && @idea.draft? %>
+            <%= link_to t(".discard"), destroy_draft_idea_path(@idea), class: "mr-2", method: :delete, data: { confirm: t(".discard_confirmation") } %>
+          <% end %>
+          <%= form.submit t(".save"), class: "button hollow primary mb-0 mr-2", data: { disable: true } %>
+          <%= form.submit button_text, class: "button primary mb-0", data: { disable: true } %>
         </div>
       <% else %>
         <div class="row">
@@ -31,7 +35,7 @@
               <p class="lead"><%= t(".sign_in_before_submitting") %></p>
               <p><%= t(".you_can_invite_others") %></p>
               <p>
-                <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large", data: { "redirect_url" => new_idea_path } do %>
+                <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large primary", data: { "redirect_url" => new_idea_path } do %>
                   <%= t(".sign_in") %>
                 <% end %>
               </p>

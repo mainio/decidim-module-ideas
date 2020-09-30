@@ -14,6 +14,7 @@ sv:
         latitude: Latitud
         longitude: Longitud
         state: Status
+        sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
         terms_agreed: Jag har läst gränsvillkoren för idéer
         title: Idé namn
@@ -119,6 +120,8 @@ sv:
             minimum_votes_per_user: Minsta antal stöd per användare
             new_idea_help_text: Ny idéhjälptext
             resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för varje idé
+            terms_intro: Gränsvillkoren intro
+            terms_text: Gränsvillkoren text
             threshold_per_idea: Tröskel per idé
             vote_limit: Stödgräns per deltagare
           step:
@@ -388,6 +391,9 @@ sv:
       create:
         error: Det uppstod ett problem med att spara idén.
         success: Idén har skapats. Den är sparat som ett utkast.
+      destroy_draft:
+        error: Det gick inte att förstöra utkastet.
+        success: Utkast förstördes framgångsrikt.
       last_activity:
         new_idea_at_html: "<span>Ny idé på %{link}</span>"
       models:
@@ -431,6 +437,10 @@ sv:
           send: Förhandsgranska
           title: Redigera idéutkast
         edit_view:
+          discard: Släng utkastet
+          discard_confirmation: Är du säker på att du vill slänga detta utkast?
+          cancel: Avbryt
+          save: Spara som utkast
           sign_in: Logga in
           sign_in_before_submitting: Du måste logga in innan du skickar in en idé
           you_can_invite_others: Om du skickar in en idé som grupp kan du bjuda in andra att samarbeta på idén
@@ -456,24 +466,35 @@ sv:
           filter_by: Filtrera efter
           unfold: Öppna
         form:
+          attachment_added: Bilaga tillagd
+          attachment_file_required: Filen måste bifogas
+          attachment_title_required: Titel måste definieras för filen
+          add_attachment: Lägg till bilagan
+          add_image: Lägg till bilden
           address_lookup_button: Slå upp
           attachment_legend: "Lägg till en bilaga till idén"
+          cancel: Avbryt
           characters_used: "%count%/%total% tecken används"
+          close_modal: Stäng fönstret
           files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
           files_info_images: Du kan lägga till en bild till idén som kommer att visas med idén. Du måste lägga till en titel till bilden.
           files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
+          image_added: Bilden tillagd
           image_legend: "Lägg till en bild för idén"
+          required_fields_text: Obligatoriska fält är markerade med *-tecknet.
           reset_field: Återställ fältet
-          select_a_category: Välj ett tema för idén
+          select_a_category: Välj ett primärt tema för idén
+          select_a_sub_category: Välj ett undertema för idén
           show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
           show_categories_info_text: Kontrollera vad teman består av
+          show_terms_info_text: Visa gränsvillkoren
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
           title: Bläddra bland idéer
           see_all_withdrawn: Se alla tillbakadragna idéer
-          subtitle: På den här sidan kan du bläddra bland alla idéer
+          subtitle: Leta efter och utforska idéer!
           view_idea: Visa idé
         linked_ideas:
           idea_votes:

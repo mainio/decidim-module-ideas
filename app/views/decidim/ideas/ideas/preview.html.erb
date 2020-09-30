@@ -1,4 +1,12 @@
 <div class="row">
+  <div class="columns small-centered large-8">
+    <div class="callout announcement main-announcement warning cell-announcement text-center">
+      <p><%= t(".idea_edit_before_minutes", count: component_settings.idea_edit_before_minutes) %></p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="columns large-8 large-push-2">
     <div class="card text-center">
       <div class="card__content">
@@ -15,7 +23,7 @@
   <div class="columns large-12">
     <div class="p-l">
       <div class="row column flex-center">
-        <%= link_to t(".modify"), edit_draft_idea_path(@idea) %>
+        <%= link_to t(".modify"), edit_draft_idea_path(@idea), class: "mr-2" %>
         <%= button_to t(".publish"), publish_idea_path(@idea), method: :post, class: "button large button--nomargin" %>
       </div>
     </div>

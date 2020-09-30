@@ -23,7 +23,7 @@ module Decidim
       end
 
       def image_present?
-        @form.image.file.present?
+        @form.image.present? && @form.image.file.present?
       end
 
       def create_image
