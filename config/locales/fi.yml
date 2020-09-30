@@ -484,8 +484,8 @@ fi:
           files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
           image_added: Kuva lisätty
           image_legend: "Lisää idealle kuva"
-          reset_field: Tyhjennä kenttä
           required_fields_text: Pakolliset kentät on merkitty *-merkillä.
+          reset_field: Tyhjennä kenttä
           select_a_category: Valitse idealle ensisijainen teema
           select_a_sub_category: Valitse idealle alateema
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
