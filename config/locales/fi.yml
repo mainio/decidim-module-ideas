@@ -14,6 +14,7 @@ fi:
         latitude: Leveysaste
         longitude: Pituusaste
         state: Tila
+        sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Ehdotetut hashtag-tunnisteet
         terms_agreed: Olen lukenut idean reunaehdot
         title: Idean nimi
@@ -119,6 +120,8 @@ fi:
             minimum_votes_per_user: Kannatusten vähimmäismäärä käyttäjää kohden
             new_idea_help_text: Uuden idean ohjeteksti
             resources_permissions_enabled: Toiminnallisuutta koskevat oikeudet voidaan asettaa jokaiselle idealle
+            terms_intro: Terms intro
+            terms_text: Terms text
             threshold_per_idea: Ideoiden kannatusten määrän kynnysarvo
             vote_limit: Käytettävissä olevien kannatusten määrä käyttäjää kohden
           step:
@@ -388,6 +391,9 @@ fi:
       create:
         error: Idean tallennus epäonnistui.
         success: Idean luonti onnistui. Idea on tallennettu luonnoksena.
+      destroy_draft:
+        error: Destroying the draft failed.
+        success: Draft destroyed successfully.
       last_activity:
         new_idea_at_html: "<span>Uusi idea %{link}</span>"
       models:
@@ -431,6 +437,10 @@ fi:
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
+          discard: Discard this draft
+          discard_confirmation: Are you sure you want to discard this idea draft?
+          cancel: Cancel
+          save: Save as draft
           sign_in: Kirjaudu sisään
           sign_in_before_submitting: Ennen idean jättämistä sinun tulee kirjautua sisään
           you_can_invite_others: Mikäli haluatte jättää idean porukalla, voi kutsua muita idean tekijöiksi idean jättämisen jälkeen
@@ -456,24 +466,35 @@ fi:
           filter_by: Suodata
           unfold: Avaa
         form:
+          attachment_added: Attachment added
+          attachment_file_required: File needs to be attached
+          attachment_title_required: Title has to be defined for the file
+          add_attachment: Add attachment
+          add_image: Add image
           address_lookup_button: Etsi
           attachment_legend: "Lisää idealle liite"
+          cancel: Cancel
           characters_used: "%count%/%total% merkkiä käytetty"
+          close_modal: Close window
           files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Kuville ja liitteille tulee lisätä nimet.
           files_info_images: Voit lisätä idealle kuvan, joka näkyy idean yhteydessä. Kuvalle tulee lisätä nimet.
           files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
+          image_added: Image added
           image_legend: "Lisää idealle kuva"
+          required_fields_text: Required fields are marked with the *-character.
           reset_field: Tyhjennä kenttä
-          select_a_category: Valitse idealle teema
+          select_a_category: Choose a primary theme for the idea
+          select_a_sub_category: Choose a subtheme for the idea
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
           show_categories_info_text: Katso, mitä teemat pitävät sisällään
+          show_terms_info_text: Show terms
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
           leave_your_idea: Käy jättämässä oma ideasi!
           new_idea: Uusi idea
           title: Tutustu ideoihin
           see_all_withdrawn: Näytä kaikki peruutetut ideat
-          subtitle: Tällä sivulla voit tutkia muiden ideoita
+          subtitle: Search and discover ideas!
           view_idea: Näytä idea
         linked_ideas:
           idea_votes:
