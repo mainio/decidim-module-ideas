@@ -50,7 +50,12 @@
       <% end %>
       <% if idea.category.present? %>
         <div class="resource-details-row">
-          <div class="resource-detail"><%= translated_attribute(idea.category.name) %></div>
+          <div class="resource-detail">
+            <% if idea.category.parent %>
+              <%= translated_attribute(idea.category.parent.name) %> -
+            <% end %>
+            <%= translated_attribute(idea.category.name) %>
+          </div>
         </div>
       <% end %>
     </div>

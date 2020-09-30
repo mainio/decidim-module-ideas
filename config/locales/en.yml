@@ -319,8 +319,10 @@ en:
             select_a_idea: Please select an idea
           show:
             amendments_count: Amendments count
+            area_scope: Area
             authors: Authors
             body: Body
+            category: Theme
             comments_count: Comments count
             comments_negative_count: Against
             comments_neutral_count: Neutral
@@ -329,6 +331,7 @@ en:
             documents: Documents
             link: Link
             photos: Photos
+            show_email: Show email address
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
             votes_count: Supports count

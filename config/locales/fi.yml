@@ -318,8 +318,10 @@ fi:
             select_a_idea: Valitse idea
           show:
             amendments_count: Muutosten lukumäärä
+            area_scope: Alue
             authors: Tekijät
             body: Idean kuvaus
+            category: Teema
             comments_count: Kommenttien lukumäärä
             comments_negative_count: Vastaan
             comments_neutral_count: Neutraali
@@ -328,6 +330,7 @@ fi:
             documents: Asiakirjat
             link: Linkki
             photos: Kuvat
+            show_email: Näytä sähköpostiosoite
             ideas: Ideat
             ranking: "%{ranking} / %{total}"
             votes_count: Kannatusten lukumäärä
