@@ -15,7 +15,7 @@
   }
 
   .field-info{
-    padding: $input-padding;
+    padding: $input-padding 0;
 
     &.field-info-with-icon{
       position: relative;
@@ -27,6 +27,33 @@
         width: 1.5em;
         height: 1.5em;
       }
+    }
+  }
+
+  .field-terms{
+    label,
+    .field-info{
+      display: inline-block;
+    }
+
+    label{
+      margin-right: 2rem;
+    }
+  }
+
+  .attachment-button{
+    .button,
+    .attachment-added{
+      display: inline-block;
+    }
+
+    .attachment-added{
+      position: relative;
+      top: -7px;
+    }
+
+    .attachment-fields{
+      display: none;
     }
   }
 }

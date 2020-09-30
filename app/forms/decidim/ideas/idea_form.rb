@@ -14,6 +14,7 @@ module Decidim
       attribute :latitude, Float
       attribute :longitude, Float
       attribute :category_id, Integer
+      attribute :sub_category_id, Integer
       attribute :area_scope_id, Integer
       attribute :image, Decidim::Ideas::ImageAttachmentForm
       attribute :attachment, Decidim::Ideas::AttachmentForm
@@ -50,14 +51,32 @@ module Decidim
         self.user_group_id = model.user_groups.first&.id
         return unless model.categorization
 
-        self.category_id = model.categorization.decidim_category_id
+        model_category = model.category
+        if model_category
+          if model_category.parent_id
+            self.category_id = model_category.parent_id
+            self.sub_category_id = model_category.id
+          else
+            self.category_id = model_category.id
+          end
+        end
       end
 
-      # Finds the Category from the category_id.
+      # Finds the Category from either sub_category_id or category_id. If
+      # sub-category is defined, that will be used.
       #
       # Returns a Decidim::Category
       def category
-        @category ||= categories.find_by(id: category_id)
+        cat_id = sub_category_id || category_id
+
+        @category ||= categories.find_by(id: cat_id)
+      end
+
+      # Finds the top Categories for the component.
+      #
+      # Returns a [Decidim::Category]
+      def top_categories
+        @top_categories ||= categories.where(parent_id: nil)
       end
 
       # Finds the Scope from the given decidim_scope_id.

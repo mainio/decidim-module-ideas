@@ -67,6 +67,9 @@ module Decidim
         enforce_permission_to :create, :idea
         @form = form(IdeaForm).from_params(idea_creation_params)
 
+        # In case of an error
+        @idea ||= Idea.new(component: current_component)
+
         CreateIdea.call(@form, current_user) do
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.create.success", scope: "decidim")
@@ -76,6 +79,10 @@ module Decidim
 
           on(:invalid) do
             flash.now[:alert] = I18n.t("ideas.create.error", scope: "decidim")
+
+            @form.image = form_image_attachment_new
+            @form.attachment = form_attachment_new
+
             render :new
           end
         end

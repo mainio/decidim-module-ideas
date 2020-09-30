@@ -70,7 +70,7 @@ module Decidim
       # Returns :text_area or :editor based on the organization' settings.
       def text_editor_for_idea_body(form)
         options = {
-          class: "js-hashtags",
+          class: "js-hashtags mb-0",
           hashtaggable: true,
           value: form_presenter.body(extras: false).strip
         }

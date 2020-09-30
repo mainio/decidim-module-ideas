@@ -15,6 +15,7 @@ en:
         latitude: Latitude
         longitude: Longitude
         state: State
+        sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
         terms_agreed: I have read the conditions for ideas
         title: Idea title
@@ -120,6 +121,8 @@ en:
             minimum_votes_per_user: Minimum supports per user
             new_idea_help_text: New idea help text
             resources_permissions_enabled: Actions permissions can be set for each idea
+            terms_intro: Terms intro
+            terms_text: Terms text
             threshold_per_idea: Threshold per idea
             vote_limit: Support limit per participant
           step:
@@ -316,8 +319,10 @@ en:
             select_a_idea: Please select an idea
           show:
             amendments_count: Amendments count
+            area_scope: Area
             authors: Authors
             body: Body
+            category: Theme
             comments_count: Comments count
             comments_negative_count: Against
             comments_neutral_count: Neutral
@@ -326,6 +331,7 @@ en:
             documents: Documents
             link: Link
             photos: Photos
+            show_email: Show email address
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
             votes_count: Supports count
@@ -389,6 +395,9 @@ en:
       create:
         error: There was a problem saving the idea.
         success: Idea successfully created. Saved as a Draft.
+      destroy_draft:
+        error: Destroying the draft failed.
+        success: Draft destroyed successfully.
       last_activity:
         new_idea_at_html: "<span>New idea at %{link}</span>"
       models:
@@ -432,6 +441,10 @@ en:
           send: Preview
           title: Edit Idea Draft
         edit_view:
+          discard: Discard this draft
+          discard_confirmation: Are you sure you want to discard this idea draft?
+          cancel: Cancel
+          save: Save as draft
           sign_in: Sign in
           sign_in_before_submitting: You need to sign in before submitting an idea
           you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
@@ -457,24 +470,35 @@ en:
           filter_by: Filter by
           unfold: Unfold
         form:
+          attachment_added: Attachment added
+          attachment_file_required: File needs to be attached
+          attachment_title_required: Title has to be defined for the file
+          add_attachment: Add attachment
+          add_image: Add image
           address_lookup_button: Lookup
           attachment_legend: "Add an attachment for the idea"
+          cancel: Cancel
           characters_used: "%count%/%total% characters used"
+          close_modal: Close window
           files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
           files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
           files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
+          image_added: Image added
           image_legend: "Add an image for the idea"
+          required_fields_text: Required fields are marked with the *-character.
           reset_field: Reset field
-          select_a_category: Choose a theme for the idea
+          select_a_category: Choose a primary theme for the idea
+          select_a_sub_category: Choose a subtheme for the idea
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
+          show_terms_info_text: Show terms
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
           leave_your_idea: Submit your own idea!
           new_idea: New idea
           title: Browse ideas
           see_all_withdrawn: See all withdrawn ideas
-          subtitle: On this page you can browse all the ideas
+          subtitle: Search and discover ideas!
           view_idea: View idea
         linked_ideas:
           idea_votes:

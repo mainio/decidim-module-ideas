@@ -8,11 +8,6 @@ module Decidim
 
       private
 
-      private
-
-      def build_attachment
-      end
-
       def build_attachment
         @attachment = Decidim::Ideas::Attachment.new(
           title: @form.attachment.title,
@@ -20,6 +15,10 @@ module Decidim
           attached_to: @attached_to,
           weight: 1
         )
+      end
+
+      def attachment_present?
+        @form.attachment.present? && @form.attachment.file.present?
       end
     end
   end

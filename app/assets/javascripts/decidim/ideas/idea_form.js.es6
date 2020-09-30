@@ -59,6 +59,8 @@
         );
       }
 
+      console.log(this.$target);
+
       this.$target.text(showMessages.join(", "));
     }
   }
@@ -84,7 +86,7 @@
           $firstField.focus();
         }
       });
-  }
+  };
 
   const bindAddressLookup = () => {
     const $map = exports.$("#map");
@@ -192,7 +194,104 @@
         lng: $longitude.val()
       }]);
     }
-  }
+  };
+
+  const bindSubcategoryInputs = () => {
+    const $subcategories = $("#idea-subcategory");
+    const $sections = $(".subcategories", $subcategories);
+    $subcategories.html("");
+
+    const subcategorySelects = {};
+    $sections.each((_i, el) => {
+      const $sub = $(el);
+      $sub.removeClass("hide");
+      subcategorySelects[$sub.data("parent")] = $sub;
+    });
+
+    $("#idea_category_id").on("change.decidim.ideas", (ev) => {
+      const $cat = $(ev.target);
+      const parentId = $cat.val();
+
+      $subcategories.html("");
+
+      const $sub = subcategorySelects[parentId];
+      if ($sub) {
+        $subcategories.append($sub);
+      }
+    }).trigger("change.decidim.ideas");
+  };
+
+  const bindAttachmentModals = () => {
+    // The attachment fields need to be inside the form when it is submitted but
+    // the reveal is displayed outside of the form. Therefore, we move the
+    // fields to the reveal when it is opened and back to the form when it is
+    // closed.
+    $("#image-modal, #attachment-modal").on("open.zf.reveal", (ev) => {
+      const $reveal = $(ev.target);
+      const $button = $(`button[data-open='${$reveal.attr("id")}']`);
+      const $buttonWrapper = $button.parent();
+      const $fields = $(".attachment-fields", $buttonWrapper);
+
+      $(".reveal__content", $reveal).append($fields);
+    });
+    $("#image-modal, #attachment-modal").on("closed.zf.reveal", (ev) => {
+      const $reveal = $(ev.target);
+      const $button = $(`button[data-open='${$reveal.attr("id")}']`);
+      const $buttonWrapper = $button.parent();
+      const $fields = $(".attachment-fields", $reveal);
+
+      $buttonWrapper.append($fields);
+    });
+
+    $(".add-attachment").on("click", (ev) => {
+      // Sometimes the form is submitted in case the event is not prevented.
+      ev.preventDefault();
+
+      const $reveal = $(ev.target).closest(".reveal");
+      const $file = $("input[type='file']", $reveal);
+      const $text = $("input[type='text']", $reveal);
+      const $fields = $(".attachment-fields", $reveal);
+      const filePresent = $fields.data("file-present");
+
+      $(".form-error-general", $reveal).removeClass("is-visible");
+
+      let success = true;
+      if ($file.get(0).files.length === 0 && !filePresent) {
+        success = false;
+        $(".form-error-general", $file.closest(".field")).addClass("is-visible");
+      }
+      if ($.trim($text.val()).length < 1) {
+        success = false;
+        $(".form-error-general", $text.closest(".field")).addClass("is-visible");
+      }
+
+      if (success) {
+        const $button = $(`button[data-open='${$reveal.attr("id")}']`);
+        const $buttonWrapper = $button.parent();
+
+        $reveal.foundation("close");
+        $(".attachment-added", $buttonWrapper).removeClass("hide");
+      }
+    });
+
+    $(".cancel-attachment").on("click", (ev) => {
+      const $reveal = $(ev.target).closest(".reveal");
+      const $file = $("input[type='file']", $reveal);
+      const $text = $("input[type='text']", $reveal);
+
+      $(".form-error-general", $reveal).removeClass("is-visible");
+
+      // In case of an error, make sure the fields are cleared.
+      if ($file.get(0).files.length === 0 || $.trim($text.val()).length < 1) {
+        const $button = $(`button[data-open='${$reveal.attr("id")}']`);
+        const $buttonWrapper = $button.parent();
+
+        $file.replaceWith($file.val("").clone(true));
+        $text.val("");
+        $(".attachment-added", $buttonWrapper).addClass("hide");
+      }
+    });
+  };
 
   exports.Decidim = exports.Decidim || {};
   exports.DecidimIdeas = exports.DecidimIdeas || {};
@@ -209,5 +308,7 @@
   $(() => {
     bindFormValidation();
     bindAddressLookup();
+    bindSubcategoryInputs();
+    bindAttachmentModals();
   });
 })(window);

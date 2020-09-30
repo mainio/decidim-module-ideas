@@ -1,8 +1,14 @@
 <div class="resource-control-panel text-center">
   <div class="title h3"><%= t ".manage_idea" %></div>
 
+  <% if allowed_to?(:edit, :idea, idea: idea) %>
+    <div class="lead">
+      <p><%= t("decidim.ideas.ideas.preview.idea_edit_before_minutes", count: component_settings.idea_edit_before_minutes) %></p>
+    </div>
+  <% end %>
+
   <div class="resource-controls">
-    <% if idea.amendable? %>
+    <% if allowed_to?(:edit, :idea, idea: idea) && idea.amendable? %>
       <div class="resource-control">
         <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button large hollow" %>
       </div>

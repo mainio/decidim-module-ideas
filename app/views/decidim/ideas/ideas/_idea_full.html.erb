@@ -1,4 +1,3 @@
-
 <div class="resource-intro">
   <div class="row" data-equalizer>
     <div class="columns mediumlarge-7">
@@ -18,7 +17,7 @@
   </div>
 </div>
 
-<% if show_actions && allowed_to?(:edit, :idea, idea: idea) %>
+<% if show_actions && allowed_to?(:withdraw, :idea, idea: idea) %>
   <div class="row">
     <div class="columns">
       <%= render partial: "idea_controls", locals: { idea: idea } %>
@@ -51,7 +50,12 @@
       <% end %>
       <% if idea.category.present? %>
         <div class="resource-details-row">
-          <div class="resource-detail"><%= translated_attribute(idea.category.name) %></div>
+          <div class="resource-detail">
+            <% if idea.category.parent %>
+              <%= translated_attribute(idea.category.parent.name) %> -
+            <% end %>
+            <%= translated_attribute(idea.category.name) %>
+          </div>
         </div>
       <% end %>
     </div>
@@ -65,12 +69,6 @@
         <h3 class="heading3"><%= t(".changes_at_title", title: present(@idea.amendable).title(links: true, html_escape: true)) %></h3>
       <% else %>
         <h3 class="heading3"><%= present(@idea).title(links: true, html_escape: true) %></h3>
-      <% end %>
-    </div>
-    <div class="columns mediumlarge-4 text-right">
-      <% if idea.published? %>
-        <%= t("version", scope: "decidim.versions.resource_version", number: idea.versions_count) %>
-        <%= link_to(t(".show_versions"), idea_versions_path(idea)) %>
       <% end %>
     </div>
   </div>

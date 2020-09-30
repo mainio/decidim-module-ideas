@@ -20,6 +20,16 @@ module Decidim
           javascript_include_tag "decidim/ideas/map"
         end
       end
+
+      def file_is_present?(form, attribute)
+        file_form = form.object.send attribute
+        return unless file_form
+
+        file = file_form.file
+        return unless file && file.respond_to?(:url)
+
+        file.present?
+      end
     end
   end
 end

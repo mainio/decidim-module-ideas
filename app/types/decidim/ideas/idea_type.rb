@@ -57,6 +57,10 @@ module Decidim
         description "This object's versions"
       end
 
+      # These are the resources that are linked from the related object to the
+      # idea.
+      field :linkingResources, [Decidim::Ideas::ResourceLinkSubject], method: :linking_resources, description: "The linked resources for this idea.", null: true
+
       def coordinates
         [object.latitude, object.longitude]
       end
@@ -64,6 +68,13 @@ module Decidim
       def vote_count
         current_component = idea.component
         idea.idea_votes_count unless current_component.current_settings.votes_hidden?
+      end
+
+      def linking_resources
+        resources = object.resource_links_to.map { |link| link.from }
+        return nil unless resources.any?
+
+        resources
       end
     end
   end
