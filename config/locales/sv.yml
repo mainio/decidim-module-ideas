@@ -318,8 +318,10 @@ sv:
             select_a_idea: Välj en idé
           show:
             amendments_count: Antal ändringar
+            area_scope: Area
             authors: Författare
             body: Innehåll
+            category: Theme
             comments_count: Antal kommentarer
             comments_negative_count: Mot
             comments_neutral_count: Neutral
@@ -328,6 +330,7 @@ sv:
             documents: Dokument
             link: Länk
             photos: Bilder
+            show_email: Show email address
             ideas: Idéer
             ranking: "%{ranking} av %{total}"
             votes_count: Antal stöd
