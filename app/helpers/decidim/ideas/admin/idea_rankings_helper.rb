@@ -18,7 +18,7 @@ module Decidim
         # Example:
         #   ranking_for(idea, idea_votes_count: :desc)
         def ranking_for(idea, order = {})
-          siblings = Decidim::Idea::Idea.where(component: idea.component)
+          siblings = Decidim::Ideas::Idea.where(component: idea.component)
           ranked = siblings.order([order, id: :asc])
           ranked_ids = ranked.pluck(:id)
 
