@@ -66,8 +66,6 @@ module Decidim
       end
 
       def has_footer?
-        return false if model.emendation?
-
         true
       end
 
