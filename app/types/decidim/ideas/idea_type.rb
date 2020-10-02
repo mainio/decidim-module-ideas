@@ -14,6 +14,7 @@ module Decidim
       implements Decidim::Core::AmendableInterface
       implements Decidim::Core::AmendableEntityInterface
       implements Decidim::Core::TimestampsInterface
+      implements Decidim::Favorites::Api::FavoritesInterface
 
       field :id, ID, null: false
       field :title, String, description: "This idea's title", null: false
@@ -66,8 +67,8 @@ module Decidim
       end
 
       def vote_count
-        current_component = idea.component
-        idea.idea_votes_count unless current_component.current_settings.votes_hidden?
+        current_component = object.component
+        object.idea_votes_count unless current_component.current_settings.votes_hidden?
       end
 
       def linking_resources
