@@ -1,6 +1,9 @@
 <ul class="actionbox-links">
   <% if show_actions %>
     <li>
+      <%= cell("decidim/favorites/favorite_button", idea, button_class: "link action-link", disable_tooltip: true) %>
+    </li>
+    <li>
       <button type="button" class="link action-link" data-open="socialShare" aria-haspopup="true">
         <%= icon "share", role: "img", "aria-hidden": true %>
         <span class="link-text"><%= t ".share" %></span>

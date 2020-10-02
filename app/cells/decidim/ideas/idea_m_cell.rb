@@ -24,6 +24,10 @@ module Decidim
         !context[:no_column].presence
       end
 
+      def show_favorite_button?
+        !context[:disable_favorite].presence
+      end
+
       # Don't display the authors on the card.
       def has_authors?
         false
@@ -80,13 +84,16 @@ module Decidim
       def statuses
         return [] if preview?
         return [:comments_count] if model.draft?
-        return [:creation_date, :comments_count] if !has_link_to_resource? || !can_be_followed?
 
-        [:creation_date, :follow, :comments_count]
+        [:creation_date, :favoriting_count, :comments_count]
       end
 
       def creation_date_status
         l(model.published_at.to_date, format: :decidim_short)
+      end
+
+      def favoriting_count_status
+        cell("decidim/favorites/favoriting_count", model)
       end
 
       def progress_bar_progress
@@ -103,10 +110,6 @@ module Decidim
         else
           t("decidim.ideas.ideas.votes_count.need_more_votes")
         end
-      end
-
-      def can_be_followed?
-        !model.withdrawn?
       end
 
       def has_image?

@@ -30,14 +30,40 @@
       }
     }
 
+    &.favorite-button{
+      .icon-wrap{
+        .heart-icon{
+          color: $white;
+
+          svg{
+            width: 30px;
+            height: 27px;
+          }
+        }
+      }
+
+      .indicator-wrap{
+        width: 17px;
+        height: 17px;
+        font-size: 1rem;
+        line-height: 13px;
+        bottom: 3px;
+        right: -5px;
+        border-width: 2px;
+        background: $primary;
+        border-color: $white;
+        color: $white;
+      }
+    }
+
+    &.favorite-button .icon-wrap,
     .icon{
-      width: 30px;
-      height: 30px;
       margin-right: 1rem;
     }
 
-    .link-text{
-      // TODO
+    .icon{
+      width: 30px;
+      height: 30px;
     }
   }
 }

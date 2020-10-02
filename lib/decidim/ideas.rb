@@ -7,6 +7,7 @@ require_relative "ideas/admin_engine"
 require_relative "ideas/component_settings_extensions"
 require_relative "ideas/component"
 require "acts_as_list"
+require "decidim/favorites"
 
 module Decidim
   module Ideas

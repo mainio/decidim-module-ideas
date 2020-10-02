@@ -21,6 +21,7 @@ module Decidim
       include Decidim::DataPortability
       include Decidim::Hashtaggable
       include Decidim::Amendable
+      include Decidim::Favorites::Favoritable
 
       has_paper_trail(
         versions: { class_name: "Decidim::Ideas::IdeaVersion" },
