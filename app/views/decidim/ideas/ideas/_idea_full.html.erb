@@ -65,11 +65,7 @@
 <div class="resource-title">
   <div class="row">
     <div class="columns mediumlarge-7">
-      <% if @idea.emendation? %>
-        <h3 class="heading3"><%= t(".changes_at_title", title: present(@idea.amendable).title(links: true, html_escape: true)) %></h3>
-      <% else %>
-        <h3 class="heading3"><%= present(@idea).title(links: true, html_escape: true) %></h3>
-      <% end %>
+      <h3 class="heading3"><%= present(@idea).title(links: true, html_escape: true) %></h3>
     </div>
   </div>
 </div>
