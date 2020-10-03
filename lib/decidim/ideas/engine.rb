@@ -185,6 +185,8 @@ module Decidim
       end
 
       initializer "decidim_ideas.plans_integration" do
+        next unless Decidim.const_defined?("Plans")
+
         Decidim::Plans::ResourceLinkSubject.class_eval do
           possible_types(Decidim::Ideas::IdeaType)
         end
