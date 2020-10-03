@@ -50,6 +50,7 @@ And then execute:
 ```bash
 $ bundle
 $ bundle exec rails decidim_favorites:install:migrations
+$ bundle exec rails decidim_feedback:install:migrations
 $ bundle exec rails decidim_ideas:install:migrations
 $ bundle exec rails db:migrate
 ```

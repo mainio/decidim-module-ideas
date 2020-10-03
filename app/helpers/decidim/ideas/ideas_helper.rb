@@ -4,6 +4,7 @@ module Decidim
   module Ideas
     # Simple helpers to handle markup variations for ideas
     module IdeasHelper
+      include Decidim::Feedback::FeedbackHelper
       include Decidim::Ideas::AreaScopesHelper
 
       # Serialize a collection of geocoded ideas to be used by the dynamic map component

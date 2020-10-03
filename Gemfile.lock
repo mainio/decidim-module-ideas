@@ -205,6 +205,14 @@ GIT
     decidim-favorites (0.22.0)
       decidim-core (~> 0.22.0)
 
+GIT
+  remote: https://github.com/mainio/decidim-module-feedback.git
+  revision: a7086118bdf3eb86651fa400f95049ed5aa95f88
+  branch: master
+  specs:
+    decidim-feedback (0.22.0)
+      decidim-core (~> 0.22.0)
+
 PATH
   remote: .
   specs:
@@ -214,6 +222,7 @@ PATH
       cells-rails (~> 0.0.9)
       decidim-core (~> 0.22.0.rc1)
       decidim-favorites (~> 0.22.0.rc1)
+      decidim-feedback (~> 0.22.0.rc1)
       graphql (~> 1.9.19)
       kaminari (~> 1.2, >= 1.2.1)
       ransack (~> 2.1.1)
@@ -786,6 +795,7 @@ DEPENDENCIES
   decidim!
   decidim-dev!
   decidim-favorites!
+  decidim-feedback!
   decidim-ideas!
   faker (~> 1.9)
   letter_opener_web (~> 1.3)

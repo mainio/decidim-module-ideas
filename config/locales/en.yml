@@ -558,6 +558,7 @@ en:
           back_to: Back to
           back_to_list: See other ideas
           changes_at_title: Amendment to "%{title}"
+          feedback_title: Thank you for submitting an idea!
           link_to_promoted_emendation_help_text: This idea is a promoted emendation
           link_to_promoted_emendation_text: See the rejected emendation.
           link_to_idea_from_emendation_help_text: This is a rejected emendation

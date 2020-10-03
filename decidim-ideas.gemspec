@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cells-rails", "~> 0.0.9"
   spec.add_dependency "decidim-core", Decidim::Ideas::DECIDIM_VERSION
   spec.add_dependency "decidim-favorites", Decidim::Ideas::DECIDIM_VERSION
+  spec.add_dependency "decidim-feedback", Decidim::Ideas::DECIDIM_VERSION
   spec.add_dependency "kaminari", "~> 1.2", ">= 1.2.1"
   spec.add_dependency "ransack", "~> 2.1.1"
   spec.add_dependency "social-share-button", "~> 1.2", ">= 1.2.1"

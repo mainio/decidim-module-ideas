@@ -23,6 +23,10 @@ extra_admin_link(
 )
 %>
 
+<% if trigger_feedback? %>
+  <%= trigger_feedback_modal(@idea, title: t(".feedback_title"), metadata: { context: "idea", action: "publish" }) %>
+<% end %>
+
 <%= render partial: "voting_rules" %>
 <div class="row column view-header">
   <%= link_to :ideas, class: "small hollow" do %>

@@ -13,7 +13,7 @@ module Decidim
       include Decidim::Ideas::Orderable
       include Paginable
 
-      helper_method :idea_form_builder, :idea_presenter, :form_presenter
+      helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?
 
       before_action :authenticate_user!, only: [:create, :complete]
       before_action :ensure_creation_enabled, only: [:new]
@@ -94,6 +94,7 @@ module Decidim
         PublishIdea.call(@idea, current_user) do
           on(:ok) do
             flash[:notice] = I18n.t("ideas.publish.success", scope: "decidim")
+            session["decidim-ideas.published"] = true
             redirect_to idea_path(@idea)
           end
 
@@ -178,6 +179,10 @@ module Decidim
       end
 
       private
+
+      def trigger_feedback?
+        @trigger_feedback ||= session.delete("decidim-ideas.published")
+      end
 
       def layout
         case action_name

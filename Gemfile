@@ -16,6 +16,7 @@ DECIDIM_VERSION = { github: "decidim/decidim", branch: "release/0.22-stable" }
 gem "decidim", DECIDIM_VERSION
 gem "decidim-ideas", path: "."
 gem "decidim-favorites", { github: "mainio/decidim-module-favorites", branch: "master" }
+gem "decidim-feedback", { github: "mainio/decidim-module-feedback", branch: "master" }
 
 gem "bootsnap", "~> 1.4"
 gem "puma", "~> 4.3.3"
