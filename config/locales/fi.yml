@@ -557,7 +557,7 @@ fi:
           back_to: Takaisin
           back_to_list: Näytä muut ideat
           changes_at_title: Muutokset kohteessa "%{title}"
-          feedback_title: Kiitos idean jättämisestä!
+          feedback_title: Thank you for submitting an idea!
           link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen muutoksesta
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
