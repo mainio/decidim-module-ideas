@@ -16,7 +16,7 @@ sv:
         state: Status
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
-        terms_agreed: Jag har läst gränsvillkoren för idéer
+        terms_agreed: I have read criterian
         title: Idé namn
         user_group_id: Skapa idé som
       idea_answer:
@@ -490,7 +490,7 @@ sv:
           select_a_sub_category: Välj ett undertema för idén
           show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
           show_categories_info_text: Kontrollera vad teman består av
-          show_terms_info_text: Visa gränsvillkoren
+          show_terms_info_text: Show criteria
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
           leave_your_idea: Skicka in din egen idé!
