@@ -17,7 +17,7 @@ en:
         state: State
         sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read the conditions for ideas
+        terms_agreed: I have read criterian
         title: Idea title
         user_group_id: Create idea as
       idea_answer:
@@ -491,7 +491,7 @@ en:
           select_a_sub_category: Choose a subtheme for the idea
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
-          show_terms_info_text: Show terms
+          show_terms_info_text: Show criteria
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
           leave_your_idea: Submit your own idea!
