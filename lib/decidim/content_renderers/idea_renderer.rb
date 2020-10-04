@@ -17,7 +17,7 @@ module Decidim
       # invalid Decidim::Ideas::Idea are replaced with '???' string.
       #
       # @return [String] the content ready to display (contains HTML)
-      def render
+      def render(_options = nil)
         content.gsub(GLOBAL_ID_REGEX) do |idea_gid|
           idea = GlobalID::Locator.locate(idea_gid)
           Decidim::Ideas::IdeaPresenter.new(idea).display_mention
