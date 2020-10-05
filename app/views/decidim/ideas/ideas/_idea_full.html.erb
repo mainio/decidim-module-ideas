@@ -76,12 +76,8 @@
   <div class="row">
     <div class="columns">
       <div class="section">
-        <% if idea.emendation? %>
-          <%= cell("decidim/diff", idea_presenter.versions.last) %>
-        <% else %>
-          <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
-          <%= render_idea_body(idea) %>
-        <% end %>
+        <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
+        <%= render_idea_body(idea) %>
       </div>
 
       <%= attachments_for idea %>
