@@ -4,6 +4,14 @@
   display: none;
 }
 
+#address_input{
+  position: relative;
+
+  .tribute-container{
+    top: 51px;
+  }
+}
+
 .idea-form-container{
   margin-top: 2rem;
 
