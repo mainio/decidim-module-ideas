@@ -19,6 +19,24 @@ module Decidim
         end
       end
 
+      def category_image_path(idea)
+        return unless idea.category
+        return unless idea.category
+
+
+      end
+
+      def category_image_path(category)
+        return unless category
+        return unless category.respond_to?(:category_image)
+
+        if category.category_image.blank? || category.category_image.url.blank?
+          return category_image_path(category.parent) if category.parent
+        end
+
+        category.category_image.url
+      end
+
       def idea_reason_callout_args
         {
           announcement: {

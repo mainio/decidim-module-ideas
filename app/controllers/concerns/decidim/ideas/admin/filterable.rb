@@ -34,7 +34,6 @@ module Decidim
               :state_null,
               :scope_id_eq,
               :category_id_eq,
-              :valuator_role_ids_has
             ]
           end
 
@@ -43,24 +42,14 @@ module Decidim
               is_emendation_true: %w(true false),
               state_eq: idea_states,
               scope_id_eq: scope_ids_hash(scopes.top_level),
-              category_id_eq: category_ids_hash(categories.first_class),
-              valuator_role_ids_has: valuator_role_ids
+              category_id_eq: category_ids_hash(categories.first_class)
             }
           end
 
           # Can't user `super` here, because it does not belong to a superclass
           # but to a concern.
           def dynamically_translated_filters
-            [:scope_id_eq, :category_id_eq, :valuator_role_ids_has]
-          end
-
-          def valuator_role_ids
-            current_participatory_space.user_roles(:valuator).pluck(:id)
-          end
-
-          def translated_valuator_role_ids_has(valuator_role_id)
-            user_role = current_participatory_space.user_roles(:valuator).find_by(id: valuator_role_id)
-            user_role&.user&.name
+            [:scope_id_eq, :category_id_eq]
           end
 
           # An Array<Symbol> of possible values for `state_eq` filter.

@@ -4,6 +4,8 @@
       <div class="resource-image" data-equalizer-watch>
         <% if idea.image %>
           <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+        <% elsif category_image_path(idea.category) %>
+          <%= image_tag category_image_path(idea.category), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
           <%= image_tag "decidim/ideas/idea-default.jpg", class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
