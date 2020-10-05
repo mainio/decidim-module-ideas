@@ -19,11 +19,14 @@ module Decidim
         end
       end
 
-      def category_image_path(idea)
-        return unless idea.category
-        return unless idea.category
+      def ideas_map(geocoded_ideas)
+        map_options = { type: "ideas", markers: geocoded_ideas }
+        map_center = component_settings.default_map_center_coordinates
+        map_options[:center_coordinates] = map_center.split(",").map(&:to_f) if map_center
 
-
+        dynamic_map_for(map_options) do
+          yield
+        end
       end
 
       def category_image_path(category)
