@@ -29,11 +29,27 @@ module Decidim
         process resize_to_fill: [1480, 740]
       end
 
-      protected
-
       def extension_whitelist
         %w(jpg jpeg gif png bmp pdf doc docx xls xlsx ppt ppx rtf txt odt ott odf otg ods ots)
       end
+
+      # CarrierWave automatically calls this method and validates the content
+      # type fo the temp file to match against any of these options.
+      def content_type_whitelist
+        [
+          %r{image\/},
+          %r{application\/vnd.oasis.opendocument},
+          %r{application\/vnd.ms-},
+          %r{application\/msword},
+          %r{application\/vnd.ms-word},
+          %r{application\/vnd.openxmlformats-officedocument},
+          %r{application\/vnd.oasis.opendocument},
+          %r{application\/pdf},
+          %r{application\/rtf}
+        ]
+      end
+
+      protected
 
       # Flips the image to be in correct orientation based on its Exif
       # orientation metadata.
@@ -53,22 +69,6 @@ module Decidim
           img.strip
           img
         end
-      end
-
-      # CarrierWave automatically calls this method and validates the content
-      # type fo the temp file to match against any of these options.
-      def content_type_whitelist
-        [
-          %r{image\/},
-          %r{application\/vnd.oasis.opendocument},
-          %r{application\/vnd.ms-},
-          %r{application\/msword},
-          %r{application\/vnd.ms-word},
-          %r{application\/vnd.openxmlformats-officedocument},
-          %r{application\/vnd.oasis.opendocument},
-          %r{application\/pdf},
-          %r{application\/rtf}
-        ]
       end
 
       # Checks if the file is an image based on the content type. We need this so

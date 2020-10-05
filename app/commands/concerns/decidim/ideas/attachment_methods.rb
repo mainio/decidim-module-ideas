@@ -10,9 +10,9 @@ module Decidim
 
       def build_attachment
         @attachment = Decidim::Ideas::Attachment.new(
+          attached_to: @attached_to, # Keep first
           title: @form.attachment.title,
           file: @form.attachment.file,
-          attached_to: @attached_to,
           weight: 1
         )
       end

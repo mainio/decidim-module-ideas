@@ -7,6 +7,7 @@ module Decidim
     class Attachment < ::Decidim::Attachment
       self.table_name = :decidim_attachments
 
+      validates_upload :file
       mount_uploader :file, Decidim::Ideas::AttachmentUploader
 
       # The URL to download the "main" version of the file. Only works with

@@ -22,7 +22,7 @@ module Decidim
 
       validates :terms_agreed, presence: true
       validates :title, presence: true, idea_length: {
-        minimum: 15,
+        minimum: 5,
         maximum: ->(record) { record.component.settings.idea_title_length }
       }
       validates :body, presence: true, idea_length: {
@@ -42,6 +42,7 @@ module Decidim
       delegate :categories, to: :current_component
 
       alias component current_component
+      alias organization current_organization
 
       def map_model(model)
         @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)

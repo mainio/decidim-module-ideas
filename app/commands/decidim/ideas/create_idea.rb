@@ -33,6 +33,8 @@ module Decidim
           return broadcast(:invalid)
         end
 
+        # For checking the attachment validations
+        @attached_to = form.organization
         if process_image?
           build_image
           return broadcast(:invalid) if image_invalid?
@@ -41,6 +43,7 @@ module Decidim
           build_attachment
           return broadcast(:invalid) if attachment_invalid?
         end
+        @attached_to = nil
 
         transaction do
           create_idea

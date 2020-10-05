@@ -12,22 +12,10 @@ module Decidim
 
       validates :title, presence: true, if: ->(form) { form.file.present? }
 
-      validates :file,
-        file_size: { less_than_or_equal_to: ->(_record) { Decidim.maximum_attachment_size } },
-        file_content_type: {
-          allow: [
-            %r{image\/jpeg},
-            %r{image\/png},
-            %r{application\/vnd.oasis.opendocument},
-            %r{application\/vnd.ms-},
-            %r{application\/msword},
-            %r{application\/vnd.ms-word},
-            %r{application\/vnd.openxmlformats-officedocument},
-            %r{application\/vnd.oasis.opendocument},
-            %r{application\/pdf},
-            %r{application\/rtf}
-          ]
-        }
+      validates :file, passthru: { to: Decidim::Ideas::Attachment }, if: ->(form) { form.file.present? }
+
+      alias component current_component
+      alias organization current_organization
     end
   end
 end
