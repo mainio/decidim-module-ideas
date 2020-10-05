@@ -14,7 +14,9 @@
         <h2 class="section-heading"><%= t(".title") %></h2>
 
         <% if translated_attribute(component_settings.new_idea_help_text).present? %>
-          <%= decidim_sanitize translated_attribute(component_settings.new_idea_help_text) %>
+          <div class="static__content">
+            <%= decidim_sanitize translated_attribute(component_settings.new_idea_help_text) %>
+          </div>
         <% end %>
       </div>
     </div>
