@@ -58,9 +58,6 @@
           )
         );
       }
-
-      console.log(this.$target);
-
       this.$target.text(showMessages.join(", "));
     }
   }
