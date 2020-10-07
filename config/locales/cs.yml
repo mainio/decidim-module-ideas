@@ -16,7 +16,7 @@ cs:
         state: State
         sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read criterian
+        terms_agreed: I have read the criteria
         title: Idea title
         user_group_id: Create idea as
       idea_answer:
@@ -467,6 +467,7 @@ cs:
           reset: Clear filters
           search: Search
           state: Status
+          title: Filter the ideas on the map and in the list
           type: Type
           voted: Supported
         filters_small_view:
@@ -483,6 +484,7 @@ cs:
           address_lookup_button: Lookup
           attachment_legend: "Add an attachment for the idea"
           cancel: Cancel
+          characters_min: "(at least %count% characters required)"
           characters_used: "%count%/%total% characters used"
           close_modal: Close window
           files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
@@ -490,6 +492,10 @@ cs:
           files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
           image_added: Image added
           image_legend: "Add an image for the idea"
+          remove_attachment: Remove attachment
+          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
+          remove_image: Remove image
+          remove_image_confirm: Are you sure you want to remove the image from the idea?
           required_fields_text: Required fields are marked with the *-character.
           reset_field: Reset field
           select_a_category: Choose a primary theme for the idea
