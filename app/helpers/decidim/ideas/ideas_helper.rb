@@ -96,17 +96,17 @@ module Decidim
 
         categories_values = []
         sorted_main_categories.each do |category|
-          sorted_descendant_categories = category.descendants.includes(:subcategories).sort_by do |subcategory|
-            [subcategory.weight, translated_attribute(subcategory.name, organization)]
-          end
-
           category_name = translated_attribute(category.name, organization)
           categories_values << [category_name, category.id]
 
-          name_prefix = "#{category_name} / "
-          sorted_descendant_categories.each do |subcategory|
-            categories_values << ["#{name_prefix}#{translated_attribute(subcategory.name, organization)}", subcategory.id]
-          end
+          # sorted_descendant_categories = category.descendants.includes(:subcategories).sort_by do |subcategory|
+          #   [subcategory.weight, translated_attribute(subcategory.name, organization)]
+          # end
+
+          # name_prefix = "#{category_name} / "
+          # sorted_descendant_categories.each do |subcategory|
+          #   categories_values << ["#{name_prefix}#{translated_attribute(subcategory.name, organization)}", subcategory.id]
+          # end
         end
         categories_values
       end
