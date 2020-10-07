@@ -71,12 +71,10 @@ module Decidim
       # Handle the amendment type filter
       def search_type
         case type
-        when "ideas"
-          query.only_amendables
         when "amendments"
           query.only_visible_emendations_for(@current_user, @component)
-        else # Assume 'all'
-          query.amendables_and_visible_emendations_for(@current_user, @component)
+        else # Assume 'ideas'
+          query.only_amendables
         end
       end
 
