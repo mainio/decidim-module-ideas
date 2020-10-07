@@ -111,12 +111,17 @@ module Decidim
 
       def update_draft
         enforce_permission_to :edit, :idea, idea: @idea
+        show_preview = params[:save_type] != "save"
 
         @form = form_idea_params
         UpdateIdea.call(@form, current_user, @idea) do
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.update_draft.success", scope: "decidim")
-            redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            if show_preview
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            else
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+            end
           end
 
           on(:invalid) do

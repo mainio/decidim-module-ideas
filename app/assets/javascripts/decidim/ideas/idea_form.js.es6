@@ -4,6 +4,9 @@
 ((exports) => {
   const $ = exports.$; // eslint-disable-line
 
+  // Defines whether the user can exit the view without a warning or not
+  let canExit = false;
+
   const DEFAULT_MESSAGES = {
     charactersUsed: "%count%/%total% characters used",
     charactersMin: "(at least %count characters required)"
@@ -80,14 +83,25 @@
    * version that currently ships with Decidin.
    */
   const bindFormValidation = () => {
-    const $form = exports.$("form.new_idea");
+    const $form = exports.$("form.new_idea, form.edit_idea");
     const $submits = exports.$(`[type="submit"]`, $form);
 
     $submits
       .off('click.decidim.ideas.form')
       .on('click.decidim.ideas.form', (e) => {
+        // Tell the backend which submit button was pressed (save or preview)
+        let $btn = $(e.target);
+        if (!$btn.is("button")) {
+          $btn = $btn.closest("button");
+        }
+
+        $form.append(`<input type="hidden" name="save_type" value="${$btn.attr("name")}" />`);
+        $submits.attr("disabled", true)
+
         if (!e.key || (e.key === ' ' || e.key === 'Enter')) {
           e.preventDefault();
+
+          canExit = true;
           $form.submit();
 
           const $firstField = $("input.is-invalid-input, textarea.is-invalid-input").first();
@@ -347,8 +361,6 @@
   };
 
   const bindAccidentalExitDisabling = () => {
-    let canExit = false;
-
     $(document).on("click", "a, input, button", (ev) => {
       canExit = $(ev.target).closest(".idea-form-container").length > 0;
     });
