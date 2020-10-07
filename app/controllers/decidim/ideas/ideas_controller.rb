@@ -70,11 +70,17 @@ module Decidim
         # In case of an error
         @idea ||= Idea.new(component: current_component)
 
+        show_preview = params[:save_type] != "save"
+
         CreateIdea.call(@form, current_user) do
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.create.success", scope: "decidim")
 
-            redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            if show_preview
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            else
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+            end
           end
 
           on(:invalid) do
