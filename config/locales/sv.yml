@@ -531,6 +531,8 @@ sv:
         preview:
           description: Kontrollera först hur din idé kommer att se ut när den publiceras på webbplatsen. Om du vill göra ändringar kan du gå tillbaka till redigeringsvyn. Om du är helt nöjd med idén, publicera den!
           modify: Ändra idén
+          not_published: Your idea has not yet been published
+          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
           idea_edit_before_minutes:
             one: Du kommer att kunna redigera den här idén under den första minuten efter att idén har publicerats. När det tidsfönstret har passerat kommer du inte att kunna redigera idén.
             other: Du kommer att kunna redigera den här idén upp till %{count} minuter efter att idén har publicerats. När det tidsfönstret passerat kommer du inte att kunna redigera idén.
