@@ -18,7 +18,7 @@
 
   class Options {
     static configure(options) {
-      OPTIONS = exports.$.extend(DEFAULT_OPTIONS, options);
+      OPTIONS = $.extend(DEFAULT_OPTIONS, options);
     }
 
     static getMessage(message) {
@@ -83,12 +83,13 @@
    * version that currently ships with Decidin.
    */
   const bindFormValidation = () => {
-    const $form = exports.$("form.new_idea, form.edit_idea");
-    const $submits = exports.$(`[type="submit"]`, $form);
+    const $form = $("form.new_idea, form.edit_idea");
+    const $submits = $(`[type="submit"]`, $form);
+    const $discardLink = $(".discard-draft-link", $form);
 
     $submits
-      .off('click.decidim.ideas.form')
-      .on('click.decidim.ideas.form', (e) => {
+      .off("click.decidim.ideas.form")
+      .on("click.decidim.ideas.form", (e) => {
         // Tell the backend which submit button was pressed (save or preview)
         let $btn = $(e.target);
         if (!$btn.is("button")) {
@@ -108,13 +109,19 @@
           $firstField.focus();
         }
       });
+
+    $discardLink
+      .off("click.decidim.ideas.form")
+      .on("click.decidim.ideas.form", () => {
+        canExit = true;
+      });
   };
 
   const bindAddressLookup = () => {
-    const $map = exports.$("#map");
-    const $address = exports.$("#idea_address");
-    const $latitude = exports.$("#idea_latitude");
-    const $longitude = exports.$("#idea_longitude");
+    const $map = $("#map");
+    const $address = $("#idea_address");
+    const $latitude = $("#idea_latitude");
+    const $longitude = $("#idea_longitude");
     const authToken = $(`input[name="authenticity_token"]`).val();
     const coordinatesUrl = $address.data("coordinates-url");
     const addressUrl = $address.data("address-url");
@@ -362,7 +369,12 @@
 
   const bindAccidentalExitDisabling = () => {
     $(document).on("click", "a, input, button", (ev) => {
-      canExit = $(ev.target).closest(".idea-form-container").length > 0;
+      const $target = $(ev.target);
+      if ($target.closest(".idea-form-container").length > 0) {
+        canExit = true;
+      } else if ($target.closest("#loginModal").length > 0) {
+        canExit = true;
+      }
     });
 
     window.onbeforeunload = () => {
