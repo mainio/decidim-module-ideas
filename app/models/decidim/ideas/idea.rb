@@ -278,6 +278,7 @@ module Decidim
       #
       # user - the user to check for authorship
       def editable_by?(user)
+        return false if withdrawn?
         return true if draft?
 
         !published_state? && within_edit_time_limit? && !copied_from_other_component? && created_by?(user)
