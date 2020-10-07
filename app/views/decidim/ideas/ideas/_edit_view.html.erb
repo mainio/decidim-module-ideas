@@ -8,10 +8,10 @@
           <% if @idea.persisted? && @idea.draft? %>
             <%= link_to t(".discard"), destroy_draft_idea_path(@idea), class: "mr-2", method: :delete, data: { confirm: t(".discard_confirmation") } %>
           <% end %>
-          <% unless @idea.draft? %>
-            <%= form.submit t(".save"), class: "button hollow primary large mb-0 mr-2", data: { disable: true } %>
+          <% if !@idea.persisted? || @idea.draft? %>
+            <%= form.submit t(".save"), name: "save", class: "button hollow primary large mb-0 mr-2", data: { disable: true } %>
           <% end %>
-          <%= form.submit button_text, class: "button primary large mb-0", data: { disable: true } %>
+          <%= form.submit button_text, name: "commit", class: "button primary large mb-0", data: { disable: true } %>
         </div>
       <% else %>
         <div class="row">
