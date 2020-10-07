@@ -68,7 +68,8 @@ module Decidim
       #
       # Returns a Decidim::Category
       def category
-        cat_id = sub_category_id || category_id
+        cat_id = sub_category_id.presence || category_id
+        return if cat_id.blank?
 
         @category ||= categories.find_by(id: cat_id)
       end
@@ -165,8 +166,8 @@ module Decidim
       # an error, the attachment is lost, so we need a way to inform the user of
       # this problem.
       def notify_missing_attachment_if_errored
-        errors.add(:image, :needs_to_be_reattached) if errors.any? && image.present?
-        errors.add(:attachment, :needs_to_be_reattached) if errors.any? && attachment.present?
+        errors.add(:image, :needs_to_be_reattached) if errors.any? && image.present? && image.file.present?
+        errors.add(:attachment, :needs_to_be_reattached) if errors.any? && attachment.present? && attachment.file.present?
       end
 
       def ordered_hashtag_list(string)
