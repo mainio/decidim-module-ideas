@@ -19,6 +19,19 @@
           </div>
         <% end %>
       </div>
+
+      <% unless user_signed_in? %>
+        <div class="card border-primary text-center">
+          <div class="card__content">
+            <p class="lead"><%= t("decidim.ideas.ideas.edit_view.sign_in_before_submitting") %></p>
+            <p>
+              <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large primary", data: { "redirect_url" => new_idea_path } do %>
+                <%= t("decidim.ideas.ideas.edit_view.sign_in") %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      <% end %>
     </div>
     <div class="columns large-4">
       <% if translated_attribute(component_settings.materials_text).present? %>

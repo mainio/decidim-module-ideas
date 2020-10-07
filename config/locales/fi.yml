@@ -202,10 +202,10 @@ fi:
             email_subject: Seuraamasi idea ei edennyt jatkoon
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei edennyt jatkoon.
         idea_update_category:
-          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi aihepiiriin "%{resource_title}", tarkista se tältä sivulta:'
+          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi teeman "%{resource_title}", tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
-          email_subject: Idean %{resource_title} aihepiiri on päivitetty
-          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> aihepiirin.
+          email_subject: Idean %{resource_title} teema on päivitetty
+          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> teeman.
         idea_update_area_scope:
           email_intro: 'Hallintakäyttäjä on päivittänyt ideasi "%{resource_title}" alueen, tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
@@ -293,7 +293,7 @@ fi:
           form:
             attachment_legend: "Lisää idealle liite"
             image_legend: "Valutse idealle kuva"
-            select_a_category: Valitse idealle aihepiiri
+            select_a_category: Valitse idealle teema
           index:
             actions: Toiminnot
             cancel: Peruuta
@@ -336,10 +336,10 @@ fi:
             votes_count: Kannatusten lukumäärä
             votes_ranking: Luokittelu kannatusten mukaan
           update_category:
-            invalid: 'Näillä ideoilla oli jo aihepiiri %{subject_name}: %{proposals}.'
-            select_a_category: Valitse aihepiiri
+            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
+            select_a_category: Valitse teema
             select_a_idea: Valitse idea
-            success: 'Seuraavien ideoiden aihepiirin päivitys onnistui %{subject_name}: %{proposals}.'
+            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}: %{proposals}.'
           update_area_scope:
             invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
             select_a_idea: Valitse idea
@@ -454,13 +454,14 @@ fi:
           all_categories: Kaikki teemat
           area_scope: Alue
           amendment_type: Tyyppi
-          category: Aihepiiri
+          category: Teema
           my_ideas: Omat ideat
           origin: Alkuperä
           related_to: Liittyy aiheeseen
           reset: Tyhjennä rajaukset
           search: Haku
           state: Tila
+          title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
           voted: Kannatettu
         filters_small_view:
@@ -477,6 +478,7 @@ fi:
           address_lookup_button: Etsi
           attachment_legend: "Lisää idealle liite"
           cancel: Peruuta
+          characters_min: "(vähintään %count% merkkiä vaaditaan)"
           characters_used: "%count%/%total% merkkiä käytetty"
           close_modal: Sulje ikkuna
           files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Kuville ja liitteille tulee lisätä nimet.
@@ -484,6 +486,10 @@ fi:
           files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
           image_added: Kuva lisätty
           image_legend: "Lisää idealle kuva"
+          remove_attachment: Poista liite
+          remove_attachment_confirm: Haluatko varmasti poistaa idealta liitteen?
+          remove_image: Poista kuva
+          remove_image_confirm: Haluatko varmasti poistaa idealta kuvan?
           required_fields_text: Pakolliset kentät on merkitty *-merkillä.
           reset_field: Tyhjennä kenttä
           select_a_category: Valitse idealle ensisijainen teema

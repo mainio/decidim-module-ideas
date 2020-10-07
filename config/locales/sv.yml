@@ -336,12 +336,12 @@ sv:
             votes_count: Antal stöd
             votes_ranking: Sortera efter stöd
           update_category:
-            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            invalid: 'Dessa idéer hade redan temat %{subject_name}: %{ideas}.'
             select_a_category: Välj ett tema
             select_a_idea: Välj en idé
-            success: 'Idéer som har uppdaterats till omfånget %{subject_name}: %{ideas}.'
+            success: 'Idéer som har uppdaterats till temat %{subject_name}: %{ideas}.'
           update_area_scope:
-            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            invalid: 'Dessa idéer hade redan området %{subject_name}: %{ideas}.'
             select_a_idea: Välj en idé
             select_a_scope: Välj ett område
             success: 'Idéer som har uppdaterats till området %{subject_name}: %{ideas}.'
@@ -461,6 +461,7 @@ sv:
           reset: Rensa filter
           search: Sök
           state: Status
+          title: Filtrera idéerna på kartan och i listan
           type: Typ
           voted: Stöds
         filters_small_view:
@@ -477,6 +478,7 @@ sv:
           address_lookup_button: Slå upp
           attachment_legend: "Lägg till en bilaga till idén"
           cancel: Avbryt
+          characters_min: "(minst %count% tecken krävs)"
           characters_used: "%count%/%total% tecken används"
           close_modal: Stäng fönstret
           files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
@@ -484,6 +486,10 @@ sv:
           files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
           image_added: Bilden tillagd
           image_legend: "Lägg till en bild för idén"
+          remove_attachment: Ta bort bilagan
+          remove_attachment_confirm: Är du säker på att du vill ta bort bilagan från idén??
+          remove_image: Ta bort bilden
+          remove_image_confirm: Är du säker på att du vill ta bort bilden från idén?
           required_fields_text: Obligatoriska fält är markerade med *-tecknet.
           reset_field: Återställ fältet
           select_a_category: Välj ett primärt tema för idén

@@ -22,6 +22,10 @@
     }
   }
 
+  .ideas-form-text{
+    margin-bottom: 3rem;
+  }
+
   .field-info{
     padding: $input-padding 0;
 
@@ -57,7 +61,7 @@
 
     .attachment-added{
       position: relative;
-      top: -7px;
+      top: 6px;
     }
 
     .attachment-fields{

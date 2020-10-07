@@ -1,20 +1,3 @@
-<% unless user_signed_in? %>
-  <div class="row">
-    <div class="columns large-8 large-push-2">
-      <div class="card border-primary text-center">
-        <div class="card__content">
-          <p class="lead"><%= t(".sign_in_before_submitting") %></p>
-          <p>
-            <%= action_authorized_link_to :create, new_idea_path, class: "title-action__action button large primary", data: { "redirect_url" => new_idea_path } do %>
-              <%= t(".sign_in") %>
-            <% end %>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
-
 <div class="row">
   <div class="columns large-12">
     <%= decidim_form_for(form_object, builder: idea_form_builder, url: defined?(form_url) ? form_url : nil) do |form| %>
@@ -25,8 +8,10 @@
           <% if @idea.persisted? && @idea.draft? %>
             <%= link_to t(".discard"), destroy_draft_idea_path(@idea), class: "mr-2", method: :delete, data: { confirm: t(".discard_confirmation") } %>
           <% end %>
-          <%= form.submit t(".save"), class: "button hollow primary mb-0 mr-2", data: { disable: true } %>
-          <%= form.submit button_text, class: "button primary mb-0", data: { disable: true } %>
+          <% unless @idea.draft? %>
+            <%= form.submit t(".save"), class: "button hollow primary large mb-0 mr-2", data: { disable: true } %>
+          <% end %>
+          <%= form.submit button_text, class: "button primary large mb-0", data: { disable: true } %>
         </div>
       <% else %>
         <div class="row">

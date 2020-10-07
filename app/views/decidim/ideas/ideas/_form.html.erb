@@ -181,6 +181,14 @@
 <% if component_settings.image_allowed? %>
   <div class="field attachment-button">
     <button class="button hollow primary" data-open="image-modal"><%= t(".image_legend") %></button>
+    <%
+    image_present = file_is_present?(form, :image)
+    %>
+    <div class="ml-2 attachment-added<%= " hide" unless image_present %>">
+      <strong><%= t(".image_added") %></strong>
+      <br>
+      <%= content_tag :button, t(".remove_image"), class:"link remove-attachment", data: { confirm: t(".remove_image_confirm") } %>
+    </div>
     <% if @form.errors[:image].present? %>
       <% @form.errors[:image].each do |message| %>
         <small class="form-error is-visible">
@@ -188,16 +196,14 @@
         </small>
       <% end %>
     <% end %>
-    <%
-    image_present = file_is_present?(form, :image)
-    %>
-    <div class="ml-2 attachment-added<%= " hide" unless image_present %>">
-      <strong><%= t(".image_added") %></strong>
-    </div>
     <div class="attachment-fields"<%== ' data-file-present="true"' if image_present %>>
       <%= form.fields_for :image, @form.image do |nested_form| %>
+        <%= nested_form.hidden_field :remove_file %>
+
         <div class="field">
-          <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
+          <div class="attachment-file">
+            <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
+          </div>
           <span class="form-error form-error-general" role="alert"><%= t(".attachment_file_required") %></span>
 
           <% if @form.errors[:image].present? %>
@@ -238,23 +244,29 @@
 <% if component_settings.attachments_allowed? %>
   <div class="field attachment-button">
     <button class="button hollow primary" data-open="attachment-modal"><%= t(".attachment_legend") %></button>
-    <% if @form.errors[:image].present? %>
-      <% @form.errors[:image].each do |message| %>
-        <small class="form-error is-visible">
-          <%= message %>
-        </small>
-      <% end %>
-    <% end %>
     <%
     attachment_present = file_is_present?(form, :attachment)
     %>
     <div class="ml-2 attachment-added<%= " hide" unless attachment_present%>">
       <strong><%= t(".attachment_added") %></strong>
+      <br>
+      <%= content_tag :button, t(".remove_attachment"), class:"link remove-attachment", data: { confirm: t(".remove_attachment_confirm") } %>
     </div>
+    <% if @form.errors[:attachment].present? %>
+      <% @form.errors[:attachment].each do |message| %>
+        <small class="form-error is-visible">
+          <%= message %>
+        </small>
+      <% end %>
+    <% end %>
     <div class="attachment-fields"<%== ' data-file-present="true"' if attachment_present %>>
       <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
+        <%= nested_form.hidden_field :remove_file %>
+
         <div class="field">
-          <%= nested_form.upload :file, optional: false %>
+          <div class="attachment-file">
+            <%= nested_form.upload :file, optional: false %>
+          </div>
           <span class="form-error form-error-general" role="alert"><%= t(".attachment_file_required") %></span>
 
           <% if @form.errors[:attachment].present? %>
@@ -297,6 +309,7 @@
 <%
 js_options = {
   messages: {
+    charactersMin: t(".characters_min"),
     charactersUsed: t(".characters_used")
   }
 }
