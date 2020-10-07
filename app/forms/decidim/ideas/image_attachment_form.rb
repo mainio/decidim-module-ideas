@@ -7,6 +7,7 @@ module Decidim
     class ImageAttachmentForm < Form
       attribute :title, String
       attribute :file
+      attribute :remove_file, Boolean, default: false
 
       mimic :idea_image_attachment
 
@@ -16,6 +17,10 @@ module Decidim
 
       alias component current_component
       alias organization current_organization
+
+      def map_model(model)
+        self.remove_file = false
+      end
     end
   end
 end

@@ -29,14 +29,19 @@ module Decidim
       def call
         return broadcast(:invalid) if form.invalid?
 
+        @attached_to = form.organization
+        attachments_invalid = false
         if process_image?
           build_image
-          return broadcast(:invalid) if image_invalid?
+          attachments_invalid = attachments_invalid || image_invalid?
         end
         if process_attachments?
           build_attachment
-          return broadcast(:invalid) if attachment_invalid?
+          attachments_invalid = attachments_invalid || attachment_invalid?
         end
+        return broadcast(:invalid) if attachments_invalid
+
+        @attached_to = nil
 
         transaction do
           create_emendation!
@@ -103,8 +108,30 @@ module Decidim
             emendation.save!
 
             @attached_to = emendation
-            create_image if process_image?
-            create_attachment if process_attachments?
+            if process_image?
+              create_image
+            elsif !image_removed? && amendable.image.present?
+              title = @form.image.title
+              title = amendable.image.title if title.blank?
+              Decidim::Ideas::Attachment.create!(
+                attached_to: emendation, # Keep first
+                title: title,
+                file: amendable.image.file,
+                weight: 0
+              )
+            end
+            if process_attachments?
+              create_attachment
+            elsif !attachment_removed? && amendable.actual_attachments.any?
+              title = @form.attachment.title
+              title = amendable.actual_attachments.first.title if title.blank?
+              Decidim::Ideas::Attachment.create!(
+                attached_to: emendation, # Keep first
+                title: title,
+                file: amendable.actual_attachments.first.file,
+                weight: 1
+              )
+            end
 
             emendation
           end
@@ -154,13 +181,23 @@ module Decidim
           @amendable.add_coauthor(@current_user, user_group: @user_group)
 
           @attached_to = @amendable
-          if image.present?
-            @amendable.image.destroy!
-            create_image
+          @amendable.image.destroy! if @amendable.image.present?
+          if emendation.image.present?
+            @image = Decidim::Ideas::Attachment.create!(
+              attached_to: @amendable, # Keep first
+              title: emendation.image.title,
+              file: emendation.image.file,
+              weight: 0
+            )
           end
-          if attachment.present?
-            @amendable.actual_attachments.destroy_all
-            create_attachment
+          @amendable.actual_attachments.destroy_all
+          if emendation.actual_attachments.any?
+            @attachment = Decidim::Ideas::Attachment.create!(
+              attached_to: @amendable, # Keep first
+              title: emendation.actual_attachments.first.title,
+              file: emendation.actual_attachments.first.file,
+              weight: 1
+            )
           end
         else
           @amendment.update(state: "evaluating")

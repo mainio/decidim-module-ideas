@@ -22,7 +22,13 @@ module Decidim
         end
       end
 
+      def image_removed?
+        @form.image.remove_file?
+      end
+
       def image_present?
+        return false if image_removed?
+
         @form.image.present? && @form.image.file.present?
       end
 

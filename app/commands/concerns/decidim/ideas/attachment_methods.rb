@@ -17,7 +17,13 @@ module Decidim
         )
       end
 
+      def attachment_removed?
+        @form.attachment.remove_file?
+      end
+
       def attachment_present?
+        return false if attachment_removed?
+
         @form.attachment.present? && @form.attachment.file.present?
       end
     end

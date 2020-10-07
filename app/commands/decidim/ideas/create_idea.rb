@@ -35,14 +35,17 @@ module Decidim
 
         # For checking the attachment validations
         @attached_to = form.organization
+        attachments_invalid = false
         if process_image?
           build_image
-          return broadcast(:invalid) if image_invalid?
+          attachments_invalid = attachments_invalid || image_invalid?
         end
         if process_attachments?
           build_attachment
-          return broadcast(:invalid) if attachment_invalid?
+          attachments_invalid = attachments_invalid || attachment_invalid?
         end
+        return broadcast(:invalid) if attachments_invalid
+
         @attached_to = nil
 
         transaction do
