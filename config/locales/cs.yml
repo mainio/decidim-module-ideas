@@ -539,6 +539,8 @@ cs:
         preview:
           description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
           modify: Modify the idea
+          not_published: Your idea has not yet been published
+          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
           idea_edit_before_minutes:
             one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
             few: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
