@@ -531,6 +531,8 @@ fi:
         preview:
           description: Tarkasta ensin, miltä ideasi näyttää, kun se julkaistaan sivustolla. Mikäli haluat tehdä muutoksia, voit siirtyä takaisin muokkausnäkymään. Jos olet tyytyväinen ideaasi, julkaise se!
           modify: Muokkaa ideaa
+          not_published: Your idea has not yet been published
+          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
           idea_edit_before_minutes:
             one: Voit muokata tätä ideaa ensimmäisen minuutin kuluttua idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
             other: Voit muokata tätä ideaa ensimmäisten %{count} minuutin aikana idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
