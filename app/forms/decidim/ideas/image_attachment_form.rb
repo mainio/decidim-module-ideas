@@ -13,7 +13,12 @@ module Decidim
 
       validates :title, presence: true, if: ->(form) { form.file.present? }
 
-      validates :file, passthru: { to: Decidim::Ideas::Attachment }, if: ->(form) { form.file.present? }
+      validates(
+        :file,
+        passthru: { to: Decidim::Ideas::AttachmentImage },
+        file_size: { less_than_or_equal_to: ->(_form) { 10.megabytes } },
+        if: ->(form) { form.file.present? }
+      )
 
       alias component current_component
       alias organization current_organization
