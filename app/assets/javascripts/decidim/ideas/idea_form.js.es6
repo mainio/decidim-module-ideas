@@ -97,7 +97,7 @@
         }
 
         $form.append(`<input type="hidden" name="save_type" value="${$btn.attr("name")}" />`);
-        $submits.attr("disabled", true)
+        $submits.attr("disabled", true);
 
         if (!e.key || (e.key === ' ' || e.key === 'Enter')) {
           e.preventDefault();
@@ -107,6 +107,7 @@
 
           const $firstField = $("input.is-invalid-input, textarea.is-invalid-input").first();
           $firstField.focus();
+          $submits.removeAttr("disabled");
         }
       });
 
