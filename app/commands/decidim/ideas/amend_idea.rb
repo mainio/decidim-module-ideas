@@ -107,6 +107,17 @@ module Decidim
             emendation.add_author(current_user, user_group)
             emendation.save!
 
+            # When the emendation record is created with the author (which is
+            # required), the author is automatically added as a follower to the
+            # idea. This happens because Decidim::Coauthorship has a callback
+            # on the create action which adds the coauthors automatically as
+            # followers. With ideas, we don't want this behavior because this
+            # would lead the emendation record becoming visible in the user's
+            # follows list which can be quite confusing as these are only
+            # records that store the full version history of the idea
+            # amendments.
+            emendation.follows.destroy_all
+
             @attached_to = emendation
             if process_image?
               create_image
