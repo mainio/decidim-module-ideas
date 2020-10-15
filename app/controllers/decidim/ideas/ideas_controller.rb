@@ -45,6 +45,14 @@ module Decidim
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
 
+        if @idea.emendation?
+          if @idea.amendable
+            return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path
+          else
+            raise ActionController::RoutingError, "Not Found"
+          end
+        end
+
         @report_form = form(Decidim::ReportForm).from_params(reason: "spam")
       end
 
