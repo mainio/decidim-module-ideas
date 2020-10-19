@@ -14,6 +14,7 @@ en:
         has_address: Has address
         latitude: Latitude
         longitude: Longitude
+        perform_geocoding: Fetch the map point based on the address
         state: State
         sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
@@ -294,7 +295,8 @@ en:
           form:
             attachment_legend: "Add an attachment for the idea"
             image_legend: "Add an image for the idea"
-            select_a_category: Choose a theme for the idea
+            select_a_category: Choose a primary theme for the idea
+            select_a_sub_category: Choose a subtheme for the idea
           index:
             actions: Actions
             cancel: Cancel

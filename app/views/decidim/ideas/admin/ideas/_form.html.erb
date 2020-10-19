@@ -15,7 +15,7 @@
     </div>
 
     <div class="row column hashtags__container">
-      <%= form.editor :body, hashtaggable: true, value: form_presenter.body(extras: false).strip %>
+      <%= text_editor_for_idea_body(form) %>
     </div>
 
     <% if @form.component_automatic_hashtags.any? %>
@@ -42,18 +42,9 @@
       </div>
     <% end %>
 
-    <% if @form.meetings %>
-      <div class="meeting-fields">
-        <div class="row column">
-          <%= form.check_box :created_in_meeting, label: t(".created_in_meeting") %>
-        </div>
-
-        <div class="row column" id="idea_meeting">
-          <%= form.select :meeting_id,
-                          options_for_select(@form.meetings&.map { |meeting| [present(meeting).title, meeting.id] }, selected: meetings_as_authors_selected ),
-                          { include_blank: true, label: t(".select_a_meeting") },
-                          { multiple: false, class: "chosen-select" } %>
-        </div>
+    <% if @form.areas_enabled? %>
+      <div class="field">
+        <%= area_scopes_picker_field form, :area_scope_id %>
       </div>
     <% end %>
 
@@ -61,22 +52,33 @@
       <div class="row column">
         <%= form.text_field :address %>
       </div>
-    <% end %>
-
-    <% if component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id) %>
-      <div class="field">
-        <%= area_scopes_picker_field form, :area_scope_id %>
-      </div>
-    <% end %>
-
-    <% if @form.categories&.any? %>
       <div class="row column">
-        <%= form.categories_select :category_id, @form.categories, prompt: t(".select_a_category") %>
+        <%= form.check_box :perform_geocoding %>
+      </div>
+      <div class="row column geocoding-field">
+        <%= form.number_field :latitude %>
+      </div>
+      <div class="row column geocoding-field">
+        <%= form.number_field :longitude %>
       </div>
     <% end %>
 
-    <% if component_settings.attachments_allowed? %>
-      <%= render partial: "decidim/admin/shared/gallery", locals: { form: form } %>
+    <% if @form.top_categories&.any? %>
+      <div class="row column">
+        <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, prompt: t(".select_a_category") %>
+      </div>
+
+      <div id="idea-subcategory">
+        <% @form.top_categories.each do |category| %>
+          <% next if category.subcategories.blank? %>
+
+          <div class="subcategories hide" data-parent="<%= category.id %>">
+            <div class="row column">
+              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     <% end %>
 
     <% if component_settings.image_allowed? %>
@@ -89,7 +91,7 @@
             </div>
 
             <div class="row column">
-              <%= form.upload :file, optional: false %>
+              <%= form.upload :file, optional: true %>
             </div>
           <% end %>
         </fieldset>
@@ -106,7 +108,7 @@
             </div>
 
             <div class="row column">
-              <%= form.upload :file, optional: false %>
+              <%= form.upload :file, optional: true %>
             </div>
           <% end %>
         </fieldset>

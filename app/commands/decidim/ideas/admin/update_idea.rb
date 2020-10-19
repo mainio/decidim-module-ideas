@@ -5,17 +5,18 @@ module Decidim
     module Admin
       # A command with all the business logic when a user updates a idea.
       class UpdateIdea < Rectify::Command
-        include ::Decidim::AttachmentMethods
-        include GalleryMethods
+        include ::Decidim::Ideas::AttachmentMethods
+        include ::Decidim::Ideas::ImageMethods
         include HashtagsMethods
 
         # Public: Initializes the command.
         #
         # form         - A form object with the params.
         # idea - the idea to update.
-        def initialize(form, idea)
+        def initialize(form, current_user, idea)
           @form = form
           @idea = idea
+          @current_user = current_user
           @attached_to = idea
         end
 
@@ -28,24 +29,25 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          # For checking the attachment validations
+          attachments_invalid = false
+          idea.image.destroy! if idea.image.present? && (process_image? || image_removed?)
+          if process_image?
+            build_image
+            attachments_invalid = attachments_invalid || image_invalid?
+          end
+          idea.actual_attachments.destroy_all if process_attachments? || attachment_removed?
           if process_attachments?
-            @idea.attachments.destroy_all
-
             build_attachment
-            return broadcast(:invalid) if attachment_invalid?
+            attachments_invalid = attachments_invalid || attachment_invalid?
           end
-
-          if process_gallery?
-            build_gallery
-            return broadcast(:invalid) if gallery_invalid?
-          end
+          return broadcast(:invalid) if attachments_invalid
 
           transaction do
             update_idea
             update_idea_author
+            create_image if process_image?
             create_attachment if process_attachments?
-            create_gallery if process_gallery?
-            photo_cleanup!
           end
 
           broadcast(:ok, idea)
@@ -53,7 +55,7 @@ module Decidim
 
         private
 
-        attr_reader :form, :idea, :attachment, :gallery
+        attr_reader :form, :idea, :image, :attachment
 
         def update_idea
           Decidim.traceability.update!(
@@ -69,9 +71,16 @@ module Decidim
           )
         end
 
+        def user_group
+          @user_group ||= Decidim::UserGroup.find_by(organization: organization, id: form.user_group_id)
+        end
+
+        def organization
+          @organization ||= @current_user.organization
+        end
+
         def update_idea_author
-          idea.coauthorships.clear
-          idea.add_coauthor(form.author)
+          idea.add_coauthor(@current_user, user_group: user_group)
           idea.save!
           idea
         end

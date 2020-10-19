@@ -26,20 +26,24 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          # For checking the attachment validations
+          @attached_to = form.organization
+          attachments_invalid = false
+          if process_image?
+            build_image
+            attachments_invalid = attachments_invalid || image_invalid?
+          end
           if process_attachments?
             build_attachment
-            return broadcast(:invalid) if attachment_invalid?
+            attachments_invalid = attachments_invalid || attachment_invalid?
           end
-
-          if process_gallery?
-            build_gallery
-            return broadcast(:invalid) if gallery_invalid?
-          end
+          return broadcast(:invalid) if attachments_invalid
 
           transaction do
             create_idea
+            @attached_to = idea
+            create_image if process_image?
             create_attachment if process_attachments?
-            create_gallery if process_gallery?
             send_notification
           end
 
@@ -48,7 +52,7 @@ module Decidim
 
         private
 
-        attr_reader :form, :idea, :attachment, :gallery
+        attr_reader :form, :idea, :image, :attachment
 
         def create_idea
           @idea = Decidim::Ideas::IdeaBuilder.create(
