@@ -13,6 +13,7 @@ fi:
         has_address: Idealla on osoite
         latitude: Leveysaste
         longitude: Pituusaste
+        perform_geocoding: Fetch the map point based on the address
         state: Tila
         sub_category_id: Valitse idealle alateema
         suggested_hashtags: Ehdotetut hashtag-tunnisteet
@@ -293,7 +294,8 @@ fi:
           form:
             attachment_legend: "Lisää idealle liite"
             image_legend: "Valutse idealle kuva"
-            select_a_category: Valitse idealle aihepiiri
+            select_a_category: Choose a primary theme for the idea
+            select_a_sub_category: Choose a subtheme for the idea
           index:
             actions: Toiminnot
             cancel: Peruuta
