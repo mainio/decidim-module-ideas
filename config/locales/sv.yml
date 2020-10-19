@@ -13,6 +13,7 @@ sv:
         has_address: Har adress
         latitude: Latitud
         longitude: Longitud
+        perform_geocoding: Fetch the map point based on the address
         state: Status
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
@@ -293,7 +294,8 @@ sv:
           form:
             attachment_legend: "Lägg till en bilaga till idén"
             image_legend: "Lägg till en bild för idén"
-            select_a_category: Välj ett tema för idén
+            select_a_category: Choose a primary theme for the idea
+            select_a_sub_category: Choose a subtheme for the idea
           index:
             actions: Funktioner
             cancel: Avbryt
