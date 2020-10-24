@@ -68,7 +68,10 @@ module Decidim
       # submit the "too long" text but the backend rejects it, because all those
       # characters are calculated as a single character in the backend.
       def body
-        super.gsub(/\r/, "")
+        orig_body = super
+        return orig_body if orig_body.blank?
+
+        orig_body.gsub(/\r/, "")
       end
 
       # Finds the Category from either sub_category_id or category_id. If
