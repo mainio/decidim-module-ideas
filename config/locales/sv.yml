@@ -156,26 +156,26 @@ sv:
           notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" gick vidare. Du kan läsa svaret på den här sidan:'
+            email_intro: 'Din idé "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Din idé gick vidare
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> gick vidare.
+            email_subject: Din idé kommer att gå vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
           follower:
-            email_intro: 'Din idé "%{resource_title}" gick vidare. Du kan läsa svaret på den här sidan:'
+            email_intro: 'Idén "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
-            email_subject: En idé du följer gick vidare
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> gick vidare.
+            email_subject: En idé du följer kommer att gå vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
         idea_evaluating:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" utvärderas för närvarande. Du kan söka efter ett svar på den här sidan:'
+            email_intro: 'Din idé "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
             email_subject: Din idé utvärderas
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas.
           follower:
-            email_intro: 'Idén "%{resource_title}" utvärderas för närvarande. Du kan söka efter ett svar på den här sidan:'
+            email_intro: 'Idén "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
             email_subject: En idé som du följer utvärderas
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas.
         idea_mentioned:
           email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i denna grupp</a> i kommentarerna.
           email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
@@ -193,15 +193,15 @@ sv:
           notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> har lagts till i %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" gick inte vidare. Du kan läsa svaret på denna sida:'
+            email_intro: 'Din idé "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Din idé gick inte vidare
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> gick inte vidare.
+            email_subject: Din idé går inte vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
           follower:
-            email_intro: 'Idén "%{resource_title}" gick inte vidare. Du kan läsa svaret på denna sida:'
+            email_intro: 'Idén "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}". Klicka på länken ovan för att sluta följa det.
-            email_subject: En idé du följer gick inte vidare
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> gick inte vidare.
+            email_subject: En idé du följer går inte vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
         idea_update_category:
           email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
           email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
@@ -572,9 +572,9 @@ sv:
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: 'Denna idé gick vidare eftersom:'
-          idea_in_evaluation_reason: Denna idé utvärderas
-          idea_rejected_reason: 'Denna idé gick inte vidare eftersom:'
+          idea_accepted_reason: Denna idé gick vidare.
+          idea_in_evaluation_reason: Denna idé utvärderas.
+          idea_rejected_reason: Denna idé gick inte vidare.
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
