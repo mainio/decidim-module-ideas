@@ -480,6 +480,7 @@ en:
         form:
           attachment_added: Attachment added
           attachment_file_required: File needs to be attached
+          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
           attachment_title_required: Title has to be defined for the file
           add_attachment: Add attachment
           add_image: Add image

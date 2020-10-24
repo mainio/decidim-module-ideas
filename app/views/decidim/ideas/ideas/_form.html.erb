@@ -200,6 +200,10 @@
       <%= form.fields_for :image, @form.image do |nested_form| %>
         <%= nested_form.hidden_field :remove_file %>
 
+        <div class="field show-for-small-only">
+          <p><%= t(".attachment_modal_mobile_notice") %></p>
+        </div>
+
         <div class="field">
           <div class="attachment-file">
             <%= nested_form.upload :file, optional: false, help_i18n_scope: "decidim.forms.file_help.image" %>
@@ -262,6 +266,10 @@
     <div class="attachment-fields"<%== ' data-file-present="true"' if attachment_present %>>
       <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
         <%= nested_form.hidden_field :remove_file %>
+
+        <div class="field show-for-small-only">
+          <p><%= t(".attachment_modal_mobile_notice") %></p>
+        </div>
 
         <div class="field">
           <div class="attachment-file">

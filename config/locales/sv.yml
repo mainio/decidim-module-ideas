@@ -479,6 +479,7 @@ sv:
         form:
           attachment_added: Bilaga tillagd
           attachment_file_required: Filen måste bifogas
+          attachment_modal_mobile_notice: Tilläggsknappen finns längst ner i det här fönstret. Om du inte ser det på en mobilskärm, bläddra nedåt på skärmen.
           attachment_title_required: Titel måste definieras för filen
           add_attachment: Lägg till bilagan
           add_image: Lägg till bilden

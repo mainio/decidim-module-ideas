@@ -68,4 +68,24 @@
       display: none;
     }
   }
+
+  .actions{
+    margin-top: 2rem;
+
+    @include breakpoint(medium up){
+      margin-top: 0;
+    }
+
+    a{
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    a,
+    .button{
+      @include breakpoint(large up){
+        margin-bottom: 0;
+      }
+    }
+  }
 }
