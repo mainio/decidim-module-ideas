@@ -13,11 +13,11 @@ fi:
         has_address: Idealla on osoite
         latitude: Leveysaste
         longitude: Pituusaste
-        perform_geocoding: Fetch the map point based on the address
+        perform_geocoding: Hae karttapiste osoitteen perusteella
         state: Tila
         sub_category_id: Valitse idealle alateema
         suggested_hashtags: Ehdotetut hashtag-tunnisteet
-        terms_agreed: I have read the criteria
+        terms_agreed: Olen lukenut kriteerit
         title: Idean nimi
         user_group_id: Luo idea käyttäjänä
       idea_answer:
@@ -70,7 +70,7 @@ fi:
     admin:
       filters:
         area_scope_id_eq:
-          label: Area
+          label: Alue
         is_emendation_true:
           label: Tyyppi
           values:
@@ -81,9 +81,9 @@ fi:
         state_eq:
           label: Tila
           values:
-            accepted: Possible
+            accepted: Mahdollinen
             evaluating: Arvioitavana
-            rejected: Not possible
+            rejected: Ei mahdollinen
             withdrawn: Peruutettu
         state_null:
           label: Tila
@@ -160,25 +160,25 @@ fi:
           notification_title: Voit nyt esittää <a href="%{resource_path}">uusia ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
+            email_intro: 'Ideasi "%{resource_title}" etenee jatkoon. Voit lukea vastauksen täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Your idea will go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
+            email_subject: Ideasi etenee jatkoon
+            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> etenee jatkoon.
           follower:
-            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
+            email_intro: 'Idea "%{resource_title}" etenee jatkoon. Voit lukea vastauksen täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: An idea you are following will go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
+            email_subject: Seuraamasi idea etenee jatkoon
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> etenee jatkoon.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
+            email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
             email_outro: Saat tämän ilmoituksen, koska olet luonut kohteen "%{resource_title}".
             email_subject: Ideaasi arvioidaan
             notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
           follower:
-            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
+            email_intro: 'Ideaa "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: A idea you are following is being evaluated
+            email_subject: Seuraamaasi ideaa arvioidaan
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on arvioitavana.
         idea_mentioned:
           email_intro: Ideasi "%{mentioned_proposal_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
@@ -197,15 +197,15 @@ fi:
           notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on lisätty kohteeseen %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'Ideasi "%{resource_title}" ei etene jatkoon. Voit lukea vastauksen täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Your idea will not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
+            email_subject: Ideasi ei etene jatkoon
+            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
           follower:
-            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'Idea "%{resource_title}" ei etene jatokon. Voit lukea vastauksen tällä sivulla:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: A idea you are following will not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
+            email_subject: Seuraamasi idea ei etene jatkoon
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
         idea_update_category:
           email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi aihepiiriin "%{resource_title}", tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
@@ -298,8 +298,8 @@ fi:
           form:
             attachment_legend: "Lisää idealle liite"
             image_legend: "Valutse idealle kuva"
-            select_a_category: Choose a primary theme for the idea
-            select_a_sub_category: Choose a subtheme for the idea
+            select_a_category: Valitse idealle ensisijainen teema
+            select_a_sub_category: Valitse idealle alateema
           index:
             actions: Toiminnot
             cancel: Peruuta
@@ -443,7 +443,7 @@ fi:
         edit_draft:
           discard: Peruuta tämä luonnos
           discard_confirmation: Haluatko varmasti peruuttaa tämän idealuonnoksen?
-          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
+          draft_announcement_html: <p>Tämä on keskeneräinen idealuonnos. Sinun on julkaistava luonnos, jotta se tulee näkyviin sivustolle.</p><p>Sinulla voi olla vain yksi keskeneräinen idea kerrallaan.</p>
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
@@ -462,16 +462,16 @@ fi:
           area_scope: Alue
           amendment_type: Tyyppi
           category: Aihepiiri
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
+          my_favorites: Näytä omat suosikkisi
+          my_ideas: Näytä omat ideasi
           origin: Alkuperä
           related_to: Liittyy aiheeseen
           reset: Tyhjennä rajaukset
           search: Haku
           state: Tila
-          title: Filter the ideas on the map and in the list
+          title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
-          voted: Show supported
+          voted: Näytä kannatetut
         filters_small_view:
           close_modal: Sulje ikkuna
           filter: Suodata
@@ -480,14 +480,14 @@ fi:
         form:
           attachment_added: Liite lisätty
           attachment_file_required: Tiedosto on liitettävä
-          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
+          attachment_modal_mobile_notice: Lisäysnappi löytyy ikkunan alalaidasta. Jos et näe sitä mobiilinäytöllä, vieritä ruutua alaspäin.
           attachment_title_required: Tiedostolle on annettava otsikko
           add_attachment: Lisää liite
           add_image: Lisää kuva
           address_lookup_button: Etsi
           attachment_legend: "Lisää idealle liite"
           cancel: Peruuta
-          characters_min: "(at least %count% characters required)"
+          characters_min: "(vähintään %count% merkkiä vaaditaan)"
           characters_used: "%count%/%total% merkkiä käytetty"
           close_modal: Sulje ikkuna
           files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Kuville ja liitteille tulee lisätä nimet.
@@ -495,22 +495,22 @@ fi:
           files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
           image_added: Kuva lisätty
           image_legend: "Lisää idealle kuva"
-          remove_attachment: Remove attachment
-          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
-          remove_image: Remove image
-          remove_image_confirm: Are you sure you want to remove the image from the idea?
+          remove_attachment: Poista liite
+          remove_attachment_confirm: Haluatko varmasti poistaa idealta liitteen?
+          remove_image: Poista kuva
+          remove_image_confirm: Haluatko varmasti poistaa idealta kuvan?
           required_fields_text: Pakolliset kentät on merkitty *-merkillä.
           reset_field: Tyhjennä kenttä
           select_a_category: Valitse idealle ensisijainen teema
           select_a_sub_category: Valitse idealle alateema
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
           show_categories_info_text: Katso, mitä teemat pitävät sisällään
-          show_terms_info_text: Show criteria
+          show_terms_info_text: Tutustu kriteereihin
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
-          draft_idea_title: You have an idea draft!
-          draft_idea_continue: Continue your idea
-          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
+          draft_idea_title: Sinulla on keskeneräinen idea!
+          draft_idea_continue: Jatka ideaasi
+          draft_idea_description: Olet aikaisemmin tallentanut idean keskeneräisenä. Voit nyt jatkaa sen kirjoittamista.
           leave_your_idea: Käy jättämässä oma ideasi!
           new_idea: Uusi idea
           title: Tutustu ideoihin
@@ -543,8 +543,8 @@ fi:
         preview:
           description: Tarkasta ensin, miltä ideasi näyttää, kun se julkaistaan sivustolla. Mikäli haluat tehdä muutoksia, voit siirtyä takaisin muokkausnäkymään. Jos olet tyytyväinen ideaasi, julkaise se!
           modify: Muokkaa ideaa
-          not_published: Your idea has not yet been published
-          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
+          not_published: Ideaasi ei ole vielä julkaistu
+          not_published_description: Ideasi on tallennettu keskeneräisenä luonnoksena. Se pitää julkaista, jotta se tulee näkyviin sivustolle.
           idea_edit_before_minutes:
             one: Voit muokata tätä ideaa ensimmäisen minuutin kuluttua idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
             other: Voit muokata tätä ideaa ensimmäisten %{count} minuutin aikana idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
@@ -577,14 +577,14 @@ fi:
           back_to: Takaisin
           back_to_list: Näytä muut ideat
           changes_at_title: Muutokset kohteessa "%{title}"
-          feedback_title: Thank you for submitting an idea!
+          feedback_title: Kiitos idean jättämisestä!
           link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen muutoksesta
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
           link_to_idea_from_emendation_text: Näytä idea
-          idea_accepted_reason: This idea went through.
-          idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea did not go through.
+          idea_accepted_reason: Tämä idea eteni jatkoon.
+          idea_in_evaluation_reason: Tätä ideaa arvioidaan.
+          idea_rejected_reason: Tämä idea ei edennyt jatkoon.
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
