@@ -1,15 +1,3 @@
-<% if @draft_idea_link %>
-  <div class="row">
-    <div class="columns small-centered large-8">
-      <div class="callout announcement main-announcement warning cell-announcement text-center">
-        <h2><%= t ".draft_idea_title" %></h2>
-        <p><%= t ".draft_idea_description" %></p>
-        <p><%= link_to t(".draft_idea_continue"), @draft_idea_link, class: "button primary large" %></p>
-      </div>
-    </div>
-  </div>
-<% end %>
-
 <div class="row columns">
   <div class="text-center">
     <h2 class="heading1 page-title"><%= t ".title" %></h2>
@@ -35,10 +23,16 @@
     <div class="columns medium-6 mediumlarge-4">
       <div class="card border-primary" data-equalizer-watch>
         <div class="card__content text-center">
-          <p class="h3"><%= t(".leave_your_idea") %></p>
-          <%= link_to new_idea_path, class: "title-action__action button hollow large primary", data: { "redirect_url" => new_idea_path } do %>
-            <%= t(".new_idea") %>
-            <%= icon "plus", aria_label: t(".new_idea"), role: "img" %>
+          <% if @draft_idea_link %>
+            <p class="h3"><%= t ".draft_idea_title" %></p>
+            <p><%= t ".draft_idea_description" %></p>
+            <%= link_to t(".draft_idea_continue"), @draft_idea_link, class: "title-action__action button hollow large primary" %>
+          <% else %>
+            <p class="h3"><%= t(".leave_your_idea") %></p>
+            <%= link_to new_idea_path, class: "title-action__action button hollow large primary", data: { "redirect_url" => new_idea_path } do %>
+              <%= t(".new_idea") %>
+              <%= icon "plus", aria_label: t(".new_idea"), role: "img" %>
+            <% end %>
           <% end %>
         </div>
       </div>
