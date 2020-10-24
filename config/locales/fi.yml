@@ -69,6 +69,8 @@ fi:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Alue
         is_emendation_true:
           label: Tyyppi
           values:
@@ -79,7 +81,9 @@ fi:
         state_eq:
           label: Tila
           values:
+            accepted: Mahdollinen
             evaluating: Arvioitavana
+            rejected: Ei mahdollinen
             withdrawn: Peruutettu
         state_null:
           label: Tila

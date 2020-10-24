@@ -69,6 +69,8 @@ sv:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Område
         is_emendation_true:
           label: Typ
           values:
@@ -79,7 +81,9 @@ sv:
         state_eq:
           label: Status
           values:
+            accepted: Möjlig
             evaluating: Utvärderas
+            rejected: Omöjligt
             withdrawn: Tillbakadragna
         state_null:
           label: Status

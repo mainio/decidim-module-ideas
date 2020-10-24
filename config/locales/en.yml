@@ -70,6 +70,8 @@ en:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Area
         is_emendation_true:
           label: Type
           values:
@@ -80,7 +82,9 @@ en:
         state_eq:
           label: State
           values:
+            accepted: Possible
             evaluating: Evaluating
+            rejected: Not possible
             withdrawn: Withdrawn
         state_null:
           label: Status
