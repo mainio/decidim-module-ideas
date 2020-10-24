@@ -443,6 +443,7 @@ fi:
         edit_draft:
           discard: Peruuta tämä luonnos
           discard_confirmation: Haluatko varmasti peruuttaa tämän idealuonnoksen?
+          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
@@ -507,6 +508,9 @@ fi:
           show_terms_info_text: Show criteria
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
+          draft_idea_title: You have an idea draft!
+          draft_idea_continue: Continue your idea
+          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
           leave_your_idea: Käy jättämässä oma ideasi!
           new_idea: Uusi idea
           title: Tutustu ideoihin
