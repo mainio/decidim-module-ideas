@@ -73,6 +73,8 @@ cs:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Area
         is_emendation_true:
           label: Type
           values:
@@ -83,7 +85,9 @@ cs:
         state_eq:
           label: State
           values:
+            accepted: Possible
             evaluating: Evaluating
+            rejected: Not possible
             withdrawn: Withdrawn
         state_null:
           label: Status
@@ -160,25 +164,25 @@ cs:
           notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea went through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> went through.
+            email_subject: Your idea will go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
           follower:
-            email_intro: 'The idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following went through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea went through.
+            email_subject: An idea you are following will go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
             email_subject: Your idea is being evaluated
             notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
           follower:
-            email_intro: 'The idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following is being evaluated
+            email_subject: A idea you are following is being evaluated
             notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
         idea_mentioned:
           email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
@@ -197,15 +201,15 @@ cs:
           notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea did not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> did not go through.
+            email_subject: Your idea will not go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
           follower:
-            email_intro: 'The idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following did not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea did not go through.
+            email_subject: A idea you are following will not go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
         idea_update_category:
           email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
           email_outro: You have received this notification because you are the author of the idea.
@@ -582,9 +586,9 @@ cs:
           link_to_promoted_emendation_text: See the rejected emendation.
           link_to_idea_from_emendation_help_text: This is a rejected emendation
           link_to_idea_from_emendation_text: See the Idea
-          idea_accepted_reason: 'This idea went through because:'
-          idea_in_evaluation_reason: This idea is being evaluated
-          idea_rejected_reason: 'This idea did not go through because:'
+          idea_accepted_reason: This idea went through.
+          idea_in_evaluation_reason: This idea is being evaluated.
+          idea_rejected_reason: This idea did not go through.
           read_less: Read less
           read_more: Read more
           report: Report
