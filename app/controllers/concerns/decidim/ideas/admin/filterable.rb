@@ -32,7 +32,7 @@ module Decidim
               :is_emendation_true,
               :state_eq,
               :state_null,
-              :scope_id_eq,
+              :area_scope_id_eq,
               :category_id_eq,
             ]
           end
@@ -41,7 +41,7 @@ module Decidim
             {
               is_emendation_true: %w(true false),
               state_eq: idea_states,
-              scope_id_eq: scope_ids_hash(scopes.top_level),
+              area_scope_id_eq: scope_ids_hash(area_scopes),
               category_id_eq: category_ids_hash(categories.first_class)
             }
           end
@@ -49,7 +49,7 @@ module Decidim
           # Can't user `super` here, because it does not belong to a superclass
           # but to a concern.
           def dynamically_translated_filters
-            [:scope_id_eq, :category_id_eq]
+            [:area_scope_id_eq, :category_id_eq]
           end
 
           # An Array<Symbol> of possible values for `state_eq` filter.
@@ -58,6 +58,21 @@ module Decidim
           # Decidim::Ideas::Admin::FilterableHelper#extra_dropdown_submenu_options_items
           def idea_states
             Idea::POSSIBLE_STATES.without("not_answered")
+          end
+
+          def translated_area_scope_id_eq(id)
+            translated_attribute(area_scopes.find_by(id: id).name)
+          end
+
+          private
+
+          def area_scopes
+            return [] unless component_settings.area_scope_parent_id
+
+            parent = Decidim::Scope.find_by(id: component_settings.area_scope_parent_id)
+            return [] unless parent
+
+            parent.children
           end
         end
       end
