@@ -1,0 +1,40 @@
+.idea-filters{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  select{
+    margin-bottom: 0;
+  }
+
+  .activity_collection_radio_buttons_filter{
+    fieldset{
+      legend,
+      label{
+        @include breakpoint(large up){
+          display: inline-block;
+        }
+      }
+
+      label{
+        @include breakpoint(large up){
+          margin-left: 2rem;
+        }
+      }
+
+      label:first-of-type{
+        margin-left: 0;
+      }
+    }
+  }
+
+  .filters__section{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    &.filters__section--title{
+      p{
+        margin-bottom: 0;
+      }
+    }
+  }
+}
