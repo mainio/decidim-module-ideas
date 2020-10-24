@@ -61,6 +61,14 @@ module Decidim
 
         alias component current_component
 
+        # In Windows, the front-end form calculates Windows line breaks (\r\n) as
+        # a single character which can lead to situations where the user can
+        # submit the "too long" text but the backend rejects it, because all those
+        # characters are calculated as a single character in the backend.
+        def body
+          super.gsub(/\r/, "")
+        end
+
         # Finds the Category from the category_id.
         #
         # Returns a Decidim::Category
