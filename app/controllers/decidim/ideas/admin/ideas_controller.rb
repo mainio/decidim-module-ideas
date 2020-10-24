@@ -147,7 +147,11 @@ module Decidim
         private
 
         def collection
-          @collection ||= Idea.where(component: current_component).published
+          @collection ||= Idea.where(component: current_component)
+                          .only_amendables
+                          .published
+                          .not_hidden
+                          .includes(:amendable, :category, :component, :area_scope)
         end
 
         def ideas
