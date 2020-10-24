@@ -461,7 +461,8 @@ fi:
           area_scope: Alue
           amendment_type: Tyyppi
           category: Teema
-          my_ideas: Omat ideat
+          my_favorites: Näytä omat suosikkisi
+          my_ideas: Näytä omat ideasi
           origin: Alkuperä
           related_to: Liittyy aiheeseen
           reset: Tyhjennä rajaukset
@@ -469,7 +470,7 @@ fi:
           state: Tila
           title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
-          voted: Kannatettu
+          voted: Näytä kannatetut
         filters_small_view:
           close_modal: Sulje ikkuna
           filter: Suodata

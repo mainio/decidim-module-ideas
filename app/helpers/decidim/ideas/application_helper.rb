@@ -129,7 +129,8 @@ module Decidim
       def activity_filter_values
         base = [
           ["all", t(".all")],
-          ["my_ideas", t(".my_ideas")]
+          ["my_ideas", t(".my_ideas")],
+          ["my_favorites", t(".my_favorites")]
         ]
         base += [["voted", t(".voted")]] if current_settings.votes_enabled?
         base

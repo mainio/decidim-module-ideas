@@ -461,7 +461,8 @@ sv:
           area_scope: Område
           amendment_type: Typ
           category: Tema
-          my_ideas: Mina idéer
+          my_favorites: Visa mina favoriter
+          my_ideas: Visa mina idéer
           origin: Ursprung
           related_to: Relaterade till
           reset: Rensa filter
@@ -469,7 +470,7 @@ sv:
           state: Status
           title: Filtrera idéerna på kartan och i listan
           type: Typ
-          voted: Stöds
+          voted: Visa stöds
         filters_small_view:
           close_modal: Stäng fönstret
           filter: Filtrera

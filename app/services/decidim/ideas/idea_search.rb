@@ -47,6 +47,8 @@ module Decidim
             .joins(:coauthorships)
             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
             .where(decidim_coauthorships: { decidim_author_id: @current_user })
+        when "my_favorites"
+          query.user_favorites(@current_user)
         else # Assume 'all'
           query
         end
