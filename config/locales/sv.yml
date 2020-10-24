@@ -13,11 +13,11 @@ sv:
         has_address: Har adress
         latitude: Latitud
         longitude: Longitud
-        perform_geocoding: Fetch the map point based on the address
+        perform_geocoding: Hämta kartpunkten baserat på adressen
         state: Status
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
-        terms_agreed: I have read the criteria
+        terms_agreed: Jag har läst kriterier
         title: Idé namn
         user_group_id: Skapa idé som
       idea_answer:
@@ -70,7 +70,7 @@ sv:
     admin:
       filters:
         area_scope_id_eq:
-          label: Area
+          label: Område
         is_emendation_true:
           label: Typ
           values:
@@ -81,9 +81,9 @@ sv:
         state_eq:
           label: Status
           values:
-            accepted: Possible
+            accepted: Möjlig
             evaluating: Utvärderas
-            rejected: Not possible
+            rejected: Omöjligt
             withdrawn: Tillbakadragna
         state_null:
           label: Status
@@ -160,25 +160,25 @@ sv:
           notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
+            email_intro: 'Din idé "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Your idea will go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
+            email_subject: Din idé kommer att gå vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
           follower:
-            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
+            email_intro: 'Idén "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
-            email_subject: An idea you are following will go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
+            email_subject: En idé du följer kommer att gå vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
+            email_intro: 'Din idé "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
             email_subject: Din idé utvärderas
             notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
           follower:
-            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
+            email_intro: 'Idén "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
-            email_subject: A idea you are following is being evaluated
+            email_subject: En idé som du följer utvärderas
             notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
         idea_mentioned:
           email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i denna grupp</a> i kommentarerna.
@@ -197,15 +197,15 @@ sv:
           notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> har lagts till i %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'Din idé "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Your idea will not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
+            email_subject: Din idé går inte vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
           follower:
-            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'Idén "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}". Klicka på länken ovan för att sluta följa det.
-            email_subject: A idea you are following will not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
+            email_subject: En idé du följer går inte vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
         idea_update_category:
           email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
           email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
@@ -298,8 +298,8 @@ sv:
           form:
             attachment_legend: "Lägg till en bilaga till idén"
             image_legend: "Lägg till en bild för idén"
-            select_a_category: Choose a primary theme for the idea
-            select_a_sub_category: Choose a subtheme for the idea
+            select_a_category: Välj ett primärt tema för idén
+            select_a_sub_category: Välj ett undertema för idén
           index:
             actions: Funktioner
             cancel: Avbryt
@@ -443,7 +443,7 @@ sv:
         edit_draft:
           discard: Släng utkastet
           discard_confirmation: Är du säker på att du vill slänga detta utkast?
-          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
+          draft_announcement_html: <p>Detta är ett idéutkast. Du måste publicera utkastet för att det ska bli synligt på webbplatsen.</p><p>Du kan bara ha ett utkastidé åt gången.</p>
           send: Förhandsgranska
           title: Redigera idéutkast
         edit_view:
@@ -462,16 +462,16 @@ sv:
           area_scope: Område
           amendment_type: Typ
           category: Tema
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
+          my_favorites: Visa mina favoriter
+          my_ideas: Visa mina idéer
           origin: Ursprung
           related_to: Relaterade till
           reset: Rensa filter
           search: Sök
           state: Status
-          title: Filter the ideas on the map and in the list
+          title: Filtrera idéerna på kartan och i listan
           type: Typ
-          voted: Show supported
+          voted: Visa stöds
         filters_small_view:
           close_modal: Stäng fönstret
           filter: Filtrera
@@ -480,14 +480,14 @@ sv:
         form:
           attachment_added: Bilaga tillagd
           attachment_file_required: Filen måste bifogas
-          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
+          attachment_modal_mobile_notice: Tilläggsknappen finns längst ner i det här fönstret. Om du inte ser det på en mobilskärm, bläddra nedåt på skärmen.
           attachment_title_required: Titel måste definieras för filen
           add_attachment: Lägg till bilagan
           add_image: Lägg till bilden
           address_lookup_button: Slå upp
           attachment_legend: "Lägg till en bilaga till idén"
           cancel: Avbryt
-          characters_min: "(at least %count% characters required)"
+          characters_min: "(minst %count% tecken krävs)"
           characters_used: "%count%/%total% tecken används"
           close_modal: Stäng fönstret
           files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
@@ -495,22 +495,22 @@ sv:
           files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
           image_added: Bilden tillagd
           image_legend: "Lägg till en bild för idén"
-          remove_attachment: Remove attachment
-          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
-          remove_image: Remove image
-          remove_image_confirm: Are you sure you want to remove the image from the idea?
+          remove_attachment: Ta bort bilagan
+          remove_attachment_confirm: Är du säker på att du vill ta bort bilagan från idén?
+          remove_image: Ta bort bilden
+          remove_image_confirm: Är du säker på att du vill ta bort bilden från idén?
           required_fields_text: Obligatoriska fält är markerade med *-tecknet.
           reset_field: Återställ fältet
           select_a_category: Välj ett primärt tema för idén
           select_a_sub_category: Välj ett undertema för idén
           show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
           show_categories_info_text: Kontrollera vad teman består av
-          show_terms_info_text: Show criteria
+          show_terms_info_text: Visa kriterier
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
-          draft_idea_title: You have an idea draft!
-          draft_idea_continue: Continue your idea
-          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
+          draft_idea_title: Du har ett idéutkast!
+          draft_idea_continue: Fortsätt din idé
+          draft_idea_description: Du har tidigare sparat en idé som ett utkast. Du kan nu fortsätta skriva den.
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
           title: Bläddra bland idéer
@@ -543,8 +543,8 @@ sv:
         preview:
           description: Kontrollera först hur din idé kommer att se ut när den publiceras på webbplatsen. Om du vill göra ändringar kan du gå tillbaka till redigeringsvyn. Om du är helt nöjd med idén, publicera den!
           modify: Ändra idén
-          not_published: Your idea has not yet been published
-          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
+          not_published: Din idé har ännu inte publicerats
+          not_published_description: Din idé har sparats som ett utkast. Idén måste publiceras för att den ska visas på webbplatsen.
           idea_edit_before_minutes:
             one: Du kommer att kunna redigera den här idén under den första minuten efter att idén har publicerats. När det tidsfönstret har passerat kommer du inte att kunna redigera idén.
             other: Du kommer att kunna redigera den här idén upp till %{count} minuter efter att idén har publicerats. När det tidsfönstret passerat kommer du inte att kunna redigera idén.
@@ -577,14 +577,14 @@ sv:
           back_to: Tillbaka till
           back_to_list: Visa andra idéer
           changes_at_title: Ändring till %{title}
-          feedback_title: Thank you for submitting an idea!
+          feedback_title: Tack för att du skickade en idé!
           link_to_promoted_emendation_help_text: Denna idé är ett annonserat ändringsförslag
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: This idea went through.
-          idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea did not go through.
+          idea_accepted_reason: Denna idé gick vidare.
+          idea_in_evaluation_reason: Denna idé utvärderas.
+          idea_rejected_reason: Denna idé gick inte vidare.
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
