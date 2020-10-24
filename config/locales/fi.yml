@@ -443,6 +443,7 @@ fi:
         edit_draft:
           discard: Peruuta tämä luonnos
           discard_confirmation: Haluatko varmasti peruuttaa tämän idealuonnoksen?
+          draft_announcement_html: <p>Tämä on keskeneräinen idealuonnos. Sinun on julkaistava luonnos, jotta se tulee näkyviin sivustolle.</p><p>Sinulla voi olla vain yksi keskeneräinen idea kerrallaan.</p>
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
@@ -507,6 +508,9 @@ fi:
           show_terms_info_text: Tutustu kriteereihin
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
+          draft_idea_title: Sinulla on keskeneräinen idea!
+          draft_idea_continue: Jatka ideaasi
+          draft_idea_description: Olet aikaisemmin tallentanut idean keskeneräisenä. Voit nyt jatkaa sen kirjoittamista.
           leave_your_idea: Käy jättämässä oma ideasi!
           new_idea: Uusi idea
           title: Tutustu ideoihin

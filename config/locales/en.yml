@@ -444,6 +444,7 @@ en:
         edit_draft:
           discard: Discard this draft
           discard_confirmation: Are you sure you want to discard this idea draft?
+          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
           send: Preview
           title: Edit Idea Draft
         edit_view:
@@ -508,6 +509,9 @@ en:
           show_terms_info_text: Show criteria
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
+          draft_idea_title: You have an idea draft!
+          draft_idea_continue: Continue your idea
+          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
           leave_your_idea: Submit your own idea!
           new_idea: New idea
           title: Browse ideas

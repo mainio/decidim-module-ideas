@@ -1,3 +1,15 @@
+<% if @draft_idea_link %>
+  <div class="row">
+    <div class="columns small-centered large-8">
+      <div class="callout announcement main-announcement warning cell-announcement text-center">
+        <h2><%= t ".draft_idea_title" %></h2>
+        <p><%= t ".draft_idea_description" %></p>
+        <p><%= link_to t(".draft_idea_continue"), @draft_idea_link, class: "button primary large" %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="row columns">
   <div class="text-center">
     <h2 class="heading1 page-title"><%= t ".title" %></h2>

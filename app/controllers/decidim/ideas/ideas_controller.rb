@@ -40,6 +40,12 @@ module Decidim
         end
         @ideas = paginate(@ideas)
         @ideas = reorder(@ideas)
+
+        if idea_draft && current_settings&.creation_enabled? && allowed_to?(:edit, :idea, idea: idea_draft)
+          @draft_idea_link = Decidim::ResourceLocatorPresenter.new(
+            idea_draft
+          ).path + "/edit_draft"
+        end
       end
 
       def show

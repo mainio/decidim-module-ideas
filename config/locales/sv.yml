@@ -443,6 +443,7 @@ sv:
         edit_draft:
           discard: Släng utkastet
           discard_confirmation: Är du säker på att du vill slänga detta utkast?
+          draft_announcement_html: <p>Detta är ett idéutkast. Du måste publicera utkastet för att det ska bli synligt på webbplatsen.</p><p>Du kan bara ha ett utkastidé åt gången.</p>
           send: Förhandsgranska
           title: Redigera idéutkast
         edit_view:
@@ -507,6 +508,9 @@ sv:
           show_terms_info_text: Visa kriterier
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
+          draft_idea_title: Du har ett idéutkast!
+          draft_idea_continue: Fortsätt din idé
+          draft_idea_description: Du har tidigare sparat en idé som ett utkast. Du kan nu fortsätta skriva den.
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
           title: Bläddra bland idéer
