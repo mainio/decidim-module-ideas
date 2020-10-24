@@ -479,6 +479,7 @@ fi:
         form:
           attachment_added: Liite lisätty
           attachment_file_required: Tiedosto on liitettävä
+          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
           attachment_title_required: Tiedostolle on annettava otsikko
           add_attachment: Lisää liite
           add_image: Lisää kuva
