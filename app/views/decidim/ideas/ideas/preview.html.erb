@@ -1,6 +1,8 @@
 <div class="row">
   <div class="columns small-centered large-8">
     <div class="callout announcement main-announcement warning cell-announcement text-center">
+      <h3><%= t(".not_published") %></h3>
+      <p><%= t(".not_published_description") %></p>
       <p><%= t(".idea_edit_before_minutes", count: component_settings.idea_edit_before_minutes) %></p>
     </div>
   </div>
@@ -11,7 +13,9 @@
     <div class="card text-center">
       <div class="card__content">
         <h2 class="section-heading"><%= t(".title") %></h2>
-        <p><%= t(".description") %></p>
+        <div class="static__content">
+          <p><%= t(".description") %></p>
+        </div>
       </div>
     </div>
   </div>

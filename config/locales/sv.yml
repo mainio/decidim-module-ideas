@@ -174,12 +174,12 @@ sv:
             email_intro: 'Din idé "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
             email_subject: Din idé utvärderas
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas.
           follower:
             email_intro: 'Idén "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
             email_subject: En idé som du följer utvärderas
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas.
         idea_mentioned:
           email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i denna grupp</a> i kommentarerna.
           email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
@@ -342,12 +342,12 @@ sv:
             votes_count: Antal stöd
             votes_ranking: Sortera efter stöd
           update_category:
-            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            invalid: 'Dessa idéer hade redan temat %{subject_name}: %{ideas}.'
             select_a_category: Välj ett tema
             select_a_idea: Välj en idé
-            success: 'Idéer som har uppdaterats till omfånget %{subject_name}: %{ideas}.'
+            success: 'Idéer som har uppdaterats till temat %{subject_name}: %{ideas}.'
           update_area_scope:
-            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            invalid: 'Dessa idéer hade redan området %{subject_name}: %{ideas}.'
             select_a_idea: Välj en idé
             select_a_scope: Välj ett område
             success: 'Idéer som har uppdaterats till området %{subject_name}: %{ideas}.'

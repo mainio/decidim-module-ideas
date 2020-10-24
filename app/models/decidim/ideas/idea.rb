@@ -8,6 +8,7 @@ module Decidim
       include Decidim::Coauthorable
       include Decidim::HasComponent
       include Decidim::Ideas::AreaScopable
+      # include Decidim::ScopableResource
       include Decidim::HasReference
       include Decidim::HasCategory
       include Decidim::Reportable
@@ -19,7 +20,6 @@ module Decidim
       include Decidim::Loggable
       include Decidim::Fingerprintable
       include Decidim::DataPortability
-      include Decidim::Hashtaggable
       include Decidim::Amendable
       include Decidim::Favorites::Favoritable
 
@@ -95,8 +95,8 @@ module Decidim
         {
           scope_id: :area_scope_id,
           participatory_space: { component: :participatory_space },
-          D: :search_body,
-          A: :search_title,
+          D: :body,
+          A: :title,
           datetime: :published_at
         },
         index_on_create: ->(idea) { idea.visible? },
@@ -278,6 +278,7 @@ module Decidim
       #
       # user - the user to check for authorship
       def editable_by?(user)
+        return false if withdrawn?
         return true if draft?
 
         !published_state? && within_edit_time_limit? && !copied_from_other_component? && created_by?(user)

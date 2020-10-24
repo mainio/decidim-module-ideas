@@ -11,7 +11,7 @@ module Decidim
         helper Ideas::ApplicationHelper
         helper Decidim::Ideas::Admin::IdeaRankingsHelper
         helper Decidim::Messaging::ConversationHelper
-        helper_method :ideas, :query, :form_presenter, :idea, :idea_ids
+        helper_method :ideas, :query, :form_presenter, :idea_form_builder, :idea, :idea_ids
         helper Ideas::Admin::IdeaBulkActionsHelper
 
         def show
@@ -123,14 +123,15 @@ module Decidim
         def edit
           enforce_permission_to :edit, :idea, idea: idea
           @form = form(Admin::IdeaForm).from_model(idea)
-          @form.attachment = form(AttachmentForm).from_params({})
+          @form.image = form(ImageAttachmentForm).from_model(idea.image)
+          @form.attachment = form(AttachmentForm).from_model(idea.actual_attachments.first)
         end
 
         def update
           enforce_permission_to :edit, :idea, idea: idea
 
           @form = form(Admin::IdeaForm).from_params(params)
-          Admin::UpdateIdea.call(@form, @idea) do
+          Admin::UpdateIdea.call(@form, current_user, @idea) do
             on(:ok) do |_idea|
               flash[:notice] = t("ideas.update.success", scope: "decidim")
               redirect_to ideas_path
@@ -146,7 +147,11 @@ module Decidim
         private
 
         def collection
-          @collection ||= Idea.where(component: current_component).published
+          @collection ||= Idea.where(component: current_component)
+                          .only_amendables
+                          .published
+                          .not_hidden
+                          .includes(:amendable, :category, :component, :area_scope)
         end
 
         def ideas
@@ -199,6 +204,10 @@ module Decidim
               scope: "decidim.ideas.admin"
             )
           end
+        end
+
+        def idea_form_builder
+          Decidim::Ideas::Admin::FormBuilder
         end
 
         def form_presenter

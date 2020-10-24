@@ -40,10 +40,24 @@ module Decidim
         end
         @ideas = paginate(@ideas)
         @ideas = reorder(@ideas)
+
+        if idea_draft && current_settings&.creation_enabled? && allowed_to?(:edit, :idea, idea: idea_draft)
+          @draft_idea_link = Decidim::ResourceLocatorPresenter.new(
+            idea_draft
+          ).path + "/edit_draft"
+        end
       end
 
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
+
+        if @idea.emendation?
+          if @idea.amendable
+            return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path
+          else
+            raise ActionController::RoutingError, "Not Found"
+          end
+        end
 
         @report_form = form(Decidim::ReportForm).from_params(reason: "spam")
       end
@@ -70,11 +84,17 @@ module Decidim
         # In case of an error
         @idea ||= Idea.new(component: current_component)
 
+        show_preview = params[:save_type] != "save"
+
         CreateIdea.call(@form, current_user) do
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.create.success", scope: "decidim")
 
-            redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            if show_preview
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            else
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+            end
           end
 
           on(:invalid) do
@@ -111,12 +131,17 @@ module Decidim
 
       def update_draft
         enforce_permission_to :edit, :idea, idea: @idea
+        show_preview = params[:save_type] != "save"
 
         @form = form_idea_params
         UpdateIdea.call(@form, current_user, @idea) do
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.update_draft.success", scope: "decidim")
-            redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            if show_preview
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+            else
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+            end
           end
 
           on(:invalid) do

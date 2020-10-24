@@ -207,10 +207,10 @@ fi:
             email_subject: Seuraamasi idea ei etene jatkoon
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
         idea_update_category:
-          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi aihepiiriin "%{resource_title}", tarkista se tältä sivulta:'
+          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi teeman "%{resource_title}", tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
-          email_subject: Idean %{resource_title} aihepiiri on päivitetty
-          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> aihepiirin.
+          email_subject: Idean %{resource_title} teema on päivitetty
+          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> teeman.
         idea_update_area_scope:
           email_intro: 'Hallintakäyttäjä on päivittänyt ideasi "%{resource_title}" alueen, tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
@@ -342,10 +342,10 @@ fi:
             votes_count: Kannatusten lukumäärä
             votes_ranking: Luokittelu kannatusten mukaan
           update_category:
-            invalid: 'Näillä ideoilla oli jo aihepiiri %{subject_name}: %{proposals}.'
-            select_a_category: Valitse aihepiiri
+            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
+            select_a_category: Valitse teema
             select_a_idea: Valitse idea
-            success: 'Seuraavien ideoiden aihepiirin päivitys onnistui %{subject_name}: %{proposals}.'
+            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}: %{proposals}.'
           update_area_scope:
             invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
             select_a_idea: Valitse idea
@@ -461,7 +461,7 @@ fi:
           all_categories: Kaikki teemat
           area_scope: Alue
           amendment_type: Tyyppi
-          category: Aihepiiri
+          category: Teema
           my_favorites: Näytä omat suosikkisi
           my_ideas: Näytä omat ideasi
           origin: Alkuperä

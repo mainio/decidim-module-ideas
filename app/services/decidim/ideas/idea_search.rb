@@ -47,6 +47,8 @@ module Decidim
             .joins(:coauthorships)
             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
             .where(decidim_coauthorships: { decidim_author_id: @current_user })
+        when "my_favorites"
+          query.user_favorites(@current_user)
         else # Assume 'all'
           query
         end
@@ -71,12 +73,10 @@ module Decidim
       # Handle the amendment type filter
       def search_type
         case type
-        when "ideas"
-          query.only_amendables
         when "amendments"
           query.only_visible_emendations_for(@current_user, @component)
-        else # Assume 'all'
-          query.amendables_and_visible_emendations_for(@current_user, @component)
+        else # Assume 'ideas'
+          query.only_amendables
         end
       end
 

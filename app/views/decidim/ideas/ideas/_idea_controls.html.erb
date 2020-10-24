@@ -10,7 +10,7 @@
   <div class="resource-controls">
     <% if allowed_to?(:edit, :idea, idea: idea) && idea.amendable? %>
       <div class="resource-control">
-        <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button large hollow" %>
+        <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button primary large hollow" %>
       </div>
     <% elsif idea.emendation? %>
       <div class="resource-control">
@@ -18,7 +18,7 @@
       </div>
     <% end %>
     <div class="resource-control">
-      <%= action_authorized_link_to :withdraw, withdraw_idea_path(idea), method: :put, class: "button large hollow", data: { confirm: t(".withdraw_confirmation_html") } do %>
+      <%= action_authorized_link_to :withdraw, withdraw_idea_path(idea), method: :put, class: "button primary large hollow", data: { confirm: t(".withdraw_confirmation_html") } do %>
         <%= t(".withdraw_idea") %>
       <% end %>
     </div>

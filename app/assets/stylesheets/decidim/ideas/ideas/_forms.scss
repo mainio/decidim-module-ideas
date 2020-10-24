@@ -4,6 +4,14 @@
   display: none;
 }
 
+#address_input{
+  position: relative;
+
+  .tribute-container{
+    top: 51px;
+  }
+}
+
 .idea-form-container{
   margin-top: 2rem;
 
@@ -12,6 +20,10 @@
     span.form-error{
       color: $input-error-color;
     }
+  }
+
+  .ideas-form-text{
+    margin-bottom: 3rem;
   }
 
   .field-info{
@@ -49,11 +61,31 @@
 
     .attachment-added{
       position: relative;
-      top: -7px;
+      top: 6px;
     }
 
     .attachment-fields{
       display: none;
+    }
+  }
+
+  .actions{
+    margin-top: 2rem;
+
+    @include breakpoint(medium up){
+      margin-top: 0;
+    }
+
+    a{
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    a,
+    .button{
+      @include breakpoint(large up){
+        margin-bottom: 0;
+      }
     }
   }
 }

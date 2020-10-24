@@ -31,15 +31,14 @@ module Decidim
         return broadcast(:invalid) unless idea.editable_by?(current_user)
         return broadcast(:invalid) if idea_limit_reached?
 
+        @idea.image.destroy! if @idea.image.present? && (process_image? || image_removed?)
         if process_image?
-          @idea.image.destroy! if @idea.image.present?
-
           build_image
           return broadcast(:invalid) if image_invalid?
         end
-        if process_attachments?
-          @idea.actual_attachments.destroy_all
 
+        @idea.actual_attachments.destroy_all if process_attachments? || attachment_removed?
+        if process_attachments?
           build_attachment
           return broadcast(:invalid) if attachment_invalid?
         end

@@ -4,6 +4,8 @@
       <div class="resource-image" data-equalizer-watch>
         <% if idea.image %>
           <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+        <% elsif category_image_path(idea.category) %>
+          <%= image_tag category_image_path(idea.category), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
           <%= image_tag "decidim/ideas/idea-default.jpg", class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
@@ -73,13 +75,9 @@
 <div class="resource-body">
   <div class="row">
     <div class="columns">
-      <div class="section">
-        <% if idea.emendation? %>
-          <%= cell("decidim/diff", idea_presenter.versions.last) %>
-        <% else %>
-          <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
-          <%= render_idea_body(idea) %>
-        <% end %>
+      <div class="section static__content">
+        <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
+        <%= render_idea_body(idea) %>
       </div>
 
       <%= attachments_for idea %>
@@ -88,8 +86,6 @@
       <%= linked_resources_for idea, :results, "included_ideas" %>
       <%= linked_resources_for idea, :projects, "included_ideas" %>
       <%= linked_resources_for idea, :ideas, "copied_from_component" %>
-
-      <%= amendments_for idea %>
     </div>
   </div>
 </div>

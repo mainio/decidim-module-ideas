@@ -16,7 +16,7 @@
       <% end %>
     </li>
   <% end %>
-  <% if component_settings.geocoding_enabled? && idea.address.present? %>
+  <% if component_settings.geocoding_enabled? && idea.latitude.present? && idea.longitude.present? %>
     <li>
       <%= link_to idea_map_link(idea), class: "action-link", target: "_blank" do %>
         <%= icon "map-marker", role: "img", "aria-hidden": true %>

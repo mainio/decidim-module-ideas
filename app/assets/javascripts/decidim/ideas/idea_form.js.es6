@@ -4,8 +4,12 @@
 ((exports) => {
   const $ = exports.$; // eslint-disable-line
 
+  // Defines whether the user can exit the view without a warning or not
+  let canExit = false;
+
   const DEFAULT_MESSAGES = {
-    charactersUsed: "%count%/%total% characters used"
+    charactersUsed: "%count%/%total% characters used",
+    charactersMin: "(at least %count characters required)"
   };
   const DEFAULT_OPTIONS = {
     messages: DEFAULT_MESSAGES
@@ -14,7 +18,7 @@
 
   class Options {
     static configure(options) {
-      OPTIONS = exports.$.extend(DEFAULT_OPTIONS, options);
+      OPTIONS = $.extend(DEFAULT_OPTIONS, options);
     }
 
     static getMessage(message) {
@@ -58,10 +62,17 @@
           )
         );
       }
+      if (this.minCharacters > 0 && this.minCharacters > numCharacters) {
+        let message = Options.getMessage("charactersMin");
 
-      console.log(this.$target);
-
-      this.$target.text(showMessages.join(", "));
+        showMessages.push(
+          message.replace(
+            "%count%",
+            this.minCharacters
+          )
+        );
+      }
+      this.$target.html(showMessages.join("<br>"));
     }
   }
 
@@ -72,27 +83,46 @@
    * version that currently ships with Decidin.
    */
   const bindFormValidation = () => {
-    const $form = exports.$("form.new_idea");
-    const $submits = exports.$(`[type="submit"]`, $form);
+    const $form = $("form.new_idea, form.edit_idea");
+    const $submits = $(`[type="submit"]`, $form);
+    const $discardLink = $(".discard-draft-link", $form);
 
     $submits
-      .off('click.decidim.ideas.form')
-      .on('click.decidim.ideas.form', (e) => {
+      .off("click.decidim.ideas.form")
+      .on("click.decidim.ideas.form", (e) => {
+        // Tell the backend which submit button was pressed (save or preview)
+        let $btn = $(e.target);
+        if (!$btn.is("button")) {
+          $btn = $btn.closest("button");
+        }
+
+        $form.append(`<input type="hidden" name="save_type" value="${$btn.attr("name")}" />`);
+        $submits.attr("disabled", true);
+
         if (!e.key || (e.key === ' ' || e.key === 'Enter')) {
           e.preventDefault();
+
+          canExit = true;
           $form.submit();
 
           const $firstField = $("input.is-invalid-input, textarea.is-invalid-input").first();
           $firstField.focus();
+          $submits.removeAttr("disabled");
         }
+      });
+
+    $discardLink
+      .off("click.decidim.ideas.form")
+      .on("click.decidim.ideas.form", () => {
+        canExit = true;
       });
   };
 
   const bindAddressLookup = () => {
-    const $map = exports.$("#map");
-    const $address = exports.$("#idea_address");
-    const $latitude = exports.$("#idea_latitude");
-    const $longitude = exports.$("#idea_longitude");
+    const $map = $("#map");
+    const $address = $("#idea_address");
+    const $latitude = $("#idea_latitude");
+    const $longitude = $("#idea_longitude");
     const authToken = $(`input[name="authenticity_token"]`).val();
     const coordinatesUrl = $address.data("coordinates-url");
     const addressUrl = $address.data("address-url");
@@ -222,6 +252,8 @@
   };
 
   const bindAttachmentModals = () => {
+    const fileMissing = ($file) => $file.get(0).files.length === 0;
+
     // The attachment fields need to be inside the form when it is submitted but
     // the reveal is displayed outside of the form. Therefore, we move the
     // fields to the reveal when it is opened and back to the form when it is
@@ -231,6 +263,13 @@
       const $button = $(`button[data-open='${$reveal.attr("id")}']`);
       const $buttonWrapper = $button.parent();
       const $fields = $(".attachment-fields", $buttonWrapper);
+      const $file = $("input[type='file']", $fields);
+      const $text = $("input[type='text']", $fields);
+      const $remove = $("input[name$='[remove_file]']", $fields);
+
+      $file.data("original-value", $file.get(0).files);
+      $text.data("original-value", $text.val());
+      $remove.data("original-value", $remove.val()).removeAttr("value");
 
       $(".reveal__content", $reveal).append($fields);
     });
@@ -250,13 +289,14 @@
       const $reveal = $(ev.target).closest(".reveal");
       const $file = $("input[type='file']", $reveal);
       const $text = $("input[type='text']", $reveal);
+      const $remove = $("input[name$='[remove_file]']", $reveal);
       const $fields = $(".attachment-fields", $reveal);
       const filePresent = $fields.data("file-present");
 
       $(".form-error-general", $reveal).removeClass("is-visible");
 
       let success = true;
-      if ($file.get(0).files.length === 0 && !filePresent) {
+      if (fileMissing($file) && !filePresent) {
         success = false;
         $(".form-error-general", $file.closest(".field")).addClass("is-visible");
       }
@@ -269,28 +309,82 @@
         const $button = $(`button[data-open='${$reveal.attr("id")}']`);
         const $buttonWrapper = $button.parent();
 
+        $remove.attr("value", "false");
         $reveal.foundation("close");
         $(".attachment-added", $buttonWrapper).removeClass("hide");
       }
     });
 
+    $(".attachment-added .remove-attachment").on("click", (ev) => {
+      ev.preventDefault();
+
+      const $container = $(ev.target).closest(".attachment-button");
+      const $file = $("input[type='file']", $container);
+      const $text = $("input[type='text']", $container);
+      const $remove = $("input[name$='[remove_file]']", $container);
+
+      $remove.attr("value", "true");
+      $file.nextAll().remove(); // The current file elements
+      $file.replaceWith($file.val("").clone(true));
+      $text.val("").removeAttr("required");
+      $(".attachment-added", $container).addClass("hide");
+    });
+
     $(".cancel-attachment").on("click", (ev) => {
+      // Prevent the form submission or validation.
+      ev.preventDefault();
+
       const $reveal = $(ev.target).closest(".reveal");
       const $file = $("input[type='file']", $reveal);
       const $text = $("input[type='text']", $reveal);
+      const $remove = $("input[name$='[remove_file]']", $reveal);
+      const $fields = $(".attachment-fields", $reveal);
+      const filePresent = $fields.data("file-present");
 
       $(".form-error-general", $reveal).removeClass("is-visible");
 
-      // In case of an error, make sure the fields are cleared.
-      if ($file.get(0).files.length === 0 || $.trim($text.val()).length < 1) {
+      const originalFiles = $file.data("original-value");
+      if (originalFiles.length > 0) {
+        $file.get(0).files = originalFiles;
+      } else {
+        $file.replaceWith($file.val("").clone(true));
+      }
+
+      $text.val($text.data("original-value"));
+      $remove.attr("value", $remove.data("original-value"));
+
+      if (filePresent) {
+        // When there are elements after the file, it means there is a current
+        // file defiled.
+      } else if (fileMissing($file) || $.trim($text.val()).length < 1) {
+        // In case of an error, make sure the fields are cleared.
         const $button = $(`button[data-open='${$reveal.attr("id")}']`);
         const $buttonWrapper = $button.parent();
 
-        $file.replaceWith($file.val("").clone(true));
-        $text.val("");
+        // $file.replaceWith($file.val("").clone(true));
+        // $text.val("");
         $(".attachment-added", $buttonWrapper).addClass("hide");
       }
     });
+  };
+
+  const bindAccidentalExitDisabling = () => {
+    $(document).on("click", "a, input, button", (ev) => {
+      const $target = $(ev.target);
+      if ($target.closest(".idea-form-container").length > 0) {
+        canExit = true;
+      } else if ($target.closest("#loginModal").length > 0) {
+        canExit = true;
+      }
+    });
+
+    window.onbeforeunload = () => {
+      if (canExit) {
+        return null;
+      }
+
+      return "";
+    }
   };
 
   exports.Decidim = exports.Decidim || {};
@@ -310,5 +404,6 @@
     bindAddressLookup();
     bindSubcategoryInputs();
     bindAttachmentModals();
+    bindAccidentalExitDisabling();
   });
 })(window);

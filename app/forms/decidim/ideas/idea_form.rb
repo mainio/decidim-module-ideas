@@ -22,7 +22,7 @@ module Decidim
 
       validates :terms_agreed, presence: true
       validates :title, presence: true, idea_length: {
-        minimum: 15,
+        minimum: 5,
         maximum: ->(record) { record.component.settings.idea_title_length }
       }
       validates :body, presence: true, idea_length: {
@@ -42,6 +42,7 @@ module Decidim
       delegate :categories, to: :current_component
 
       alias component current_component
+      alias organization current_organization
 
       def map_model(model)
         @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
@@ -62,12 +63,24 @@ module Decidim
         end
       end
 
+      # In Windows, the front-end form calculates Windows line breaks (\r\n) as
+      # a single character which can lead to situations where the user can
+      # submit the "too long" text but the backend rejects it, because all those
+      # characters are calculated as a single character in the backend.
+      def body
+        orig_body = super
+        return orig_body if orig_body.blank?
+
+        orig_body.gsub(/\r/, "")
+      end
+
       # Finds the Category from either sub_category_id or category_id. If
       # sub-category is defined, that will be used.
       #
       # Returns a Decidim::Category
       def category
-        cat_id = sub_category_id || category_id
+        cat_id = sub_category_id.presence || category_id
+        return if cat_id.blank?
 
         @category ||= categories.find_by(id: cat_id)
       end
@@ -164,8 +177,8 @@ module Decidim
       # an error, the attachment is lost, so we need a way to inform the user of
       # this problem.
       def notify_missing_attachment_if_errored
-        errors.add(:image, :needs_to_be_reattached) if errors.any? && image.present?
-        errors.add(:attachment, :needs_to_be_reattached) if errors.any? && attachment.present?
+        errors.add(:image, :needs_to_be_reattached) if errors.any? && image.present? && image.file.present?
+        errors.add(:attachment, :needs_to_be_reattached) if errors.any? && attachment.present? && attachment.file.present?
       end
 
       def ordered_hashtag_list(string)

@@ -8,10 +8,10 @@ module Decidim
 
       def build_image
         @image = Decidim::Ideas::Attachment.new(
+          attached_to: @attached_to, # Keep first
           title: @form.image.title,
           file: @form.image.file,
-          weight: 0,
-          attached_to: @attached_to
+          weight: 0
         )
       end
 
@@ -22,7 +22,13 @@ module Decidim
         end
       end
 
+      def image_removed?
+        @form.image.remove_file?
+      end
+
       def image_present?
+        return false if image_removed?
+
         @form.image.present? && @form.image.file.present?
       end
 

@@ -14,10 +14,11 @@ en:
         has_address: Has address
         latitude: Latitude
         longitude: Longitude
+        perform_geocoding: Fetch the map point based on the address
         state: State
         sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read the conditions for ideas
+        terms_agreed: I have read the criteria
         title: Idea title
         user_group_id: Create idea as
       idea_answer:
@@ -69,6 +70,8 @@ en:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Area
         is_emendation_true:
           label: Type
           values:
@@ -79,7 +82,9 @@ en:
         state_eq:
           label: State
           values:
+            accepted: Possible
             evaluating: Evaluating
+            rejected: Not possible
             withdrawn: Withdrawn
         state_null:
           label: Status
@@ -156,25 +161,25 @@ en:
           notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea went through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> went through.
+            email_subject: Your idea will go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
           follower:
-            email_intro: 'The idea "%{resource_title}" went through. You can read the answer in this page:'
+            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following went through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea went through.
+            email_subject: An idea you are following will go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
             email_subject: Your idea is being evaluated
             notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
           follower:
-            email_intro: 'The idea "%{resource_title}" is currently being evaluated. You can check for an answer in this page:'
+            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following is being evaluated
+            email_subject: A idea you are following is being evaluated
             notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
         idea_mentioned:
           email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
@@ -193,15 +198,15 @@ en:
           notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea did not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> did not go through.
+            email_subject: Your idea will not go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
           follower:
-            email_intro: 'The idea "%{resource_title}" did not go through. You can read the answer in this page:'
+            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you're following did not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea did not go through.
+            email_subject: A idea you are following will not go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
         idea_update_category:
           email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
           email_outro: You have received this notification because you are the author of the idea.
@@ -294,7 +299,8 @@ en:
           form:
             attachment_legend: "Add an attachment for the idea"
             image_legend: "Add an image for the idea"
-            select_a_category: Choose a theme for the idea
+            select_a_category: Choose a primary theme for the idea
+            select_a_sub_category: Choose a subtheme for the idea
           index:
             actions: Actions
             cancel: Cancel
@@ -438,6 +444,7 @@ en:
         edit_draft:
           discard: Discard this draft
           discard_confirmation: Are you sure you want to discard this idea draft?
+          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
           send: Preview
           title: Edit Idea Draft
         edit_view:
@@ -456,14 +463,16 @@ en:
           area_scope: Area
           amendment_type: Type
           category: Theme
-          my_ideas: My ideas
+          my_favorites: Show my favourites
+          my_ideas: Show my ideas
           origin: Origin
           related_to: Related to
           reset: Clear filters
           search: Search
           state: Status
+          title: Filter the ideas on the map and in the list
           type: Type
-          voted: Supported
+          voted: Show supported
         filters_small_view:
           close_modal: Close modal
           filter: Filter
@@ -472,12 +481,14 @@ en:
         form:
           attachment_added: Attachment added
           attachment_file_required: File needs to be attached
+          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
           attachment_title_required: Title has to be defined for the file
           add_attachment: Add attachment
           add_image: Add image
           address_lookup_button: Lookup
           attachment_legend: "Add an attachment for the idea"
           cancel: Cancel
+          characters_min: "(at least %count% characters required)"
           characters_used: "%count%/%total% characters used"
           close_modal: Close window
           files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
@@ -485,15 +496,22 @@ en:
           files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
           image_added: Image added
           image_legend: "Add an image for the idea"
+          remove_attachment: Remove attachment
+          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
+          remove_image: Remove image
+          remove_image_confirm: Are you sure you want to remove the image from the idea?
           required_fields_text: Required fields are marked with the *-character.
           reset_field: Reset field
           select_a_category: Choose a primary theme for the idea
           select_a_sub_category: Choose a subtheme for the idea
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
-          show_terms_info_text: Show terms
+          show_terms_info_text: Show criteria
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
+          draft_idea_title: You have an idea draft!
+          draft_idea_continue: Continue your idea
+          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
           leave_your_idea: Submit your own idea!
           new_idea: New idea
           title: Browse ideas
@@ -526,6 +544,8 @@ en:
         preview:
           description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
           modify: Modify the idea
+          not_published: Your idea has not yet been published
+          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
           idea_edit_before_minutes:
             one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
             other: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
@@ -563,9 +583,9 @@ en:
           link_to_promoted_emendation_text: See the rejected emendation.
           link_to_idea_from_emendation_help_text: This is a rejected emendation
           link_to_idea_from_emendation_text: See the Idea
-          idea_accepted_reason: 'This idea went through because:'
-          idea_in_evaluation_reason: This idea is being evaluated
-          idea_rejected_reason: 'This idea did not go through because:'
+          idea_accepted_reason: This idea went through.
+          idea_in_evaluation_reason: This idea is being evaluated.
+          idea_rejected_reason: This idea did not go through.
           read_less: Read less
           read_more: Read more
           report: Report

@@ -1,5 +1,3 @@
-<%= render partial: "decidim/shared/component_announcement" %>
-
 <div class="row columns">
   <div class="text-center">
     <h2 class="heading1 page-title"><%= t ".title" %></h2>
@@ -25,10 +23,16 @@
     <div class="columns medium-6 mediumlarge-4">
       <div class="card border-primary" data-equalizer-watch>
         <div class="card__content text-center">
-          <p class="h3"><%= t(".leave_your_idea") %></p>
-          <%= link_to new_idea_path, class: "title-action__action button hollow large primary", data: { "redirect_url" => new_idea_path } do %>
-            <%= t(".new_idea") %>
-            <%= icon "plus", aria_label: t(".new_idea"), role: "img" %>
+          <% if @draft_idea_link %>
+            <p class="h3"><%= t ".draft_idea_title" %></p>
+            <p><%= t ".draft_idea_description" %></p>
+            <%= link_to t(".draft_idea_continue"), @draft_idea_link, class: "title-action__action button hollow large primary" %>
+          <% else %>
+            <p class="h3"><%= t(".leave_your_idea") %></p>
+            <%= link_to new_idea_path, class: "title-action__action button hollow large primary", data: { "redirect_url" => new_idea_path } do %>
+              <%= t(".new_idea") %>
+              <%= icon "plus", aria_label: t(".new_idea"), role: "img" %>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -37,7 +41,7 @@
 </div>
 
 <% if component_settings.geocoding_enabled? %>
-  <%= dynamic_map_for ideas_data_for_map(@ideas.select(&:geocoded?)) do %>
+  <%= ideas_map ideas_data_for_map(@ideas.select(&:geocoded?)) do %>
     <template id="marker-popup">
       <div class="map-info__content">
         <h3>${title}</h3>
@@ -59,8 +63,6 @@
         </div>
       </div>
     </template>
-    <%= stylesheet_link_tag "decidim/map" %>
-    <%= javascript_include_tag "decidim/map" %>
     <%= javascript_include_tag "decidim/ideas/map" %>
   <% end %>
 <% end %>
@@ -68,7 +70,9 @@
 <div class="row columns">
   <%= render partial: "filters_small_view" %>
   <div class="card card--secondary show-for-mediumlarge">
-    <%= render partial: "filters" %>
+    <div class="idea-filters">
+      <%= render partial: "filters" %>
+    </div>
   </div>
 </div>
 

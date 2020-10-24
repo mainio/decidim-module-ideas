@@ -29,7 +29,7 @@ extra_admin_link(
 
 <%= render partial: "voting_rules" %>
 <div class="row column view-header">
-  <%= link_to :ideas, class: "small hollow" do %>
+  <%= link_to ideas_path(filter_link_params), class: "small hollow" do %>
     <%= icon "chevron-left", class: "icon--small" %>
     <%= t(".back_to_list") %>
   <% end %>
