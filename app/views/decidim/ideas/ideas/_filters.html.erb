@@ -1,12 +1,12 @@
 <%= filter_form_for filter do |form| %>
   <div class="row columns">
-    <div class="filters__section">
+    <div class="filters__section filters__section--title">
       <p class="h3"><%= t(".title") %></p>
     </div>
   </div>
 
   <div class="row">
-    <div class="columns mediumlarge-6 large-4">
+    <div class="columns mediumlarge-6 large-8">
       <% if current_user %>
         <%= form.collection_radio_buttons :activity, activity_filter_values, :first, :last, legend_title: t(".activity") %>
       <% end %>
@@ -39,7 +39,7 @@
         </div>
       </div>
     <% end %>
-    <div class="columns mediumlarge-6 large-4">
+    <div class="columns mediumlarge-6 large-4 end">
       <div class="filters__section">
         <div class="filters__search">
           <fieldset>
