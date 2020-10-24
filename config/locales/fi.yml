@@ -461,7 +461,8 @@ fi:
           area_scope: Alue
           amendment_type: Tyyppi
           category: Aihepiiri
-          my_ideas: Omat ideat
+          my_favorites: Show my favourites
+          my_ideas: Show my ideas
           origin: Alkuperä
           related_to: Liittyy aiheeseen
           reset: Tyhjennä rajaukset
@@ -469,7 +470,7 @@ fi:
           state: Tila
           title: Filter the ideas on the map and in the list
           type: Tyyppi
-          voted: Kannatettu
+          voted: Show supported
         filters_small_view:
           close_modal: Sulje ikkuna
           filter: Suodata
