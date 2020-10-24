@@ -69,6 +69,8 @@ fi:
   decidim:
     admin:
       filters:
+        area_scope_id_eq:
+          label: Area
         is_emendation_true:
           label: Tyyppi
           values:
@@ -79,7 +81,9 @@ fi:
         state_eq:
           label: Tila
           values:
+            accepted: Possible
             evaluating: Arvioitavana
+            rejected: Not possible
             withdrawn: Peruutettu
         state_null:
           label: Tila
@@ -156,25 +160,25 @@ fi:
           notification_title: Voit nyt esittää <a href="%{resource_path}">uusia ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" on edennyt jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Ideasi on edennyt jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> on edennyt jatkoon.
+            email_subject: Your idea will go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
           follower:
-            email_intro: 'Idea "%{resource_title}" on edennyt jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi idea on edennyt jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on edennyt jatkoon.
+            email_subject: An idea you are following will go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
         idea_evaluating:
           affected_user:
-            email_intro: 'Ideaasi "%{resource_title}" arvioidaan parhaillaan. Voit tarkistaa vastauksen täältä:'
+            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: Saat tämän ilmoituksen, koska olet luonut kohteen "%{resource_title}".
             email_subject: Ideaasi arvioidaan
             notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
           follower:
-            email_intro: 'Ideaa "%{resource_title}" arvioidaan parhaillaan. Voit tarkistaa vastauksen tältä sivulla:'
+            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi idea on arvioitavana
+            email_subject: A idea you are following is being evaluated
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on arvioitavana.
         idea_mentioned:
           email_intro: Ideasi "%{mentioned_proposal_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
@@ -193,15 +197,15 @@ fi:
           notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on lisätty kohteeseen %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" ei edennyt jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Ideasi ei edennyt jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> ei edennyt jatkoon.
+            email_subject: Your idea will not go through
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
           follower:
-            email_intro: 'Idea "%{resource_title}" ei edennyt jatokon. Voit lukea vastauksen tällä sivulla:'
+            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi idea ei edennyt jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei edennyt jatkoon.
+            email_subject: A idea you are following will not go through
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
         idea_update_category:
           email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi aihepiiriin "%{resource_title}", tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
@@ -572,9 +576,9 @@ fi:
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
           link_to_idea_from_emendation_text: Näytä idea
-          idea_accepted_reason: 'Tämä idea eteni jatkoon, koska:'
-          idea_in_evaluation_reason: Tätä ideaa arvioidaan
-          idea_rejected_reason: 'Tämä idea ei edennyt jatokon, koska:'
+          idea_accepted_reason: This idea went through.
+          idea_in_evaluation_reason: This idea is being evaluated.
+          idea_rejected_reason: This idea did not go through.
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
