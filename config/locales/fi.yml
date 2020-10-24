@@ -171,20 +171,20 @@ fi:
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> etenee jatkoon.
         idea_evaluating:
           affected_user:
-            email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkistaa vastauksen täältä:'
+            email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
             email_outro: Saat tämän ilmoituksen, koska olet luonut kohteen "%{resource_title}".
             email_subject: Ideaasi arvioidaan
             notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
           follower:
-            email_intro: 'Ideaa "%{resource_title}" arvioidaan. Voit tarkistaa vastauksen tältä sivulla:'
+            email_intro: 'Ideaa "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi ideaa arvioidaan
-            notification_title: Ideaa <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
+            email_subject: Seuraamaasi ideaa arvioidaan
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on arvioitavana.
         idea_mentioned:
-          email_intro: Ideasi "%{mentioned_proposal_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
+          email_intro: Ideasi "%{mentioned_idea_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-          email_subject: Ideasi "%{mentioned_proposal_title}" on mainittu
-          notification_title: Ideasi %{mentioned_proposal_title} on mainittu <a href="%{resource_path}">tässä tilassa</a> kommentissa.
+          email_subject: Ideasi "%{mentioned_idea_title}" on mainittu
+          notification_title: Ideasi %{mentioned_idea_title} on mainittu <a href="%{resource_path}">tässä tilassa</a> kommentissa.
         idea_published:
           email_intro: '%{author_name} %{author_nickname}, jota seuraat, on julkaissut uuden ehdotuksen "%{resource_title}". Tutustu ehdotukseen ja osallistu:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat %{author_nickname}. Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
@@ -207,7 +207,7 @@ fi:
             email_subject: Seuraamasi idea ei etene jatkoon
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
         idea_update_category:
-          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi teeman "%{resource_title}", tarkista se tältä sivulta:'
+          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi "%{resource_title}" teeman, tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
           email_subject: Idean %{resource_title} teema on päivitetty
           notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> teeman.
@@ -342,12 +342,12 @@ fi:
             votes_count: Kannatusten lukumäärä
             votes_ranking: Luokittelu kannatusten mukaan
           update_category:
-            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
+            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
             select_a_category: Valitse teema
             select_a_idea: Valitse idea
-            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}: %{proposals}.'
+            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}: %{ideas}.'
           update_area_scope:
-            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{proposals}.'
+            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
             select_a_idea: Valitse idea
             select_a_scope: Valitse alue
             success: 'Seuraavien ideoiden alueen päivitys onnistui %{subject_name}: %{proposals}.'
