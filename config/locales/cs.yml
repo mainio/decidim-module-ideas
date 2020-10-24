@@ -467,7 +467,8 @@ cs:
           area_scope: Area
           amendment_type: Type
           category: Theme
-          my_ideas: My ideas
+          my_favorites: Show my favourites
+          my_ideas: Show my ideas
           origin: Origin
           related_to: Related to
           reset: Clear filters
@@ -475,7 +476,7 @@ cs:
           state: Status
           title: Filter the ideas on the map and in the list
           type: Type
-          voted: Supported
+          voted: Show supported
         filters_small_view:
           close_modal: Close modal
           filter: Filter
