@@ -443,6 +443,7 @@ sv:
         edit_draft:
           discard: Släng utkastet
           discard_confirmation: Är du säker på att du vill slänga detta utkast?
+          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
           send: Förhandsgranska
           title: Redigera idéutkast
         edit_view:
@@ -507,6 +508,9 @@ sv:
           show_terms_info_text: Show criteria
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
+          draft_idea_title: You have an idea draft!
+          draft_idea_continue: Continue your idea
+          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
           title: Bläddra bland idéer
