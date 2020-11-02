@@ -22,11 +22,9 @@ module Decidim
       before_action :edit_form, only: [:edit_draft, :edit]
 
       def index
-        @ideas = search
-                 .results
-                 .published
-                 .not_hidden
-                 .includes(:amendable, :category, :component, :area_scope)
+        base_query = search.results.published.not_hidden
+        @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
+        @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
         @voted_ideas = begin
           if current_user

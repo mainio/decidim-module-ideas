@@ -7,15 +7,22 @@ module Decidim
       include Decidim::Feedback::FeedbackHelper
       include Decidim::Ideas::AreaScopesHelper
 
-      # Serialize a collection of geocoded ideas to be used by the dynamic map component
+      # Serialize a collection of geocoded ideas to be used by the dynamic map
+      # component. The serialized list is made for the flat list fetched with
+      # `Idea.geocoded_data_for` in order to make the processing faster.
       #
-      # geocoded_ideas - A collection of geocoded ideas
-      def ideas_data_for_map(geocoded_ideas)
-        geocoded_ideas.map do |idea|
-          idea.slice(:latitude, :longitude, :address).merge(title: present(idea).title,
-                                                            body: truncate(present(idea).body, length: 100),
-                                                            icon: icon("ideas", width: 40, height: 70, remove_icon_class: true),
-                                                            link: idea_path(idea))
+      # geocoded_ideas_data - A flat array of the idea data received from `Idea.geocoded_data_for`
+      def ideas_data_for_map(geocoded_ideas_data)
+        geocoded_ideas_data.map do |data|
+          {
+            id: data[0],
+            title: data[1],
+            body: truncate(data[2], length: 100),
+            address: data[3],
+            latitude: data[4],
+            longitude: data[5],
+            link: idea_path(data[0])
+          }
         end
       end
 

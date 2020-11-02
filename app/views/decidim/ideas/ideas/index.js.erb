@@ -12,7 +12,7 @@ $dropdownMenu.foundation();
 
 var mapController = $map.data("map-controller");
 if (mapController) {
-  var ideasData = JSON.parse('<%== escape_javascript ideas_data_for_map(@ideas.select(&:geocoded?)).to_json %>');
+  var ideasData = JSON.parse('<%== escape_javascript ideas_data_for_map(@geocoded_ideas).to_json %>');
   mapController.clearMarkers();
   mapController.addMarkers(ideasData);
 }

@@ -118,12 +118,51 @@ module Decidim
       end
 
       def self.retrieve_ideas_for(component)
-        Decidim::Ideas::Idea.where(component: component).joins(:coauthorships)
+        Decidim::Ideas::Idea.where(component: component)
+                            .joins(:coauthorships)
                             .includes(:votes)
                             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
                             .not_hidden
                             .published
                             .except_withdrawn
+      end
+
+      def self.geocoded_data_for(component)
+        locale = Arel::Nodes.build_quoted(I18n.locale.to_s).to_sql
+
+        with_geocoded_area_scopes_for(component).pluck(
+          :id,
+          :title,
+          :body,
+          "CASE WHEN CHAR_LENGTH(decidim_ideas_ideas.address::text) > 0 THEN decidim_ideas_ideas.address ELSE area_scopes.name->>#{locale} END",
+          "CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.latitude ELSE scope_coordinates.latitude END",
+          "CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.longitude ELSE scope_coordinates.longitude END"
+        )
+      end
+
+      def self.with_geocoded_area_scopes_for(component)
+        # Fetch all the configured area scope coodinates and create a select
+        # statement for each scope with its latitude and longitude in order to
+        # combine this information with the base query.
+        scope_selects = component.settings.area_scope_coordinates.map do |scope_id, coords|
+          latlng = coords.split(",")
+          next if latlng.length < 1
+
+          lat = latlng[0].to_f
+          lng = latlng[1].to_f
+          "SELECT #{scope_id} AS scope_id, #{lat} AS latitude, #{lng} AS longitude"
+        end.compact
+        # The empty select ensures there is always at least one row for the
+        # scope locations so that it will not break even when it is not
+        # configured correctly.
+        empty_scope_select = "SELECT 0 AS scope_id, 0 AS latitude, 0 AS longitude"
+        # The scopes "table" is a virtual scopes table which consists of the
+        # unionized scope selects resulting in multiple rows of scope IDs
+        # combined with their associated latitude and longitude coordinates.
+        scopes_table = ([empty_scope_select] + scope_selects).join(" UNION ALL ")
+
+        joins("LEFT JOIN decidim_scopes AS area_scopes ON area_scopes.id = decidim_ideas_ideas.area_scope_id")
+          .joins("LEFT JOIN (#{scope_selects.join(" UNION ALL ")}) AS scope_coordinates ON scope_coordinates.scope_id = area_scopes.id")
       end
 
       def self.newsletter_participant_ids(component)

@@ -41,7 +41,7 @@
 </div>
 
 <% if component_settings.geocoding_enabled? %>
-  <%= ideas_map ideas_data_for_map(@ideas.select(&:geocoded?)) do %>
+  <%= ideas_map ideas_data_for_map(@geocoded_ideas) do %>
     <template id="marker-popup">
       <div class="map-info__content">
         <h3>${title}</h3>
