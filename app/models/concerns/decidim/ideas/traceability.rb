@@ -27,6 +27,16 @@ module Decidim
           Decidim.traceability.version_editor(versions.last)
         end
       end
+
+      # This is needed for the action logs to work properly. They are only
+      # stored against models that implement Decidim::Traceable. However, we
+      # cannot directly include that module because we want to modify its
+      # functionality.
+      def is_a?(klass)
+        return true if klass == Decidim::Traceable
+
+        super
+      end
     end
   end
 end
