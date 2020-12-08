@@ -193,6 +193,9 @@ module Decidim
         Decidim::Plans::ResourceLinkSubject.class_eval do
           possible_types(Decidim::Ideas::IdeaType)
         end
+        Decidim::Plans::ContentMutationAttributes.class_eval do
+          argument(:ideas, ::Decidim::Ideas::ContentMutation::FieldIdeasAttributes, required: false)
+        end
 
         registry = Decidim::Plans.section_types
         registry.register(:link_ideas) do |type|
