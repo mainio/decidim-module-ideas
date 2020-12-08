@@ -1,0 +1,10 @@
+<div class="attached-proposals">
+  <h4 class="section-heading">
+    <%= translated_attribute(model.title) %>
+  </h4>
+  <div class="collapsible-list row small-up-1 medium-up-2 card-grid">
+    <% ideas.each do |idea| %>
+      <%= card_for idea, from: idea %>
+    <% end %>
+  </div>
+</div>

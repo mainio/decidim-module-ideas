@@ -12,6 +12,7 @@ module Decidim
       include FilterResource
       include Decidim::Ideas::Orderable
       include Paginable
+      include Decidim::Ideas::AttachedIdeasHelper
 
       helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?
 

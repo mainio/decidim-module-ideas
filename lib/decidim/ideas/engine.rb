@@ -26,6 +26,7 @@ module Decidim
             put :withdraw
           end
           collection do
+            get :search_ideas
             resources :info, only: [:show], param: :section
             resource :geocoding, only: [:create] do
               collection do
@@ -44,6 +45,8 @@ module Decidim
         app.config.assets.precompile += %w(decidim_ideas_manifest.js
                                            decidim/ideas/idea_form.js
                                            decidim/ideas/ideas_list.js
+                                           decidim/ideas/idea_picker.js
+                                           decidim/ideas/idea_picker.scss
                                            decidim/ideas/map.js
                                            decidim/ideas/utils.js)
       end
@@ -184,11 +187,19 @@ module Decidim
         end
       end
 
-      initializer "decidim_ideas.plans_integration" do
+      initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
         Decidim::Plans::ResourceLinkSubject.class_eval do
           possible_types(Decidim::Ideas::IdeaType)
+        end
+
+        registry = Decidim::Plans.section_types
+        registry.register(:link_ideas) do |type|
+          type.edit_cell = "decidim/ideas/section_type_edit/link_ideas"
+          type.display_cell = "decidim/ideas/section_type_display/link_ideas"
+          type.content_form_class_name = "Decidim::Ideas::ContentData::LinkIdeasForm"
+          type.content_control_class_name = "Decidim::Ideas::SectionControl::LinkIdeas"
         end
       end
     end
