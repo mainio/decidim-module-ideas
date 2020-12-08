@@ -401,6 +401,11 @@ cs:
           all: All
           amendments: Amendments
           ideas: Ideas
+      attached_ideas_helper:
+        attach_idea: Attach idea
+        close: Close
+        current_selection: Search ideas by name or ID
+        select: Select
       create:
         error: There was a problem saving the idea.
         success: Idea successfully created. Saved as a Draft.
