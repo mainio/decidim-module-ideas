@@ -1,5 +1,3 @@
-// = require decidim/ideas/info_modals
-
 ((exports) => {
   const bindResetInputs = () => {
     exports.$(".reset-input").on("click.decidim-ideas-form", (ev) => {
