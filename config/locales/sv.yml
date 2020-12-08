@@ -397,11 +397,11 @@ sv:
           all: Alla
           amendments: Ändringar
           ideas: Idéer
-      attached_idea_helper:
-        attach_idea: Bifoga idé
-        close: Stäng
-        current_selection: Sök idéer på namn eller ID
-        select: Välj
+      attached_ideas_helper:
+        attach_idea: Attach idea
+        close: Close
+        current_selection: Search ideas by name or ID
+        select: Select
       create:
         error: Det uppstod ett problem med att spara idén.
         success: Idén har skapats. Den är sparat som ett utkast.
