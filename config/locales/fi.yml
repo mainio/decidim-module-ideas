@@ -398,10 +398,10 @@ fi:
           amendments: Muutokset
           ideas: Ideat
       attached_ideas_helper:
-        attach_idea: Liitä idea
-        close: Sulje
-        current_selection: Hae ideoita nimellä tai ID-numerolla
-        select: Valitse
+        attach_idea: Attach idea
+        close: Close
+        current_selection: Search ideas by name or ID
+        select: Select
       create:
         error: Idean tallennus epäonnistui.
         success: Idean luonti onnistui. Idea on tallennettu luonnoksena.
