@@ -49,14 +49,14 @@ cs:
             title:
               identical: AND body cannot be identical
     models:
-      decidim/ideas/accepted_idea_event: Idea gone through
+      decidim/ideas/accepted_idea_event: Idea accepted to the next step
       decidim/ideas/admin/update_idea_category_event: Idea theme changed
       decidim/ideas/admin/update_idea_scope_event: Idea scope changed
       decidim/ideas/creation_enabled_event: Idea creation enabled
       decidim/ideas/evaluating_idea_event: Idea is being evaluated
       decidim/ideas/idea_mentioned_event: Idea mentioned
       decidim/ideas/publish_idea_event: Idea published
-      decidim/ideas/rejected_idea_event: Idea did not go through
+      decidim/ideas/rejected_idea_event: Idea was not accepted to the next step
       decidim/ideas/voting_enabled_event: Idea voting enabled
   activerecord:
     models:
@@ -85,9 +85,9 @@ cs:
         state_eq:
           label: State
           values:
-            accepted: Possible
+            accepted: Accepted to the next step
             evaluating: Evaluating
-            rejected: Not possible
+            rejected: Not accepted to the next step
             withdrawn: Withdrawn
         state_null:
           label: Status
@@ -164,10 +164,10 @@ cs:
           notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
+            email_intro: 'Your idea "%{resource_title}" was accepted to the next step. You can read the answer in this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea will go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
+            email_subject: Your idea was accepted to the next step
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was accepted to the next step.
           follower:
             email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
@@ -201,15 +201,15 @@ cs:
           notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'Your idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
             email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea will not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
+            email_subject: Your idea was not accepted to the next step
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was not accepted to the next step.
           follower:
-            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
+            email_intro: 'The idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
             email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you are following will not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
+            email_subject: A idea you are following was not accepted to the next step
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
         idea_update_category:
           email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
           email_outro: You have received this notification because you are the author of the idea.
@@ -233,10 +233,10 @@ cs:
         accepted_ideas:
           conditions:
             - Choose the participation space of your interest with submission for ideas enabled
-            - Try to make ideas that can be carried out. This way they are more likely to go through.
-          description: This badge is granted when you actively participate with new ideas and these go through.
-          description_another: This participant had %{score} ideas that went through.
-          description_own: You got %{score} ideas that went through.
+            - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
+          description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
+          description_another: This participant had %{score} ideas accepted to the next step.
+          description_own: You got %{score} ideas accepted to the next step.
           name: Possible ideas
           next_level_in: Get %{score} more ideas through to reach the next level!
           unearned_another: This participant has not yet had any ideas that went through.
@@ -284,10 +284,10 @@ cs:
             name: Idea
         idea_answers:
           form:
-            accepted: Possible
+            accepted: Accepted to the next step
             answer_idea: Answer
             evaluating: Evaluating
-            rejected: Not possible
+            rejected: Not accepted to the next step
             title: Answer for idea %{title}
         ideas:
           answer:
@@ -379,10 +379,10 @@ cs:
           publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
           update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
       answers:
-        accepted: Possible
+        accepted: Accepted to the next step
         evaluating: Evaluating
         not_answered: Not answered
-        rejected: Not possible
+        rejected: Not accepted to the next step
         withdrawn: Withdrawn
       application_helper:
         filter_category_values:
@@ -392,11 +392,11 @@ cs:
           citizens: Citizens
           user_groups: Groups
         filter_state_values:
-          accepted: Possible
+          accepted: Accepted to the next step
           all: All
           evaluating: Evaluating
           not_answered: Not answered
-          rejected: Not possible
+          rejected: Not accepted to the next step
         filter_type_values:
           all: All
           amendments: Amendments
@@ -597,9 +597,9 @@ cs:
           link_to_promoted_emendation_text: See the rejected emendation.
           link_to_idea_from_emendation_help_text: This is a rejected emendation
           link_to_idea_from_emendation_text: See the Idea
-          idea_accepted_reason: This idea went through.
+          idea_accepted_reason: This idea was accepted to the next step.
           idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea did not go through.
+          idea_rejected_reason: This idea was not accepted to the next step.
           read_less: Read less
           read_more: Read more
           report: Report
@@ -651,6 +651,31 @@ cs:
         close: Close
         more_ideas: There are %{number} more ideas. Refine your search to locate them.
         no_ideas: No ideas match your search criteria or there isn't any ideas.
+      ideas_picker_inline:
+        attached_ideas_number: Ideas attached to this proposal
+        choose_idea: Select idea
+        chosen_idea: Chosen idea
+        filters:
+          activity: My activity
+          all: All
+          all_area_scopes: All areas
+          all_categories: All themes
+          area_scope: Area
+          category: Theme
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          my_favorites: Show my favourites
+          my_ideas: Show my ideas
+          origin: Origin
+          reset: Clear filters
+          search: Search
+          state: Status
+          title: Filter the ideas on the map and in the list
+          unfold: Unfold
+          voted: Show supported
+        pcs_html: "<span>%{number}</span> pcs"
+        remove_idea: Remove idea
       info:
         show:
           back: Back to previous page
@@ -675,9 +700,9 @@ cs:
           has_supports: This idea can not be withdrawn because it already has supports.
     metrics:
       accepted_ideas:
-        description: Number of possible ideas
+        description: Number of ideas accepted to the next step
         object: ideas
-        title: Possible ideas
+        title: Ideas accepted to the next step
       ideas:
         description: Number of ideas
         object: ideas
@@ -691,11 +716,15 @@ cs:
         highlighted_ideas:
           ideas: Ideas
       statistics:
-        ideas_accepted: Possible ideas
+        ideas_accepted: Ideas accepted to the next step
         ideas_count: Ideas
     participatory_spaces:
       highlighted_ideas:
         see_all: See all (%{count})
+    plans:
+      section_types:
+        link_ideas: Link ideas
+        link_ideas_inline: Link ideas inline
     resource_links:
       copied_from_component:
         idea_idea: Related ideas
