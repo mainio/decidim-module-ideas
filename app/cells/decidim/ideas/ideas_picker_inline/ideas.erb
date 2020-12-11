@@ -1,0 +1,28 @@
+<ul class="ideas-picker-list">
+  <% decorated_ideas do |idea| %>
+    <li>
+      <a href="#" class="ideas-picker-chooser" >
+        <%= render partial: "decidim/ideas/ideas_picker_inline/idea", locals: { idea: idea } %>
+        <div class="idea-picker-item-state">
+          <div class="ideas-picker-item-choose"><%= t(".choose_idea") %></div>
+          <div class="ideas-picker-item-chosen">
+            <%= icon "check", aria_hidden: true %>
+            <%= t(".chosen_idea") %>
+            <div class="idea-picker-item-remove">
+              <%= t(".remove_idea") %>
+            </div>
+          </div>
+        </div>
+      </a>
+    </li>
+  <% end %>
+  <% if more_ideas? %>
+    <li>
+      <div class="callout warning"><%= t("ideas_picker.more_ideas", scope: "decidim.ideas", number: more_ideas_count) %></div>
+    </li>
+  <% elsif ideas_count == 0 %>
+    <li>
+      <div class="ideas-picker-empty callout warning"><%= t("ideas_picker.no_ideas", scope: "decidim.ideas") %></div>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,17 @@
+<div class="ideas-picker-item" data-idea-id="<%= idea.id %>">
+  <div class="ideas-picker-item-details">
+    <div class="ideas-picker-item-title"><%= idea.id_and_title(html_escape: true) %></div>
+    <div class="ideas-picker-item-info">
+      <ul class="no-bullet">
+        <li><%= idea.area_scope_name %></li>
+        <li><%= idea.category_name %></li>
+        <li><%= idea.published_date %></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ideas-picker-item-controls">
+    <div class="idea-picker-item-remove" tabindex="0">
+      <%= t(".remove_idea") %>
+    </div>
+  </div>
+</div>

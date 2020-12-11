@@ -9,7 +9,11 @@ module Decidim
       def search_ideas
         respond_to do |format|
           format.html do
-            render partial: "decidim/ideas/attached_ideas/ideas"
+            if params[:layout] == "inline"
+              render partial: "decidim/ideas/attached_ideas/ideas_inline", layout: false
+            else
+              render partial: "decidim/ideas/attached_ideas/ideas", layout: false
+            end
           end
           format.json do
             query = Decidim

@@ -9,6 +9,7 @@ module Decidim
       include Rails.application.routes.mounted_helpers
       include ActionView::Helpers::UrlHelper
       include Decidim::SanitizeHelper
+      include Decidim::TranslatableAttributes
 
       def author
         @author ||= begin
@@ -64,6 +65,24 @@ module Decidim
 
         text = Decidim::ContentRenderers::LinkRenderer.new(text).render if links
         text
+      end
+
+      def area_scope_name
+        return unless idea.area_scope
+
+        translated_attribute(idea.area_scope.name)
+      end
+
+      def category_name
+        return unless idea.category
+
+        translated_attribute(idea.category.name)
+      end
+
+      def published_date
+        return unless idea.published_at
+
+        I18n.l(idea.published_at.to_date, format: :decidim_short)
       end
 
       # Returns the idea versions, hiding not published answers
