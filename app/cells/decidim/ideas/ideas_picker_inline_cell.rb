@@ -54,6 +54,12 @@ module Decidim
         context[:form]
       end
 
+      def presenter_for(idea)
+        @presenters ||= {}
+
+        @presenters[idea.id] ||= Decidim::Ideas::IdeaPresenter.new(idea)
+      end
+
       def picker_id
         @picker_id ||= "idea_picker_#{SecureRandom.uuid}"
       end
