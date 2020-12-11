@@ -49,14 +49,14 @@ fi:
             title:
               identical: JA kuvaus ei voi olla sama kuin otsikko
     models:
-      decidim/ideas/accepted_idea_event: Idea etenee jatkoon
+      decidim/ideas/accepted_idea_event: Idea accepted to the next step
       decidim/ideas/admin/update_idea_category_event: Idean teemaa on muutettu
       decidim/ideas/admin/update_idea_scope_event: Idean teemaa on muutettu
       decidim/ideas/creation_enabled_event: Ideoiden luonti on mahdollista
       decidim/ideas/evaluating_idea_event: Ideaa arvioidaan
       decidim/ideas/idea_mentioned_event: Idea mainittiin
       decidim/ideas/publish_idea_event: Idea julkaistiin
-      decidim/ideas/rejected_idea_event: Idea ei etene jatkoon
+      decidim/ideas/rejected_idea_event: Idea was not accepted to the next step
       decidim/ideas/voting_enabled_event: Ideoiden äänestys on mahdollista
   activerecord:
     models:
@@ -81,9 +81,9 @@ fi:
         state_eq:
           label: Tila
           values:
-            accepted: Mahdollinen
+            accepted: Accepted to the next step
             evaluating: Arvioitavana
-            rejected: Ei mahdollinen
+            rejected: Not accepted to the next step
             withdrawn: Peruutettu
         state_null:
           label: Tila
@@ -160,10 +160,10 @@ fi:
           notification_title: Voit nyt esittää <a href="%{resource_path}">uusia ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" etenee jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'Your idea "%{resource_title}" was accepted to the next step. You can read the answer in this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Ideasi etenee jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> etenee jatkoon.
+            email_subject: Your idea was accepted to the next step
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was accepted to the next step.
           follower:
             email_intro: 'Idea "%{resource_title}" etenee jatkoon. Voit lukea vastauksen täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
@@ -197,15 +197,15 @@ fi:
           notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on lisätty kohteeseen %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" ei etene jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'Your idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
-            email_subject: Ideasi ei etene jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
+            email_subject: Your idea was not accepted to the next step
+            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was not accepted to the next step.
           follower:
-            email_intro: 'Idea "%{resource_title}" ei etene jatokon. Voit lukea vastauksen tällä sivulla:'
+            email_intro: 'The idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi idea ei etene jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei etene jatkoon.
+            email_subject: A idea you are following was not accepted to the next step
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
         idea_update_category:
           email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi "%{resource_title}" teeman, tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
@@ -229,10 +229,10 @@ fi:
         accepted_ideas:
           conditions:
             - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen on mahdollista
-            - Yritä luoda ideoita, jotka voidaan toteuttaa. Tällä tavoin ne todennäköisesti etenevät jatkoon.
-          description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita ja ne etenevät jatkoon.
-          description_another: Tällä käyttäjällä on %{score} jatkoon edennyttä ideaa.
-          description_own: Olet saanut %{score} ideaa jatkoon.
+            - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
+          description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
+          description_another: This participant had %{score} ideas accepted to the next step.
+          description_own: You got %{score} ideas accepted to the next step.
           name: Mahdolliset ideat
           next_level_in: Saa vielä %{score} ideaa jatkoon noustaksesi seuraavalle tasolle!
           unearned_another: Tällä käyttäjällä ei ole vielä yhtään hyväksyttyä ideaa.
@@ -280,10 +280,10 @@ fi:
             name: Idea
         idea_answers:
           form:
-            accepted: Mahdollinen
+            accepted: Accepted to the next step
             answer_idea: Vastaa
             evaluating: Arvioitavana
-            rejected: Ei mahdollinen
+            rejected: Not accepted to the next step
             title: Vastaus idealle %{title}
         ideas:
           answer:
@@ -375,10 +375,10 @@ fi:
           publish_answer: "%{user_name} julkaisi vastauksen idealle %{resource_name} osallistumistilassa %{space_name}"
           update: "%{user_name} päivitti ideaa %{resource_name} osallistumistilassa %{space_name}"
       answers:
-        accepted: Mahdollinen
+        accepted: Accepted to the next step
         evaluating: Arvioitavana
         not_answered: Ei vastattu
-        rejected: Ei mahdollinen
+        rejected: Not accepted to the next step
         withdrawn: Peruutettu
       application_helper:
         filter_category_values:
@@ -388,11 +388,11 @@ fi:
           citizens: Kansalaiset
           user_groups: Ryhmät
         filter_state_values:
-          accepted: Mahdollinen
+          accepted: Accepted to the next step
           all: Kaikki
           evaluating: Arvioitavana
           not_answered: Ei vastattu
-          rejected: Ei mahdollinen
+          rejected: Not accepted to the next step
         filter_type_values:
           all: Kaikki
           amendments: Muutokset
@@ -587,9 +587,9 @@ fi:
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
           link_to_idea_from_emendation_text: Näytä idea
-          idea_accepted_reason: Tämä idea eteni jatkoon.
+          idea_accepted_reason: This idea was accepted to the next step.
           idea_in_evaluation_reason: Tätä ideaa arvioidaan.
-          idea_rejected_reason: Tämä idea ei edennyt jatkoon.
+          idea_rejected_reason: This idea was not accepted to the next step.
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
@@ -639,6 +639,31 @@ fi:
         close: Sulje
         more_ideas: Ideoita on vielä %{number} kpl lisää. Muuta hakuehtoja löytääksesi ne.
         no_ideas: Hakuehtosi eivät vastaa yhtään ideaa tai yhtään ideaa ei vielä ole olemassa.
+      ideas_picker_inline:
+        attached_ideas_number: Ideas attached to this proposal
+        choose_idea: Select idea
+        chosen_idea: Chosen idea
+        filters:
+          activity: My activity
+          all: All
+          all_area_scopes: All areas
+          all_categories: All themes
+          area_scope: Area
+          category: Theme
+          close_modal: Close modal
+          filter: Filter
+          filter_by: Filter by
+          my_favorites: Show my favourites
+          my_ideas: Show my ideas
+          origin: Origin
+          reset: Clear filters
+          search: Search
+          state: Status
+          title: Filter the ideas on the map and in the list
+          unfold: Unfold
+          voted: Show supported
+        pcs_html: "<span>%{number}</span> pcs"
+        remove_idea: Remove idea
       info:
         show:
           back: Palaa edelliselle sivulle
@@ -663,9 +688,9 @@ fi:
           has_supports: Tätä ideaa ei voi peruuttaa, koska sitä on jo tuettu.
     metrics:
       accepted_ideas:
-        description: Mahdollisten ideoiden lukumäärä
+        description: Number of ideas accepted to the next step
         object: ideat
-        title: Mahdolliset ideat
+        title: Ideas accepted to the next step
       ideas:
         description: Ideoiden lukumäärä
         object: ideat
@@ -679,11 +704,15 @@ fi:
         highlighted_ideas:
           ideas: Ideat
       statistics:
-        ideas_accepted: Mahdolliset ideat
+        ideas_accepted: Ideas accepted to the next step
         ideas_count: Ideat
     participatory_spaces:
       highlighted_ideas:
         see_all: Näytä kaikki (%{count})
+    plans:
+      section_types:
+        link_ideas: Link ideas
+        link_ideas_inline: Link ideas inline
     resource_links:
       copied_from_component:
         idea_idea: Liittyvät ideat
