@@ -65,7 +65,7 @@ module Decidim
       end
 
       def max_ideas
-        10
+        20
       end
 
       def selected_ideas
