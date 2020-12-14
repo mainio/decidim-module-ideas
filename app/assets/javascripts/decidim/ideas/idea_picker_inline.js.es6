@@ -13,12 +13,21 @@
 
       $(".sample-idea-field", $selected).remove();
 
-      $(".ideas-picker-item", $selected).each((_j, el) => {
-        selectedIdeas.push($(el).data("idea-id"));
-      });
-
       let jqxhr = null;
       let filterTimeout = null;
+      const initializePickedItem = ($item) => {
+        const ideaId = $item.data("idea-id");
+
+        $(".idea-picker-item-remove", $item).on("click", (evr) => {
+          evr.preventDefault();
+
+          const $chooser = $(`.ideas-picker-chooser [data-idea-id="${ideaId}"]`, $target).parent();
+          $chooser.removeClass("selected");
+          selectedIdeas = selectedIdeas.filter((id) => id !== ideaId);
+          $(`input[value="${ideaId}"]`, $selected).remove();
+          $item.remove();
+        });
+      };
       const initializeList = ($list) => {
         $(".ideas-picker-chooser", $list).each((_j, el) => {
           const $chooser = $(el);
@@ -27,7 +36,14 @@
           if (selectedIdeas.includes($item.data("idea-id"))) {
             $chooser.addClass("selected");
           }
+
+          $(".idea-picker-item-remove", $item).on("click", (evr) => {
+            evr.preventDefault();
+
+            initializePickedItem($item);
+          });
         });
+        $selectedNumber.text(selectedIdeas.length);
 
         $(".ideas-picker-chooser", $list).on("click", (ev) => {
           ev.preventDefault();
@@ -41,9 +57,7 @@
           const ideaId = $item.data("idea-id");
 
           if ($chooser.hasClass("selected")) {
-            $chooser.removeClass("selected");
-            selectedIdeas = selectedIdeas.filter((id) => id !== ideaId);
-            $(`[data-idea-id="${ideaId}"], input[value="${ideaId}"]`, $selected).remove();
+            $(`[data-idea-id="${ideaId}"] .idea-picker-item-remove`, $selected).trigger("click");
           } else {
             const $cloneItem = $item.clone();
 
@@ -52,11 +66,7 @@
             $selected.append($cloneItem);
             $selected.append(`<input type="hidden" name="${fieldName}" value="${ideaId}" class="idea-field">`);
 
-            $(".idea-picker-item-remove", $cloneItem).on("click", (evr) => {
-              evr.preventDefault();
-
-              $chooser.trigger("click");
-            });
+            initializePickedItem($cloneItem);
           }
 
           $selectedNumber.text(selectedIdeas.length);
@@ -110,6 +120,13 @@
         if ($(ev.target).val() === "") {
           filterIdeas();
         }
+      });
+
+      $(".ideas-picker-item", $selected).each((_j, el) => {
+        const $item = $(el);
+
+        selectedIdeas.push($item.data("idea-id"));
+        initializePickedItem($item);
       });
 
       initializeList($target);
