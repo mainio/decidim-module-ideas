@@ -3,6 +3,20 @@
     <p class="h3"><%= t("ideas_picker.choose_ideas", scope: "decidim.ideas") %></p>
   </div>
 
+  <ul class="accordion" data-accordion data-allow-all-closed="true">
+    <li class="accordion-item" data-accordion-item>
+      <a href="#" class="accordion-title"><%= t(".attached_ideas_number") %> - <%= t(".pcs_html", number: 0) %></a>
+
+      <div id="<%= picker_id %>_selected" class="accordion-content ideas-picker-selected" data-tab-content>
+        <%= form.hidden_field "idea_ids][", value: "", id: nil, class: "sample-idea-field" %>
+        <% selected_ideas.each do |idea| %>
+          <%= form.hidden_field "idea_ids][", value: idea.id, id: nil, class: "idea-field" %>
+          <%= render partial: "decidim/ideas/ideas_picker_inline/idea", locals: { idea: idea } %>
+        <% end %>
+      </div>
+    </li>
+  </ul>
+
   <div class="row columns" id="<%= picker_id %>">
     <%= render :filters_small_view %>
     <div class="card card--secondary show-for-mediumlarge">
@@ -15,18 +29,4 @@
   <div class="picker-content picker-list" data-idea-picker-form="<%= picker_id %>" data-idea-picker-selected="<%= picker_id %>_selected" data-picker-path="<%= picker_path %>" data-picker-more="<%= more_ideas? %>">
     <%= render :ideas %>
   </div>
-
-  <ul class="accordion" data-accordion data-allow-all-closed="true">
-    <li class="accordion-item is-active" data-accordion-item>
-      <a href="#" class="accordion-title"><%= t(".attached_ideas_number") %> - <%= t(".pcs_html", number: 0) %></a>
-
-      <div id="<%= picker_id %>_selected" class="accordion-content ideas-picker-selected" data-tab-content>
-        <%= form.hidden_field "idea_ids][", value: "", class: "sample-idea-field" %>
-        <% selected_ideas.each do |idea| %>
-          <%= form.hidden_field "idea_ids[]", value: idea.id, class: "idea-field" %>
-          <%= render partial: "decidim/ideas/ideas_picker_inline/idea", locals: { idea: idea } %>
-        <% end %>
-      </div>
-    </li>
-  </ul>
 </div>
