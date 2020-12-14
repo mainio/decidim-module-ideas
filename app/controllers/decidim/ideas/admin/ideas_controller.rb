@@ -7,7 +7,6 @@ module Decidim
       class IdeasController < Admin::ApplicationController
         include Decidim::ApplicationHelper
         include Decidim::Ideas::Admin::Filterable
-        include Decidim::Ideas::AttachedIdeasHelper
 
         helper Ideas::ApplicationHelper
         helper Decidim::Ideas::Admin::IdeaRankingsHelper
