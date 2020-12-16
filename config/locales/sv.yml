@@ -232,7 +232,7 @@ sv:
             - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
           description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
           description_another: This participant had %{score} ideas accepted to the next step.
-          description_own: You got %{score} ideas accepted to the next step.
+          description_own: Du fick %{score} idéer accepterade till nästa steg.
           name: Möjliga idéer
           next_level_in: Få %{score} fler idéer antagna för att nå nästa nivå!
           unearned_another: Denna deltagare hade inga idéer som gick vidare.
@@ -280,10 +280,10 @@ sv:
             name: Idé
         idea_answers:
           form:
-            accepted: Accepted to the next step
+            accepted: Accepterad till nästa steg
             answer_idea: Svara
             evaluating: Utvärderas
-            rejected: Not accepted to the next step
+            rejected: Ej accepterad till nästa steg
             title: Svar på idén %{title}
         ideas:
           answer:
@@ -375,10 +375,10 @@ sv:
           publish_answer: "%{user_name} publicerade svaret på idén %{resource_name} i utrymmet %{space_name}"
           update: "%{user_name} uppdaterade idén %{resource_name} på utrymmet %{space_name}"
       answers:
-        accepted: Accepted to the next step
+        accepted: Accepterad till nästa steg
         evaluating: Utvärderas
         not_answered: Ej besvarade
-        rejected: Not accepted to the next step
+        rejected: Ej accepterad till nästa steg
         withdrawn: Tillbakadragna
       application_helper:
         filter_category_values:
@@ -388,19 +388,19 @@ sv:
           citizens: Medborgare
           user_groups: Grupper
         filter_state_values:
-          accepted: Accepted to the next step
+          accepted: Accepterad till nästa steg
           all: Alla
           evaluating: Utvärderas
           not_answered: Ej besvarade
-          rejected: Not accepted to the next step
+          rejected: Ej accepterad till nästa steg
         filter_type_values:
           all: Alla
           amendments: Ändringar
           ideas: Idéer
       attached_ideas_helper:
         attach_idea: Attach idea
-        close: Close
-        current_selection: Search ideas by name or ID
+        close: Stäng
+        current_selection: Sök efter namn eller ID
         select: Välj
       create:
         error: Det uppstod ett problem med att spara idén.
