@@ -83,7 +83,7 @@ fi:
           values:
             accepted: Hyväksytty jatkoon
             evaluating: Arvioitavana
-            rejected: Ei päässyt jatkoon
+            rejected: Ei jatkoon
             withdrawn: Peruutettu
         state_null:
           label: Tila
@@ -283,7 +283,7 @@ fi:
             accepted: Hyväksytty jatkoon
             answer_idea: Vastaa
             evaluating: Arvioitavana
-            rejected: Ei päässyt jatkoon
+            rejected: Ei jatkoon
             title: Vastaus idealle %{title}
         ideas:
           answer:
@@ -378,7 +378,7 @@ fi:
         accepted: Hyväksytty jatkoon
         evaluating: Arvioitavana
         not_answered: Ei vastattu
-        rejected: Ei päässyt jatkoon
+        rejected: Ei jatkoon
         withdrawn: Peruutettu
       application_helper:
         filter_category_values:
@@ -392,7 +392,7 @@ fi:
           all: Kaikki
           evaluating: Arvioitavana
           not_answered: Ei vastattu
-          rejected: Ei päässyt jatkoon
+          rejected: Ei jatkoon
         filter_type_values:
           all: Kaikki
           amendments: Muutokset
