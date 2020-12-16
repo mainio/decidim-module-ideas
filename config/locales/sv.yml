@@ -401,7 +401,7 @@ sv:
         attach_idea: Attach idea
         close: Close
         current_selection: Search ideas by name or ID
-        select: Select
+        select: Välj
       create:
         error: Det uppstod ett problem med att spara idén.
         success: Idén har skapats. Den är sparat som ett utkast.
@@ -587,9 +587,9 @@ sv:
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: This idea was accepted to the next step.
+          idea_accepted_reason: Denna idé accepterades till nästa steg.
           idea_in_evaluation_reason: Denna idé utvärderas.
-          idea_rejected_reason: This idea was not accepted to the next step.
+          idea_rejected_reason: Denna idé accepterades inte till nästa steg.
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
@@ -640,26 +640,26 @@ sv:
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_inline:
-        attached_ideas_number: Ideas attached to this proposal
-        choose_idea: Select idea
-        chosen_idea: Chosen idea
+        attached_ideas_number: Idéer bifogade till detta förslag
+        choose_idea: Välj en idé
+        chosen_idea: Vald idé
         filters:
-          activity: My activity
-          all: All
-          all_area_scopes: All areas
-          all_categories: All themes
-          area_scope: Area
-          category: Theme
-          close_modal: Close modal
-          filter: Filter
-          filter_by: Filter by
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
-          origin: Origin
-          reset: Clear filters
-          search: Search
+          activity: Min aktivitet
+          all: Alla
+          all_area_scopes: Alla områden
+          all_categories: Alla teman
+          area_scope: Område
+          category: Tema
+          close_modal: Stäng fönstret
+          filter: Filtrera
+          filter_by: Filtrera efter
+          my_favorites: Visa mina favoriter
+          my_ideas: Visa mina idéer
+          origin: Ursprung
+          reset: Rensa filter
+          search: Sök
           state: Status
-          title: Filter the ideas on the map and in the list
+          title: Filtrera idéerna på kartan och i listan
           unfold: Unfold
           voted: Show supported
         pcs_html: "<span>%{number}</span> pcs"
