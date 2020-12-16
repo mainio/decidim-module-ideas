@@ -40,6 +40,11 @@
             height: 27px;
           }
         }
+
+        .heart-icon,
+        .indicator-wrap{
+          margin: 0;
+        }
       }
 
       .indicator-wrap{
@@ -64,6 +69,10 @@
     .icon{
       width: 30px;
       height: 30px;
+    }
+
+    .link-text{
+      text-align: left;
     }
   }
 }
