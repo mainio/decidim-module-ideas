@@ -8,7 +8,7 @@ module Decidim
     class IdeaMCell < Decidim::CardMCell
       include IdeaCellsHelper
 
-      property :area_scope
+      property :area_scope, :answered?
 
       def badge
         render if has_badge?
