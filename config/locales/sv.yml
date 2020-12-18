@@ -14,7 +14,7 @@ sv:
         latitude: Latitud
         longitude: Longitud
         perform_geocoding: Hämta kartpunkten baserat på adressen
-        state: Status
+        state: Evaluation
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
         terms_agreed: Jag har läst kriterier
@@ -22,7 +22,7 @@ sv:
         user_group_id: Skapa idé som
       idea_answer:
         answer: Svar
-        internal_state: Status
+        internal_state: Evaluation
       ideas_copy:
         copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
         origin_component_id: Komponent för att kopiera idéer från
@@ -421,7 +421,7 @@ sv:
             published_answer: Publicerat svar
             published_at: Publikationsdatum
             scope: Tema
-            state: Status
+            state: Evaluation
             title: Titel
             votes: Stödjer
       new:
@@ -464,6 +464,7 @@ sv:
           all: Alla
           all_area_scopes: Alla områden
           all_categories: Alla teman
+          all_states: All
           area_scope: Område
           amendment_type: Typ
           category: Tema
@@ -473,7 +474,7 @@ sv:
           related_to: Relaterade till
           reset: Rensa filter
           search: Sök
-          state: Status
+          state: Evaluation
           title: Filtrera idéerna på kartan och i listan
           type: Typ
           voted: Visa stöds
@@ -658,7 +659,7 @@ sv:
           origin: Ursprung
           reset: Rensa filter
           search: Sök
-          state: Status
+          state: Evaluation
           title: Filtrera idéerna på kartan och i listan
           unfold: Unfold
           voted: Show supported
