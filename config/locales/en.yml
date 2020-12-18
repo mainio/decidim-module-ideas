@@ -15,7 +15,7 @@ en:
         latitude: Latitude
         longitude: Longitude
         perform_geocoding: Fetch the map point based on the address
-        state: State
+        state: Evaluation
         sub_category_id: Choose a subtheme for the idea
         suggested_hashtags: Suggested hashtags
         terms_agreed: I have read the criteria
@@ -23,7 +23,7 @@ en:
         user_group_id: Create idea as
       idea_answer:
         answer: Answer
-        internal_state: State
+        internal_state: Evaluation
       ideas_copy:
         copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
         origin_component_id: Component to copy the ideas from
@@ -422,7 +422,7 @@ en:
             published_answer: Published answer
             published_at: Published at
             scope: Scope
-            state: Status
+            state: Evaluation
             title: Title
             votes: Supports
       new:
@@ -465,6 +465,7 @@ en:
           all: All
           all_area_scopes: All areas
           all_categories: All themes
+          all_states: All
           area_scope: Area
           amendment_type: Type
           category: Theme
@@ -474,7 +475,7 @@ en:
           related_to: Related to
           reset: Clear filters
           search: Search
-          state: Status
+          state: Evaluation
           title: Filter the ideas on the map and in the list
           type: Type
           voted: Show supported
@@ -659,7 +660,7 @@ en:
           origin: Origin
           reset: Clear filters
           search: Search
-          state: Status
+          state: Evaluation
           title: Filter the ideas on the map and in the list
           unfold: Unfold
           voted: Show supported

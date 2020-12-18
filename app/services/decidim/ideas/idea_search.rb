@@ -13,7 +13,7 @@ module Decidim
         @component = options[:component]
         @current_user = options[:current_user]
 
-        base = options[:state]&.member?("withdrawn") ? Idea.withdrawn : Idea.except_withdrawn
+        base = options[:state] == "withdrawn" ? Idea.withdrawn : Idea.except_withdrawn
         super(base, options)
       end
 
@@ -56,18 +56,22 @@ module Decidim
 
       # Handle the state filter
       def search_state
-        return query if state.member? "withdrawn"
+        return query if state == "withdrawn"
 
-        accepted = state.member?("accepted") ? query.accepted : nil
-        rejected = state.member?("rejected") ? query.rejected : nil
-        evaluating = state.member?("evaluating") ? query.evaluating : nil
-        not_answered = state.member?("not_answered") ? query.state_not_published : nil
-
-        query
-          .where(id: accepted)
-          .or(query.where(id: rejected))
-          .or(query.where(id: evaluating))
-          .or(query.where(id: not_answered))
+        case state
+        when "accepted"
+          query.accepted
+        when "rejected"
+          query.rejected
+        when "evaluating"
+          query.evaluating
+        when "not_answered"
+          query
+            .where(id: query.state_not_published)
+            .or(query.where(id: query.evaluating))
+        else # Assume 'all' (default scope)
+          query
+        end
       end
 
       # Handle the amendment type filter

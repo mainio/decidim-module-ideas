@@ -228,7 +228,7 @@ module Decidim
           activity: "all",
           area_scope_id: "",
           category_id: "",
-          state: %w(accepted rejected evaluating not_answered),
+          state: "",
           related_to: "",
           type: "ideas"
         }

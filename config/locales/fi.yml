@@ -14,7 +14,7 @@ fi:
         latitude: Leveysaste
         longitude: Pituusaste
         perform_geocoding: Hae karttapiste osoitteen perusteella
-        state: Tila
+        state: Arviointi
         sub_category_id: Valitse idealle alateema
         suggested_hashtags: Ehdotetut hashtag-tunnisteet
         terms_agreed: Olen lukenut kriteerit
@@ -22,7 +22,7 @@ fi:
         user_group_id: Luo idea käyttäjänä
       idea_answer:
         answer: Vastaus
-        internal_state: Tila
+        internal_state: Arviointi
       ideas_copy:
         copy_ideas: Ymmärrän, että tämä tuo kaikki ideat valitusta komponentista tähän komponenttiin ja tätä toimintoa ei voi peruuttaa.
         origin_component_id: Komponentti, josta ideat kopioidaan
@@ -421,7 +421,7 @@ fi:
             published_answer: Julkaistu vastaus
             published_at: Julkaisuaika
             scope: Teema
-            state: Tila
+            state: Arviointi
             title: Nimi
             votes: Kannatukset
       new:
@@ -464,6 +464,7 @@ fi:
           all: Kaikki
           all_area_scopes: Kaikki alueet
           all_categories: Kaikki teemat
+          all_states: Kaikki
           area_scope: Alue
           amendment_type: Tyyppi
           category: Teema
@@ -473,7 +474,7 @@ fi:
           related_to: Liittyy aiheeseen
           reset: Tyhjennä rajaukset
           search: Haku
-          state: Tila
+          state: Arviointi
           title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
           voted: Näytä kannatetut
@@ -657,7 +658,7 @@ fi:
           my_ideas: Näytä omat ideasi
           reset: Tyhjennä rajaukset
           search: Haku
-          state: Tila
+          state: Arviointi
           title: Etsi ideoita
           unfold: Avaa
           voted: Näytä kannatetut

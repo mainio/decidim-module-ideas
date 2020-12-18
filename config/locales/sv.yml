@@ -14,7 +14,7 @@ sv:
         latitude: Latitud
         longitude: Longitud
         perform_geocoding: Hämta kartpunkten baserat på adressen
-        state: Status
+        state: Utvärdering
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
         terms_agreed: Jag har läst kriterier
@@ -22,7 +22,7 @@ sv:
         user_group_id: Skapa idé som
       idea_answer:
         answer: Svar
-        internal_state: Status
+        internal_state: Utvärdering
       ideas_copy:
         copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
         origin_component_id: Komponent för att kopiera idéer från
@@ -79,14 +79,14 @@ sv:
         search_placeholder:
           id_string_or_title_cont: Sök %{collection} efter ID eller titel.
         state_eq:
-          label: Status
+          label: Utvärdering
           values:
             accepted: Gick vidare
             evaluating: Utvärderas
             rejected: Gick inte vidare
             withdrawn: Tillbakadragna
         state_null:
-          label: Status
+          label: Utvärdering
           values:
             'true': Ej besvarade
     components:
@@ -421,7 +421,7 @@ sv:
             published_answer: Publicerat svar
             published_at: Publikationsdatum
             scope: Tema
-            state: Status
+            state: Utvärdering
             title: Titel
             votes: Stödjer
       new:
@@ -464,6 +464,7 @@ sv:
           all: Alla
           all_area_scopes: Alla områden
           all_categories: Alla teman
+          all_states: Alla
           area_scope: Område
           amendment_type: Typ
           category: Tema
@@ -473,7 +474,7 @@ sv:
           related_to: Relaterade till
           reset: Rensa filter
           search: Sök
-          state: Status
+          state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           type: Typ
           voted: Visa stöds
@@ -657,7 +658,7 @@ sv:
           my_ideas: Visa mina idéer
           reset: Rensa filter
           search: Sök
-          state: Status
+          state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           unfold: Öppna
           voted: Visa stöds
