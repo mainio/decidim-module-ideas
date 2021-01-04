@@ -162,7 +162,7 @@ module Decidim
         scopes_table = ([empty_scope_select] + scope_selects).join(" UNION ALL ")
 
         joins("LEFT JOIN decidim_scopes AS area_scopes ON area_scopes.id = decidim_ideas_ideas.area_scope_id")
-          .joins("LEFT JOIN (#{scope_selects.join(" UNION ALL ")}) AS scope_coordinates ON scope_coordinates.scope_id = area_scopes.id")
+          .joins("LEFT JOIN (#{scopes_table}) AS scope_coordinates ON scope_coordinates.scope_id = area_scopes.id")
       end
 
       def self.newsletter_participant_ids(component)
