@@ -14,7 +14,7 @@ sv:
         latitude: Latitud
         longitude: Longitud
         perform_geocoding: Hämta kartpunkten baserat på adressen
-        state: Evaluation
+        state: Utvärdering
         sub_category_id: Välj ett undertema för idén
         suggested_hashtags: Föreslagna hashtags
         terms_agreed: Jag har läst kriterier
@@ -22,7 +22,7 @@ sv:
         user_group_id: Skapa idé som
       idea_answer:
         answer: Svar
-        internal_state: Evaluation
+        internal_state: Utvärdering
       ideas_copy:
         copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
         origin_component_id: Komponent för att kopiera idéer från
@@ -49,14 +49,14 @@ sv:
             title:
               identical: OCH innehållet kan inte vara identiskt
     models:
-      decidim/ideas/accepted_idea_event: Idea accepted to the next step
+      decidim/ideas/accepted_idea_event: Idé gick vidare
       decidim/ideas/admin/update_idea_category_event: Idétema ändrat
       decidim/ideas/admin/update_idea_scope_event: Idétema ändrat
       decidim/ideas/creation_enabled_event: Skapande av idéer aktiverat
       decidim/ideas/evaluating_idea_event: Idén beräknas
       decidim/ideas/idea_mentioned_event: Idé nämnd
       decidim/ideas/publish_idea_event: Idé publicerad
-      decidim/ideas/rejected_idea_event: Idea was not accepted to the next step
+      decidim/ideas/rejected_idea_event: Idén gick inte vidare
       decidim/ideas/voting_enabled_event: Omröstningar om idéer aktiverat
   activerecord:
     models:
@@ -79,14 +79,14 @@ sv:
         search_placeholder:
           id_string_or_title_cont: Sök %{collection} efter ID eller titel.
         state_eq:
-          label: Status
+          label: Utvärdering
           values:
-            accepted: Accepted to the next step
+            accepted: Gick vidare
             evaluating: Utvärderas
-            rejected: Not accepted to the next step
+            rejected: Gick inte vidare
             withdrawn: Tillbakadragna
         state_null:
-          label: Status
+          label: Utvärdering
           values:
             'true': Ej besvarade
     components:
@@ -160,10 +160,10 @@ sv:
           notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" was accepted to the next step. You can read the answer in this page:'
+            email_intro: 'Din idé "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Your idea was accepted to the next step
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was accepted to the next step.
+            email_subject: Din idé kommer att gå vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
           follower:
             email_intro: 'Idén "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
             email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
@@ -197,15 +197,15 @@ sv:
           notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> har lagts till i %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
+            email_intro: 'Din idé "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
-            email_subject: Your idea was not accepted to the next step
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was not accepted to the next step.
+            email_subject: Din idé går inte vidare
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
           follower:
-            email_intro: 'The idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
+            email_intro: 'Idén "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
             email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}". Klicka på länken ovan för att sluta följa det.
-            email_subject: A idea you are following was not accepted to the next step
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
+            email_subject: En idé du följer går inte vidare
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
         idea_update_category:
           email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
           email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
@@ -229,10 +229,10 @@ sv:
         accepted_ideas:
           conditions:
             - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av intresse
-            - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
-          description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
-          description_another: This participant had %{score} ideas accepted to the next step.
-          description_own: Du fick %{score} idéer accepterade till nästa steg.
+            - Försök att lägga fram idéer som kan genomföras. De har lättare att gå vidare.
+          description: Detta märke beviljas när du aktivt deltar med nya idéer som går vidare.
+          description_another: Denna deltagare hade %{score} idéer som gick vidare.
+          description_own: Du fick %{score} idéer som gick vidare.
           name: Möjliga idéer
           next_level_in: Få %{score} fler idéer antagna för att nå nästa nivå!
           unearned_another: Denna deltagare hade inga idéer som gick vidare.
@@ -280,10 +280,10 @@ sv:
             name: Idé
         idea_answers:
           form:
-            accepted: Accepterad till nästa steg
+            accepted: Gick vidare
             answer_idea: Svara
             evaluating: Utvärderas
-            rejected: Ej accepterad till nästa steg
+            rejected: Gick inte vidare
             title: Svar på idén %{title}
         ideas:
           answer:
@@ -375,10 +375,10 @@ sv:
           publish_answer: "%{user_name} publicerade svaret på idén %{resource_name} i utrymmet %{space_name}"
           update: "%{user_name} uppdaterade idén %{resource_name} på utrymmet %{space_name}"
       answers:
-        accepted: Accepterad till nästa steg
+        accepted: Gick vidare
         evaluating: Utvärderas
         not_answered: Ej besvarade
-        rejected: Ej accepterad till nästa steg
+        rejected: Gick inte vidare
         withdrawn: Tillbakadragna
       application_helper:
         filter_category_values:
@@ -388,17 +388,17 @@ sv:
           citizens: Medborgare
           user_groups: Grupper
         filter_state_values:
-          accepted: Accepterad till nästa steg
+          accepted: Gick vidare
           all: Alla
           evaluating: Utvärderas
           not_answered: Ej besvarade
-          rejected: Ej accepterad till nästa steg
+          rejected: Gick inte vidare
         filter_type_values:
           all: Alla
           amendments: Ändringar
           ideas: Idéer
       attached_ideas_helper:
-        attach_idea: Attach idea
+        attach_idea: Bifoga idé
         close: Stäng
         current_selection: Sök efter namn eller ID
         select: Välj
@@ -421,7 +421,7 @@ sv:
             published_answer: Publicerat svar
             published_at: Publikationsdatum
             scope: Tema
-            state: Evaluation
+            state: Utvärdering
             title: Titel
             votes: Stödjer
       new:
@@ -464,7 +464,7 @@ sv:
           all: Alla
           all_area_scopes: Alla områden
           all_categories: Alla teman
-          all_states: All
+          all_states: Alla
           area_scope: Område
           amendment_type: Typ
           category: Tema
@@ -474,7 +474,7 @@ sv:
           related_to: Relaterade till
           reset: Rensa filter
           search: Sök
-          state: Evaluation
+          state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           type: Typ
           voted: Visa stöds
@@ -588,9 +588,9 @@ sv:
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: Denna idé accepterades till nästa steg.
+          idea_accepted_reason: Denna idé gick vidare.
           idea_in_evaluation_reason: Denna idé utvärderas.
-          idea_rejected_reason: Denna idé accepterades inte till nästa steg.
+          idea_rejected_reason: Denna idé gick inte vidare.
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
@@ -641,9 +641,9 @@ sv:
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_inline:
-        attached_ideas_number: Idéer bifogade till detta förslag
-        choose_idea: Välj en idé
-        chosen_idea: Vald idé
+        attached_ideas_number: Idéer bifogade detta förslag
+        choose_idea: Välj idén
+        chosen_idea: Vält idé
         filters:
           activity: Min aktivitet
           all: Alla
@@ -659,12 +659,12 @@ sv:
           origin: Ursprung
           reset: Rensa filter
           search: Sök
-          state: Evaluation
+          state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
-          unfold: Unfold
-          voted: Show supported
-        pcs_html: "<span>%{number}</span> pcs"
-        remove_idea: Remove idea
+          unfold: Öppna
+          voted: Visa stöds
+        pcs_html: "<span>%{number}</span> st"
+        remove_idea: Ta bort idén
       info:
         show:
           back: Tillbaka till föregående sida
@@ -689,9 +689,9 @@ sv:
           has_supports: Denna idé kan inte dras tillbaka eftersom den redan har stöd.
     metrics:
       accepted_ideas:
-        description: Number of ideas accepted to the next step
+        description: Antal idéer som gick vidare
         object: idéer
-        title: Ideas accepted to the next step
+        title: Idéer som gick vidare
       ideas:
         description: Antal idéer
         object: idéer
@@ -705,15 +705,15 @@ sv:
         highlighted_ideas:
           ideas: Idéer
       statistics:
-        ideas_accepted: Ideas accepted to the next step
+        ideas_accepted: Idéer som gick vidare
         ideas_count: Idéer
     participatory_spaces:
       highlighted_ideas:
         see_all: Visa alla (%{count})
     plans:
       section_types:
-        link_ideas: Link ideas
-        link_ideas_inline: Link ideas inline
+        link_ideas: Länk idéer
+        link_ideas_inline: Länk idéer inline
     resource_links:
       copied_from_component:
         idea_idea: Relaterade idéer
