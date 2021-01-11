@@ -26,7 +26,11 @@
     </div>
   </div>
 
-  <div class="picker-content picker-list" data-idea-picker-form="<%= picker_id %>" data-idea-picker-selected="<%= picker_id %>_selected" data-picker-path="<%= picker_path %>" data-picker-more="<%= more_ideas? %>">
+  <div class="picker-content picker-list" data-idea-picker-form="<%= picker_id %>" data-idea-picker-selected="<%= picker_id %>_selected" data-idea-picker-summary="<%= picker_id %>_summary" data-picker-path="<%= picker_path %>" data-picker-more="<%= more_ideas? %>">
     <%= render :ideas %>
+  </div>
+
+  <div id="<%= picker_id %>_summary" class="picker-summary static__content">
+    <div class="summary-title"><%= t(".attached_ideas_number") %> - <%= t(".pcs_html", number: 0) %></div>
   </div>
 </div>

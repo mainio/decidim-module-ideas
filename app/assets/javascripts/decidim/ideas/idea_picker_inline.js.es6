@@ -7,6 +7,8 @@
       const $form = $(`#${$target.data("idea-picker-form")}`);
       const $selected = $(`#${$target.data("idea-picker-selected")}`);
       const $selectedNumber = $(".accordion-title span", $selected.parent(".accordion-item"));
+      const $summary = $(`#${$target.data("idea-picker-summary")}`);
+      const $summarySelectedNumber = $(".summary-title span", $summary);
       const fieldName = $(".sample-idea-field", $selected).attr("name");
       const pickerPath = $target.data("picker-path");
       let selectedIdeas = [];
@@ -44,6 +46,7 @@
           });
         });
         $selectedNumber.text(selectedIdeas.length);
+        $summarySelectedNumber.text(selectedIdeas.length);
 
         $(".ideas-picker-chooser", $list).on("click", (ev) => {
           ev.preventDefault();
@@ -70,6 +73,7 @@
           }
 
           $selectedNumber.text(selectedIdeas.length);
+          $summarySelectedNumber.text(selectedIdeas.length);
 
           $chooser.blur();
         });
@@ -110,9 +114,17 @@
       $("button", $form).on("click", (ev) => {
         ev.preventDefault();
 
-        if ($(ev.target).attr("type") === "reset") {
+        const $btn = $(ev.target);
+        if ($btn.attr("type") === "reset") {
           resetFilterForm();
         } else {
+          filterIdeas();
+        }
+      });
+      // Prevent the enter press from opening the mobile modal
+      $("input[type='search']", $form).on("keydown", (ev) => {
+        if (ev.keyCode === 13) {
+          ev.preventDefault();
           filterIdeas();
         }
       });
