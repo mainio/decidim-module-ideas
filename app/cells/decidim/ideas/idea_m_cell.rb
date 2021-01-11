@@ -14,6 +14,18 @@ module Decidim
         render if has_badge?
       end
 
+      def resource_utm_params
+        return {} unless context[:utm_params]
+
+        context[:utm_params].map do |key, value|
+          ["utm_#{key}", value]
+        end.to_h
+      end
+
+      def filter_link_params(params = nil)
+        super(params).merge(resource_utm_params)
+      end
+
       private
 
       def preview?
