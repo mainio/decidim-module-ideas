@@ -155,7 +155,7 @@
         <div class="row">
           <div class="columns large-6">
             <div class="field">
-              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, label: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
+              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, label: false, include_blank: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
             </div>
           </div>
         </div>
