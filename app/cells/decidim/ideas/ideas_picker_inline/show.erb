@@ -8,9 +8,9 @@
       <a href="#" class="accordion-title"><%= t(".attached_ideas_number") %> - <%= t(".pcs_html", number: 0) %></a>
 
       <div id="<%= picker_id %>_selected" class="accordion-content ideas-picker-selected" data-tab-content>
-        <%= form.hidden_field "idea_ids][", value: "", id: nil, class: "sample-idea-field" %>
+        <%= form.hidden_field "idea_ids][", value: "", id: "plan_section_answer_#{model.id}_sample", class: "sample-idea-field" %>
         <% selected_ideas.each do |idea| %>
-          <%= form.hidden_field "idea_ids][", value: idea.id, id: nil, class: "idea-field" %>
+          <%= form.hidden_field "idea_ids][", value: idea.id, id: "plan_section_answer_#{model.id}_idea_#{idea.id}", class: "idea-field" %>
           <%= render partial: "decidim/ideas/ideas_picker_inline/idea", locals: { idea: idea } %>
         <% end %>
       </div>
