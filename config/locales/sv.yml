@@ -641,7 +641,7 @@ sv:
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_inline:
-        attached_ideas_number: Idéer bifogade detta förslag
+        attached_ideas_number: Idéer valda till förslaget
         choose_idea: Välj idén
         chosen_idea: Vält idé
         filters:
