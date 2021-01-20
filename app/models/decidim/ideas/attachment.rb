@@ -9,6 +9,10 @@ module Decidim
 
       mount_uploader :file, Decidim::Ideas::AttachmentUploader
 
+      def self.translatable_fields_list
+        superclass.translatable_fields_list
+      end
+
       # The URL to download the "main" version of the file. Only works with
       # images.
       #
