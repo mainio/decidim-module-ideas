@@ -88,32 +88,33 @@ module Decidim
         super
       end
 
-    # Handles the area_scope_id filter. When we want to show only those that do
-    # not have a area_scope_id set, we cannot pass an empty String or nil
-    # because Searchlight will automatically filter out these params, so the
-    # method will not be used. Instead, we need to pass a fake ID and then
-    # convert it inside. In this case, in order to select those elements that do
-    # not have a area_scope_id set we use `"global"` as parameter, and in the
-    # method we do the needed changes to search properly.
-    def search_area_scope_id
-      return query if area_scope_ids.empty? || area_scope_ids.include?("all")
+      # Handles the area_scope_id filter. When we want to show only those that
+      # do not have a area_scope_id set, we cannot pass an empty String or nil
+      # because Searchlight will automatically filter out these params, so the
+      # method will not be used. Instead, we need to pass a fake ID and then
+      # convert it inside. In this case, in order to select those elements that
+      # do not have a area_scope_id set we use `"global"` as parameter, and in
+      # the method we do the needed changes to search properly.
+      def search_area_scope_id
+        return query if area_scope_ids.empty? || area_scope_ids.include?("all")
 
-      conditions = []
-      conditions.concat(["? = ANY(decidim_area_scopes.part_of)"] * area_scope_ids.count)
+        conditions = []
+        conditions.concat(["? = ANY(decidim_area_scopes.part_of)"] * area_scope_ids.count)
 
-      join = %{
-        LEFT OUTER JOIN decidim_scopes AS decidim_area_scopes
-          ON decidim_area_scopes.id = decidim_ideas_ideas.area_scope_id
-      }
-      query.includes(:area_scope).joins(join).where(
-        conditions.join(" OR "),
-        *area_scope_ids.map(&:to_i)
-      )
-    end
+        join = %(
+          LEFT OUTER JOIN decidim_scopes AS decidim_area_scopes
+            ON decidim_area_scopes.id = decidim_ideas_ideas.area_scope_id
+        )
+        query.includes(:area_scope).joins(join).where(
+          conditions.join(" OR "),
+          *area_scope_ids.map(&:to_i)
+        )
+      end
 
       # Filters Ideas by the name of the classes they are linked to. By default,
-      # returns all Ideas. When a `related_to` param is given, then it camelcases item
-      # to find the real class name and checks the links for the Ideas.
+      # returns all Ideas. When a `related_to` param is given, then it
+      # camelcases item to find the real class name and checks the links for the
+      # Ideas.
       #
       # The `related_to` param is expected to be in this form:
       #
