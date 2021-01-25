@@ -28,7 +28,11 @@ module Decidim
       end
 
       def picker_path
-        "#{main_component_path(component)}/ideas/search_ideas"
+        @picker_path ||= begin
+          base_path, params = main_component_path(component).split("?")
+          params_part = params.blank? ? "" : "?#{params}"
+          "#{base_path.sub(%r{/$}, "")}/ideas/search_ideas#{params_part}"
+        end
       end
 
       def search_text
