@@ -80,16 +80,20 @@ module Decidim
           search_text: search_text,
           activity: search_activity,
           area_scope_id: search_area,
-          category_id: search_category
+          category_id: search_category,
+          state: "accepted"
         }
 
         search = Decidim::Ideas::IdeaSearch.new(params)
-        search.results.published.not_hidden.order(id: :asc)
+        search.results.only_amendables.published.not_hidden.order(id: :asc)
       end
 
       def ideas
         @ideas ||= Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
+                     &.only_amendables
                      &.published
+                     &.not_hidden
+                     &.accepted
                      &.order(id: :asc)
       end
 

@@ -19,6 +19,8 @@ module Decidim
             query = Decidim
                     .find_resource_manifest(:ideas)
                     .try(:resource_scope, current_component)
+                    &.only_amendables
+                    &.not_hidden
                     &.order(title: :asc)
                     &.where("state IS NULL OR state != ?", "rejected")
                     &.where&.not(published_at: nil)
@@ -32,7 +34,11 @@ module Decidim
                         "%#{idterm}%"
                       )
                     else
-                      query&.where("title ilike ?", "%#{params[:term]}%")
+                      query&.where(
+                        "title ilike ? OR body ilike ?",
+                        "%#{params[:term]}%",
+                        "%#{params[:term]}%"
+                      )
                     end
 
             ideas_list = query.all.collect do |p|
