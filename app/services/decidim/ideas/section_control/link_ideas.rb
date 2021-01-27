@@ -6,6 +6,8 @@ module Decidim
       # A section control object for link_ideas field type in the plans
       # component.
       class LinkIdeas < Decidim::Plans::SectionControl::Base
+        cattr_accessor :plan_resources_linked
+
         def prepare!(plan)
           self.class.prepare_all(plan)
         end
@@ -14,12 +16,8 @@ module Decidim
           self.class.finalize_all(plan)
         end
 
-        private
-
-        cattr_accessor :plan_resources_linked
-
-        def self.prepare_all(plan)
-          plan_resources_linked = false
+        def self.prepare_all(_plan)
+          self.plan_resources_linked = false
 
           true
         end
@@ -29,7 +27,8 @@ module Decidim
 
           # Go through all plan sections of this type and take note about all
           # the ideas in each section.
-          idea_ids = plan.contents.with_section_type(:link_ideas).map do |sect|
+          section_types = [:link_ideas, :link_ideas_inline]
+          idea_ids = plan.contents.with_section_type(section_types).map do |sect|
             sect.body["idea_ids"]
           end.flatten.uniq
 
@@ -39,7 +38,7 @@ module Decidim
 
           # Mark already linked so that we won't link again during the following
           # sections if there are multiple sections of the same type.
-          plan_resources_linked = true
+          self.plan_resources_linked = true
 
           true
         end
