@@ -2,8 +2,8 @@ cs:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Choose an area for the idea
-        address: Add an optional neighbourhood for the idea or a more specific address
+        area_scope_id: Vyberte oblast pro nápad
+        address: Přidejte volitelné sousedství nebo konkrétnější adresu pro Nápad
         answer: Answer
         answered_at: Answered at
         automatic_hashtags: Hashtags automatically added
