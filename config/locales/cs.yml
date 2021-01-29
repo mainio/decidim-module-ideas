@@ -127,23 +127,23 @@ cs:
             image_allowed: Povolit obrázek
             materials_text: Text materiálu
             minimum_votes_per_user: Minimální podpora na uživatele
-            new_idea_help_text: New idea help text
-            resources_permissions_enabled: Actions permissions can be set for each idea
-            terms_intro: Terms intro
-            terms_text: Terms text
-            threshold_per_idea: Threshold per idea
-            vote_limit: Support limit per participant
+            new_idea_help_text: Nová nápověda k nápadu
+            resources_permissions_enabled: Oprávnění k akcím lze nastavit pro každý nápad
+            terms_intro: Úvod k výrazům
+            terms_text: Text výrazů
+            threshold_per_idea: Prahová hodnota pro každý nápad
+            vote_limit: Limit podpory na uživatele
           step:
-            amendment_creation_enabled: Amendment creation enabled
-            amendment_creation_enabled_help: Participant can amend ideas.
-            amendment_promotion_enabled: Amendment promotion enabled
-            amendment_promotion_enabled_help: Emandation authors will be able to promote to Idea the rejected emendation.
-            amendment_reaction_enabled: Amendment reaction enabled
-            amendment_reaction_enabled_help: Idea's authors will be able to accept or reject Participant's emendations.
-            amendments_visibility: Amendments visibility
+            amendment_creation_enabled: Vytvoření pozměňovacích návrhů povoleno
+            amendment_creation_enabled_help: Účastník může pozměnit nápady.
+            amendment_promotion_enabled: Propagace pozměňovacích návrhů povolena
+            amendment_promotion_enabled_help: Autoři vylepšení budou moci propagovat myšlenku odmítnutého vylepšení.
+            amendment_reaction_enabled: Reakce na pozměňovací návrh povolena
+            amendment_reaction_enabled_help: Autoři nápadu budou moci přijmout nebo odmítnout vylepšení účastníků.
+            amendments_visibility: Viditelnost pozměňovacích návrhů
             amendments_visibility_choices:
-              all: Amendments are visible to all
-              participants: Amendments are visible only to their authors
+              all: Pozměňovací návrhy jsou viditelné pro všechny
+              participants: Pozměňovací návrhy jsou viditelné pouze pro jejich autory
             amendments_visibility_help: Pokud je vybrána možnost "Pozměňovací návrhy jsou viditelné pouze pro jejich autory", musí být účastník přihlášen pro zobrazení provedených změn.
             announcement: Oznámení
             automatic_hashtags: Hashtagy přidány ke všem nápadům
@@ -341,13 +341,13 @@ cs:
             link: Odkaz
             photos: Fotky
             show_email: Zobrazit e-mailovou adresu
-            ideas: Ideas
-            ranking: "%{ranking} of %{total}"
-            votes_count: Supports count
-            votes_ranking: Ranking by supports
+            ideas: Nápady
+            ranking: "%{ranking} z %{total}"
+            votes_count: Počet podpor
+            votes_ranking: Hodnocení pomocí podpory
           update_category:
-            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
-            select_a_category: Please select a theme
+            invalid: 'Tyto nápady již měly %{subject_name} téma: %{ideas}.'
+            select_a_category: Vyberte téma
             select_a_idea: Please select an idea
             success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
           update_area_scope:
