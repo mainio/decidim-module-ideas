@@ -219,58 +219,58 @@ cs:
           email_intro: 'Administrátor aktualizoval oblast vašeho nápadu "%{resource_title}", podívejte se na tuto stránku:'
           email_outro: Obdrželi jste toto oznámení, protože jste autorem nápadu.
           email_subject: Oblast %{resource_title} nápadu byla aktualizována
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
+          notification_title: Oblast nápadu <a href="%{resource_path}">%{resource_title}</a> byla aktualizována administrátorem.
         voting_enabled:
-          email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: Idea support has started for %{participatory_space_title}
-          notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          email_intro: 'Můžete podpořit nápady v %{participatory_space_title}! Začněte se podílet na této stránce:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{participatory_space_title}. Můžete přestat přijímat oznámení za předchozím odkazem.
+          email_subject: Podpora idey začala pro %{participatory_space_title}
+          notification_title: Nyní můžete začít <a href="%{resource_path}">podporovat nápady</a> v <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
-        idea: Ideas
+        idea: Nápady
     gamification:
       badges:
         accepted_ideas:
           conditions:
-            - Choose the participation space of your interest with submission for ideas enabled
-            - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
-          description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
-          description_another: This participant had %{score} ideas accepted to the next step.
-          description_own: You got %{score} ideas accepted to the next step.
-          name: Possible ideas
-          next_level_in: Get %{score} more ideas through to reach the next level!
-          unearned_another: This participant has not yet had any ideas that went through.
-          unearned_own: You got no ideas that went through yet.
+            - Zvolte participační prostor pro účast vašeho zájmu s povoleným podáním nápadů
+            - Snažte se vytvářet nápady, které mohou být provedeny. Tímto způsobem je pravděpodobnější, že budou přijaty k dalšímu kroku.
+          description: Tento odznak je udělen, když se aktivně zúčastníte nových nápadů a jsou přijaty k dalšímu kroku.
+          description_another: Tento uživatel měl %{score} nápadů přijatých k dalšímu kroku.
+          description_own: K dalšímu kroku máte %{score} přijatých nápadů.
+          name: Možné nápady
+          next_level_in: Získejte %{score} nápadů a dosáhněte další úrovně!
+          unearned_another: Tento uživatel ještě neměl žádné nápady, které by prošly.
+          unearned_own: Nemáte žádné nápady, které by prošly.
         idea_votes:
           conditions:
-            - Browse and spend some time reading other people's ideas
-            - Give support to the ideas you like or find interesting
-          description: This badge is granted when you support other people's ideas.
-          description_another: This participant has given support to %{score} ideas.
-          description_own: You have given support to %{score} ideas.
-          name: Idea supports
-          next_level_in: Give support to %{score} more ideas to reach the next level!
-          unearned_another: This participant hasn't given support to any ideas yet.
-          unearned_own: You have given support to no ideas yet.
+            - Procházejte a strávte nějaký čas čtením nápadů jiných lidí
+            - Podpořte nápady, které se vám líbí nebo najdete zajímavé
+          description: Tento odznak je udělen, když podpoříte nápady jiných lidí.
+          description_another: Tento uživatel podpořil %{score} nápadů.
+          description_own: Podpořili jste %{score} nápadů.
+          name: Podporované nápady
+          next_level_in: Podpořte %{score} dalších nápadů k dosažení další úrovně!
+          unearned_another: Tento uživatel zatím nepodpořil žádné nápady.
+          unearned_own: Zatím jste nepodpořil žádné nápady.
         ideas:
           conditions:
-            - Choose the participation space of your interest with submission for ideas enabled
-            - Create a new idea
-          description: This badge is granted when you actively participate with new ideas.
-          description_another: This participant has created %{score} ideas.
-          description_own: You have created %{score} ideas.
-          name: Ideas
-          next_level_in: Create %{score} more ideas to reach the next level!
-          unearned_another: This participant hasn't created any ideas yet.
-          unearned_own: You have created no ideas yet.
+            - Zvolte participační prostor vašeho zájmu s povoleným podáním nápadů
+            - Vytvořit nový nápad
+          description: Tento odznak je udělen, když se aktivně zapojíte do nových nápadů.
+          description_another: Tento uživatel vytvořil %{score} nápadů.
+          description_own: Vytvořili jste %{score} nápadů.
+          name: Nápady
+          next_level_in: Vytvořte ještě %{score} nápadů, abyste dosáhli další úrovně!
+          unearned_another: Tento uživatel zatím nevytvořil žádné nápady.
+          unearned_own: Zatím jste nevytvořili žádné nápady.
     ideas:
       actions:
-        answer_idea: Answer idea
-        edit_idea: Edit idea
-        import: Import from another component
-        new: New idea
-        show: Show idea
-        title: Actions
+        answer_idea: Odpověď k nápadu
+        edit_idea: Upravit nápad
+        import: Importovat z jiné komponenty
+        new: Nový nápad
+        show: Zobrazit nápad
+        title: Akce
       admin:
         actions:
           preview: Preview
