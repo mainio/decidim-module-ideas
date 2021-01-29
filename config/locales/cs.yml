@@ -42,44 +42,44 @@ cs:
             attachment:
               needs_to_be_reattached: Potřebuje být znovu připojen
             body:
-              cant_be_equal_to_template: cannot be equal to the template
-              identical: AND title cannot be identical
+              cant_be_equal_to_template: nemůže být stejný jako šablona
+              identical: A název nemůže být totožný
             image:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Potřebuje být znovu připojen
             title:
-              identical: AND body cannot be identical
+              identical: A text obsahu nemůže být totožný
     models:
-      decidim/ideas/accepted_idea_event: Idea accepted to the next step
-      decidim/ideas/admin/update_idea_category_event: Idea theme changed
-      decidim/ideas/admin/update_idea_scope_event: Idea scope changed
-      decidim/ideas/creation_enabled_event: Idea creation enabled
-      decidim/ideas/evaluating_idea_event: Idea is being evaluated
-      decidim/ideas/idea_mentioned_event: Idea mentioned
-      decidim/ideas/publish_idea_event: Idea published
-      decidim/ideas/rejected_idea_event: Idea was not accepted to the next step
-      decidim/ideas/voting_enabled_event: Idea voting enabled
+      decidim/ideas/accepted_idea_event: Nápad přijat k dalšímu kroku
+      decidim/ideas/admin/update_idea_category_event: Téma Nápadu změněno
+      decidim/ideas/admin/update_idea_scope_event: Oblast zájmu Nápadu změněna
+      decidim/ideas/creation_enabled_event: Tvorba nápadů povolena
+      decidim/ideas/evaluating_idea_event: Nápad se vyhodnocuje
+      decidim/ideas/idea_mentioned_event: Nápad zmíněn
+      decidim/ideas/publish_idea_event: Nápad publikován
+      decidim/ideas/rejected_idea_event: Nápad nebyl přijat k dalšímu kroku
+      decidim/ideas/voting_enabled_event: Hlasování o nápadu povoleno
   activerecord:
     models:
       decidim/ideas/idea:
-        one: Idea
-        few: Ideas
-        many: Ideas
-        other: Ideas
+        one: Nápad
+        few: Nápadů
+        many: Nápadů
+        other: Nápady
       decidim/ideas/idea_vote:
-        one: Support
-        few: Supports
-        many: Supports
-        other: Supports
+        one: Podpora
+        few: Podpory
+        many: Podpor
+        other: Podpor
   decidim:
     admin:
       filters:
         area_scope_id_eq:
-          label: Area
+          label: Oblast
         is_emendation_true:
-          label: Type
+          label: Typ
           values:
-            'false': Ideas
-            'true': Amendments
+            'false': Nápady
+            'true': Pozměňovací návrhy
         search_placeholder:
           id_string_or_title_cont: Search %{collection} by ID or title.
         state_eq:
