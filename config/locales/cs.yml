@@ -521,26 +521,26 @@ cs:
         index:
           description: Prozkoumejte nápady od ostatních na mapě a na vizitkách. Můžete také udělat své vlastní nápady!
           draft_idea_title: Máte návrh nápadu!
-          draft_idea_continue: Continue your idea
-          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
-          leave_your_idea: Submit your own idea!
-          new_idea: New idea
-          title: Browse ideas
-          see_all_withdrawn: See all withdrawn ideas
-          subtitle: Search and discover ideas!
-          view_idea: View idea
+          draft_idea_continue: Pokračujte ve svém nápadu
+          draft_idea_description: Dříve jste uložili nápad jako návrh. Nyní jej můžete psát dál.
+          leave_your_idea: Odešlete vlastní nápad!
+          new_idea: Nový nápad
+          title: Procházet nápady
+          see_all_withdrawn: Zobrazit všechny stažené nápady
+          subtitle: Hledat a objevovat nápady!
+          view_idea: Zobrazit nápad
         linked_ideas:
           idea_votes:
-            one: support
-            few: supports
-            many: supports
-            other: supports
+            one: podpora
+            few: podpor
+            many: podpor
+            other: podpory
         map:
           dynamic:
-            skip_button: Skip map
+            skip_button: Přeskočit mapu
         new:
-          back: Back to previous page
-          get_help: Get help
+          back: Zpět na předchozí stránku
+          get_help: Získat pomoc
           material_title: Informace na podporu nápadů
           need_help: Potřebujete pomoc?
           send: Pokračovat
