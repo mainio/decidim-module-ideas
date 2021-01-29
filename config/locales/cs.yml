@@ -81,9 +81,9 @@ cs:
             'false': Nápady
             'true': Pozměňovací návrhy
         search_placeholder:
-          id_string_or_title_cont: Search %{collection} by ID or title.
+          id_string_or_title_cont: Hledat %{collection} podle ID nebo názvu.
         state_eq:
-          label: State
+          label: Stav
           values:
             accepted: Accepted to the next step
             evaluating: Evaluating
@@ -144,23 +144,23 @@ cs:
             amendments_visibility_choices:
               all: Amendments are visible to all
               participants: Amendments are visible only to their authors
-            amendments_visibility_help: If the option "Amendments are visible only to their authors" is selected, participant must be logged in to see the amendments made.
-            announcement: Announcement
-            automatic_hashtags: Hashtags added to all ideas
-            comments_blocked: Comments blocked
-            creation_enabled: Idea creation enabled
-            idea_answering_enabled: Idea answering enabled
-            publish_answers_immediately: Publish idea answers immediately
-            suggested_hashtags: Hashtags suggested to participants for new ideas
-            votes_blocked: Supports blocked
-            votes_enabled: Supports enabled
-            votes_hidden: Supports hidden (if supports are enabled, checking this will hide the number of supports)
+            amendments_visibility_help: Pokud je vybrána možnost "Pozměňovací návrhy jsou viditelné pouze pro jejich autory", musí být účastník přihlášen pro zobrazení provedených změn.
+            announcement: Oznámení
+            automatic_hashtags: Hashtagy přidány ke všem nápadům
+            comments_blocked: Komentáře blokovány
+            creation_enabled: Tvorba nápadů povolena
+            idea_answering_enabled: Odpovídání na nápady povoleno
+            publish_answers_immediately: Okamžitě publikovat odpovědi na nápady
+            suggested_hashtags: Hashtagy navržené účastníkům pro nové nápady
+            votes_blocked: Podpory hlasováním blokovány
+            votes_enabled: Podpory hlasováním povoleny
+            votes_hidden: Podpory hlasováním skryté (pokud jsou podpory povoleny, zaškrtnutím se skryje počet podpor)
     events:
       ideas:
         creation_enabled:
-          email_intro: 'You can now create new ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: Ideas now available in %{participatory_space_title}
+          email_intro: 'Nyní můžete vytvářet nové nápady v %{participatory_space_title}! Začněte se podílet na této stránce:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{participatory_space_title}. Můžete přestat přijímat oznámení tímto odkazem.
+          email_subject: Nápady jsou nyní k dispozici v %{participatory_space_title}
           notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
