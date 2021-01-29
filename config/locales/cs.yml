@@ -413,73 +413,73 @@ cs:
         error: Destroying the draft failed.
         success: Návrh byl úspěšně zničen.
       last_activity:
-        new_idea_at_html: "<span>New idea at %{link}</span>"
+        new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
         idea:
           fields:
-            area_scope: Area
-            category: Theme
-            comments: Comments
+            area_scope: Oblast
+            category: Téma
+            comments: Komentáře
             id: ID
-            official_idea: Official idea
-            published_answer: Published answer
-            published_at: Published at
-            scope: Scope
-            state: Evaluation
-            title: Title
-            votes: Supports
+            official_idea: Oficiální nápad
+            published_answer: Publikovaná odpověď
+            published_at: Publikováno v
+            scope: Oblast působnosti
+            state: Hodnocení
+            title: Název
+            votes: Podpory
       new:
-        limit_reached: You can't create new ideas since you've exceeded the limit.
+        limit_reached: Nové nápady nelze vytvořit, protože jste překročili limit.
       idea_votes:
         create:
-          error: There was a problem supporting the idea.
+          error: Při podpoře nápadu došlo k chybě.
       ideas:
         compare:
-          continue: Continue
-          no_similars_found: Well done! No similar ideas found
-          title: Similar ideas
+          continue: Pokračovat
+          no_similars_found: Dobrá práce! Nebyly nalezeny žádné podobné nápady
+          title: Podobné nápady
         complete:
-          send: Send
-          title: Complete your idea
+          send: Odeslat
+          title: Dokončete svůj nápad
         count:
           ideas_count:
-            one: "%{count} idea"
-            few: "%{count} ideas"
-            many: "%{count} ideas"
-            other: "%{count} ideas"
+            one: "%{count} nápad"
+            few: "%{count} nápadů"
+            many: "%{count} nápadů"
+            other: "%{count} nápadů"
         edit:
-          back: Back to previous page
-          send: Save
-          title: Edit idea
+          back: Zpět na předchozí stránku
+          send: Uložit
+          title: Upravit nápad
         edit_draft:
-          discard: Discard this draft
-          discard_confirmation: Are you sure you want to discard this idea draft?
-          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
-          send: Preview
-          title: Edit Idea Draft
+          discard: Zahodit koncept
+          discard_confirmation: Jste si jisti, že chcete zahodit tento návrh nápadu?
+          draft_announcement_html: <p>Toto je koncept nápadu. Musíte zveřejnit koncept, aby byl viditelný na webových stránkách.</p><p>Můžete mít pouze jeden koncept v aktuálním čase.</p>
+          send: Náhled
+          title: Upravit návrh nápadu
         edit_view:
-          discard: Discard this draft
-          discard_confirmation: Are you sure you want to discard this idea draft?
-          cancel: Cancel
-          save: Save as draft
-          sign_in: Sign in
-          sign_in_before_submitting: You need to sign in before submitting an idea
-          you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
+          discard: Zahodit koncept
+          discard_confirmation: Jste si jisti, že chcete zahodit tento návrh nápadu?
+          cancel: Zrušit
+          save: Uložit jako koncept
+          sign_in: Přihlásit se
+          sign_in_before_submitting: Před odesláním nápadu se musíte přihlásit
+          you_can_invite_others: Pokud odesíláte nápad jako skupinu, můžete pozvat ostatní, aby spolupracovali na ttomto nápadu
         filters:
-          activity: My activity
-          all: All
-          all_area_scopes: All areas
-          all_categories: All themes
-          all_states: All
-          area_scope: Area
-          amendment_type: Type
-          category: Theme
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
-          origin: Origin
-          related_to: Related to
-          reset: Clear filters
-          search: Search
+          activity: Moje aktivita
+          all: Vše
+          all_area_scopes: Všechny oblasti
+          all_categories: Všecha témata
+          all_states: Vše
+          area_scope: Oblast
+          amendment_type: Typ
+          category: Téma
+          my_favorites: Zobrazit mé oblíbené
+          my_ideas: Zobrazit mé nápady
+          origin: Původ
+          related_to: Související s
+          reset: Vymazat filtry
+          search: Hledat
           state: Evaluation
           title: Filter the ideas on the map and in the list
           type: Type
@@ -541,7 +541,7 @@ cs:
         new:
           back: Back to previous page
           get_help: Get help
-          material_title: Information to support ideation
+          material_title: Informace na podporu nápadů
           need_help: Need help?
           send: Continue
           title: Submit your idea!
