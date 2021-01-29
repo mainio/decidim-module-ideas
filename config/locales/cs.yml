@@ -161,54 +161,54 @@ cs:
           email_intro: 'Nyní můžete vytvářet nové nápady v %{participatory_space_title}! Začněte se podílet na této stránce:'
           email_outro: Obdrželi jste toto oznámení, protože sledujete %{participatory_space_title}. Můžete přestat přijímat oznámení tímto odkazem.
           email_subject: Nápady jsou nyní k dispozici v %{participatory_space_title}
-          notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Nyní můžete předložit <a href="%{resource_path}">nové nápady</a> v <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" was accepted to the next step. You can read the answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea was accepted to the next step
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was accepted to the next step.
+            email_intro: 'Váš nápad "%{resource_title}" byl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad byl přijat k dalšímu kroku
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> byl přijat k dalšímu kroku.
           follower:
-            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: An idea you are following will go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
+            email_intro: 'Nápad "%{resource_title}" projde. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, projde
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> projde.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea is being evaluated
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
+            email_intro: 'Váš nápad "%{resource_title}" se hodnotí. Můžete zkontrolovat odpověď na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad je hodnocen
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> se hodnotí.
           follower:
-            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you are following is being evaluated
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
+            email_intro: 'Nápad "%{resource_title}" se hodnotí. Odpověď můžete zkontrolovat na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, je hodnocen
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> je hodnocen.
         idea_mentioned:
-          email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
-          email_outro: You have received this notification because you are an author of "%{resource_title}".
-          email_subject: Your idea "%{mentioned_idea_title}" has been mentioned
-          notification_title: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.
+          email_intro: Váš nápad "%{mentioned_idea_title}" byl zmíněn <a href="%{resource_url}">v tomto prostoru</a> v komentáři.
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+          email_subject: Váš nápad "%{mentioned_idea_title}" byl zmíněn
+          notification_title: Váš nápad "%{mentioned_idea_title}" byl zmíněn <a href="%{resource_path}">v tomto prostoru</a> v komentáři.
         idea_published:
-          email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new idea called "%{resource_title}". Check it out and contribute:'
-          email_outro: You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" by %{author_nickname}
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+          email_intro: '%{author_name} %{author_nickname}, který sledujete, zveřejnil nový nápad nazvaný "%{resource_title}". Podívejte se na něj a přispějte:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{author_nickname}. Můžete přestat přijímat oznámení za předchozím odkazem.
+          email_subject: Nový nápad "%{resource_title}" od %{author_nickname}
+          notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> byl zveřejněn od <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         idea_published_for_space:
-          email_intro: The idea "%{resource_title}" has been added to "%{participatory_space_title}" that you are following.
-          email_outro: You have received this notification because you are following "%{participatory_space_title}". You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" added to %{participatory_space_title}
-          notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
+          email_intro: Nápad "%{resource_title}" byla přidán do "%{participatory_space_title}", který sledujete.
+          email_outro: Toto oznámení jste obdrželi, protože sledujete "%{participatory_space_title}". Můžete přestat dostávat oznámení za předchozím odkazem.
+          email_subject: Nový nápad "%{resource_title}" přidán do %{participatory_space_title}
+          notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> byla přidán do %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea was not accepted to the next step
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was not accepted to the next step.
+            email_intro: 'Váš nápad "%{resource_title}" nebyl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad nebyl přijat k dalšímu kroku
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> nebyl přijat k dalšímu kroku.
           follower:
-            email_intro: 'The idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you are following was not accepted to the next step
+            email_intro: 'Nápad "%{resource_title}" nebyl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, nebyl přijat v dalším kroku
             notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
         idea_update_category:
           email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
@@ -278,27 +278,27 @@ cs:
           choose_parent: Choose an area scope parent first
         exports:
           comments: Comments
-          ideas: Ideas
+          ideas: Nápady
         models:
           idea:
-            name: Idea
+            name: Nápad
         idea_answers:
           form:
-            accepted: Accepted to the next step
-            answer_idea: Answer
-            evaluating: Evaluating
-            rejected: Not accepted to the next step
-            title: Answer for idea %{title}
+            accepted: Přijato k dalšímu kroku
+            answer_idea: Odpověď
+            evaluating: Hodnocení
+            rejected: Nepřijato v dalším kroku
+            title: Odpověď na nápad %{title}
         ideas:
           answer:
-            invalid: There's been a problem answering this idea
-            success: Idea successfully answered
+            invalid: Vyskytl se problém s odpovědí na tento nápad
+            success: Nápad byla úspěšně zodpovězen
           create:
-            invalid: There's been a problem creating this idea
-            success: Idea successfully created
+            invalid: Při vytváření tohoto nápadu došlo k potížím
+            success: Nápad byla úspěšně vytvořen
           edit:
-            title: Update idea
-            update: Update
+            title: Aktualizovat nápad
+            update: Aktualizovat
           form:
             attachment_legend: "Add an attachment for the idea"
             image_legend: "Add an image for the idea"
