@@ -300,47 +300,47 @@ cs:
             title: Aktualizovat nápad
             update: Aktualizovat
           form:
-            attachment_legend: "Add an attachment for the idea"
-            image_legend: "Add an image for the idea"
-            select_a_category: Choose a primary theme for the idea
-            select_a_sub_category: Choose a subtheme for the idea
+            attachment_legend: "Přidat přílohu k nápadu"
+            image_legend: "Přidat obrázek pro nápad"
+            select_a_category: Vyberte si primární téma pro nápad
+            select_a_sub_category: Vyberte podřazené téma pro nápad
           index:
-            actions: Actions
-            cancel: Cancel
-            change_category: Change theme
-            change_scope: Change scope
-            merge: Merge into a new one
-            merge_button: Merge
-            publish: Publish
-            publish_answers: Publish answers
-            select_component: Select a component
-            selected: selected
-            split: Split ideas
-            split_button: Split
-            title: Ideas
-            update: Update
-            update_scope_button: Update Scope
+            actions: Akce
+            cancel: Zrušit
+            change_category: Změnit téma
+            change_scope: Změnit rozsah působnosti
+            merge: Sloučit do nového
+            merge_button: Sloučit
+            publish: Publikovat
+            publish_answers: Publikovat odpovědi
+            select_component: Vybrat komponentu
+            selected: vybráno
+            split: Rozdělit nápady
+            split_button: Rozdělit
+            title: Nápady
+            update: Aktualizovat
+            update_scope_button: Aktualizovat rozsah působnosti
           new:
-            create: Create
-            title: Create idea
+            create: Vytvořit
+            title: Vytvořit nápad
           publish_answers:
-            number_of_ideas: Answers for %{number} ideas will be published.
-            select_a_idea: Please select an idea
+            number_of_ideas: Odpovědi na %{number} nápadů budou zveřejněny.
+            select_a_idea: Vyberte nápad
           show:
-            amendments_count: Amendments count
-            area_scope: Area
-            authors: Authors
-            body: Body
-            category: Theme
-            comments_count: Comments count
-            comments_negative_count: Against
-            comments_neutral_count: Neutral
-            comments_positive_count: Favor
-            created_at: Creation date
-            documents: Documents
-            link: Link
-            photos: Photos
-            show_email: Show email address
+            amendments_count: Počet pozměňovacích návrhů
+            area_scope: Oblast
+            authors: Autoři
+            body: Tělo
+            category: Téma
+            comments_count: Počet komentářů
+            comments_negative_count: Proti
+            comments_neutral_count: Neutrální
+            comments_positive_count: Oblíbené
+            created_at: Datum vytvoření
+            documents: Dokumenty
+            link: Odkaz
+            photos: Fotky
+            show_email: Zobrazit e-mailovou adresu
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
             votes_count: Supports count
@@ -411,7 +411,7 @@ cs:
         success: Idea successfully created. Saved as a Draft.
       destroy_draft:
         error: Destroying the draft failed.
-        success: Draft destroyed successfully.
+        success: Návrh byl úspěšně zničen.
       last_activity:
         new_idea_at_html: "<span>New idea at %{link}</span>"
       models:
