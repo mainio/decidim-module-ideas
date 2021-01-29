@@ -85,48 +85,48 @@ cs:
         state_eq:
           label: Stav
           values:
-            accepted: Accepted to the next step
-            evaluating: Evaluating
-            rejected: Not accepted to the next step
-            withdrawn: Withdrawn
+            accepted: Přijato k dalšímu kroku
+            evaluating: Hodnocení
+            rejected: Nepřijato v dalším kroku
+            withdrawn: Odebráno
         state_null:
-          label: Status
+          label: Stav
           values:
-            'true': Not answered
+            'true': Nezodpovězeno
     components:
       ideas:
         actions:
-          amend: Amend
-          create: Create
-          vote: Support
-          withdraw: Withdraw
-        name: Ideas
+          amend: Pozměnit
+          create: Vytvořit
+          vote: Podpora
+          withdraw: Odebrat
+        name: Nápady
         settings:
           global:
-            amendments_enabled: Amendments enabled
-            amendments_enabled_help: If active, configure Amendment features for each step.
-            amendments_wizard_help_text: Amendments Wizard help text
-            area_scope_parent_id: Areas parent scope
-            area_scope_coordinates: Area scope coordinates (latitude,longitude)
-            areas_info_intro: Areas information intro
-            areas_info_text: Areas information text
-            announcement: Announcement
-            attachments_allowed: Allow attachments
-            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
-            categories_info_intro: Themes information intro
-            categories_info_text: Themes information text
-            comments_enabled: Comments enabled
-            default_map_center_coordinates: Default map center coordinates (latitude,longitude)
-            geocoding_enabled: Geocoding enabled
-            idea_answering_enabled: Idea answering enabled
-            idea_edit_before_minutes: Ideas can be edited by authors before this many minutes passes
-            idea_length: Maximum idea body length
-            idea_limit: Idea limit per participant
-            idea_listing_intro: Idea listing page intro text
-            idea_title_length: Maximum idea title length
-            image_allowed: Allow image
-            materials_text: Materials text
-            minimum_votes_per_user: Minimum supports per user
+            amendments_enabled: Pozměňovací návrhy povoleny
+            amendments_enabled_help: Pokud je aktivní, nastavte funkce pozměňovacího návrhu pro každý krok.
+            amendments_wizard_help_text: Text nápovědy průvodce pozměňovacími návrhy
+            area_scope_parent_id: Základní oblast působnosti
+            area_scope_coordinates: Souřadnice oblasti působnosti (zeměpisná šířka,zeměpisná délka)
+            areas_info_intro: Úvod k informacím o oblastech
+            areas_info_text: Informační text o oblastech
+            announcement: Oznámení
+            attachments_allowed: Povolit přílohy
+            can_accumulate_supports_beyond_threshold: Lze sbírat podpory nad prahovou hodnotu
+            categories_info_intro: Úvod k informacím o tématech
+            categories_info_text: Informační text témat
+            comments_enabled: Komentáře povoleny
+            default_map_center_coordinates: Výchozí souřadnice středu mapy (zeměpisná šířka, zeměpisná délka)
+            geocoding_enabled: Geokódování povoleno
+            idea_answering_enabled: Odpovídání na nápady povoleno
+            idea_edit_before_minutes: Nápady mohou být editovány autory dříve, než uplyne toto množství minut
+            idea_length: Maximální délka těla nápadu
+            idea_limit: Limit nápadu na účastníka
+            idea_listing_intro: Úvodní text úvodní stránky nápadu
+            idea_title_length: Maximální délka názvu nápadu
+            image_allowed: Povolit obrázek
+            materials_text: Text materiálu
+            minimum_votes_per_user: Minimální podpora na uživatele
             new_idea_help_text: New idea help text
             resources_permissions_enabled: Actions permissions can be set for each idea
             terms_intro: Terms intro
