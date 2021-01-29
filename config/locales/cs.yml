@@ -209,16 +209,16 @@ cs:
             email_intro: 'Nápad "%{resource_title}" nebyl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
             email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
             email_subject: Nápad, který sledujete, nebyl přijat v dalším kroku
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> neby přijat k dalšímu kroku.
         idea_update_category:
-          email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea theme has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea theme has been updated by an admin.
+          email_intro: 'Administrátor aktualizoval šablonu vašeho nápadu "%{resource_title}", podívejte se na tuto stránku:'
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem nápadu.
+          email_subject: Motiv nápadu %{resource_title} byl aktualizován
+          notification_title: Téma nápadu <a href="%{resource_path}">%{resource_title}</a> bylo aktualizováno správcem.
         idea_update_area_scope:
-          email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea area has been updated
+          email_intro: 'Administrátor aktualizoval oblast vašeho nápadu "%{resource_title}", podívejte se na tuto stránku:'
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem nápadu.
+          email_subject: Oblast %{resource_title} nápadu byla aktualizována
           notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
         voting_enabled:
           email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
@@ -348,69 +348,69 @@ cs:
           update_category:
             invalid: 'Tyto nápady již měly %{subject_name} téma: %{ideas}.'
             select_a_category: Vyberte téma
-            select_a_idea: Please select an idea
-            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
+            select_a_idea: Vyberte nápad
+            success: 'Nápady byly úspěšně aktualizovány na %{subject_name} a téma: %{ideas}.'
           update_area_scope:
-            invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
-            select_a_idea: Please select an idea
-            select_a_scope: Please select an area
-            success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
+            invalid: 'Tyto nápady již měly %{subject_name} oblasti: %{ideas}.'
+            select_a_idea: Vyberte nápad
+            select_a_scope: Vyberte oblast
+            success: 'Nápady byly úspěšně aktualizovány na %{subject_name} oblast: %{ideas}.'
         ideas_imports:
           create:
-            invalid: There was a problem importing the ideas
-            success: "%{number} ideas successfully imported"
+            invalid: Při importu nápadů došlo k potížím
+            success: "%{number} nápadů úspěšně importováno"
           new:
-            create: Import ideas
-            no_components: There are no other idea components in this participatory space to import the ideas from.
-            select_component: Please select a component
-            select_states: Check the status of the ideas to import
+            create: Importovat nápady
+            no_components: V tomto participačním prostoru nejsou žádné další komponenty nápadů, ze kterých by bylo možné importovat nápady.
+            select_component: Vyberte komponentu
+            select_states: Zkontrolujte stav nápadů k importu
         ideas_merges:
           create:
-            invalid: There was a problem merging the selected ideas.
-            success: Successfully merged the ideas into a new one.
+            invalid: Při slučování vybraných nápadů došlo k chybě.
+            success: Nápady byly úspěšně sloučeny do nového.
         ideas_splits:
           create:
-            invalid: There was a problem spliting the selected ideas.
-            success: Successfully splitted the ideas into new ones.
+            invalid: Při rozdělení vybraných nápadů došlo k chybě.
+            success: Nápady se úspěšně rozdělily na nové.
       admin_log:
         idea:
-          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} idea on the %{space_name} space"
-          publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
-          update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
+          answer: "%{user_name} odpověděl na nápad %{resource_name} ve skupině %{space_name}"
+          create: "%{user_name} vytvořil nápad %{resource_name} ve skupině %{space_name}"
+          publish_answer: "%{user_name} zveřejnil odpověď na nápad %{resource_name} ve skupině %{space_name}"
+          update: "%{user_name} aktualizoval nápad %{resource_name} ve skupině %{space_name}"
       answers:
-        accepted: Accepted to the next step
-        evaluating: Evaluating
-        not_answered: Not answered
-        rejected: Not accepted to the next step
-        withdrawn: Withdrawn
+        accepted: Přijato k dalšímu kroku
+        evaluating: Hodnocení
+        not_answered: Nezodpovězeno
+        rejected: Nepřijato k dalšímu kroku
+        withdrawn: Odebráno
       application_helper:
         filter_category_values:
-          all: All
+          all: Vše
         filter_origin_values:
-          all: All
-          citizens: Citizens
-          user_groups: Groups
+          all: Vše
+          citizens: Občané
+          user_groups: Skupiny
         filter_state_values:
-          accepted: Accepted to the next step
-          all: All
-          evaluating: Evaluating
-          not_answered: Not answered
-          rejected: Not accepted to the next step
+          accepted: Přijato k dalšímu kroku
+          all: Vše
+          evaluating: Hodnocení
+          not_answered: Nezodpovězeno
+          rejected: Nepřijato k dalšímu kroku
         filter_type_values:
-          all: All
-          amendments: Amendments
-          ideas: Ideas
+          all: Vše
+          amendments: Pozměňovací návrhy
+          ideas: Nápady
       attached_ideas_helper:
-        attach_idea: Attach idea
-        close: Close
-        current_selection: Search ideas by name or ID
-        select: Select
+        attach_idea: Přiložit nápad
+        close: Zavřít
+        current_selection: Hledat nápady podle jména nebo ID
+        select: Vybrat
       create:
-        error: There was a problem saving the idea.
-        success: Idea successfully created. Saved as a Draft.
+        error: Při ukládání myšlenky došlo k chybě.
+        success: Myšlenka úspěšně vytvořena. Uloženo jako koncept.
       destroy_draft:
-        error: Destroying the draft failed.
+        error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
       last_activity:
         new_idea_at_html: "<span>Nový nápad v %{link}</span>"
@@ -603,36 +603,36 @@ cs:
           idea_rejected_reason: Tento nápad nebyl přijat do dalšího kroku.
           read_less: Číst méně
           read_more: Číst více
-          report: Report
-          withdraw_btn_hint: You can withdraw your idea if you change your mind, as long as you have not received any support. The idea is not deleted, it will appear in the list of withdrawn ideas.
-          withdraw_confirmation: Are you sure you want to withdraw this idea?
-          withdraw_idea: Withdraw idea
+          report: Hlášení
+          withdraw_btn_hint: Pokud změníte názor, můžete svůj nápad stáhnout, pokud jste nedostali žádnou podporu. Nápad není smazán, objeví se v seznamu stažených nápadů.
+          withdraw_confirmation: Jste si jisti, že chcete stáhnout tento nápad?
+          withdraw_idea: Stáhnout nápad
         tags:
-          changed_from: "(changed from <u>%{previous_name}</u> by an administrator)"
+          changed_from: "(změněno z <u>%{previous_name}</u> správcem)"
         vote_button:
-          already_voted: Already supported
-          already_voted_hover: Withdraw support
-          maximum_votes_reached: Support limit reached
-          no_votes_remaining: No supports remaining
-          vote: Support
-          votes_blocked: Supports disabled
+          already_voted: Již je podporováno
+          already_voted_hover: Stáhnout podporu
+          maximum_votes_reached: Dosažen limit podpor
+          no_votes_remaining: Nezbývají žádné podpory
+          vote: Podpora
+          votes_blocked: Podpory zakázány
         votes_count:
           count:
-            one: Support
-            few: Supports
-            many: Supports
-            other: Supports
-          most_popular_idea: Most popular idea
-          need_more_votes: Need more supports
+            one: Podpora
+            few: Podpor
+            many: Podpor
+            other: Podpory
+          most_popular_idea: Nejpopulárnější nápad
+          need_more_votes: Potřebujete více podpory
         voting_rules:
           can_accumulate_supports_beyond_threshold:
-            description: Each idea can accumulate more than %{limit} supports
+            description: Každý nápad může shromáždit více než %{limit} podpor
           minimum_votes_per_user:
-            description: You must distribute a minimum of %{votes} supports among different ideas.
-            given_enough_votes: You've given enough supports.
-            supports_remaining: You have to support %{remaining_votes} more ideas for your supports to be taken into account.
+            description: Musíte rozdělit minimálně %{votes} podpor v různých nápadech.
+            given_enough_votes: Poskytli jste dostatek podpor.
+            supports_remaining: Musíte podpořit %{remaining_votes} dalších nápadů, aby vaše podpory byly brány v úvahu.
           idea_limit:
-            description: You can create up to %{limit} ideas.
+            description: Můžete vytvořit až %{limit} nápadů.
           threshold_per_idea:
             description: In order to be validated ideas need to reach %{limit} supports
           title: 'Supports are subject to the following rules:'
