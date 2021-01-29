@@ -598,11 +598,11 @@ cs:
           link_to_promoted_emendation_text: Podívejte se na odmítnuté vylepšení.
           link_to_idea_from_emendation_help_text: Toto je odmítnuté vylepšení
           link_to_idea_from_emendation_text: Podívejte se na nápad
-          idea_accepted_reason: This idea was accepted to the next step.
-          idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea was not accepted to the next step.
-          read_less: Read less
-          read_more: Read more
+          idea_accepted_reason: Tento nápad byl přijat v dalším kroku.
+          idea_in_evaluation_reason: Tento nápad se hodnotí.
+          idea_rejected_reason: Tento nápad nebyl přijat do dalšího kroku.
+          read_less: Číst méně
+          read_more: Číst více
           report: Report
           withdraw_btn_hint: You can withdraw your idea if you change your mind, as long as you have not received any support. The idea is not deleted, it will appear in the list of withdrawn ideas.
           withdraw_confirmation: Are you sure you want to withdraw this idea?
@@ -670,11 +670,11 @@ cs:
           my_ideas: Show my ideas
           origin: Origin
           reset: Clear filters
-          search: Search
-          state: Evaluation
-          title: Filter the ideas on the map and in the list
-          unfold: Unfold
-          voted: Show supported
+          search: Hledat
+          state: Hodnocení
+          title: Filtrovat nápady na mapě a v seznamu
+          unfold: Rozbalit
+          voted: Zobrazit podporované
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Remove idea
       info:
