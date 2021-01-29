@@ -4,43 +4,43 @@ cs:
       idea:
         area_scope_id: Vyberte oblast pro nápad
         address: Přidejte volitelné sousedství nebo konkrétnější adresu pro Nápad
-        answer: Answer
-        answered_at: Answered at
-        automatic_hashtags: Hashtags automatically added
-        body: Idea description
-        category_id: Choose a theme for the idea
-        decidim_category_id: Choose a theme for the idea
-        has_address: Has address
-        latitude: Latitude
-        longitude: Longitude
-        perform_geocoding: Fetch the map point based on the address
-        state: Evaluation
-        sub_category_id: Choose a subtheme for the idea
-        suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read the criteria
-        title: Idea title
-        user_group_id: Create idea as
+        answer: Odpověď
+        answered_at: Odpovězeno
+        automatic_hashtags: Hashtagy automaticky přidány
+        body: Popis Nápadu
+        category_id: Vyberte téma pro nápad
+        decidim_category_id: Vyberte téma pro nápad
+        has_address: Má adresu
+        latitude: Zeměpisná šířka
+        longitude: Zeměpisná délka
+        perform_geocoding: Načíst bod mapy na základě adresy
+        state: Hodnocení
+        sub_category_id: Vyberte podřazené téma pro nápad
+        suggested_hashtags: Navrhované hashtagy
+        terms_agreed: Přečetl jsem si kritéria
+        title: Název nápadu
+        user_group_id: Vytvořit nápad jako
       idea_answer:
-        answer: Answer
-        internal_state: Evaluation
+        answer: Odpověď
+        internal_state: Hodnocení
       ideas_copy:
-        copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
-        origin_component_id: Component to copy the ideas from
+        copy_ideas: Chápu, že toto naimportuje všechny nápady z vybrané komponenty do té aktuální a že tuto akci nelze vrátit zpět.
+        origin_component_id: Komponenta pro kopírování nápadů z
       ideas_import:
-        import_ideas: Import ideas
-        keep_authors: Keep original authors
+        import_ideas: Importovat nápady
+        keep_authors: Zachovat originální autory
       idea_attachment:
-        title: Attachment title
-        file: Attachment file
+        title: Název přílohy
+        file: Soubor přílohy
       idea_image_attachment:
-        title: Image title
-        file: Image file
+        title: Název obrázku
+        file: Soubor obrázku
     errors:
       models:
         idea:
           attributes:
             attachment:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Potřebuje být znovu připojen
             body:
               cant_be_equal_to_template: cannot be equal to the template
               identical: AND title cannot be identical
