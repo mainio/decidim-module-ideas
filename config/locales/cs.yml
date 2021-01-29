@@ -3,7 +3,7 @@ cs:
     attributes:
       idea:
         area_scope_id: Vyberte oblast pro nápad
-        address: Přidejte volitelné sousedství nebo konkrétnější adresu pro Nápad
+        address: Přidejte volitelné okolí nebo konkrétnější adresu pro Nápad
         answer: Odpověď
         answered_at: Odpovězeno
         automatic_hashtags: Hashtagy automaticky přidány
@@ -273,11 +273,11 @@ cs:
         title: Akce
       admin:
         actions:
-          preview: Preview
+          preview: Náhled
         area_scopes:
-          choose_parent: Choose an area scope parent first
+          choose_parent: Nejprve vyberte nadřazený rozsah oblasti
         exports:
-          comments: Comments
+          comments: Komentáře
           ideas: Nápady
         models:
           idea:
@@ -480,47 +480,47 @@ cs:
           related_to: Související s
           reset: Vymazat filtry
           search: Hledat
-          state: Evaluation
-          title: Filter the ideas on the map and in the list
-          type: Type
-          voted: Show supported
+          state: Hodnocení
+          title: Filtrovat nápady na mapě a v seznamu
+          type: Typ
+          voted: Zobrazit podporované
         filters_small_view:
-          close_modal: Close modal
-          filter: Filter
-          filter_by: Filter by
-          unfold: Unfold
+          close_modal: Zavřít okno
+          filter: Filtr
+          filter_by: Filtrovat podle
+          unfold: Rozbalit
         form:
-          attachment_added: Attachment added
-          attachment_file_required: File needs to be attached
-          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
-          attachment_title_required: Title has to be defined for the file
-          add_attachment: Add attachment
-          add_image: Add image
-          address_lookup_button: Lookup
-          attachment_legend: "Add an attachment for the idea"
-          cancel: Cancel
-          characters_min: "(at least %count% characters required)"
-          characters_used: "%count%/%total% characters used"
-          close_modal: Close window
-          files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
-          files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          image_added: Image added
-          image_legend: "Add an image for the idea"
-          remove_attachment: Remove attachment
-          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
-          remove_image: Remove image
-          remove_image_confirm: Are you sure you want to remove the image from the idea?
-          required_fields_text: Required fields are marked with the *-character.
-          reset_field: Reset field
-          select_a_category: Choose a primary theme for the idea
-          select_a_sub_category: Choose a subtheme for the idea
-          show_areas_info_text: Check which neighborhood belong to different major districts
-          show_categories_info_text: Check what the themes consist of
-          show_terms_info_text: Show criteria
+          attachment_added: Příloha byla přidána
+          attachment_file_required: Soubor musí být připojen
+          attachment_modal_mobile_notice: Tlačítko přidávání je dole v tomto okně. Pokud ho nevidíte na mobilní obrazovce, posuňte obrazovku dolů.
+          attachment_title_required: Název souboru musí být definován
+          add_attachment: Přidat přílohu
+          add_image: Přidat obrázek
+          address_lookup_button: Vyhledat
+          attachment_legend: "Přidat přílohu k nápadu"
+          cancel: Zrušit
+          characters_min: "(je vyžadováno alespoň %count% znaků)"
+          characters_used: "použito %count%/%total% znaků"
+          close_modal: Zavřít okno
+          files_info_attachments: Můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Je třeba přidat názvy k obrázkům a přílohám.
+          files_info_images: Můžete přidat jeden obrázek k nápadu, který bude zobrazen s nápadem. Musíte přidat název obrázku.
+          files_info_images_and_attachments: Můžete přidat jeden obrázek k nápadu, která bude zobrazen s nápadem. Kromě toho můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Musíte přidat názvy obrázků a příloh.
+          image_added: Obrázek přidán
+          image_legend: "Přidat obrázek pro nápad"
+          remove_attachment: Odstranit přílohu
+          remove_attachment_confirm: Opravdu chcete odstranit přílohu z nápadu?
+          remove_image: Odebrat obrázek
+          remove_image_confirm: Jste si jisti, že chcete odebrat obrázek z tohoto nápadu?
+          required_fields_text: Povinná pole jsou označena *-znakem.
+          reset_field: Obnovit pole
+          select_a_category: Vyberte si primární téma pro nápad
+          select_a_sub_category: Vyberte podřazené téma pro nápad
+          show_areas_info_text: Zkontrolujte, které okolí patří do různých hlavních okresů
+          show_categories_info_text: Zkontrolujte, ze kterých témat se skládají
+          show_terms_info_text: Zobrazit kritéria
         index:
-          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
-          draft_idea_title: You have an idea draft!
+          description: Prozkoumejte nápady od ostatních na mapě a na vizitkách. Můžete také udělat své vlastní nápady!
+          draft_idea_title: Máte návrh nápadu!
           draft_idea_continue: Continue your idea
           draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
           leave_your_idea: Submit your own idea!
@@ -634,42 +634,42 @@ cs:
           idea_limit:
             description: Můžete vytvořit až %{limit} nápadů.
           threshold_per_idea:
-            description: In order to be validated ideas need to reach %{limit} supports
-          title: 'Supports are subject to the following rules:'
+            description: Abychom mohli ověřit nápady, je třeba získat %{limit} podpor
+          title: 'Podpory podléhají těmto pravidlům:'
           vote_limit:
-            description: You can support up to %{limit} ideas.
-            left: Remaining
-            votes: Supports
+            description: Můžete podpořit až %{limit} nápadů.
+            left: Zbývá
+            votes: Podpory
         wizard_steps:
-          see_steps: see steps
-          step_1: Create your idea
-          step_2: Compare
-          step_3: Complete
-          step_4: Publish your idea
-          step_of: Step %{current_step_num} of %{total_steps}
+          see_steps: zobrazit kroky
+          step_1: Vytvořte svůj nápad
+          step_2: Porovnat
+          step_3: Dokončit
+          step_4: Publikovat svůj nápad
+          step_of: Krok %{current_step_num} z %{total_steps}
       ideas_picker:
-        choose_ideas: Choose ideas
-        close: Close
-        more_ideas: There are %{number} more ideas. Refine your search to locate them.
-        no_ideas: No ideas match your search criteria or there isn't any ideas.
+        choose_ideas: Vybrat nápady
+        close: Zavřít
+        more_ideas: Existuje ještě %{number} nápadů. Upřesněte vyhledávání a najděte je.
+        no_ideas: Žádné nápady neodpovídají vašim kritériím vyhledávání, nebo zde nejsou žádné nápady.
       ideas_picker_inline:
-        attached_ideas_number: Ideas attached to this proposal
-        choose_idea: Select idea
-        chosen_idea: Chosen idea
+        attached_ideas_number: Nápady připojené k tomuto návrhu
+        choose_idea: Vybrat nápad
+        chosen_idea: Zvolený nápad
         filters:
-          activity: My activity
-          all: All
-          all_area_scopes: All areas
-          all_categories: All themes
-          area_scope: Area
-          category: Theme
-          close_modal: Close modal
-          filter: Filter
-          filter_by: Filter by
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
-          origin: Origin
-          reset: Clear filters
+          activity: Moje aktivita
+          all: Vše
+          all_area_scopes: Všechny oblasti
+          all_categories: Všecha témata
+          area_scope: Oblast
+          category: Téma
+          close_modal: Zavřít okno
+          filter: Filtr
+          filter_by: Filtrovat podle
+          my_favorites: Zobrazit mé oblíbené
+          my_ideas: Zobrazit mé nápady
+          origin: Původ
+          reset: Vymazat filtry
           search: Hledat
           state: Hodnocení
           title: Filtrovat nápady na mapě a v seznamu
