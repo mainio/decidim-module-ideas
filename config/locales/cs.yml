@@ -542,62 +542,62 @@ cs:
           back: Back to previous page
           get_help: Get help
           material_title: Informace na podporu nápadů
-          need_help: Need help?
-          send: Continue
-          title: Submit your idea!
+          need_help: Potřebujete pomoc?
+          send: Pokračovat
+          title: Odešlete svůj nápad!
         orders:
-          label: 'Order ideas by:'
-          most_commented: Most commented
-          most_followed: Most followed
-          most_voted: Most supported
-          oldest: Oldest
-          random: Random
-          recent: Recent
-          with_more_authors: With most authors
+          label: 'Seřadit nápady podle:'
+          most_commented: Nejkomentovanější
+          most_followed: Nejvíce sledované
+          most_voted: Nejpodporovanější
+          oldest: Nejstarší
+          random: Náhodně
+          recent: Nedávné
+          with_more_authors: S nejvíce autory
         preview:
-          description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
-          modify: Modify the idea
-          not_published: Your idea has not yet been published
-          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
+          description: Nejprve zkontrolujte, jak bude vypadat váš nápad, když bude publikován na webu. Pokud chcete provádět úpravy, můžete se vrátit zpět do editačního pohledu. Pokud jste s tímto nápadem dokonale spokojeni, publikujte ho!
+          modify: Upravit nápad
+          not_published: Váš nápad ještě nebyl publikován
+          not_published_description: Váš nápad byl uložen jako koncept. Musí být zveřejněn, aby se mohl zobrazit na webu.
           idea_edit_before_minutes:
-            one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            few: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            many: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            other: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-          publish: Publish
-          title: Preview your idea
+            one: Tento nápad budete moci upravit během první minuty po zveřejnění nápadu. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            few: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            many: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            other: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+          publish: Publikovat
+          title: Náhled vašeho nápadu
         idea:
-          creation_date: 'Creation: %{date}'
-          view_idea: View idea
+          creation_date: 'Vytvoření: %{date}'
+          view_idea: Zobrazit nápad
         idea_actions:
-          share: Share idea
-          show_comments: Show idea comments
-          show_on_map: Show idea on map
-          print: Print idea
-          flag: Report idea
+          share: Sdílet nápad
+          show_comments: Zobrazit komentáře nápadu
+          show_on_map: Zobrazit nápad na mapě
+          print: Tisk nápadu
+          flag: Nahlásit nápad
         idea_controls:
-          edit_idea: Edit idea
-          manage_idea: Manage idea
-          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
-          withdraw_idea: Withdraw idea
+          edit_idea: Upravit nápad
+          manage_idea: Spravovat nápad
+          withdraw_confirmation_html: Jste si jisti, že chcete stáhnout tento nápad?<br><br><strong>Tuto akci nelze zrušit!</strong>
+          withdraw_idea: Stáhnout nápad
         idea_full:
-          changes_at_title: Changes at title
-          comments: Comments
-          edit_idea: Edit idea
-          show_versions: Show version history
+          changes_at_title: Změny v názvu
+          comments: Komentáře
+          edit_idea: Upravit nápad
+          show_versions: Zobrazit historii verzí
         ideas:
-          empty: There are no ideas yet
-          empty_filters: There isn't any idea with this criteria
+          empty: Zatím neexistují žádné nápady
+          empty_filters: S těmito kritérii není žádný nápad
         show:
-          answer: Answer
-          back_to: Back to
-          back_to_list: See other ideas
-          changes_at_title: Amendment to "%{title}"
-          feedback_title: Thank you for submitting an idea!
-          link_to_promoted_emendation_help_text: This idea is a promoted emendation
-          link_to_promoted_emendation_text: See the rejected emendation.
-          link_to_idea_from_emendation_help_text: This is a rejected emendation
-          link_to_idea_from_emendation_text: See the Idea
+          answer: Odpověď
+          back_to: Zpět na
+          back_to_list: Podívejte se na další nápady
+          changes_at_title: Pozměňovací návrh k "%{title}"
+          feedback_title: Děkujeme, že jste odeslali nápad!
+          link_to_promoted_emendation_help_text: Tento nápad je podporované vylepšení
+          link_to_promoted_emendation_text: Podívejte se na odmítnuté vylepšení.
+          link_to_idea_from_emendation_help_text: Toto je odmítnuté vylepšení
+          link_to_idea_from_emendation_text: Podívejte se na nápad
           idea_accepted_reason: This idea was accepted to the next step.
           idea_in_evaluation_reason: This idea is being evaluated.
           idea_rejected_reason: This idea was not accepted to the next step.
