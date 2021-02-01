@@ -105,9 +105,11 @@
           canExit = true;
           $form.submit();
 
-          const $firstField = $("input.is-invalid-input, textarea.is-invalid-input").first();
-          $firstField.focus();
-          $submits.removeAttr("disabled");
+          const $firstField = $("input.is-invalid-input, textarea.is-invalid-input, select.is-invalid-input").first();
+          if ($firstField.length > 0) {
+            $firstField.focus();
+            $submits.removeAttr("disabled");
+          }
         }
       });
 
