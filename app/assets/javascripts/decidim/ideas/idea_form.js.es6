@@ -380,13 +380,13 @@
       }
     });
 
-    window.onbeforeunload = () => {
+    $(window).on("beforeunload", () => {
       if (canExit) {
         return null;
       }
 
       return "";
-    }
+    });
   };
 
   exports.Decidim = exports.Decidim || {};
