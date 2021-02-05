@@ -1,5 +1,5 @@
 .ideas-picker-inline{
-  a.ideas-picker-chooser,
+  .ideas-picker-chooser,
   .ideas-picker-selected .ideas-picker-item{
     display: flex;
     justify-content: space-between;
@@ -16,7 +16,18 @@
     }
   }
 
-  a.ideas-picker-chooser{
+  .ideas-picker-chooser{
+    &:hover,
+    &:focus{
+      cursor: pointer;
+      background: #d0e6f7;
+    }
+
+    &:focus{
+      outline: 2px solid var(--highlight);
+      outline-offset: 2px;
+    }
+
     &.selected{
       background: #a3e3c2;
 
@@ -43,11 +54,6 @@
 
     .ideas-picker-item-controls{
       display: none;
-    }
-
-    &:hover,
-    &:focus{
-      background: #d0e6f7;
     }
   }
 

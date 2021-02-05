@@ -64,6 +64,10 @@ module Decidim
         @picker_id ||= "idea_picker_#{SecureRandom.uuid}"
       end
 
+      def idea_link_for(idea)
+        routes_proxy.idea_path(idea)
+      end
+
       def max_ideas
         20
       end
@@ -101,6 +105,10 @@ module Decidim
 
       def current_locale
         I18n.locale.to_s
+      end
+
+      def routes_proxy
+        @routes_proxy ||= ::Decidim::EngineRouter.main_proxy(current_component)
       end
     end
   end

@@ -664,6 +664,7 @@ sv:
           voted: Visa stöds
         pcs_html: "<span>%{number}</span> st"
         remove_idea: Ta bort idén
+        show_idea_link: Visa idé-sidan
       info:
         show:
           back: Tillbaka till föregående sida

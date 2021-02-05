@@ -48,10 +48,23 @@
         $selectedNumber.text(selectedIdeas.length);
         $summarySelectedNumber.text(selectedIdeas.length);
 
-        $(".ideas-picker-chooser", $list).on("click", (ev) => {
+        $(".ideas-picker-chooser", $list).on("keydown", (ev) => {
+          // Allow selecting the items with a spacebar or Enter key.
+          if (ev.key === " " || ev.key === "Enter") {
+            ev.preventDefault();
+            $(ev.target).closest(".ideas-picker-chooser").trigger("click", [true]);
+          }
+        });
+        $(".ideas-picker-chooser", $list).on("click", (ev, keepFocus) => {
+          let $chooser = $(ev.target);
+
+          // If the clicked item is a link, continue normally.
+          if ($chooser.is(".ideas-picker-item-link") || $chooser.parents(".ideas-picker-item-link").length > 0) {
+            return;
+          }
+
           ev.preventDefault();
 
-          let $chooser = $(ev.target);
           if (!$chooser.is(".ideas-picker-chooser")) {
             $chooser = $chooser.parents(".ideas-picker-chooser");
           }
@@ -75,6 +88,9 @@
           $selectedNumber.text(selectedIdeas.length);
           $summarySelectedNumber.text(selectedIdeas.length);
 
+          if (keepFocus) {
+            return;
+          }
           $chooser.blur();
         });
       };

@@ -1,7 +1,7 @@
 <ul class="ideas-picker-list">
   <% decorated_ideas do |idea| %>
     <li>
-      <a href="#" class="ideas-picker-chooser" >
+      <div class="ideas-picker-chooser" tabindex="0">
         <%= render partial: "decidim/ideas/ideas_picker_inline/idea", locals: { idea: idea } %>
         <div class="idea-picker-item-state">
           <div class="ideas-picker-item-choose"><%= t(".choose_idea") %></div>
@@ -13,7 +13,7 @@
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </li>
   <% end %>
   <% if more_ideas? %>

@@ -666,6 +666,7 @@ en:
           voted: Show supported
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Remove idea
+        show_idea_link: Show idea page
       info:
         show:
           back: Back to previous page

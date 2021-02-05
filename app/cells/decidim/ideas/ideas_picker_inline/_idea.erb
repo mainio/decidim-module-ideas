@@ -6,6 +6,12 @@
         <li><%= presenter_for(idea).area_scope_name %></li>
         <li><%= presenter_for(idea).category_name %></li>
         <li><%= presenter_for(idea).published_date %></li>
+        <li>
+          <%= link_to(idea_link_for(idea), target: "_blank", class: "ideas-picker-item-link") do %>
+            <%= t(".show_idea_link") %>
+            <span class="show-for-sr"><%= presenter_for(idea).title(html_escape: true) %></span>
+          <% end %>
+        </li>
       </ul>
     </div>
   </div>

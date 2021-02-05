@@ -664,6 +664,7 @@ fi:
           voted: Näytä kannatetut
         pcs_html: "<span>%{number}</span> kpl"
         remove_idea: Poista idea
+        show_idea_link: Näytä ideasivu
       info:
         show:
           back: Palaa edelliselle sivulle
