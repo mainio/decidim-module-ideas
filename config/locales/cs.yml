@@ -677,6 +677,7 @@ cs:
           voted: Zobrazit podporované
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Odstranit nápad
+        show_idea_link: Show idea page
       info:
         show:
           back: Zpět na předchozí stránku
