@@ -72,7 +72,7 @@ module Decidim
       end
 
       def linking_resources
-        resources = object.resource_links_to.map { |link| link.from }
+        resources = object.resource_links_to.map(&:from)
         return nil unless resources.any?
 
         resources
