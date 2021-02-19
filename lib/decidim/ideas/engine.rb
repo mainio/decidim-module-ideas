@@ -192,6 +192,9 @@ module Decidim
       initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
+        Decidim::Plans::ContentSubject.class_eval do
+          possible_types(Decidim::Ideas::SectionContent::LinkIdeasType)
+        end
         Decidim::Plans::ResourceLinkSubject.class_eval do
           possible_types(Decidim::Ideas::IdeaType)
         end
@@ -205,12 +208,14 @@ module Decidim
           type.display_cell = "decidim/ideas/section_type_display/link_ideas"
           type.content_form_class_name = "Decidim::Ideas::ContentData::LinkIdeasForm"
           type.content_control_class_name = "Decidim::Ideas::SectionControl::LinkIdeas"
+          type.api_type_class_name = "Decidim::Ideas::SectionContent::LinkIdeasType"
         end
         registry.register(:link_ideas_inline) do |type|
           type.edit_cell = "decidim/ideas/section_type_edit/link_ideas_inline"
           type.display_cell = "decidim/ideas/section_type_display/link_ideas"
           type.content_form_class_name = "Decidim::Ideas::ContentData::LinkIdeasForm"
           type.content_control_class_name = "Decidim::Ideas::SectionControl::LinkIdeas"
+          type.api_type_class_name = "Decidim::Ideas::SectionContent::LinkIdeasType"
         end
       end
     end
