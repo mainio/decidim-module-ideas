@@ -588,9 +588,9 @@ fi:
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
           link_to_idea_from_emendation_text: Näytä idea
-          idea_accepted_reason: Tämä idea hyväksyttiin jatkoon.
-          idea_in_evaluation_reason: Tätä ideaa arvioidaan.
-          idea_rejected_reason: Tämä idea ei päässyt jatkoon.
+          idea_accepted_reason: This idea was accepted to the next step
+          idea_in_evaluation_reason: This idea is being evaluated
+          idea_rejected_reason: This idea was not accepted to the next step
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
