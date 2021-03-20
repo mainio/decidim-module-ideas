@@ -588,9 +588,9 @@ sv:
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: Denna idé gick vidare.
-          idea_in_evaluation_reason: Denna idé utvärderas.
-          idea_rejected_reason: Denna idé gick inte vidare.
+          idea_accepted_reason: Denna idé gick vidare
+          idea_in_evaluation_reason: Denna idé utvärderas
+          idea_rejected_reason: Denna idé gick inte vidare
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera

@@ -589,9 +589,9 @@ en:
           link_to_promoted_emendation_text: See the rejected emendation.
           link_to_idea_from_emendation_help_text: This is a rejected emendation
           link_to_idea_from_emendation_text: See the Idea
-          idea_accepted_reason: This idea was accepted to the next step.
-          idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea was not accepted to the next step.
+          idea_accepted_reason: This idea was accepted to the next step
+          idea_in_evaluation_reason: This idea is being evaluated
+          idea_rejected_reason: This idea was not accepted to the next step
           read_less: Read less
           read_more: Read more
           report: Report
