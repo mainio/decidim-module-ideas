@@ -598,9 +598,9 @@ cs:
           link_to_promoted_emendation_text: Podívejte se na odmítnuté vylepšení.
           link_to_idea_from_emendation_help_text: Toto je odmítnuté vylepšení
           link_to_idea_from_emendation_text: Podívejte se na nápad
-          idea_accepted_reason: This idea was accepted to the next step
-          idea_in_evaluation_reason: This idea is being evaluated
-          idea_rejected_reason: This idea was not accepted to the next step
+          idea_accepted_reason: Tento nápad byl přijat do dalšího kroku
+          idea_in_evaluation_reason: Tento nápad je hodnocen
+          idea_rejected_reason: Tento nápad nebyl přijat do dalšího kroku
           read_less: Číst méně
           read_more: Číst více
           report: Hlášení
