@@ -34,7 +34,7 @@ end
         <div class="filters__section area_scope_id_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".state") %></legend>
-            <%= form.select(:state, filter_ideas_state_values, label: false, include_blank: t(".all_states")) %>
+            <%= form.select(:state, filter_ideas_state_values, { label: false, include_blank: t(".all_states") }, "aria-label": t(".state")) %>
           </fieldset>
         </div>
       </div>
@@ -44,7 +44,7 @@ end
         <div class="filters__section area_scope_id_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".area_scope") %></legend>
-            <%= area_scopes_picker_field(form, :area_scope_id, root: false, options: { label: false, include_blank: t(".all_area_scopes") }) %>
+            <%= area_scopes_picker_field(form, :area_scope_id, root: false, options: { label: false, include_blank: t(".all_area_scopes") }, html_options: { "aria-label": t(".area_scope") }) %>
           </fieldset>
         </div>
       </div>
@@ -54,7 +54,7 @@ end
         <div class="filters__section category_id_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".category") %></legend>
-            <%= form.select(:category_id, filter_ideas_categories_values, label: false, include_blank: t(".all_categories")) %>
+            <%= form.select(:category_id, filter_ideas_categories_values, { label: false, include_blank: t(".all_categories") }, "aria-label": t(".category")) %>
           </fieldset>
         </div>
       </div>
