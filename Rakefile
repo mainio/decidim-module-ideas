@@ -6,8 +6,11 @@ Rake.application.options.trace = true
 
 def install_module(path)
   Dir.chdir(path) do
-    system("bundle exec rake decidim_ideas:install:migrations")
-    system("bundle exec rake db:migrate")
+    system("bundle exec rails decidim_favorites:install:migrations")
+    system("bundle exec rails decidim_plans:install:migrations")
+    system("bundle exec rails decidim_feedback:install:migrations")
+    system("bundle exec rails decidim_ideas:install:migrations")
+    system("bundle exec rails db:migrate")
   end
 end
 
@@ -38,5 +41,5 @@ task :development_app do
   end
 
   install_module("development_app")
-  seed_db("development_app")
+  # seed_db("development_app")
 end
