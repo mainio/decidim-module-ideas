@@ -192,6 +192,9 @@ module Decidim
       initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
+        Decidim::Ideas::ResourceLinkSubject.class_eval do
+          possible_types(Decidim::Plans::PlanType)
+        end
         Decidim::Plans::ContentSubject.class_eval do
           possible_types(Decidim::Ideas::SectionContent::LinkIdeasType)
         end
