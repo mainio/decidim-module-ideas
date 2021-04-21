@@ -58,9 +58,17 @@ module Decidim
         description "This object's versions"
       end
 
-      # These are the resources that are linked from the related object to the
-      # idea.
-      field :linkingResources, [Decidim::Ideas::ResourceLinkSubject], method: :linking_resources, description: "The linked resources for this idea.", null: true
+      if Decidim::Ideas::ResourceLinkSubject.possible_types.any?
+        # These are the resources that are linked from the related object to the
+        # idea.
+        field(
+          :linkingResources,
+          [Decidim::Ideas::ResourceLinkSubject],
+          method: :linking_resources,
+          description: "The linked resources for this idea.",
+          null: true
+        )
+      end
 
       def coordinates
         [object.latitude, object.longitude]
@@ -72,7 +80,11 @@ module Decidim
       end
 
       def linking_resources
-        resources = object.resource_links_to.map(&:from)
+        resources = object.resource_links_to.map(&:from).reject do |resource|
+          (resource.respond_to?(:published?) && !resource.published?) ||
+            (resource.respond_to?(:hidden?) && resource.hidden?) ||
+            (resource.respond_to?(:withdrawn?) && resource.withdrawn?)
+        end
         return nil unless resources.any?
 
         resources
