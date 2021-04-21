@@ -7,7 +7,6 @@ Rake.application.options.trace = true
 def install_module(path)
   Dir.chdir(path) do
     system("bundle exec rails decidim_favorites:install:migrations")
-    system("bundle exec rails decidim_plans:install:migrations")
     system("bundle exec rails decidim_feedback:install:migrations")
     system("bundle exec rails decidim_ideas:install:migrations")
     system("bundle exec rails db:migrate")

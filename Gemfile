@@ -18,7 +18,6 @@ gem "decidim-ideas", path: "."
 
 gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "release/0.23-stable"
 gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "release/0.23-stable"
-gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "develop"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", "~> 4.3.3"
