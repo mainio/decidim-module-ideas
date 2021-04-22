@@ -33,11 +33,11 @@ module Decidim
         attachments_invalid = false
         if process_image?
           build_image
-          attachments_invalid = attachments_invalid || image_invalid?
+          attachments_invalid ||= image_invalid?
         end
         if process_attachments?
           build_attachment
-          attachments_invalid = attachments_invalid || attachment_invalid?
+          attachments_invalid ||= attachment_invalid?
         end
         return broadcast(:invalid) if attachments_invalid
 
@@ -122,8 +122,13 @@ module Decidim
             if process_image?
               create_image
             elsif !image_removed? && amendable.image.present?
-              title = @form.image.title
-              title = amendable.image.title if title.blank?
+              title = begin
+                if @form.image.title.blank?
+                  amendable.image.title if title.blank?
+                else
+                  { I18n.locale.to_s => @form.image.title }
+                end
+              end
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
                 title: title,
@@ -134,8 +139,13 @@ module Decidim
             if process_attachments?
               create_attachment
             elsif !attachment_removed? && amendable.actual_attachments.any?
-              title = @form.attachment.title
-              title = amendable.actual_attachments.first.title if title.blank?
+              title = begin
+                if @form.attachment.title.blank?
+                  amendable.actual_attachments.first.title
+                else
+                  { I18n.locale.to_s => @form.attachment.title }
+                end
+              end
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
                 title: title,

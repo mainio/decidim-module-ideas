@@ -23,6 +23,8 @@ module Decidim
           @form = form(Admin::IdeaForm).from_params(
             attachment: form(AttachmentForm).from_params({})
           )
+          @form.image = form(Decidim::Ideas::ImageAttachmentForm).from_params({})
+          @form.attachment = form(Decidim::Ideas::AttachmentForm).from_params({})
         end
 
         def create
@@ -148,10 +150,10 @@ module Decidim
 
         def collection
           @collection ||= Idea.where(component: current_component)
-                          .only_amendables
-                          .published
-                          .not_hidden
-                          .includes(:amendable, :category, :component, :area_scope)
+                              .only_amendables
+                              .published
+                              .not_hidden
+                              .includes(:amendable, :category, :component, :area_scope)
         end
 
         def ideas
