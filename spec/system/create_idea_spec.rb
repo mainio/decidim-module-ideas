@@ -38,11 +38,6 @@ describe "User creates idea", type: :system do
     visit_component
   end
 
-  context "when there is a draft" do
-    let!(:idea) { create :idea, :draft, users: [user], component: component, category: category }
-
-  end
-
   describe "idea creation process" do
     before do
       click_link "New idea"
@@ -51,6 +46,38 @@ describe "User creates idea", type: :system do
       fill_in :idea_body, with: idea_body
       select subscope.name["en"], from: :idea_area_scope_id
       select category.name["en"], from: :idea_category_id
+    end
+
+    describe "draft" do
+      let(:updated_title) { ::Faker::Lorem.paragraph }
+
+      before do
+        click_button "Save as draft"
+      end
+
+      it "create" do
+        expect(page).to have_content("Idea successfully created. Saved as a Draft")
+      end
+
+      it "update" do
+        fill_in :idea_title, with: updated_title
+        click_button "Save as draft"
+        expect(page).to have_content("Idea draft successfully updated")
+        expect(Decidim::Ideas::Idea.last.title).to eq(updated_title)
+      end
+
+      it "publish" do
+        fill_in :idea_title, with: updated_title
+        click_button "Preview"
+        click_button "Publish"
+        expect(page).to have_content("Idea successfully published")
+      end
+
+      it "withdraw" do
+        click_link "Discard this draft"
+        click_link "OK"
+        expect(page).to have_content("Draft destroyed successfully")
+      end
     end
 
     it "creates a new idea with a category and scope" do
