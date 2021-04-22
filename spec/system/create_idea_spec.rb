@@ -13,6 +13,9 @@ describe "User creates idea", type: :system do
   let!(:component) do
     create(:idea_component,
            :with_creation_enabled,
+           :with_card_image_allowed,
+           :with_attachments_allowed,
+           :with_geocoding_enabled,
            manifest: manifest,
            participatory_space: participatory_process)
   end
@@ -35,21 +38,37 @@ describe "User creates idea", type: :system do
     visit_component
   end
 
+  context "when there is a draft" do
+    let!(:idea) { create :idea, :draft, users: [user], component: component, category: category }
+
+  end
+
   describe "idea creation process" do
-    it "creates a new idea with a category and scope" do
+    before do
       click_link "New idea"
       fill_in :idea_title, with: idea_title
       find(:css, "#idea_terms_agreed").set(true)
       fill_in :idea_body, with: idea_body
-      fill_category_and_scope
+      select subscope.name["en"], from: :idea_area_scope_id
+      select category.name["en"], from: :idea_category_id
+    end
+
+    it "creates a new idea with a category and scope" do
       click_button "Continue"
       click_button "Publish"
       expect(page).to have_content("Idea successfully published")
     end
-  end
 
-  def fill_category_and_scope
-    select category.name["en"], from: :idea_category_id
-    select subscope.name["en"], from: :idea_area_scope_id
+    context "when uploading a file", processing_uploads_for: Decidim::Ideas::AttachmentUploader do
+      it "creates a new idea with image" do
+        click_button "Add an image for the idea"
+        attach_file(:idea_image_file, Decidim::Dev.asset("avatar.jpg"))
+        fill_in :idea_image_title, with: "Foo bar"
+        click_button "Add image"
+        click_button "Continue"
+        click_button "Publish"
+        expect(page).to have_content("Idea successfully published")
+      end
+    end
   end
 end
