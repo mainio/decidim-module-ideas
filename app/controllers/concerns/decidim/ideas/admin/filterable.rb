@@ -33,7 +33,7 @@ module Decidim
               :state_eq,
               :state_null,
               :area_scope_id_eq,
-              :category_id_eq,
+              :category_id_eq
             ]
           end
 
@@ -61,16 +61,17 @@ module Decidim
           end
 
           def translated_area_scope_id_eq(id)
-            translated_attribute(area_scopes.find_by(id: id).name)
+            scope = area_scopes.find_by(id: id)
+            return unless scope
+
+            translated_attribute(scope.name)
           end
 
-          private
-
           def area_scopes
-            return [] unless component_settings.area_scope_parent_id
+            return Decidim::Scope.none unless component_settings.area_scope_parent_id
 
             parent = Decidim::Scope.find_by(id: component_settings.area_scope_parent_id)
-            return [] unless parent
+            return Decidim::Scope.none unless parent
 
             parent.children
           end
