@@ -85,13 +85,13 @@
       <div class="row column">
         <fieldset>
           <legend><%= t(".image_legend") %></legend>
-          <%= form.fields_for :image, @form.image do |form| %>
+          <%= form.fields_for :image, @form.image do |nested_form| %>
             <div class="row column">
-              <%= form.text_field :title %>
+              <%= nested_form.text_field :title %>
             </div>
 
             <div class="row column">
-              <%= form.upload :file, optional: true %>
+              <%= nested_form.upload :file, optional: true %>
             </div>
           <% end %>
         </fieldset>
@@ -102,13 +102,13 @@
       <div class="row column">
         <fieldset>
           <legend><%= t(".attachment_legend") %></legend>
-          <%= form.fields_for :attachment, @form.attachment do |form| %>
+          <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
             <div class="row column">
-              <%= form.text_field :title %>
+              <%= nested_form.text_field :title %>
             </div>
 
             <div class="row column">
-              <%= form.upload :file, optional: true %>
+              <%= nested_form.upload :file, optional: true %>
             </div>
           <% end %>
         </fieldset>
