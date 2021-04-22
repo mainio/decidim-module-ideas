@@ -11,7 +11,7 @@ module Decidim
       def build_attachment
         @attachment = Decidim::Ideas::Attachment.new(
           attached_to: @attached_to, # Keep first
-          title: @form.attachment.title,
+          title: { I18n.locale.to_s => @form.attachment.title },
           file: @form.attachment.file,
           weight: 1
         )
