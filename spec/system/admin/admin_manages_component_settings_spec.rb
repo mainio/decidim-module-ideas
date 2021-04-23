@@ -35,14 +35,20 @@ describe "Admin manages idea component", type: :system do
   end
 
   describe "configure" do
+    let(:max_title_length) { rand(15..100) }
+    let(:max_body_length) { rand(500..1500) }
+
     before do
-      # visit current_path
-      find(".icon--cog").click
+      find(".icon--cog", match: :first).click
     end
 
     it "updates component's settings" do
+      fill_in :component_settings_idea_title_length, with: max_title_length
+      fill_in :component_settings_idea_length, with: max_body_length
       click_button "Update"
       expect(page).to have_content("The component was updated successfully")
+      expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_title_length"]).to eq(max_title_length)
+      expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_length"]).to eq(max_body_length)
     end
   end
 end
