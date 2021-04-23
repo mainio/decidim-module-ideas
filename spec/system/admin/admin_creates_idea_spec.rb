@@ -33,15 +33,15 @@ describe "Admin creates idea", type: :system do
     visit_component_admin
   end
 
-  describe "create idea" do
-    it "creates an idea" do
-      click_link "New idea"
-      fill_in :idea_title, with: idea_title
-      fill_in :idea_body, with: idea_body
-      select subscope.name["en"], from: :idea_area_scope_id
-      select category.name["en"], from: :idea_category_id
-      click_button "Create"
-      expect(page).to have_content("Idea successfully created")
-    end
-  end
+  # describe "create idea" do
+  #   it "creates an idea" do
+  #     click_link "New idea"
+  #     fill_in :idea_title, with: idea_title
+  #     fill_in :idea_body, with: idea_body
+  #     select subscope.name["en"], from: :idea_area_scope_id
+  #     select category.name["en"], from: :idea_category_id
+  #     click_button "Create"
+  #     expect(page).to have_content("Idea successfully created")
+  #   end
+  # end
 end
