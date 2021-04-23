@@ -146,7 +146,7 @@ module Decidim
         # combine this information with the base query.
         scope_selects = component.settings.area_scope_coordinates.map do |scope_id, coords|
           latlng = coords.split(",")
-          next if latlng.length < 1
+          next if latlng.length < 2
 
           lat = latlng[0].to_f
           lng = latlng[1].to_f
