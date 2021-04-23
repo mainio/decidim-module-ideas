@@ -33,15 +33,39 @@ describe "Admin creates idea", type: :system do
     visit_component_admin
   end
 
-  # describe "create idea" do
-  #   it "creates an idea" do
-  #     click_link "New idea"
-  #     fill_in :idea_title, with: idea_title
-  #     fill_in :idea_body, with: idea_body
-  #     select subscope.name["en"], from: :idea_area_scope_id
-  #     select category.name["en"], from: :idea_category_id
-  #     click_button "Create"
-  #     expect(page).to have_content("Idea successfully created")
-  #   end
-  # end
+  describe "create idea" do
+    it "creates an idea" do
+      click_link "New idea"
+      fill_in :idea_title, with: idea_title
+      fill_in :idea_body, with: idea_body
+      select subscope.name["en"], from: :idea_area_scope_id
+      select category.name["en"], from: :idea_category_id
+      click_button "Create"
+      expect(page).to have_content("Idea successfully created")
+    end
+  end
+
+  describe "update idea" do
+    let!(:idea) { create(:idea, component: component) }
+    let(:update_title) { ::Faker::Hipster.sentence }
+    let(:update_body) { ::Faker::Hipster.paragraph }
+    let!(:update_category) { create :category, participatory_space: participatory_process }
+    let!(:update_subscope) { create :scope, parent: scope }
+
+    before do
+      visit current_path
+      find(".icon--pencil").click
+    end
+
+    it "updates the idea" do
+      fill_in :idea_title, with: update_title
+      fill_in :idea_body, with: update_body
+      select update_subscope.name["en"], from: :idea_area_scope_id
+      select update_category.name["en"], from: :idea_category_id
+      click_button "Update"
+      expect(page).to have_content("Idea successfully updated")
+      expect(Decidim::Ideas::Idea.find(idea.id).area_scope.id).to eq(update_subscope.id)
+      expect(Decidim::Ideas::Idea.find(idea.id).category.id).to eq(update_category.id)
+    end
+  end
 end

@@ -8,6 +8,7 @@ module Decidim
         include ::Decidim::AttachmentMethods
         include GalleryMethods
         include HashtagsMethods
+        include ImageMethods
 
         # Public: Initializes the command.
         #
