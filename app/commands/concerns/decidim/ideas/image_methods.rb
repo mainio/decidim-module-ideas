@@ -25,7 +25,7 @@ module Decidim
       def image_removed?
         return false unless image_allowed?
 
-        @form.image.remove_file?
+        @form.image&.remove_file?
       end
 
       def image_present?

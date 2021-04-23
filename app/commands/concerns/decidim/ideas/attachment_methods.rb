@@ -20,7 +20,7 @@ module Decidim
       def attachment_removed?
         return false unless attachment_allowed?
 
-        @form.attachment.remove_file?
+        @form.attachment&.remove_file?
       end
 
       def attachment_present?
