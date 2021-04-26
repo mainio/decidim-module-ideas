@@ -27,7 +27,6 @@ describe "Admin manages idea component", type: :system do
   end
 
   before do
-    component[:settings]["global"]["area_scope_parent_id"] = scope.id
     component.save!
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -37,6 +36,7 @@ describe "Admin manages idea component", type: :system do
   describe "configure" do
     let(:max_title_length) { rand(15..100) }
     let(:max_body_length) { rand(500..1500) }
+    let(:coordinates) { "60.1699,24.9384" }
 
     before do
       find(".icon--cog", match: :first).click
@@ -45,10 +45,22 @@ describe "Admin manages idea component", type: :system do
     it "updates component's settings" do
       fill_in :component_settings_idea_title_length, with: max_title_length
       fill_in :component_settings_idea_length, with: max_body_length
+      click_link "Global scope"
+      click_link scope.name["en"]
+      click_link("Select", wait: 1)
+      fill_in "component[settings][area_scope_coordinates]_#{subscope.id}", with: coordinates
       click_button "Update"
       expect(page).to have_content("The component was updated successfully")
       expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_title_length"]).to eq(max_title_length)
       expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_length"]).to eq(max_body_length)
+      expect(Decidim::Component.find(component.id).settings.area_scope_coordinates).to eq(subscope.id.to_s => coordinates)
+    end
+  end
+
+  describe "delete" do
+    it "delets component" do
+      find(".icon--circle-x").click
+      expect(page).to have_content("Component deleted successfully")
     end
   end
 end
