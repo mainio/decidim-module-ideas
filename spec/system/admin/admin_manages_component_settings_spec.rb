@@ -51,8 +51,8 @@ describe "Admin manages idea component", type: :system do
       fill_in "component[settings][area_scope_coordinates]_#{subscope.id}", with: coordinates
       click_button "Update"
       expect(page).to have_content("The component was updated successfully")
-      expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_title_length"]).to eq(max_title_length)
-      expect(Decidim::Component.find(component.id)["settings"]["global"]["idea_length"]).to eq(max_body_length)
+      expect(Decidim::Component.find(component.id)[:settings]["global"]["idea_title_length"]).to eq(max_title_length)
+      expect(Decidim::Component.find(component.id)[:settings]["global"]["idea_length"]).to eq(max_body_length)
       expect(Decidim::Component.find(component.id).settings.area_scope_coordinates).to eq(subscope.id.to_s => coordinates)
     end
   end
