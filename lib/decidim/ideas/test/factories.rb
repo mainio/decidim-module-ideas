@@ -188,12 +188,25 @@ FactoryBot.define do
     end
   end
 
+  factory :area_scope_parent, class: "Decidim::Scope" do
+    name { Decidim::Faker::Localized.literal(generate(:scope_name)) }
+    code { generate(:scope_code) }
+    scope_type { create(:scope_type, organization: organization) }
+    organization { parent ? parent.organization : build(:organization) }
+
+    after :create do |area_scope|
+      create_list(:subscope, 5, parent: area_scope)
+    end
+  end
+
   factory :idea, class: "Decidim::Ideas::Idea" do
     transient do
       users { nil }
       # user_groups correspondence to users is by sorting order
       user_groups { [] }
       skip_injection { false }
+      category { create(:category) }
+      area_scope { area_scope_parent.children.sample }
     end
 
     title do
