@@ -112,6 +112,7 @@ fi:
             categories_info_intro: Teemojen tietoikkunan intro
             categories_info_text: Teemojen tietoikkunan teksti
             comments_enabled: Kommentit käytössä
+            comments_max_length: Kommentin maksimipituus
             default_map_center_coordinates: Kartan keskipisteen oletuskoordinaatit (pituusaste,leveysaste)
             geocoding_enabled: Geokoodaus käytössä
             idea_answering_enabled: Ideoihin vastaaminen käytössä

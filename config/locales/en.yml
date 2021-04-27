@@ -113,6 +113,7 @@ en:
             categories_info_intro: Themes information intro
             categories_info_text: Themes information text
             comments_enabled: Comments enabled
+            comments_max_length: Comment max length
             default_map_center_coordinates: Default map center coordinates (latitude,longitude)
             geocoding_enabled: Geocoding enabled
             idea_answering_enabled: Idea answering enabled

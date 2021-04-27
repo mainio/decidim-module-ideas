@@ -112,6 +112,7 @@ sv:
             categories_info_intro: Teman information intro
             categories_info_text: Teman informationstext
             comments_enabled: Kommentarer tillåtna
+            comments_max_length: Kommentar max längd
             default_map_center_coordinates: Standard kartcenter koordinater (latitud,longitud)
             geocoding_enabled: Geokodning aktiverad
             idea_answering_enabled: Svar på idéer aktiverat
