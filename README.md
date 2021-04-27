@@ -1,6 +1,6 @@
 # Decidim::Ideas
 
-[![codecov](https://codecov.io/gh/mainio/decidim-module-ideas/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-ideas)
+[![Build Status](https://github.com/mainio/decidim-module-ideas/actions/workflows/ci_ideas.yml/badge.svg)](https://github.com/mainio/decidim-module-ideas/actions)
 
 **NOTE: This module is currently work in progress, THERE CAN STILL BE BUGS**
 
