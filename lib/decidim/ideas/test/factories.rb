@@ -230,7 +230,7 @@ FactoryBot.define do
           idea.coauthorships.build(author: user, user_group: user_group)
         end
 
-        idea.category = create(:category, component: component.participatory_space) if idea.category.blank?
+        idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank?
       end
 
       idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank?
