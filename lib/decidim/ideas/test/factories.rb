@@ -205,8 +205,7 @@ FactoryBot.define do
       # user_groups correspondence to users is by sorting order
       user_groups { [] }
       skip_injection { false }
-      category { create(:category) }
-      area_scope { area_scope_parent.children.sample }
+      area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
     end
 
     title do
@@ -230,7 +229,11 @@ FactoryBot.define do
           user_group = evaluator.user_groups[idx]
           idea.coauthorships.build(author: user, user_group: user_group)
         end
+
+        idea.category = create(:category, component: component.participatory_space) if idea.category.blank?
       end
+
+      idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank?
     end
 
     trait :published do
