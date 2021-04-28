@@ -6,37 +6,20 @@ require "decidim/api/test/type_context"
 describe Decidim::Ideas::IdeaVersionType, type: :graphql do
   include_context "with a graphql type"
 
-  # let(:schema) { Decidim::Api::Schema }
-  let(:type_class) { Decidim::Api::QueryType }
-  let(:locale) { "en" }
-
-  let(:organization) { create(:organization) }
-  let!(:component) do
-    create(:idea_component,
-           :with_creation_enabled,
-           manifest: manifest,
-           participatory_space: participatory_process)
-  end
-  let!(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
-  let(:manifest_name) { "ideas" }
-  let(:manifest) { Decidim.find_component_manifest(manifest_name) }
-  let!(:idea) { create :idea, component: component }
-
-  let(:query) do
-    %(
+  # After upgrade to 0.24, the schema definition and response can be
+  # removed. They are workarounds to make it work with the old schema in
+  # 0.23.
+  let(:schema) { Decidim::Api::Schema }
+  let(:response) do
+    actual_query = %(
       {
-        participatoryProcess(
-          slug: "#{participatory_process.slug}"
-        ){
+        participatoryProcess(id: #{participatory_process.id}){
           components{
             ...on Ideas{
               ideas{
                 edges{
                   node{
-                    id
-                    versions{
-                      changeset
-                    }
+                    #{query}
                   }
                 }
               }
@@ -45,12 +28,54 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
         }
       }
     )
+    resp = execute_query actual_query, variables.stringify_keys
+    resp["participatoryProcess"]["components"].first["ideas"]["edges"].first["node"]
   end
 
-  describe "valid query" do
-    it "executes sucessfully" do
-      raise response.inspect
+  let!(:component) do
+    create(:idea_component,
+           :with_creation_enabled,
+           participatory_space: participatory_process)
+  end
+  let!(:participatory_process) { create :participatory_process, :with_steps, organization: current_organization }
+  let(:author) { create :user, :confirmed, organization: current_organization }
+  let(:original_attributes) do
+    {
+      title: generate(:title).dup
+    }
+  end
+  let(:updated_attributes) do
+    {
+      title: generate(:title).dup
+    }
+  end
+  let(:idea) do
+    create(:idea, original_attributes.merge(component: component, users: [author])).tap do |idea|
+      trail_state = PaperTrail.config.enabled
+      PaperTrail.config.enabled = true
+      idea.update!(updated_attributes)
+      PaperTrail.config.enabled = trail_state
+    end
+  end
+  let(:model) { idea.versions.last }
+
+  describe "versions" do
+    let(:query) do
+      %(
+        versions{
+          changeset
+        }
+      )
+    end
+
+    let(:version_data) { response["versions"].first }
+
+    it "returns the changeset" do
       expect { response }.not_to raise_error
+
+      expect(version_data["changeset"]["title"]).to eq(
+        %W(#{original_attributes[:title]} #{updated_attributes[:title]})
+      )
     end
   end
 end
