@@ -53,7 +53,9 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
     create(:idea, original_attributes.merge(component: component, users: [author])).tap do |idea|
       trail_state = PaperTrail.config.enabled
       PaperTrail.config.enabled = true
-      idea.update!(updated_attributes)
+      PaperTrail.request(whodunnit: author.to_gid) do
+        idea.update!(updated_attributes)
+      end
       PaperTrail.config.enabled = trail_state
     end
   end
@@ -63,11 +65,19 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
     let(:query) { "{ changeset }" }
 
     it "returns the changeset" do
-      expect { response }.not_to raise_error
-
       expect(response["changeset"]["title"]).to eq(
         %W(#{original_attributes[:title]} #{updated_attributes[:title]})
       )
+    end
+  end
+
+  describe "editor" do
+    let(:query) { "{ editor { id name nickname } }" }
+
+    it "returns the editor" do
+      expect(response["editor"]["id"]).to eq(author.id.to_s)
+      expect(response["editor"]["name"]).to eq(author.name)
+      expect(response["editor"]["nickname"]).to eq("@#{author.nickname}")
     end
   end
 end
