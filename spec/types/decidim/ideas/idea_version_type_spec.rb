@@ -19,7 +19,7 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
               ideas{
                 edges{
                   node{
-                    #{query}
+                    versions #{query}
                   }
                 }
               }
@@ -29,7 +29,7 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
       }
     )
     resp = execute_query actual_query, variables.stringify_keys
-    resp["participatoryProcess"]["components"].first["ideas"]["edges"].first["node"]
+    resp["participatoryProcess"]["components"].first["ideas"]["edges"].first["node"]["versions"].first
   end
 
   let!(:component) do
@@ -59,21 +59,13 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
   end
   let(:model) { idea.versions.last }
 
-  describe "versions" do
-    let(:query) do
-      %(
-        versions{
-          changeset
-        }
-      )
-    end
-
-    let(:version_data) { response["versions"].first }
+  describe "changeset" do
+    let(:query) { "{ changeset }" }
 
     it "returns the changeset" do
       expect { response }.not_to raise_error
 
-      expect(version_data["changeset"]["title"]).to eq(
+      expect(response["changeset"]["title"]).to eq(
         %W(#{original_attributes[:title]} #{updated_attributes[:title]})
       )
     end
