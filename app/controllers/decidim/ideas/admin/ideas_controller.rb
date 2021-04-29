@@ -96,7 +96,7 @@ module Decidim
         def update_area_scope
           enforce_permission_to :update, :idea_scope
 
-          Admin::UpdateIdeaAreaScope.call(params[:scope_id], idea_ids) do
+          Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
             on(:invalid_scope) do
               flash.now[:error] = t(
                 "ideas.update_scope.select_a_scope",
@@ -180,7 +180,7 @@ module Decidim
             )
           elsif subject == :scope
             t(
-              "ideas.update_scope.success",
+              "ideas.update_area_scope.success",
               subject_name: response[:subject_name],
               ideas: response[:successful].to_sentence,
               scope: "decidim.ideas.admin"
