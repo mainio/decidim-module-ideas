@@ -171,8 +171,9 @@ module Decidim
         coauthors_recipients_ids = ideas.map { |p| p.notifiable_identities.pluck(:id) }.flatten.compact.uniq
 
         participants_has_voted_ids = Decidim::Ideas::IdeaVote.joins(:idea).where(idea: ideas).joins(:author).map(&:decidim_author_id).flatten.compact.uniq
+        commentators_ids = Decidim::Comments::Comment.user_commentators_ids_in(ideas)
 
-        (participants_has_voted_ids + coauthors_recipients_ids).flatten.compact.uniq
+        (participants_has_voted_ids + coauthors_recipients_ids + commentators_ids).flatten.compact.uniq
       end
 
       def image
