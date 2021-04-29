@@ -158,7 +158,7 @@ module Decidim
         path = category_image_path(model.category)
         return path if path
 
-        category_image_path(model.category.parent) if model.category.parent.present?
+        category_image_path(model.category.parent) if model.category&.parent.present?
       end
 
       def category_image_path(cat)
