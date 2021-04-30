@@ -39,4 +39,20 @@ describe "User edits idea", type: :system do
       expect(page).to have_content(comment.body["en"])
     end
   end
+
+  describe "report idea" do
+    let(:report_reason) { %w(spamn offensive does_not_belong).sample }
+    let(:report_body) { ::Faker::Lorem.paragraph }
+
+    it "creates report" do
+      click_link idea.title
+      click_link "Report idea"
+      choose reason
+      fill_in :report_details, with: report_body
+      click_button "Report"
+      expect(page).to have_content("The report has been created successfully and it will be reviewed by an admin")
+      expect(Decidim::Report.last.details).to eq(report_body)
+      expect(Decidim::Report.last.reason).to eq(report_reason)
+    end
+  end
 end

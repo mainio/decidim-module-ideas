@@ -52,4 +52,24 @@ describe "Admin creates idea", type: :system do
       expect(Decidim::Ideas::Idea.find(idea.id).area_scope.id).to eq(scope.id)
     end
   end
+
+  describe "moderations" do
+    let(:moderation) { create(:moderation, reportable: idea, report_count: 1) }
+    let!(:report) { create(:report, moderation: moderation) }
+
+    before do
+      click_link "Moderations"
+    end
+
+    it "unreports" do
+      find(".icon--action-undo").click
+      expect(page).to have_content("Resource successfully unreported")
+    end
+
+    it "hides" do
+      find(".icon--eye").click
+      expect(page).to have_content("Resource successfully hidden")
+      expect(Decidim::Ideas::Idea.find(idea.id).hidden?).to eq(true)
+    end
+  end
 end
