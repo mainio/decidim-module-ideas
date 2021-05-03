@@ -21,6 +21,17 @@ describe Decidim::Ideas::Idea do
     include_examples "counts commentators as newsletter participants"
   end
 
+  describe "data portability images" do
+    let!(:image) { create(:attachment, attached_to: idea) }
+    let(:user) { idea.authors.first }
+
+    it "matches attachment" do
+      expect(described_class.data_portability_images(user).first.first.model.title).to eq(image.title)
+      expect(described_class.data_portability_images(user).first.first.model.content_type).to eq(image.content_type)
+      expect(described_class.data_portability_images(user).first.first.model.file_size).to eq(image.file_size)
+    end
+  end
+
   context "when it has been accepted" do
     let(:idea) { build(:idea, :accepted) }
 

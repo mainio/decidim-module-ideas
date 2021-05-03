@@ -305,6 +305,18 @@ FactoryBot.define do
         create_list(:idea_amendment, 5, amendable: idea)
       end
     end
+
+    trait :with_photo do
+      after :create do |idea|
+        idea.attachments << create(:ideas_attachment, :with_image, attached_to: idea)
+      end
+    end
+
+    trait :with_document do
+      after :create do |idea|
+        idea.attachments << create(:ideas_attachment, :with_pdf, attached_to: idea)
+      end
+    end
   end
 
   factory :idea_vote, class: "Decidim::Ideas::IdeaVote" do
@@ -317,5 +329,26 @@ FactoryBot.define do
     emendation { build(:idea, component: amendable.component) }
     amender { build(:user, organization: amendable.component.participatory_space.organization) }
     state { Decidim::Amendment::STATES.sample }
+  end
+
+  factory :ideas_attachment, class: "Decidim::Ideas::Attachment" do
+    title { generate_localized_title }
+    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    weight { 0 }
+    attached_to { build(:participatory_process) }
+    content_type { "image/jpeg" }
+    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") } # Keep after attached_to
+    file_size { 108_908 }
+
+    trait :with_image do
+      file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
+    end
+
+    trait :with_pdf do
+      weight { rand(1..9) }
+      file { Decidim::Dev.test_file("Exampledocument.pdf", "application/pdf") }
+      content_type { "application/pdf" }
+      file_size { 17_525 }
+    end
   end
 end
