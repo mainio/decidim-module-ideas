@@ -273,6 +273,11 @@ FactoryBot.define do
       answer { generate_localized_title }
     end
 
+    trait :geocoded do
+      latitude { Faker::Address.latitude }
+      longitude { Faker::Address.longitude }
+    end
+
     trait :with_answer do
       state { "accepted" }
       answer { generate_localized_title }
