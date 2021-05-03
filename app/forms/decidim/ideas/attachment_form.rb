@@ -22,6 +22,8 @@ module Decidim
 
       def map_model(model)
         self.remove_file = false
+        return unless model
+
         self.title = translated_attribute(model.title)
       end
     end
