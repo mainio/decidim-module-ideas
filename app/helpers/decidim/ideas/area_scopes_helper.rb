@@ -107,7 +107,7 @@ module Decidim
       private
 
       def scope_children(scope)
-        scope.children.order("code, name->>'#{current_locale}'")
+        scope.children.order(Arel.sql("code, name->>'#{current_locale}'"))
       end
 
       def area_scopes_options(parent, name_prefix = "")
