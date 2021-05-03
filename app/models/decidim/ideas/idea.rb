@@ -134,9 +134,9 @@ module Decidim
           :id,
           :title,
           :body,
-          "CASE WHEN CHAR_LENGTH(decidim_ideas_ideas.address::text) > 0 THEN decidim_ideas_ideas.address ELSE area_scopes.name->>#{locale} END",
-          "CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.latitude ELSE scope_coordinates.latitude END",
-          "CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.longitude ELSE scope_coordinates.longitude END"
+          Arel.sql("CASE WHEN CHAR_LENGTH(decidim_ideas_ideas.address::text) > 0 THEN decidim_ideas_ideas.address ELSE area_scopes.name->>#{locale} END"),
+          Arel.sql("CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.latitude ELSE scope_coordinates.latitude END"),
+          Arel.sql("CASE WHEN decidim_ideas_ideas.latitude IS NOT NULL THEN decidim_ideas_ideas.longitude ELSE scope_coordinates.longitude END")
         )
       end
 
