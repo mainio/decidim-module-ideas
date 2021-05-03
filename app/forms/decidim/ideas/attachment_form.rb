@@ -5,6 +5,8 @@ module Decidim
     # A form object used to create attachments.
     #
     class AttachmentForm < Form
+      include TranslatableAttributes
+
       attribute :title, String
       attribute :file
       attribute :remove_file, Boolean, default: false
@@ -20,6 +22,7 @@ module Decidim
 
       def map_model(model)
         self.remove_file = false
+        self.title = translated_attribute(model.title)
       end
     end
   end
