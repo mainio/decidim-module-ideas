@@ -58,7 +58,7 @@ describe "User creates idea", type: :system do
         select category.name["en"], from: :idea_category_id
       end
 
-      describe "draft" do
+      describe "draft exists" do
         let(:updated_title) { ::Faker::Lorem.paragraph }
 
         before do
@@ -67,6 +67,13 @@ describe "User creates idea", type: :system do
 
         it "create" do
           expect(page).to have_content("Idea successfully created. Saved as a Draft")
+        end
+
+        it "new redirects to edit draft" do
+          visit "/processes/#{participatory_process.slug}/f/#{component.id}/ideas/new"
+          expect(page).to have_content("This is an idea draft. You have to publish the draft for it to become visible on the website")
+          expect(page).to have_selector("input[value='#{idea_title}']")
+          expect(find("#idea_body")).to have_content(idea_body)
         end
 
         it "update" do
