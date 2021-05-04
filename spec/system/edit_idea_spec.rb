@@ -112,9 +112,8 @@ describe "User edits idea", type: :system do
       it "remove image" do
         click_button "Remove image"
         click_link "OK"
-        click_button "Save"
+        expect { click_button "Save" }.to change(idea2.attachments, :count).by(-1)
         expect(page).to have_content("Idea successfully updated")
-        expect(idea2.attachments.count).to eq(0)
       end
     end
   end
@@ -143,9 +142,8 @@ describe "User edits idea", type: :system do
       it "removes attached pdf" do
         click_button "Remove attachment"
         click_link "OK"
-        click_button "Save"
+        expect { click_button "Save" }.to change(idea3.attachments, :count).by(-1)
         expect(page).to have_content("Idea successfully updated")
-        expect(idea3.attachments.count).to eq(0)
       end
     end
   end
