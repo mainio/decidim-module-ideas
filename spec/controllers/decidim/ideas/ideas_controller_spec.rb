@@ -185,12 +185,10 @@ module Decidim
             expect(subject).to render_template(:show)
           end
 
-          context "and the user is not logged in" do
-            it "shows the idea" do
-              get :show, params: params.merge(id: amendable.id)
-              expect(response).to have_http_status(:ok)
-              expect(subject).to render_template(:show)
-            end
+          it "redirects to amendable" do
+            get :show, params: params.merge(id: emendation.id)
+            expect(response).to have_http_status(:found)
+            expect(subject).to redirect_to("/processes/#{component.participatory_space.slug}/f/#{component.id}/ideas/#{amendable.id}")
           end
         end
 
