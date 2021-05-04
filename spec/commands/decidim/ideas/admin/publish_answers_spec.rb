@@ -35,9 +35,9 @@ module Decidim
           end
 
           expect { subject }.to change(Decidim::ActionLog, :count)
-          action_log = Decidim::ActionLog.last
-          expect(action_log.version).to be_present
-          expect(action_log.version.event).to eq "update"
+          idea_version = Decidim::Ideas::IdeaVersion.last
+          expect(idea_version).to be_present
+          expect(idea_version.event).to eq "update"
         end
 
         it "notifies the answers" do
