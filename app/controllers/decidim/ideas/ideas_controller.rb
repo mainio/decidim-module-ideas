@@ -227,7 +227,6 @@ module Decidim
           area_scope_id: "",
           category_id: "",
           state: "",
-          related_to: "",
           type: "ideas"
         }
       end
