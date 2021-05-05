@@ -146,26 +146,6 @@ module Decidim
             )
           end
         end
-
-        # context "when idea has orginal idea" do
-        #   let!(:original) { create(:idea) }
-
-        #   before do
-        #     original.update(category: category)
-        #     original.update(area_scope: scope)
-        #     idea.amendable = original
-        #   end
-
-          # Failure/Error: return amendment.state if emendation?
-
-          # NoMethodError:
-          #   undefined method `state' for nil:NilClass
-          # ./app/models/decidim/ideas/idea.rb:225:in `state'
-
-          # it "serializes the orginal idea" do
-          #   expect(serialized[:original_idea]).to include(title: original.title)
-          # end
-        # end
       end
     end
   end
