@@ -48,8 +48,10 @@ module Decidim
         area_scope_id = reset(:area_scope_id)
         category = @idea.category
 
-        PaperTrail.request(enabled: false) do
-          @idea.categorization.destroy!
+        if @idea.categorization
+          PaperTrail.request(enabled: false) do
+            @idea.categorization.destroy!
+          end
         end
 
         Decidim.traceability.perform_action!(

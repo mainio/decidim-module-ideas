@@ -40,6 +40,23 @@ describe "User creates idea", type: :system do
     end
   end
 
+  describe "idea creation without scope and category" do
+    before do
+      login_as user, scope: :user
+      visit_component
+    end
+
+    it "creates new idea without scope and category" do
+      click_link "New idea"
+      fill_in :idea_title, with: idea_title
+      find(:css, "#idea_terms_agreed").set(true)
+      fill_in :idea_body, with: idea_body
+      click_button "Continue"
+      click_button "Publish"
+      expect(page).to have_content("Idea successfully published")
+    end
+  end
+
   context "when ideas component has parent scope" do
     before do
       component[:settings]["global"]["area_scope_parent_id"] = scope.id
