@@ -117,7 +117,7 @@ module Decidim
         it "updates the idea" do
           patch :update, params: params
 
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:found)
         end
       end
 
