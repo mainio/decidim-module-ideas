@@ -63,9 +63,6 @@ fi:
       decidim/ideas/idea:
         one: Idea
         other: Ideat
-      decidim/ideas/idea_vote:
-        one: Kannatus
-        other: Kannatukset
   decidim:
     admin:
       filters:
@@ -94,7 +91,6 @@ fi:
         actions:
           amend: Muuta
           create: Luo
-          vote: Kannata
           withdraw: Peruuta
         name: Ideat
         settings:
@@ -123,13 +119,11 @@ fi:
             idea_title_length: Idean nimen merkkien enimmäismäärä
             image_allowed: Salli kuva
             materials_text: Materiaalien ohjeteksti
-            minimum_votes_per_user: Kannatusten vähimmäismäärä käyttäjää kohden
             new_idea_help_text: Uuden idean ohjeteksti
             resources_permissions_enabled: Toiminnallisuutta koskevat oikeudet voidaan asettaa jokaiselle idealle
             terms_intro: Reunaehtojen intro
             terms_text: Reunaehtojen teksti
             threshold_per_idea: Ideoiden kannatusten määrän kynnysarvo
-            vote_limit: Käytettävissä olevien kannatusten määrä käyttäjää kohden
           step:
             amendment_creation_enabled: Muutosten luonti käytössä
             amendment_creation_enabled_help: Osallistujat voivat ehdottaa muutoksia ideoille.
@@ -149,9 +143,6 @@ fi:
             idea_answering_enabled: Ideaan vastaaminen käytössä
             publish_answers_immediately: Julkaise ideoiden vastaukset heti
             suggested_hashtags: Käyttäjille ehdotettavat hashtagit uusille ehdotuksille
-            votes_blocked: Kannatukset estetty
-            votes_enabled: Kannatukset käytössä
-            votes_hidden: Piilota kannatusmäärät (jos kannatukset ovat käytössä, tämä valitseminen piilottaa kannatusmäärän)
     events:
       ideas:
         creation_enabled:
@@ -238,17 +229,6 @@ fi:
           next_level_in: Saa vielä %{score} ideaa hyväksyttyä jatkoon noustaksesi seuraavalle tasolle!
           unearned_another: Tällä käyttäjällä ei ole vielä yhtään jatkoon hyväksyttyä ideaa.
           unearned_own: Sinulla ei ole vielä jatkoon hyväksyttyjä ideoita.
-        idea_votes:
-          conditions:
-            - Selaa muiden ihmisten ideoita ja käytä aikaa tutustumalla niihin
-            - Tue ideoita, joita pidät tai jotka kiinnostavat sinua
-          description: Tämä kunniamerkki myönnetään, kun tuet muiden ihmisten ideoita.
-          description_another: Tämä käyttäjä on kannattanut %{score} ideaa.
-          description_own: Olet kannattanut %{score} ideaa.
-          name: Ideoiden kannatukset
-          next_level_in: Kannata %{score} ideaa noustaksesi seuraavalle tasolle!
-          unearned_another: Tämä käyttäjä ei ole vielä kannattanut yhtään ideaa.
-          unearned_own: Et ole vielä kannattanut ideoita.
         ideas:
           conditions:
             - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen on mahdollista
@@ -340,8 +320,6 @@ fi:
             show_email: Näytä sähköpostiosoite
             ideas: Ideat
             ranking: "%{ranking} / %{total}"
-            votes_count: Kannatusten lukumäärä
-            votes_ranking: Luokittelu kannatusten mukaan
           update_category:
             invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
             select_a_category: Valitse teema
@@ -424,12 +402,8 @@ fi:
             scope: Teema
             state: Arviointi
             title: Nimi
-            votes: Kannatukset
       new:
         limit_reached: Et voi luoda uusia ideoita, koska olet ylittänyt rajan.
-      idea_votes:
-        create:
-          error: Idean kannattaminen epäonnistui.
       ideas:
         compare:
           continue: Jatka
@@ -477,7 +451,6 @@ fi:
           state: Arviointi
           title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
-          voted: Näytä kannatetut
         filters_small_view:
           close_modal: Sulje ikkuna
           filter: Suodata
@@ -523,10 +496,6 @@ fi:
           see_all_withdrawn: Näytä kaikki peruutetut ideat
           subtitle: Etsi ja tutki ideoita!
           view_idea: Näytä idea
-        linked_ideas:
-          idea_votes:
-            one: kannatus
-            other: kannatusta
         map:
           dynamic:
             skip_button: Ohita kartta
@@ -541,7 +510,6 @@ fi:
           label: 'Järjestä ideoita:'
           most_commented: Eniten kommentoidut
           most_followed: Eniten seuratut
-          most_voted: Eniten kannatuksia saaneet
           oldest: Vanhimmat
           random: Satunnainen
           recent: Viimeisimmät
@@ -599,19 +567,6 @@ fi:
           withdraw_idea: Peruuta idea
         tags:
           changed_from: "(muutettu nimestä <u>%{previous_name}</u> hallintakäyttäjän toimesta)"
-        vote_button:
-          already_voted: Jo kannatettu
-          already_voted_hover: Peru kannatuksesi
-          maximum_votes_reached: Kaikki kannatukset käytetty
-          no_votes_remaining: Ei kannatuksia jäljellä
-          vote: Kannata
-          votes_blocked: Kannatus poissa käytöstä
-        votes_count:
-          count:
-            one: Kannatus
-            other: Kannatukset
-          most_popular_idea: Suosituin idea
-          need_more_votes: Tarvitsee enemmän kannatuksia
         wizard_steps:
           see_steps: näytä vaiheet
           step_1: Luo ideasi
@@ -645,7 +600,6 @@ fi:
           state: Arviointi
           title: Etsi ideoita
           unfold: Avaa
-          voted: Näytä kannatetut
         pcs_html: "<span>%{number}</span> kpl"
         remove_idea: Poista idea
         show_idea_link: Näytä ideasivu
@@ -680,10 +634,6 @@ fi:
         description: Ideoiden lukumäärä
         object: ideat
         title: Ideat
-      votes:
-        description: Ideoiden kannatusten lukumäärä
-        object: kannatukset
-        title: Kannatukset
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:

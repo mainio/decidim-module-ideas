@@ -64,9 +64,6 @@ en:
       decidim/ideas/idea:
         one: Idea
         other: Ideas
-      decidim/ideas/idea_vote:
-        one: Support
-        other: Supports
   decidim:
     admin:
       filters:
@@ -95,7 +92,6 @@ en:
         actions:
           amend: Amend
           create: Create
-          vote: Support
           withdraw: Withdraw
         name: Ideas
         settings:
@@ -124,13 +120,11 @@ en:
             idea_title_length: Maximum idea title length
             image_allowed: Allow image
             materials_text: Materials text
-            minimum_votes_per_user: Minimum supports per user
             new_idea_help_text: New idea help text
             resources_permissions_enabled: Actions permissions can be set for each idea
             terms_intro: Terms intro
             terms_text: Terms text
             threshold_per_idea: Threshold per idea
-            vote_limit: Support limit per participant
           step:
             amendment_creation_enabled: Amendment creation enabled
             amendment_creation_enabled_help: Participant can amend ideas.
@@ -150,9 +144,6 @@ en:
             idea_answering_enabled: Idea answering enabled
             publish_answers_immediately: Publish idea answers immediately
             suggested_hashtags: Hashtags suggested to participants for new ideas
-            votes_blocked: Supports blocked
-            votes_enabled: Supports enabled
-            votes_hidden: Supports hidden (if supports are enabled, checking this will hide the number of supports)
     events:
       ideas:
         creation_enabled:
@@ -239,17 +230,6 @@ en:
           next_level_in: Get %{score} more ideas through to reach the next level!
           unearned_another: This participant has not yet had any ideas that went through.
           unearned_own: You got no ideas that went through yet.
-        idea_votes:
-          conditions:
-          - Browse and spend some time reading other people's ideas
-          - Give support to the ideas you like or find interesting
-          description: This badge is granted when you support other people's ideas.
-          description_another: This participant has given support to %{score} ideas.
-          description_own: You have given support to %{score} ideas.
-          name: Idea supports
-          next_level_in: Give support to %{score} more ideas to reach the next level!
-          unearned_another: This participant hasn't given support to any ideas yet.
-          unearned_own: You have given support to no ideas yet.
         ideas:
           conditions:
           - Choose the participation space of your interest with submission for ideas enabled
@@ -341,8 +321,6 @@ en:
             show_email: Show email address
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
-            votes_count: Supports count
-            votes_ranking: Ranking by supports
           update_category:
             invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
             select_a_category: Please select a theme
@@ -425,12 +403,8 @@ en:
             scope: Scope
             state: Evaluation
             title: Title
-            votes: Supports
       new:
         limit_reached: You can't create new ideas since you've exceeded the limit.
-      idea_votes:
-        create:
-          error: There was a problem supporting the idea.
       ideas:
         compare:
           continue: Continue
@@ -478,7 +452,6 @@ en:
           state: Evaluation
           title: Filter the ideas on the map and in the list
           type: Type
-          voted: Show supported
         filters_small_view:
           close_modal: Close modal
           filter: Filter
@@ -524,10 +497,6 @@ en:
           see_all_withdrawn: See all withdrawn ideas
           subtitle: Search and discover ideas!
           view_idea: View idea
-        linked_ideas:
-          idea_votes:
-            one: support
-            other: supports
         map:
           dynamic:
             skip_button: Skip map
@@ -542,7 +511,6 @@ en:
           label: 'Order ideas by:'
           most_commented: Most commented
           most_followed: Most followed
-          most_voted: Most supported
           oldest: Oldest
           random: Random
           recent: Recent
@@ -600,19 +568,6 @@ en:
           withdraw_idea: Withdraw idea
         tags:
           changed_from: "(changed from <u>%{previous_name}</u> by an administrator)"
-        vote_button:
-          already_voted: Already supported
-          already_voted_hover: Withdraw support
-          maximum_votes_reached: Support limit reached
-          no_votes_remaining: No supports remaining
-          vote: Support
-          votes_blocked: Supports disabled
-        votes_count:
-          count:
-            one: Support
-            other: Supports
-          most_popular_idea: Most popular idea
-          need_more_votes: Need more supports
         wizard_steps:
           see_steps: see steps
           step_1: Create your idea
@@ -647,7 +602,6 @@ en:
           state: Evaluation
           title: Filter the ideas on the map and in the list
           unfold: Unfold
-          voted: Show supported
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Remove idea
         show_idea_link: Show idea page
@@ -682,10 +636,6 @@ en:
         description: Number of ideas
         object: ideas
         title: Ideas
-      votes:
-        description: Number of supports to ideas
-        object: supports
-        title: Supports
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
