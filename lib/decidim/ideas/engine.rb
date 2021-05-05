@@ -221,6 +221,10 @@ module Decidim
           type.api_type_class_name = "Decidim::Ideas::SectionContent::LinkIdeasType"
         end
       end
+
+      config.to_prepare do
+        Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
+      end
     end
   end
 end

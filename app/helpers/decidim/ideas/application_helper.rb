@@ -117,14 +117,6 @@ module Decidim
         return true if minimum_votes_per_user_enabled?
       end
 
-      def filter_type_values
-        [
-          ["all", t("decidim.ideas.application_helper.filter_type_values.all")],
-          ["ideas", t("decidim.ideas.application_helper.filter_type_values.ideas")],
-          ["amendments", t("decidim.ideas.application_helper.filter_type_values.amendments")]
-        ]
-      end
-
       # Options to filter Ideas by activity.
       def activity_filter_values
         base = [
