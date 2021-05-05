@@ -137,19 +137,6 @@ module Decidim
             idea.reload
             expect(idea.withdrawn?).to be true
           end
-
-          context "and the idea already has supports" do
-            let(:idea) { create(:idea, :with_votes, component: component, users: [user]) }
-
-            it "is not able to withdraw the idea" do
-              put :withdraw, params: params.merge(id: idea.id)
-
-              expect(flash[:alert]).to eq("This idea can not be withdrawn because it already has supports.")
-              expect(response).to have_http_status(:found)
-              idea.reload
-              expect(idea.withdrawn?).to be false
-            end
-          end
         end
 
         describe "when current user is NOT the author of the idea" do

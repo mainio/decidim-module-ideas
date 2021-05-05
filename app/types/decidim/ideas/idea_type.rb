@@ -45,10 +45,6 @@ module Decidim
         description "The date and time this idea was published"
       end
 
-      field :voteCount, Integer, resolver_method: :vote_count, null: true do
-        description "The total amount of votes the idea has received"
-      end
-
       # Modifies Decidim::Core::TraceableInterface because we use different
       # version type in order to add our customizations.
       field :versionsCount, Integer, method: :versions_count, null: false do
@@ -72,11 +68,6 @@ module Decidim
 
       def coordinates
         [object.latitude, object.longitude]
-      end
-
-      def vote_count
-        current_component = object.component
-        object.idea_votes_count unless current_component.current_settings.votes_hidden?
       end
 
       def linking_resources

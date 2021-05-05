@@ -46,7 +46,6 @@ module Decidim
           },
           state: idea.state.to_s,
           answer: ensure_translatable(idea.answer),
-          supports: idea.idea_votes_count,
           comments: idea.comments.count,
           attachments: idea.attachments.count,
           followers: idea.followers.count,

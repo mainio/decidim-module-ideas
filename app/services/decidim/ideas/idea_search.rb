@@ -37,10 +37,6 @@ module Decidim
       # Handle the activity filter
       def search_activity
         case activity
-        when "voted"
-          query
-            .includes(:votes)
-            .where(decidim_ideas_idea_votes: { decidim_author_id: @current_user })
         when "my_ideas"
           query
             .where.not(coauthorships_count: 0)

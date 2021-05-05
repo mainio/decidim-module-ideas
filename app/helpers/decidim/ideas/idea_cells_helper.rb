@@ -19,13 +19,13 @@ module Decidim
       def has_actions?
         return context[:has_actions] if context[:has_actions].present?
 
-        ideas_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
+        ideas_controller? && index_action? && !model.draft?
       end
 
       def has_footer?
         return context[:has_footer] if context[:has_footer].present?
 
-        ideas_controller? && index_action? && current_settings.votes_enabled? && !model.draft?
+        ideas_controller? && index_action? && !model.draft?
       end
 
       def ideas_controller?

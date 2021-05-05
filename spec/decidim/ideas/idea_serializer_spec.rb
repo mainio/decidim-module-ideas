@@ -80,10 +80,6 @@ module Decidim
           end
         end
 
-        it "serializes the amount of supports" do
-          expect(serialized).to include(supports: idea.idea_votes_count)
-        end
-
         it "serializes the amount of comments" do
           expect(serialized).to include(comments: idea.comments_count)
         end

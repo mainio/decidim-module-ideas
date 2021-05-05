@@ -22,13 +22,6 @@
           <% end %>
         </div>
       </div>
-      <% if !current_settings.try(:votes_hidden?) && !idea.component.current_settings.votes_hidden? %>
-        <div class="card--list__data">
-          <span class="card--list__data__number">
-            <%= idea.votes.size %>
-          </span> <%= t(".idea_votes", count: idea.votes.size) %>
-        </div>
-      <% end %>
     </div>
   <% end %>
 </div>

@@ -133,19 +133,11 @@ module Decidim
       end
 
       def progress_bar_progress
-        model.idea_votes_count || 0
+        0
       end
 
       def progress_bar_total
-        model.maximum_votes || 0
-      end
-
-      def progress_bar_subtitle_text
-        if progress_bar_progress >= progress_bar_total
-          t("decidim.ideas.ideas.votes_count.most_popular_idea")
-        else
-          t("decidim.ideas.ideas.votes_count.need_more_votes")
-        end
+        0
       end
 
       def has_image?

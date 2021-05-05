@@ -612,22 +612,6 @@ sv:
             other: Stödjer
           most_popular_idea: Mest populära idén
           need_more_votes: Behöver fler stöd
-        voting_rules:
-          can_accumulate_supports_beyond_threshold:
-            description: Varje idé kan samla mer än %{limit} stöd
-          minimum_votes_per_user:
-            description: Du måste fördela minst %{votes} stöd mellan olika idéer.
-            given_enough_votes: Du har gett tillräckligt med stöd.
-            supports_remaining: Du måste rösta %{remaining_votes} ytterligare idéer för att dina röster ska beaktas.
-          idea_limit:
-            description: Du kan skapa upp till %{limit} idéer.
-          threshold_per_idea:
-            description: För att valideras måste idéer nå stöd från %{limit}
-          title: 'Stöden måste följa följande regler:'
-          vote_limit:
-            description: Du kan stödja upp till %{limit} idéer.
-            left: Återstående
-            votes: Stödjer
         wizard_steps:
           see_steps: visa steg
           step_1: Skapa din idé

@@ -17,7 +17,6 @@ module Decidim
         def available_orders
           @available_orders ||= begin
             available_orders = %w(recent oldest)
-            available_orders << "most_voted" if most_voted_order_available?
             available_orders << "most_commented" if component_settings.comments_enabled?
             available_orders << "most_followed"
             available_orders
@@ -25,19 +24,7 @@ module Decidim
         end
 
         def default_order
-          if order_by_votes?
-            detect_order("most_voted")
-          else
-            "recent"
-          end
-        end
-
-        def most_voted_order_available?
-          current_settings.votes_enabled? && !current_settings.votes_hidden?
-        end
-
-        def order_by_votes?
-          most_voted_order_available? && current_settings.votes_blocked?
+          "recent"
         end
 
         def reorder(ideas)
@@ -46,8 +33,6 @@ module Decidim
             ideas.left_joins(:comments).group(:id).order(Arel.sql("COUNT(decidim_comments_comments.id) DESC"))
           when "most_followed"
             ideas.left_joins(:follows).group(:id).order(Arel.sql("COUNT(decidim_follows.id) DESC"))
-          when "most_voted"
-            ideas.order(idea_votes_count: :desc)
           when "recent"
             ideas.order(published_at: :desc)
           when "oldest"

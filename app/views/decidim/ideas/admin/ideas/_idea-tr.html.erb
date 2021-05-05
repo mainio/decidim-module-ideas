@@ -39,12 +39,6 @@
     </td>
   <% end %>
 
-  <% if current_settings.votes_enabled? %>
-    <td>
-      <%= idea.idea_votes_count %>
-    </td>
-  <% end %>
-
   <% if current_component.settings.comments_enabled? and !current_settings.comments_blocked? %>
     <td>
       <%= idea.comments.count %>

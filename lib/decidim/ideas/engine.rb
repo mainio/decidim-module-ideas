@@ -34,7 +34,6 @@ module Decidim
               end
             end
           end
-          resource :idea_vote, only: [:create, :destroy]
           resources :versions, only: [:show, :index]
         end
 
@@ -49,8 +48,7 @@ module Decidim
                                            decidim/ideas/idea_picker_inline.js
                                            decidim/ideas/idea_picker.scss
                                            decidim/ideas/idea_picker_inline.scss
-                                           decidim/ideas/map.js
-                                           decidim/ideas/utils.js)
+                                           decidim/ideas/map.js)
       end
 
       initializer "decidim_ideas.content_processors" do |_app|
@@ -136,14 +134,6 @@ module Decidim
             Decidim::Ideas::Idea.where(id: idea_ids).accepted.count
           }
         end
-
-        Decidim::Gamification.register_badge(:idea_votes) do |badge|
-          badge.levels = [5, 15, 50, 100, 500]
-
-          badge.reset = lambda { |user|
-            Decidim::Ideas::IdeaVote.where(author: user).select(:decidim_idea_id).distinct.count
-          }
-        end
       end
 
       initializer "decidim_ideas.register_metrics" do
@@ -166,17 +156,6 @@ module Decidim
             settings.attribute :scopes, type: :array, default: %w(home participatory_process)
             settings.attribute :weight, type: :integer, default: 3
             settings.attribute :stat_block, type: :string, default: "small"
-          end
-        end
-
-        Decidim.metrics_registry.register(:idea_votes) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Ideas::Metrics::VotesMetricManage"
-
-          metric_registry.settings do |settings|
-            settings.attribute :highlighted, type: :boolean, default: true
-            settings.attribute :scopes, type: :array, default: %w(home participatory_process)
-            settings.attribute :weight, type: :integer, default: 3
-            settings.attribute :stat_block, type: :string, default: "medium"
           end
         end
 

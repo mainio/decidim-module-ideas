@@ -5,15 +5,12 @@ module Decidim
     module ApplicationHelper
       include Decidim::Comments::CommentsHelper
       include PaginateHelper
-      include IdeaVotesHelper
       include ::Decidim::EndorsableHelper
       include ::Decidim::FollowableHelper
       include ControlVersionHelper
       include Decidim::RichTextEditorHelper
       include Decidim::CheckBoxesTreeHelper
       include Decidim::Ideas::AreaScopesHelper
-
-      delegate :minimum_votes_per_user, to: :component_settings
 
       # Public: The state of a idea in a way a human can understand.
       #
@@ -48,10 +45,6 @@ module Decidim
         idea_limit.present?
       end
 
-      def minimum_votes_per_user_enabled?
-        minimum_votes_per_user.positive?
-      end
-
       # If the rich text editor is enabled.
       def safe_content?
         rich_text_editor_in_public_views?
@@ -84,37 +77,12 @@ module Decidim
         component_settings.idea_limit
       end
 
-      def votes_given
-        @votes_given ||= IdeaVote.where(
-          idea: Idea.where(component: current_component),
-          author: current_user
-        ).count
-      end
-
-      def votes_count_for(model, from_ideas_list)
-        render partial: "decidim/ideas/ideas/idea_votes_count.html", locals: { idea: model, from_ideas_list: from_ideas_list }
-      end
-
-      def vote_button_for(model, from_ideas_list)
-        render partial: "decidim/ideas/ideas/idea_vote_button.html", locals: { idea: model, from_idea_list: from_ideas_list }
-      end
-
       def form_has_address?
         @form.address.present? || @form.has_address?
       end
 
       def authors_for(idea)
         idea.identities.map { |identity| present(identity) }
-      end
-
-      def show_voting_rules?
-        return false unless votes_enabled?
-
-        return true if vote_limit_enabled?
-        return true if threshold_per_idea_enabled?
-        return true if idea_limit_enabled?
-        return true if can_accumulate_supports_beyond_threshold?
-        return true if minimum_votes_per_user_enabled?
       end
 
       # Options to filter Ideas by activity.
@@ -124,7 +92,6 @@ module Decidim
           ["my_ideas", t(".my_ideas")],
           ["my_favorites", t(".my_favorites")]
         ]
-        base += [["voted", t(".voted")]] if current_settings.votes_enabled?
         base
       end
     end

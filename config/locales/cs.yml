@@ -617,22 +617,6 @@ cs:
             other: Supports
           most_popular_idea: Most popular idea
           need_more_votes: Need more supports
-        voting_rules:
-          can_accumulate_supports_beyond_threshold:
-            description: Each idea can accumulate more than %{limit} supports
-          minimum_votes_per_user:
-            description: You must distribute a minimum of %{votes} supports among different ideas.
-            given_enough_votes: You've given enough supports.
-            supports_remaining: You have to support %{remaining_votes} more ideas for your supports to be taken into account.
-          idea_limit:
-            description: You can create up to %{limit} ideas.
-          threshold_per_idea:
-            description: In order to be validated ideas need to reach %{limit} supports
-          title: 'Supports are subject to the following rules:'
-          vote_limit:
-            description: You can support up to %{limit} ideas.
-            left: Remaining
-            votes: Supports
         wizard_steps:
           see_steps: see steps
           step_1: Create your idea

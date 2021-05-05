@@ -24,22 +24,6 @@ module Decidim
 
           { ranking: ranked_ids.index(idea.id) + 1, total: ranked_ids.count }
         end
-
-        # Public: Gets the ranking for a given idea, ordered by votes.
-        def votes_ranking_for(idea)
-          ranking_for(idea, idea_votes_count: :desc)
-        end
-
-        def i18n_votes_ranking_for(idea)
-          rankings = votes_ranking_for(idea)
-
-          I18n.t(
-            "ranking",
-            scope: "decidim.ideas.admin.ideas.show",
-            ranking: rankings[:ranking],
-            total: rankings[:total]
-          )
-        end
       end
     end
   end

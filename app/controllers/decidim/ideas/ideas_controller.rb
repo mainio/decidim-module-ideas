@@ -27,16 +27,6 @@ module Decidim
         @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
-        @voted_ideas = begin
-          if current_user
-            IdeaVote.where(
-              author: current_user,
-              idea: @ideas.pluck(:id)
-            ).pluck(:decidim_idea_id)
-          else
-            []
-          end
-        end
         @ideas = paginate(@ideas)
         @ideas = reorder(@ideas)
 

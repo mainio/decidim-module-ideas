@@ -20,8 +20,6 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:has_supports) if @idea.votes.any?
-
         transaction do
           change_idea_state_to_withdrawn
           reject_emendations_if_any

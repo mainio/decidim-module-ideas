@@ -51,13 +51,6 @@ module Decidim
                inverse_of: :attached_to,
                as: :attached_to
 
-      has_many :votes,
-               -> { final },
-               foreign_key: "decidim_idea_id",
-               class_name: "Decidim::Ideas::IdeaVote",
-               dependent: :destroy,
-               counter_cache: "idea_votes_count"
-
       validates :title, :body, presence: true
 
       geocoded_by :address, http_headers: ->(idea) { { "Referer" => idea.component.organization.host } }
@@ -120,7 +113,6 @@ module Decidim
       def self.retrieve_ideas_for(component)
         Decidim::Ideas::Idea.where(component: component)
                             .joins(:coauthorships)
-                            .includes(:votes)
                             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
                             .not_hidden
                             .published
@@ -170,10 +162,9 @@ module Decidim
 
         coauthors_recipients_ids = ideas.map { |p| p.notifiable_identities.pluck(:id) }.flatten.compact.uniq
 
-        participants_has_voted_ids = Decidim::Ideas::IdeaVote.joins(:idea).where(idea: ideas).joins(:author).map(&:decidim_author_id).flatten.compact.uniq
         commentators_ids = Decidim::Comments::Comment.user_commentators_ids_in(ideas)
 
-        (participants_has_voted_ids + coauthors_recipients_ids + commentators_ids).flatten.compact.uniq
+        (coauthors_recipients_ids + commentators_ids).flatten.compact.uniq
       end
 
       def image
@@ -196,20 +187,6 @@ module Decidim
       # Returns an Array<Attachment>
       def documents
         @documents ||= actual_attachments.includes(:attachment_collection).select(&:document?)
-      end
-
-      # Public: Updates the vote count of this idea.
-      #
-      # Returns nothing.
-      def update_votes_count
-        update_columns(idea_votes_count: votes.count)
-      end
-
-      # Public: Check if the user has voted the idea.
-      #
-      # Returns Boolean.
-      def voted_by?(user)
-        IdeaVote.where(idea: self, author: user).any?
       end
 
       # Public: Checks if the idea has been published or not.
@@ -286,32 +263,6 @@ module Decidim
       # Public: Overrides the `reported_content_url` Reportable concern method.
       def reported_content_url
         ResourceLocatorPresenter.new(self).url
-      end
-
-      # Public: The maximum amount of votes allowed for this idea.
-      #
-      # Returns an Integer with the maximum amount of votes, nil otherwise.
-      def maximum_votes
-        maximum_votes = component.settings.threshold_per_idea
-        return nil if maximum_votes.zero?
-
-        maximum_votes
-      end
-
-      # Public: The maximum amount of votes allowed for this idea. 0 means infinite.
-      #
-      # Returns true if reached, false otherwise.
-      def maximum_votes_reached?
-        return false unless maximum_votes
-
-        votes.count >= maximum_votes
-      end
-
-      # Public: Can accumulate more votres than maximum for this idea.
-      #
-      # Returns true if can accumulate, false otherwise
-      def can_accumulate_supports_beyond_threshold
-        component.settings.can_accumulate_supports_beyond_threshold
       end
 
       # Checks whether the user can edit the given idea.

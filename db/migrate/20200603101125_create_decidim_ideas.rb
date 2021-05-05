@@ -14,7 +14,6 @@ class CreateDecidimIdeas < ActiveRecord::Migration[5.2]
       t.string :state, index: true
       t.jsonb :answer
       t.integer :coauthorships_count, index: true, null: false, default: 0
-      t.integer :idea_votes_count, index: true, null: false, default: 0
       t.datetime :terms_confirmed_at, index: true
       t.datetime :published_at, index: true
       t.datetime :answered_at, index: true

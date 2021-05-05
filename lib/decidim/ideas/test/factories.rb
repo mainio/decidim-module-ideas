@@ -9,42 +9,6 @@ FactoryBot.define do
     manifest_name { :ideas }
     participatory_space { create(:participatory_process, :with_steps, organization: organization) }
 
-    trait :with_votes_enabled do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_enabled: true }
-        }
-      end
-    end
-
-    trait :with_votes_disabled do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_enabled: false }
-        }
-      end
-    end
-
-    trait :with_votes_hidden do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_hidden: true }
-        }
-      end
-    end
-
-    trait :with_vote_limit do
-      transient do
-        vote_limit { 10 }
-      end
-
-      settings do
-        {
-          vote_limit: vote_limit
-        }
-      end
-    end
-
     trait :with_idea_limit do
       transient do
         idea_limit { 1 }
@@ -65,17 +29,6 @@ FactoryBot.define do
       settings do
         {
           idea_length: idea_length
-        }
-      end
-    end
-
-    trait :with_votes_blocked do
-      step_settings do
-        {
-          participatory_space.active_step.id => {
-            votes_enabled: true,
-            votes_blocked: true
-          }
         }
       end
     end
@@ -120,18 +73,6 @@ FactoryBot.define do
       settings do
         {
           can_accumulate_supports_beyond_threshold: true
-        }
-      end
-    end
-
-    trait :with_minimum_votes_per_user do
-      transient do
-        minimum_votes_per_user { 3 }
-      end
-
-      settings do
-        {
-          minimum_votes_per_user: minimum_votes_per_user
         }
       end
     end
@@ -299,12 +240,6 @@ FactoryBot.define do
       end
     end
 
-    trait :with_votes do
-      after :create do |idea|
-        create_list(:idea_vote, 5, idea: idea)
-      end
-    end
-
     trait :with_amendments do
       after :create do |idea|
         create_list(:idea_amendment, 5, amendable: idea)
@@ -322,11 +257,6 @@ FactoryBot.define do
         idea.attachments << create(:ideas_attachment, :with_pdf, attached_to: idea)
       end
     end
-  end
-
-  factory :idea_vote, class: "Decidim::Ideas::IdeaVote" do
-    idea { build(:idea) }
-    author { build(:user, organization: idea.organization) }
   end
 
   factory :idea_amendment, class: "Decidim::Amendment" do

@@ -30,14 +30,9 @@ module Decidim
 
       private
 
-      def filter_keys_by_settings(kwargs, component)
-        kwargs.select do |key, _value|
-          case key
-          when :vote_count
-            !component.current_settings.votes_hidden?
-          else
-            true
-          end
+      def filter_keys_by_settings(kwargs, _component)
+        kwargs.select do |_key, _value|
+          true
         end
       end
     end

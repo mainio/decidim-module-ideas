@@ -612,22 +612,6 @@ fi:
             other: Kannatukset
           most_popular_idea: Suosituin idea
           need_more_votes: Tarvitsee enemmän kannatuksia
-        voting_rules:
-          can_accumulate_supports_beyond_threshold:
-            description: Jokainen idea voi kerätä yli %{limit} kannatusta
-          minimum_votes_per_user:
-            description: Sinun on annettava vähintään %{votes} kannatusta eri ideoille.
-            given_enough_votes: Olet kannattanut tarpeeksi monta ideaa.
-            supports_remaining: Sinun on kannatettava %{remaining_votes} ideaa lisää, jotta äänesi otetaan huomioon.
-          idea_limit:
-            description: Voit luoda enintään %{limit} ideaa.
-          threshold_per_idea:
-            description: Jotta ideat vahvistettaisiin, niiden on saavutettava %{limit} kannatusta
-          title: 'Kannatukseen sovelletaan seuraavia sääntöjä:'
-          vote_limit:
-            description: Voit kannattaa enintään %{limit} ideaa.
-            left: Jäljellä
-            votes: Kannatusta
         wizard_steps:
           see_steps: näytä vaiheet
           step_1: Luo ideasi
