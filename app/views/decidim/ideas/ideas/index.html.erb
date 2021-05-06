@@ -21,7 +21,7 @@
   </div>
   <% if current_settings.creation_enabled &&
         current_component.participatory_space.can_participate?(current_user) &&
-        !users_idea_limit_reached?(current_user, current_component) %>
+        !users_idea_limit_reached? %>
     <div class="columns medium-6 mediumlarge-4">
       <div class="card border-primary" data-equalizer-watch>
         <div class="card__content text-center">
