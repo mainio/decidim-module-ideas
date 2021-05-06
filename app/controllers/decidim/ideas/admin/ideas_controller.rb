@@ -9,7 +9,6 @@ module Decidim
         include Decidim::Ideas::Admin::Filterable
 
         helper Ideas::ApplicationHelper
-        helper Decidim::Ideas::Admin::IdeaRankingsHelper
         helper Decidim::Messaging::ConversationHelper
         helper_method :ideas, :query, :form_presenter, :idea_form_builder, :idea, :idea_ids
         helper Ideas::Admin::IdeaBulkActionsHelper

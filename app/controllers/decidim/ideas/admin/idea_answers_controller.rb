@@ -9,7 +9,6 @@ module Decidim
 
         helper Ideas::ApplicationHelper
         helper Decidim::Ideas::Admin::IdeasHelper
-        helper Decidim::Ideas::Admin::IdeaRankingsHelper
         helper Decidim::Messaging::ConversationHelper
 
         def edit
