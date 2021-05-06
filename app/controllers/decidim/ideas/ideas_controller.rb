@@ -14,7 +14,7 @@ module Decidim
       include Paginable
       include Decidim::Ideas::AttachedIdeasHelper
 
-      helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
+      helper_method :idea_form_builder, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
 
       before_action :authenticate_user!, only: [:create, :complete]
       before_action :ensure_creation_enabled, only: [:new]
@@ -267,10 +267,6 @@ module Decidim
         return Decidim::Ideas::FormBuilderDisabled unless user_signed_in?
 
         Decidim::Ideas::FormBuilder
-      end
-
-      def idea_presenter
-        @idea_presenter ||= present(@idea)
       end
 
       def form_idea_params
