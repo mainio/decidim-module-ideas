@@ -14,7 +14,7 @@ module Decidim
       include Paginable
       include Decidim::Ideas::AttachedIdeasHelper
 
-      helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?
+      helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
 
       before_action :authenticate_user!, only: [:create, :complete]
       before_action :ensure_creation_enabled, only: [:new]
@@ -203,6 +203,13 @@ module Decidim
         else
           super
         end
+      end
+
+      def users_idea_limit_reached?(current_user, current_component)
+        return unless current_component&.settings&.idea_limit
+
+        users_idea_count = Idea.from_author(current_user).where(component: current_component).except_withdrawn
+        current_component.settings.idea_limit <= users_idea_count.count
       end
 
       def search_klass

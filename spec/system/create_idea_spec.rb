@@ -57,6 +57,23 @@ describe "User creates idea", type: :system do
     end
   end
 
+  context "when idea limit per participant is full" do
+    let!(:component) do
+      create(:idea_component, :with_creation_enabled, :with_idea_limit, manifest: manifest, participatory_space: participatory_process)
+    end
+    let(:idea_limit) { 1 }
+    let!(:idea) { create(:idea, users: [user], component: component) }
+
+    before do
+      login_as user, scope: :user
+      visit_component
+    end
+
+    it "hides new idea button" do
+      expect(page).not_to have_content("New idea")
+    end
+  end
+
   context "when ideas component has parent scope" do
     before do
       component[:settings]["global"]["area_scope_parent_id"] = scope.id
