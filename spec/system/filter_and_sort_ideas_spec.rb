@@ -192,11 +192,11 @@ describe "User filters ideas", type: :system do
           expect(page).to have_selector("ul[data-dropdown-menu$=dropdown-menu]", text: "Recent")
           page.find("a", text: "Recent").click
           click_link(selected_option, match: :first)
-          expect(page).to have_content("Browse ideas", wait: 1)
         end
+        expect(page).to have_content("Browse ideas", wait: 1)
       end
 
-      describe "recent" do
+      describe "select recent" do
         let(:selected_option) { "Recent" }
 
         it "shows newest first" do
@@ -204,7 +204,7 @@ describe "User filters ideas", type: :system do
         end
       end
 
-      describe "oldest" do
+      describe "select oldest" do
         let(:selected_option) { "Oldest" }
 
         it "shows oldest first" do
@@ -212,7 +212,7 @@ describe "User filters ideas", type: :system do
         end
       end
 
-      describe "most commented" do
+      describe "select most commented" do
         let(:selected_option) { "Most commented" }
 
         it "shows most commented first" do
