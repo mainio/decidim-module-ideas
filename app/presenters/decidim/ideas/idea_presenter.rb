@@ -11,17 +11,6 @@ module Decidim
       include Decidim::SanitizeHelper
       include Decidim::TranslatableAttributes
 
-      def author
-        @author ||= begin
-          if official?
-            Decidim::Ideas::OfficialAuthorPresenter.new
-          else
-            coauthorship = coauthorships.includes(:author, :user_group).first
-            coauthorship.user_group&.presenter || coauthorship.author.presenter
-          end
-        end
-      end
-
       def idea
         __getobj__
       end
