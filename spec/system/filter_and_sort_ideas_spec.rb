@@ -192,6 +192,7 @@ describe "User filters ideas", type: :system do
           expect(page).to have_selector("ul[data-dropdown-menu$=dropdown-menu]", text: "Recent")
           page.find("a", text: "Recent").click
           click_link(selected_option, match: :first)
+          expect(page).to have_content("Browse ideas", wait: 1)
         end
       end
 
