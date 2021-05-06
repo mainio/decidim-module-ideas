@@ -369,7 +369,7 @@ module Decidim
 
       def generate_related_changes
         final = {}.tap do |changes|
-          if categorization.saved_changes && categorization.saved_changes["decidim_category_id"].present?
+          if categorization&.saved_changes && categorization.saved_changes["decidim_category_id"].present?
             changes["decidim_category_id"] = categorization.saved_changes["decidim_category_id"]
           end
           if pending_image.present? && pending_image != image
