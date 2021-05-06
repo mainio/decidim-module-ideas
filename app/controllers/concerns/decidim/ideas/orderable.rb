@@ -18,7 +18,6 @@ module Decidim
           @available_orders ||= begin
             available_orders = %w(recent oldest)
             available_orders << "most_commented" if component_settings.comments_enabled?
-            available_orders << "most_followed"
             available_orders
           end
         end
