@@ -65,11 +65,6 @@ cs:
         few: Nápadů
         many: Nápadů
         other: Nápady
-      decidim/ideas/idea_vote:
-        one: Podpora
-        few: Podpory
-        many: Podpor
-        other: Podpor
   decidim:
     admin:
       filters:
@@ -98,7 +93,6 @@ cs:
         actions:
           amend: Pozměnit
           create: Vytvořit
-          vote: Podpora
           withdraw: Odebrat
         name: Nápady
         settings:
@@ -116,6 +110,7 @@ cs:
             categories_info_intro: Úvod k informacím o tématech
             categories_info_text: Informační text témat
             comments_enabled: Komentáře povoleny
+            comments_max_length: Comment max length
             default_map_center_coordinates: Výchozí souřadnice středu mapy (zeměpisná šířka, zeměpisná délka)
             geocoding_enabled: Geokódování povoleno
             idea_answering_enabled: Odpovídání na nápady povoleno
@@ -126,13 +121,11 @@ cs:
             idea_title_length: Maximální délka názvu nápadu
             image_allowed: Povolit obrázek
             materials_text: Text materiálu
-            minimum_votes_per_user: Minimální podpora na uživatele
             new_idea_help_text: Nová nápověda k nápadu
             resources_permissions_enabled: Oprávnění k akcím lze nastavit pro každý nápad
             terms_intro: Úvod k výrazům
             terms_text: Text výrazů
             threshold_per_idea: Prahová hodnota pro každý nápad
-            vote_limit: Limit podpory na uživatele
           step:
             amendment_creation_enabled: Vytvoření pozměňovacích návrhů povoleno
             amendment_creation_enabled_help: Účastník může pozměnit nápady.
@@ -152,9 +145,6 @@ cs:
             idea_answering_enabled: Odpovídání na nápady povoleno
             publish_answers_immediately: Okamžitě publikovat odpovědi na nápady
             suggested_hashtags: Hashtagy navržené účastníkům pro nové nápady
-            votes_blocked: Podpory hlasováním blokovány
-            votes_enabled: Podpory hlasováním povoleny
-            votes_hidden: Podpory hlasováním skryté (pokud jsou podpory povoleny, zaškrtnutím se skryje počet podpor)
     events:
       ideas:
         creation_enabled:
@@ -241,17 +231,6 @@ cs:
           next_level_in: Získejte %{score} nápadů a dosáhněte další úrovně!
           unearned_another: Tento uživatel ještě neměl žádné nápady, které by prošly.
           unearned_own: Nemáte žádné nápady, které by prošly.
-        idea_votes:
-          conditions:
-            - Procházejte a strávte nějaký čas čtením nápadů jiných lidí
-            - Podpořte nápady, které se vám líbí nebo najdete zajímavé
-          description: Tento odznak je udělen, když podpoříte nápady jiných lidí.
-          description_another: Tento uživatel podpořil %{score} nápadů.
-          description_own: Podpořili jste %{score} nápadů.
-          name: Podporované nápady
-          next_level_in: Podpořte %{score} dalších nápadů k dosažení další úrovně!
-          unearned_another: Tento uživatel zatím nepodpořil žádné nápady.
-          unearned_own: Zatím jste nepodpořil žádné nápady.
         ideas:
           conditions:
             - Zvolte participační prostor vašeho zájmu s povoleným podáním nápadů
@@ -343,8 +322,6 @@ cs:
             show_email: Zobrazit e-mailovou adresu
             ideas: Nápady
             ranking: "%{ranking} z %{total}"
-            votes_count: Počet podpor
-            votes_ranking: Hodnocení pomocí podpory
           update_category:
             invalid: 'Tyto nápady již měly %{subject_name} téma: %{ideas}.'
             select_a_category: Vyberte téma
@@ -427,12 +404,8 @@ cs:
             scope: Oblast působnosti
             state: Hodnocení
             title: Název
-            votes: Podpory
       new:
         limit_reached: Nové nápady nelze vytvořit, protože jste překročili limit.
-      idea_votes:
-        create:
-          error: Při podpoře nápadu došlo k chybě.
       ideas:
         compare:
           continue: Pokračovat
@@ -477,13 +450,11 @@ cs:
           my_favorites: Zobrazit mé oblíbené
           my_ideas: Zobrazit mé nápady
           origin: Původ
-          related_to: Související s
           reset: Vymazat filtry
           search: Hledat
           state: Hodnocení
           title: Filtrovat nápady na mapě a v seznamu
           type: Typ
-          voted: Zobrazit podporované
         filters_small_view:
           close_modal: Zavřít okno
           filter: Filtr
@@ -529,12 +500,6 @@ cs:
           see_all_withdrawn: Zobrazit všechny stažené nápady
           subtitle: Hledat a objevovat nápady!
           view_idea: Zobrazit nápad
-        linked_ideas:
-          idea_votes:
-            one: podpora
-            few: podpor
-            many: podpor
-            other: podpory
         map:
           dynamic:
             skip_button: Přeskočit mapu
@@ -549,7 +514,6 @@ cs:
           label: 'Seřadit nápady podle:'
           most_commented: Nejkomentovanější
           most_followed: Nejvíce sledované
-          most_voted: Nejpodporovanější
           oldest: Nejstarší
           random: Náhodně
           recent: Nedávné
@@ -609,37 +573,6 @@ cs:
           withdraw_idea: Stáhnout nápad
         tags:
           changed_from: "(změněno z <u>%{previous_name}</u> správcem)"
-        vote_button:
-          already_voted: Již je podporováno
-          already_voted_hover: Stáhnout podporu
-          maximum_votes_reached: Dosažen limit podpor
-          no_votes_remaining: Nezbývají žádné podpory
-          vote: Podpora
-          votes_blocked: Podpory zakázány
-        votes_count:
-          count:
-            one: Podpora
-            few: Podpor
-            many: Podpor
-            other: Podpory
-          most_popular_idea: Nejpopulárnější nápad
-          need_more_votes: Potřebujete více podpory
-        voting_rules:
-          can_accumulate_supports_beyond_threshold:
-            description: Každý nápad může shromáždit více než %{limit} podpor
-          minimum_votes_per_user:
-            description: Musíte rozdělit minimálně %{votes} podpor v různých nápadech.
-            given_enough_votes: Poskytli jste dostatek podpor.
-            supports_remaining: Musíte podpořit %{remaining_votes} dalších nápadů, aby vaše podpory byly brány v úvahu.
-          idea_limit:
-            description: Můžete vytvořit až %{limit} nápadů.
-          threshold_per_idea:
-            description: Abychom mohli ověřit nápady, je třeba získat %{limit} podpor
-          title: 'Podpory podléhají těmto pravidlům:'
-          vote_limit:
-            description: Můžete podpořit až %{limit} nápadů.
-            left: Zbývá
-            votes: Podpory
         wizard_steps:
           see_steps: zobrazit kroky
           step_1: Vytvořte svůj nápad
@@ -674,7 +607,6 @@ cs:
           state: Hodnocení
           title: Filtrovat nápady na mapě a v seznamu
           unfold: Rozbalit
-          voted: Zobrazit podporované
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Odstranit nápad
         show_idea_link: Zobrazit stránku nápadů
@@ -709,10 +641,6 @@ cs:
         description: Počet nápadů
         object: nápady
         title: Nápady
-      votes:
-        description: Počet podpor k nápadům
-        object: podpory
-        title: Podpory
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
