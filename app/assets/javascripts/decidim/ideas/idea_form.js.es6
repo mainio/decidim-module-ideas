@@ -220,7 +220,7 @@
       performCoordinatesLookup();
     });
 
-    if ($latitude.val().length > 0 && $longitude.val().length > 0) {
+    if ($latitude.val() && $latitude.val().length > 0 && $longitude.val().length > 0) {
       $map.trigger("coordinates.decidim.ideas", [{
         lat: $latitude.val(),
         lng: $longitude.val()
