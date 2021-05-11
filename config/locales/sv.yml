@@ -63,9 +63,6 @@ sv:
       decidim/ideas/idea:
         one: Idé
         other: Idéer
-      decidim/ideas/idea_vote:
-        one: Stöd
-        other: Stödjer
   decidim:
     admin:
       filters:
@@ -94,7 +91,6 @@ sv:
         actions:
           amend: Ändra
           create: Skapa
-          vote: Stöd
           withdraw: Dra tillbaka
         name: Idéer
         settings:
@@ -112,6 +108,7 @@ sv:
             categories_info_intro: Teman information intro
             categories_info_text: Teman informationstext
             comments_enabled: Kommentarer tillåtna
+            comments_max_length: Comment max length
             default_map_center_coordinates: Standard kartcenter koordinater (latitud,longitud)
             geocoding_enabled: Geokodning aktiverad
             idea_answering_enabled: Svar på idéer aktiverat
@@ -122,13 +119,11 @@ sv:
             idea_title_length: Maximal längd på idéns titel
             image_allowed: Tillåt bild
             materials_text: Material text
-            minimum_votes_per_user: Minsta antal stöd per användare
             new_idea_help_text: Ny idéhjälptext
             resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för varje idé
             terms_intro: Gränsvillkoren intro
             terms_text: Gränsvillkoren text
             threshold_per_idea: Tröskel per idé
-            vote_limit: Stödgräns per deltagare
           step:
             amendment_creation_enabled: Skapa ändringar är aktiverat
             amendment_creation_enabled_help: Deltagare kan ändra idéer.
@@ -148,9 +143,6 @@ sv:
             idea_answering_enabled: Svar på idéer aktiverat
             publish_answers_immediately: Publicera idésvar omedelbart
             suggested_hashtags: Förslag på hashtags för nya idéer till deltagare
-            votes_blocked: Stöder blockerad
-            votes_enabled: Stöd aktiverat
-            votes_hidden: Stöd dolda (om stöd är aktiverade, kommer detta att gömma antalet stöd)
     events:
       ideas:
         creation_enabled:
@@ -237,17 +229,6 @@ sv:
           next_level_in: Få %{score} fler idéer antagna för att nå nästa nivå!
           unearned_another: Denna deltagare hade inga idéer som gick vidare.
           unearned_own: Du fick inga idéer som gick vidare.
-        idea_votes:
-          conditions:
-            - Bläddra runt och ägna lite tid åt att läsa andras idéer
-            - Ge stöd till de idéer som du tycker om eller tycker är intressanta
-          description: Du får detta märke när du stöder idéer från andra.
-          description_another: Denna deltagare har gett stöd till %{score} idéer.
-          description_own: Du har gett stöd till %{score} idéer.
-          name: Idé stöd
-          next_level_in: Ge stöd till %{score} fler idéer för att nå nästa nivå!
-          unearned_another: Den här deltagare har inte stött några idéer än.
-          unearned_own: Du har gett stöd till inga idéer.
         ideas:
           conditions:
             - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av intresse
@@ -339,8 +320,6 @@ sv:
             show_email: Visa e-postadress
             ideas: Idéer
             ranking: "%{ranking} av %{total}"
-            votes_count: Antal stöd
-            votes_ranking: Sortera efter stöd
           update_category:
             invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
             select_a_category: Välj ett tema
@@ -423,12 +402,8 @@ sv:
             scope: Tema
             state: Utvärdering
             title: Titel
-            votes: Stödjer
       new:
         limit_reached: Du kan inte skapa nya idéer eftersom du har överskridit gränsen.
-      idea_votes:
-        create:
-          error: Det uppstod ett problem med att stödja idén.
       ideas:
         compare:
           continue: Fortsätt
@@ -471,13 +446,11 @@ sv:
           my_favorites: Visa mina favoriter
           my_ideas: Visa mina idéer
           origin: Ursprung
-          related_to: Relaterade till
           reset: Rensa filter
           search: Sök
           state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           type: Typ
-          voted: Visa stöds
         filters_small_view:
           close_modal: Stäng fönstret
           filter: Filtrera
@@ -523,10 +496,6 @@ sv:
           see_all_withdrawn: Se alla tillbakadragna idéer
           subtitle: Sök och utforska idéer!
           view_idea: Visa idé
-        linked_ideas:
-          idea_votes:
-            one: stöd
-            other: stödjer
         map:
           dynamic:
             skip_button: Hoppa över karta
@@ -541,7 +510,6 @@ sv:
           label: 'Ordna idéer:'
           most_commented: Mest kommenterade
           most_followed: Mest följda
-          most_voted: Mest stöd
           oldest: Äldsta
           random: Slumpmässig
           recent: Nyaste
@@ -599,35 +567,6 @@ sv:
           withdraw_idea: Dra tillbaka idé
         tags:
           changed_from: "(ändrad från <u>%{previous_name}</u> av en administratör)"
-        vote_button:
-          already_voted: Redan stött
-          already_voted_hover: Dra tillbaka stöd
-          maximum_votes_reached: Stödgränsen har uppnåtts
-          no_votes_remaining: Inga stöd kvar
-          vote: Stöd
-          votes_blocked: Stöden är inaktiverade
-        votes_count:
-          count:
-            one: Stöd
-            other: Stödjer
-          most_popular_idea: Mest populära idén
-          need_more_votes: Behöver fler stöd
-        voting_rules:
-          can_accumulate_supports_beyond_threshold:
-            description: Varje idé kan samla mer än %{limit} stöd
-          minimum_votes_per_user:
-            description: Du måste fördela minst %{votes} stöd mellan olika idéer.
-            given_enough_votes: Du har gett tillräckligt med stöd.
-            supports_remaining: Du måste rösta %{remaining_votes} ytterligare idéer för att dina röster ska beaktas.
-          idea_limit:
-            description: Du kan skapa upp till %{limit} idéer.
-          threshold_per_idea:
-            description: För att valideras måste idéer nå stöd från %{limit}
-          title: 'Stöden måste följa följande regler:'
-          vote_limit:
-            description: Du kan stödja upp till %{limit} idéer.
-            left: Återstående
-            votes: Stödjer
         wizard_steps:
           see_steps: visa steg
           step_1: Skapa din idé
@@ -662,7 +601,6 @@ sv:
           state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           unfold: Öppna
-          voted: Visa stöds
         pcs_html: "<span>%{number}</span> st"
         remove_idea: Ta bort idén
         show_idea_link: Show idea page
@@ -697,10 +635,6 @@ sv:
         description: Antal idéer
         object: idéer
         title: Idéer
-      votes:
-        description: Antal stöd till idéer
-        object: stödjer
-        title: Stödjer
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
