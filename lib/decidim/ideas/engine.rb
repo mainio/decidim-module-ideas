@@ -205,7 +205,7 @@ module Decidim
         # When creating seeds, Decidim goes through all tables and if table name matches a class,
         # calls "reset_column_information" method for the matching class. Autoload matches table
         # decidim_ideas_idea_versions with class Decidim::Version which doesn't have above-mentioned
-        # method so seeds crash.
+        # method so seeds crash. To avoid that we call Decidim::Version before we run seeds.
         Decidim.const_get("Version")
 
         Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
