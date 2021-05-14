@@ -595,6 +595,7 @@ fi:
           filter_by: Suodata
           my_favorites: Näytä omat suosikkisi
           my_ideas: Näytä omat ideasi
+          origin: Alkuperä
           reset: Tyhjennä rajaukset
           search: Haku
           state: Arviointi

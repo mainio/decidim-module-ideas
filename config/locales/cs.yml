@@ -2,628 +2,669 @@ cs:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Choose an area for the idea
-        address: Add an optional neighbourhood for the idea or a more specific address
-        answer: Answer
-        answered_at: Answered at
-        automatic_hashtags: Hashtags automatically added
-        body: Idea description
-        category_id: Choose a theme for the idea
-        decidim_category_id: Choose a theme for the idea
-        has_address: Has address
-        latitude: Latitude
-        longitude: Longitude
-        perform_geocoding: Fetch the map point based on the address
-        state: State
-        sub_category_id: Choose a subtheme for the idea
-        suggested_hashtags: Suggested hashtags
-        terms_agreed: I have read the criteria
-        title: Idea title
-        user_group_id: Create idea as
+        area_scope_id: Vyberte oblast pro nápad
+        address: Přidejte volitelné okolí nebo konkrétnější adresu pro Nápad
+        answer: Odpověď
+        answered_at: Odpovězeno
+        automatic_hashtags: Hashtagy automaticky přidány
+        body: Popis Nápadu
+        category_id: Vyberte téma pro nápad
+        decidim_category_id: Vyberte téma pro nápad
+        has_address: Má adresu
+        latitude: Zeměpisná šířka
+        longitude: Zeměpisná délka
+        perform_geocoding: Načíst bod mapy na základě adresy
+        state: Hodnocení
+        sub_category_id: Vyberte podřazené téma pro nápad
+        suggested_hashtags: Navrhované hashtagy
+        terms_agreed: Přečetl jsem si kritéria
+        title: Název nápadu
+        user_group_id: Vytvořit nápad jako
       idea_answer:
-        answer: Answer
-        internal_state: State
+        answer: Odpověď
+        internal_state: Hodnocení
       ideas_copy:
-        copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
-        origin_component_id: Component to copy the ideas from
+        copy_ideas: Chápu, že toto naimportuje všechny nápady z vybrané komponenty do té aktuální a že tuto akci nelze vrátit zpět.
+        origin_component_id: Komponenta pro kopírování nápadů z
       ideas_import:
-        import_ideas: Import ideas
-        keep_authors: Keep original authors
+        import_ideas: Importovat nápady
+        keep_authors: Zachovat originální autory
       idea_attachment:
-        title: Attachment title
-        file: Attachment file
+        title: Název přílohy
+        file: Soubor přílohy
       idea_image_attachment:
-        title: Image title
-        file: Image file
+        title: Název obrázku
+        file: Soubor obrázku
     errors:
       models:
         idea:
           attributes:
             attachment:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Potřebuje být znovu připojen
             body:
-              cant_be_equal_to_template: cannot be equal to the template
-              identical: AND title cannot be identical
+              cant_be_equal_to_template: nemůže být stejný jako šablona
+              identical: A název nemůže být totožný
             image:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Potřebuje být znovu připojen
             title:
-              identical: AND body cannot be identical
+              identical: A text obsahu nemůže být totožný
     models:
-      decidim/ideas/accepted_idea_event: Idea gone through
-      decidim/ideas/admin/update_idea_category_event: Idea theme changed
-      decidim/ideas/admin/update_idea_scope_event: Idea scope changed
-      decidim/ideas/creation_enabled_event: Idea creation enabled
-      decidim/ideas/evaluating_idea_event: Idea is being evaluated
-      decidim/ideas/idea_mentioned_event: Idea mentioned
-      decidim/ideas/publish_idea_event: Idea published
-      decidim/ideas/rejected_idea_event: Idea did not go through
-      decidim/ideas/voting_enabled_event: Idea voting enabled
+      decidim/ideas/accepted_idea_event: Nápad přijat k dalšímu kroku
+      decidim/ideas/admin/update_idea_category_event: Téma Nápadu změněno
+      decidim/ideas/admin/update_idea_scope_event: Oblast zájmu Nápadu změněna
+      decidim/ideas/creation_enabled_event: Tvorba nápadů povolena
+      decidim/ideas/evaluating_idea_event: Nápad se vyhodnocuje
+      decidim/ideas/idea_mentioned_event: Nápad zmíněn
+      decidim/ideas/publish_idea_event: Nápad publikován
+      decidim/ideas/rejected_idea_event: Nápad nebyl přijat k dalšímu kroku
+      decidim/ideas/voting_enabled_event: Hlasování o nápadu povoleno
   activerecord:
     models:
       decidim/ideas/idea:
-        one: Idea
-        few: Ideas
-        many: Ideas
-        other: Ideas
+        one: Nápad
+        few: Nápadů
+        many: Nápadů
+        other: Nápady
   decidim:
     admin:
       filters:
         area_scope_id_eq:
-          label: Area
+          label: Oblast
         is_emendation_true:
-          label: Type
+          label: Typ
           values:
-            'false': Ideas
-            'true': Amendments
+            'false': Nápady
+            'true': Pozměňovací návrhy
         search_placeholder:
-          id_string_or_title_cont: Search %{collection} by ID or title.
+          id_string_or_title_cont: Hledat %{collection} podle ID nebo názvu.
         state_eq:
-          label: State
+          label: Stav
           values:
-            accepted: Possible
-            evaluating: Evaluating
-            rejected: Not possible
-            withdrawn: Withdrawn
+            accepted: Přijato k dalšímu kroku
+            evaluating: Hodnocení
+            rejected: Nepřijato v dalším kroku
+            withdrawn: Odebráno
         state_null:
-          label: Status
+          label: Stav
           values:
-            'true': Not answered
+            'true': Nezodpovězeno
     components:
       ideas:
         actions:
-          amend: Amend
-          create: Create
-          withdraw: Withdraw
-        name: Ideas
+          amend: Pozměnit
+          create: Vytvořit
+          withdraw: Odebrat
+        name: Nápady
         settings:
           global:
-            amendments_enabled: Amendments enabled
-            amendments_enabled_help: If active, configure Amendment features for each step.
-            amendments_wizard_help_text: Amendments Wizard help text
-            area_scope_parent_id: Areas parent scope
-            area_scope_coordinates: Area scope coordinates (latitude,longitude)
-            areas_info_intro: Areas information intro
-            areas_info_text: Areas information text
-            announcement: Announcement
-            attachments_allowed: Allow attachments
-            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
-            categories_info_intro: Themes information intro
-            categories_info_text: Themes information text
-            comments_enabled: Comments enabled
-            default_map_center_coordinates: Default map center coordinates (latitude,longitude)
-            geocoding_enabled: Geocoding enabled
-            idea_answering_enabled: Idea answering enabled
-            idea_edit_before_minutes: Ideas can be edited by authors before this many minutes passes
-            idea_length: Maximum idea body length
-            idea_limit: Idea limit per participant
-            idea_listing_intro: Idea listing page intro text
-            idea_title_length: Maximum idea title length
-            image_allowed: Allow image
-            materials_text: Materials text
-            new_idea_help_text: New idea help text
-            resources_permissions_enabled: Actions permissions can be set for each idea
-            terms_intro: Terms intro
-            terms_text: Terms text
-            threshold_per_idea: Threshold per idea
+            amendments_enabled: Pozměňovací návrhy povoleny
+            amendments_enabled_help: Pokud je aktivní, nastavte funkce pozměňovacího návrhu pro každý krok.
+            amendments_wizard_help_text: Text nápovědy průvodce pozměňovacími návrhy
+            area_scope_parent_id: Základní oblast působnosti
+            area_scope_coordinates: Souřadnice oblasti působnosti (zeměpisná šířka,zeměpisná délka)
+            areas_info_intro: Úvod k informacím o oblastech
+            areas_info_text: Informační text o oblastech
+            announcement: Oznámení
+            attachments_allowed: Povolit přílohy
+            can_accumulate_supports_beyond_threshold: Lze sbírat podpory nad prahovou hodnotu
+            categories_info_intro: Úvod k informacím o tématech
+            categories_info_text: Informační text témat
+            comments_enabled: Komentáře povoleny
+            comments_max_length: Comment max length
+            default_map_center_coordinates: Výchozí souřadnice středu mapy (zeměpisná šířka, zeměpisná délka)
+            geocoding_enabled: Geokódování povoleno
+            idea_answering_enabled: Odpovídání na nápady povoleno
+            idea_edit_before_minutes: Nápady mohou být editovány autory dříve, než uplyne toto množství minut
+            idea_length: Maximální délka těla nápadu
+            idea_limit: Limit nápadu na účastníka
+            idea_listing_intro: Úvodní text úvodní stránky nápadu
+            idea_title_length: Maximální délka názvu nápadu
+            image_allowed: Povolit obrázek
+            materials_text: Text materiálu
+            new_idea_help_text: Nová nápověda k nápadu
+            resources_permissions_enabled: Oprávnění k akcím lze nastavit pro každý nápad
+            terms_intro: Úvod k výrazům
+            terms_text: Text výrazů
+            threshold_per_idea: Prahová hodnota pro každý nápad
           step:
-            amendment_creation_enabled: Amendment creation enabled
-            amendment_creation_enabled_help: Participant can amend ideas.
-            amendment_promotion_enabled: Amendment promotion enabled
-            amendment_promotion_enabled_help: Emandation authors will be able to promote to Idea the rejected emendation.
-            amendment_reaction_enabled: Amendment reaction enabled
-            amendment_reaction_enabled_help: Idea's authors will be able to accept or reject Participant's emendations.
-            amendments_visibility: Amendments visibility
+            amendment_creation_enabled: Vytvoření pozměňovacích návrhů povoleno
+            amendment_creation_enabled_help: Účastník může pozměnit nápady.
+            amendment_promotion_enabled: Propagace pozměňovacích návrhů povolena
+            amendment_promotion_enabled_help: Autoři vylepšení budou moci propagovat myšlenku odmítnutého vylepšení.
+            amendment_reaction_enabled: Reakce na pozměňovací návrh povolena
+            amendment_reaction_enabled_help: Autoři nápadu budou moci přijmout nebo odmítnout vylepšení účastníků.
+            amendments_visibility: Viditelnost pozměňovacích návrhů
             amendments_visibility_choices:
-              all: Amendments are visible to all
-              participants: Amendments are visible only to their authors
-            amendments_visibility_help: If the option "Amendments are visible only to their authors" is selected, participant must be logged in to see the amendments made.
-            announcement: Announcement
-            automatic_hashtags: Hashtags added to all ideas
-            comments_blocked: Comments blocked
-            creation_enabled: Idea creation enabled
-            idea_answering_enabled: Idea answering enabled
-            publish_answers_immediately: Publish idea answers immediately
-            suggested_hashtags: Hashtags suggested to participants for new ideas
+              all: Pozměňovací návrhy jsou viditelné pro všechny
+              participants: Pozměňovací návrhy jsou viditelné pouze pro jejich autory
+            amendments_visibility_help: Pokud je vybrána možnost "Pozměňovací návrhy jsou viditelné pouze pro jejich autory", musí být účastník přihlášen pro zobrazení provedených změn.
+            announcement: Oznámení
+            automatic_hashtags: Hashtagy přidány ke všem nápadům
+            comments_blocked: Komentáře blokovány
+            creation_enabled: Tvorba nápadů povolena
+            idea_answering_enabled: Odpovídání na nápady povoleno
+            publish_answers_immediately: Okamžitě publikovat odpovědi na nápady
+            suggested_hashtags: Hashtagy navržené účastníkům pro nové nápady
     events:
       ideas:
         creation_enabled:
-          email_intro: 'You can now create new ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: Ideas now available in %{participatory_space_title}
-          notification_title: You can now put forward <a href="%{resource_path}">new ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          email_intro: 'Nyní můžete vytvářet nové nápady v %{participatory_space_title}! Začněte se podílet na této stránce:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{participatory_space_title}. Můžete přestat přijímat oznámení tímto odkazem.
+          email_subject: Nápady jsou nyní k dispozici v %{participatory_space_title}
+          notification_title: Nyní můžete předložit <a href="%{resource_path}">nové nápady</a> v <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will go through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea will go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will go through.
+            email_intro: 'Váš nápad "%{resource_title}" byl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad byl přijat k dalšímu kroku
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> byl přijat k dalšímu kroku.
           follower:
-            email_intro: 'The idea "%{resource_title}" will go through. You can read the answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: An idea you are following will go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will go through.
+            email_intro: 'Nápad "%{resource_title}" projde. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, projde
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> projde.
         idea_evaluating:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea is being evaluated
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> is being evaluated.
+            email_intro: 'Váš nápad "%{resource_title}" se hodnotí. Můžete zkontrolovat odpověď na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad je hodnocen
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> se hodnotí.
           follower:
-            email_intro: 'The idea "%{resource_title}" is being evaluated. You can check for an answer in this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you are following is being evaluated
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea is being evaluated.
+            email_intro: 'Nápad "%{resource_title}" se hodnotí. Odpověď můžete zkontrolovat na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, je hodnocen
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> je hodnocen.
         idea_mentioned:
-          email_intro: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
-          email_outro: You have received this notification because you are an author of "%{resource_title}".
-          email_subject: Your idea "%{mentioned_idea_title}" has been mentioned
-          notification_title: Your idea "%{mentioned_idea_title}" has been mentioned <a href="%{resource_path}">in this space</a> in the comments.
+          email_intro: Váš nápad "%{mentioned_idea_title}" byl zmíněn <a href="%{resource_url}">v tomto prostoru</a> v komentáři.
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+          email_subject: Váš nápad "%{mentioned_idea_title}" byl zmíněn
+          notification_title: Váš nápad "%{mentioned_idea_title}" byl zmíněn <a href="%{resource_path}">v tomto prostoru</a> v komentáři.
         idea_published:
-          email_intro: '%{author_name} %{author_nickname}, who you are following, has published a new idea called "%{resource_title}". Check it out and contribute:'
-          email_outro: You have received this notification because you are following %{author_nickname}. You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" by %{author_nickname}
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea was published by <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+          email_intro: '%{author_name} %{author_nickname}, který sledujete, zveřejnil nový nápad nazvaný "%{resource_title}". Podívejte se na něj a přispějte:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{author_nickname}. Můžete přestat přijímat oznámení za předchozím odkazem.
+          email_subject: Nový nápad "%{resource_title}" od %{author_nickname}
+          notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> byl zveřejněn od <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         idea_published_for_space:
-          email_intro: The idea "%{resource_title}" has been added to "%{participatory_space_title}" that you are following.
-          email_outro: You have received this notification because you are following "%{participatory_space_title}". You can stop receiving notifications following the previous link.
-          email_subject: New idea "%{resource_title}" added to %{participatory_space_title}
-          notification_title: The idea <a href="%{resource_path}">%{resource_title}</a> has been added to %{participatory_space_title}
+          email_intro: Nápad "%{resource_title}" byla přidán do "%{participatory_space_title}", který sledujete.
+          email_outro: Toto oznámení jste obdrželi, protože sledujete "%{participatory_space_title}". Můžete přestat dostávat oznámení za předchozím odkazem.
+          email_subject: Nový nápad "%{resource_title}" přidán do %{participatory_space_title}
+          notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> byla přidán do %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Your idea "%{resource_title}" will not go through. You can read the answer on this page:'
-            email_outro: You have received this notification because you are an author of "%{resource_title}".
-            email_subject: Your idea will not go through
-            notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> will not go through.
+            email_intro: 'Váš nápad "%{resource_title}" nebyl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože jste autorem "%{resource_title}".
+            email_subject: Váš nápad nebyl přijat k dalšímu kroku
+            notification_title: Váš nápad <a href="%{resource_path}">%{resource_title}</a> nebyl přijat k dalšímu kroku.
           follower:
-            email_intro: 'The idea "%{resource_title}" will not go through. You can read the answer on this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
-            email_subject: A idea you are following will not go through
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea will not go through.
+            email_intro: 'Nápad "%{resource_title}" nebyl přijat k dalšímu kroku. Odpověď si můžete přečíst na této stránce:'
+            email_outro: Obdrželi jste toto oznámení, protože sledujete "%{resource_title}". Můžete ho zrušit z předchozího odkazu.
+            email_subject: Nápad, který sledujete, nebyl přijat v dalším kroku
+            notification_title: Nápad <a href="%{resource_path}">%{resource_title}</a> neby přijat k dalšímu kroku.
         idea_update_category:
-          email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea theme has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea theme has been updated by an admin.
+          email_intro: 'Administrátor aktualizoval šablonu vašeho nápadu "%{resource_title}", podívejte se na tuto stránku:'
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem nápadu.
+          email_subject: Motiv nápadu %{resource_title} byl aktualizován
+          notification_title: Téma nápadu <a href="%{resource_path}">%{resource_title}</a> bylo aktualizováno správcem.
         idea_update_area_scope:
-          email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea area has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
+          email_intro: 'Administrátor aktualizoval oblast vašeho nápadu "%{resource_title}", podívejte se na tuto stránku:'
+          email_outro: Obdrželi jste toto oznámení, protože jste autorem nápadu.
+          email_subject: Oblast %{resource_title} nápadu byla aktualizována
+          notification_title: Oblast nápadu <a href="%{resource_path}">%{resource_title}</a> byla aktualizována administrátorem.
         voting_enabled:
-          email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: Idea support has started for %{participatory_space_title}
-          notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          email_intro: 'Můžete podpořit nápady v %{participatory_space_title}! Začněte se podílet na této stránce:'
+          email_outro: Obdrželi jste toto oznámení, protože sledujete %{participatory_space_title}. Můžete přestat přijímat oznámení za předchozím odkazem.
+          email_subject: Podpora idey začala pro %{participatory_space_title}
+          notification_title: Nyní můžete začít <a href="%{resource_path}">podporovat nápady</a> v <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
-        idea: Ideas
+        idea: Nápady
     gamification:
       badges:
         accepted_ideas:
           conditions:
-            - Choose the participation space of your interest with submission for ideas enabled
-            - Try to make ideas that can be carried out. This way they are more likely to go through.
-          description: This badge is granted when you actively participate with new ideas and these go through.
-          description_another: This participant had %{score} ideas that went through.
-          description_own: You got %{score} ideas that went through.
-          name: Possible ideas
-          next_level_in: Get %{score} more ideas through to reach the next level!
-          unearned_another: This participant has not yet had any ideas that went through.
-          unearned_own: You got no ideas that went through yet.
+            - Zvolte participační prostor pro účast vašeho zájmu s povoleným podáním nápadů
+            - Snažte se vytvářet nápady, které mohou být provedeny. Tímto způsobem je pravděpodobnější, že budou přijaty k dalšímu kroku.
+          description: Tento odznak je udělen, když se aktivně zúčastníte nových nápadů a jsou přijaty k dalšímu kroku.
+          description_another: Tento uživatel měl %{score} nápadů přijatých k dalšímu kroku.
+          description_own: K dalšímu kroku máte %{score} přijatých nápadů.
+          name: Možné nápady
+          next_level_in: Získejte %{score} nápadů a dosáhněte další úrovně!
+          unearned_another: Tento uživatel ještě neměl žádné nápady, které by prošly.
+          unearned_own: Nemáte žádné nápady, které by prošly.
         ideas:
           conditions:
-            - Choose the participation space of your interest with submission for ideas enabled
-            - Create a new idea
-          description: This badge is granted when you actively participate with new ideas.
-          description_another: This participant has created %{score} ideas.
-          description_own: You have created %{score} ideas.
-          name: Ideas
-          next_level_in: Create %{score} more ideas to reach the next level!
-          unearned_another: This participant hasn't created any ideas yet.
-          unearned_own: You have created no ideas yet.
+            - Zvolte participační prostor vašeho zájmu s povoleným podáním nápadů
+            - Vytvořit nový nápad
+          description: Tento odznak je udělen, když se aktivně zapojíte do nových nápadů.
+          description_another: Tento uživatel vytvořil %{score} nápadů.
+          description_own: Vytvořili jste %{score} nápadů.
+          name: Nápady
+          next_level_in: Vytvořte ještě %{score} nápadů, abyste dosáhli další úrovně!
+          unearned_another: Tento uživatel zatím nevytvořil žádné nápady.
+          unearned_own: Zatím jste nevytvořili žádné nápady.
     ideas:
       actions:
-        answer_idea: Answer idea
-        edit_idea: Edit idea
-        import: Import from another component
-        new: New idea
-        show: Show idea
-        title: Actions
+        answer_idea: Odpověď k nápadu
+        edit_idea: Upravit nápad
+        import: Importovat z jiné komponenty
+        new: Nový nápad
+        show: Zobrazit nápad
+        title: Akce
       admin:
         actions:
-          preview: Preview
+          preview: Náhled
         area_scopes:
-          choose_parent: Choose an area scope parent first
+          choose_parent: Nejprve vyberte nadřazený rozsah oblasti
         exports:
-          comments: Comments
-          ideas: Ideas
+          comments: Komentáře
+          ideas: Nápady
         models:
           idea:
-            name: Idea
+            name: Nápad
         idea_answers:
           form:
-            accepted: Possible
-            answer_idea: Answer
-            evaluating: Evaluating
-            rejected: Not possible
-            title: Answer for idea %{title}
+            accepted: Přijato k dalšímu kroku
+            answer_idea: Odpověď
+            evaluating: Hodnocení
+            rejected: Nepřijato v dalším kroku
+            title: Odpověď na nápad %{title}
         ideas:
           answer:
-            invalid: There's been a problem answering this idea
-            success: Idea successfully answered
+            invalid: Vyskytl se problém s odpovědí na tento nápad
+            success: Nápad byla úspěšně zodpovězen
           create:
-            invalid: There's been a problem creating this idea
-            success: Idea successfully created
+            invalid: Při vytváření tohoto nápadu došlo k potížím
+            success: Nápad byla úspěšně vytvořen
           edit:
-            title: Update idea
-            update: Update
+            title: Aktualizovat nápad
+            update: Aktualizovat
           form:
-            attachment_legend: "Add an attachment for the idea"
-            image_legend: "Add an image for the idea"
-            select_a_category: Choose a primary theme for the idea
-            select_a_sub_category: Choose a subtheme for the idea
+            attachment_legend: "Přidat přílohu k nápadu"
+            image_legend: "Přidat obrázek pro nápad"
+            select_a_category: Vyberte si primární téma pro nápad
+            select_a_sub_category: Vyberte podřazené téma pro nápad
           index:
-            actions: Actions
-            cancel: Cancel
-            change_category: Change theme
-            change_scope: Change scope
-            merge: Merge into a new one
-            merge_button: Merge
-            publish: Publish
-            publish_answers: Publish answers
-            select_component: Select a component
-            selected: selected
-            split: Split ideas
-            split_button: Split
-            title: Ideas
-            update: Update
-            update_scope_button: Update Scope
+            actions: Akce
+            cancel: Zrušit
+            change_category: Změnit téma
+            change_scope: Změnit rozsah působnosti
+            merge: Sloučit do nového
+            merge_button: Sloučit
+            publish: Publikovat
+            publish_answers: Publikovat odpovědi
+            select_component: Vybrat komponentu
+            selected: vybráno
+            split: Rozdělit nápady
+            split_button: Rozdělit
+            title: Nápady
+            update: Aktualizovat
+            update_scope_button: Aktualizovat rozsah působnosti
           new:
-            create: Create
-            title: Create idea
+            create: Vytvořit
+            title: Vytvořit nápad
           publish_answers:
-            number_of_ideas: Answers for %{number} ideas will be published.
-            select_a_idea: Please select an idea
+            number_of_ideas: Odpovědi na %{number} nápadů budou zveřejněny.
+            select_a_idea: Vyberte nápad
           show:
-            amendments_count: Amendments count
-            area_scope: Area
-            authors: Authors
-            body: Body
-            category: Theme
-            comments_count: Comments count
-            comments_negative_count: Against
-            comments_neutral_count: Neutral
-            comments_positive_count: Favor
-            created_at: Creation date
-            documents: Documents
-            link: Link
-            photos: Photos
-            show_email: Show email address
-            ideas: Ideas
-            ranking: "%{ranking} of %{total}"
+            amendments_count: Počet pozměňovacích návrhů
+            area_scope: Oblast
+            authors: Autoři
+            body: Tělo
+            category: Téma
+            comments_count: Počet komentářů
+            comments_negative_count: Proti
+            comments_neutral_count: Neutrální
+            comments_positive_count: Oblíbené
+            created_at: Datum vytvoření
+            documents: Dokumenty
+            link: Odkaz
+            photos: Fotky
+            show_email: Zobrazit e-mailovou adresu
+            ideas: Nápady
+            ranking: "%{ranking} z %{total}"
           update_category:
-            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
-            select_a_category: Please select a theme
-            select_a_idea: Please select an idea
-            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
+            invalid: 'Tyto nápady již měly %{subject_name} téma: %{ideas}.'
+            select_a_category: Vyberte téma
+            select_a_idea: Vyberte nápad
+            success: 'Nápady byly úspěšně aktualizovány na %{subject_name} a téma: %{ideas}.'
           update_area_scope:
-            invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
-            select_a_idea: Please select an idea
-            select_a_scope: Please select an area
-            success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
+            invalid: 'Tyto nápady již měly %{subject_name} oblasti: %{ideas}.'
+            select_a_idea: Vyberte nápad
+            select_a_scope: Vyberte oblast
+            success: 'Nápady byly úspěšně aktualizovány na %{subject_name} oblast: %{ideas}.'
         ideas_imports:
           create:
-            invalid: There was a problem importing the ideas
-            success: "%{number} ideas successfully imported"
+            invalid: Při importu nápadů došlo k potížím
+            success: "%{number} nápadů úspěšně importováno"
           new:
-            create: Import ideas
-            no_components: There are no other idea components in this participatory space to import the ideas from.
-            select_component: Please select a component
-            select_states: Check the status of the ideas to import
+            create: Importovat nápady
+            no_components: V tomto participačním prostoru nejsou žádné další komponenty nápadů, ze kterých by bylo možné importovat nápady.
+            select_component: Vyberte komponentu
+            select_states: Zkontrolujte stav nápadů k importu
         ideas_merges:
           create:
-            invalid: There was a problem merging the selected ideas.
-            success: Successfully merged the ideas into a new one.
+            invalid: Při slučování vybraných nápadů došlo k chybě.
+            success: Nápady byly úspěšně sloučeny do nového.
         ideas_splits:
           create:
-            invalid: There was a problem spliting the selected ideas.
-            success: Successfully splitted the ideas into new ones.
+            invalid: Při rozdělení vybraných nápadů došlo k chybě.
+            success: Nápady se úspěšně rozdělily na nové.
       admin_log:
         idea:
-          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} idea on the %{space_name} space"
-          publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
-          update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
+          answer: "%{user_name} odpověděl na nápad %{resource_name} ve skupině %{space_name}"
+          create: "%{user_name} vytvořil nápad %{resource_name} ve skupině %{space_name}"
+          publish_answer: "%{user_name} zveřejnil odpověď na nápad %{resource_name} ve skupině %{space_name}"
+          update: "%{user_name} aktualizoval nápad %{resource_name} ve skupině %{space_name}"
       answers:
-        accepted: Possible
-        evaluating: Evaluating
-        not_answered: Not answered
-        rejected: Not possible
-        withdrawn: Withdrawn
+        accepted: Přijato k dalšímu kroku
+        evaluating: Hodnocení
+        not_answered: Nezodpovězeno
+        rejected: Nepřijato k dalšímu kroku
+        withdrawn: Odebráno
       application_helper:
         filter_category_values:
-          all: All
+          all: Vše
         filter_origin_values:
-          all: All
-          citizens: Citizens
-          user_groups: Groups
+          all: Vše
+          citizens: Občané
+          user_groups: Skupiny
         filter_state_values:
-          accepted: Possible
-          all: All
-          evaluating: Evaluating
-          not_answered: Not answered
-          rejected: Not possible
+          accepted: Přijato k dalšímu kroku
+          all: Vše
+          evaluating: Hodnocení
+          not_answered: Nezodpovězeno
+          rejected: Nepřijato k dalšímu kroku
         filter_type_values:
-          all: All
-          amendments: Amendments
-          ideas: Ideas
+          all: Vše
+          amendments: Pozměňovací návrhy
+          ideas: Nápady
+      attached_ideas_helper:
+        attach_idea: Přiložit nápad
+        close: Zavřít
+        current_selection: Hledat nápady podle jména nebo ID
+        select: Vybrat
       create:
-        error: There was a problem saving the idea.
-        success: Idea successfully created. Saved as a Draft.
+        error: Při ukládání myšlenky došlo k chybě.
+        success: Myšlenka úspěšně vytvořena. Uloženo jako koncept.
       destroy_draft:
-        error: Destroying the draft failed.
-        success: Draft destroyed successfully.
+        error: Zničení návrhu selhalo.
+        success: Návrh byl úspěšně zničen.
       last_activity:
-        new_idea_at_html: "<span>New idea at %{link}</span>"
+        new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
         idea:
           fields:
-            area_scope: Area
-            category: Theme
-            comments: Comments
+            area_scope: Oblast
+            category: Téma
+            comments: Komentáře
             id: ID
-            official_idea: Official idea
-            published_answer: Published answer
-            published_at: Published at
-            scope: Scope
-            state: Status
-            title: Title
+            official_idea: Oficiální nápad
+            published_answer: Publikovaná odpověď
+            published_at: Publikováno v
+            scope: Oblast působnosti
+            state: Hodnocení
+            title: Název
       new:
-        limit_reached: You can't create new ideas since you've exceeded the limit.
+        limit_reached: Nové nápady nelze vytvořit, protože jste překročili limit.
       ideas:
         compare:
-          continue: Continue
-          no_similars_found: Well done! No similar ideas found
-          title: Similar ideas
+          continue: Pokračovat
+          no_similars_found: Dobrá práce! Nebyly nalezeny žádné podobné nápady
+          title: Podobné nápady
         complete:
-          send: Send
-          title: Complete your idea
+          send: Odeslat
+          title: Dokončete svůj nápad
         count:
           ideas_count:
-            one: "%{count} idea"
-            few: "%{count} ideas"
-            many: "%{count} ideas"
-            other: "%{count} ideas"
+            one: "%{count} nápad"
+            few: "%{count} nápadů"
+            many: "%{count} nápadů"
+            other: "%{count} nápadů"
         edit:
-          back: Back to previous page
-          send: Save
-          title: Edit idea
+          back: Zpět na předchozí stránku
+          send: Uložit
+          title: Upravit nápad
         edit_draft:
-          discard: Discard this draft
-          discard_confirmation: Are you sure you want to discard this idea draft?
-          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
-          send: Preview
-          title: Edit Idea Draft
+          discard: Zahodit koncept
+          discard_confirmation: Jste si jisti, že chcete zahodit tento návrh nápadu?
+          draft_announcement_html: <p>Toto je koncept nápadu. Musíte zveřejnit koncept, aby byl viditelný na webových stránkách.</p><p>Můžete mít pouze jeden koncept v aktuálním čase.</p>
+          send: Náhled
+          title: Upravit návrh nápadu
         edit_view:
-          discard: Discard this draft
-          discard_confirmation: Are you sure you want to discard this idea draft?
-          cancel: Cancel
-          save: Save as draft
-          sign_in: Sign in
-          sign_in_before_submitting: You need to sign in before submitting an idea
-          you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
+          discard: Zahodit koncept
+          discard_confirmation: Jste si jisti, že chcete zahodit tento návrh nápadu?
+          cancel: Zrušit
+          save: Uložit jako koncept
+          sign_in: Přihlásit se
+          sign_in_before_submitting: Před odesláním nápadu se musíte přihlásit
+          you_can_invite_others: Pokud odesíláte nápad jako skupinu, můžete pozvat ostatní, aby spolupracovali na ttomto nápadu
         filters:
-          activity: My activity
-          all: All
-          all_area_scopes: All areas
-          all_categories: All themes
-          area_scope: Area
-          amendment_type: Type
-          category: Theme
-          my_favorites: Show my favourites
-          my_ideas: Show my ideas
-          origin: Origin
-          reset: Clear filters
-          search: Search
-          state: Status
-          title: Filter the ideas on the map and in the list
-          type: Type
+          activity: Moje aktivita
+          all: Vše
+          all_area_scopes: Všechny oblasti
+          all_categories: Všecha témata
+          all_states: Vše
+          area_scope: Oblast
+          amendment_type: Typ
+          category: Téma
+          my_favorites: Zobrazit mé oblíbené
+          my_ideas: Zobrazit mé nápady
+          origin: Původ
+          reset: Vymazat filtry
+          search: Hledat
+          state: Hodnocení
+          title: Filtrovat nápady na mapě a v seznamu
+          type: Typ
         filters_small_view:
-          close_modal: Close modal
-          filter: Filter
-          filter_by: Filter by
-          unfold: Unfold
+          close_modal: Zavřít okno
+          filter: Filtr
+          filter_by: Filtrovat podle
+          unfold: Rozbalit
         form:
-          attachment_added: Attachment added
-          attachment_file_required: File needs to be attached
-          attachment_modal_mobile_notice: The adding button is at the bottom of this window. If you don't see it on a mobile screen, scroll the screen down.
-          attachment_title_required: Title has to be defined for the file
-          add_attachment: Add attachment
-          add_image: Add image
-          address_lookup_button: Lookup
-          attachment_legend: "Add an attachment for the idea"
-          cancel: Cancel
-          characters_min: "(at least %count% characters required)"
-          characters_used: "%count%/%total% characters used"
-          close_modal: Close window
-          files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
-          files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          image_added: Image added
-          image_legend: "Add an image for the idea"
-          remove_attachment: Remove attachment
-          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
-          remove_image: Remove image
-          remove_image_confirm: Are you sure you want to remove the image from the idea?
-          required_fields_text: Required fields are marked with the *-character.
-          reset_field: Reset field
-          select_a_category: Choose a primary theme for the idea
-          select_a_sub_category: Choose a subtheme for the idea
-          show_areas_info_text: Check which neighborhood belong to different major districts
-          show_categories_info_text: Check what the themes consist of
-          show_terms_info_text: Show criteria
+          attachment_added: Příloha byla přidána
+          attachment_file_required: Soubor musí být připojen
+          attachment_modal_mobile_notice: Tlačítko přidávání je dole v tomto okně. Pokud ho nevidíte na mobilní obrazovce, posuňte obrazovku dolů.
+          attachment_title_required: Název souboru musí být definován
+          add_attachment: Přidat přílohu
+          add_image: Přidat obrázek
+          address_lookup_button: Vyhledat
+          attachment_legend: "Přidat přílohu k nápadu"
+          cancel: Zrušit
+          characters_min: "(je vyžadováno alespoň %count% znaků)"
+          characters_used: "použito %count%/%total% znaků"
+          close_modal: Zavřít okno
+          files_info_attachments: Můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Je třeba přidat názvy k obrázkům a přílohám.
+          files_info_images: Můžete přidat jeden obrázek k nápadu, který bude zobrazen s nápadem. Musíte přidat název obrázku.
+          files_info_images_and_attachments: Můžete přidat jeden obrázek k nápadu, která bude zobrazen s nápadem. Kromě toho můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Musíte přidat názvy obrázků a příloh.
+          image_added: Obrázek přidán
+          image_legend: "Přidat obrázek pro nápad"
+          remove_attachment: Odstranit přílohu
+          remove_attachment_confirm: Opravdu chcete odstranit přílohu z nápadu?
+          remove_image: Odebrat obrázek
+          remove_image_confirm: Jste si jisti, že chcete odebrat obrázek z tohoto nápadu?
+          required_fields_text: Povinná pole jsou označena *-znakem.
+          reset_field: Obnovit pole
+          select_a_category: Vyberte si primární téma pro nápad
+          select_a_sub_category: Vyberte podřazené téma pro nápad
+          show_areas_info_text: Zkontrolujte, které okolí patří do různých hlavních okresů
+          show_categories_info_text: Zkontrolujte, ze kterých témat se skládají
+          show_terms_info_text: Zobrazit kritéria
         index:
-          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
-          draft_idea_title: You have an idea draft!
-          draft_idea_continue: Continue your idea
-          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
-          leave_your_idea: Submit your own idea!
-          new_idea: New idea
-          title: Browse ideas
-          see_all_withdrawn: See all withdrawn ideas
-          subtitle: Search and discover ideas!
-          view_idea: View idea
+          description: Prozkoumejte nápady od ostatních na mapě a na vizitkách. Můžete také udělat své vlastní nápady!
+          draft_idea_title: Máte návrh nápadu!
+          draft_idea_continue: Pokračujte ve svém nápadu
+          draft_idea_description: Dříve jste uložili nápad jako návrh. Nyní jej můžete psát dál.
+          leave_your_idea: Odešlete vlastní nápad!
+          new_idea: Nový nápad
+          title: Procházet nápady
+          see_all_withdrawn: Zobrazit všechny stažené nápady
+          subtitle: Hledat a objevovat nápady!
+          view_idea: Zobrazit nápad
         map:
           dynamic:
-            skip_button: Skip map
+            skip_button: Přeskočit mapu
         new:
-          back: Back to previous page
-          get_help: Get help
-          material_title: Information to support ideation
-          need_help: Need help?
-          send: Continue
-          title: Submit your idea!
+          back: Zpět na předchozí stránku
+          get_help: Získat pomoc
+          material_title: Informace na podporu nápadů
+          need_help: Potřebujete pomoc?
+          send: Pokračovat
+          title: Odešlete svůj nápad!
         orders:
-          label: 'Order ideas by:'
-          most_commented: Most commented
-          most_followed: Most followed
-          oldest: Oldest
-          random: Random
-          recent: Recent
-          with_more_authors: With most authors
+          label: 'Seřadit nápady podle:'
+          most_commented: Nejkomentovanější
+          most_followed: Nejvíce sledované
+          oldest: Nejstarší
+          random: Náhodně
+          recent: Nedávné
+          with_more_authors: S nejvíce autory
         preview:
-          description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
-          modify: Modify the idea
-          not_published: Your idea has not yet been published
-          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
+          description: Nejprve zkontrolujte, jak bude vypadat váš nápad, když bude publikován na webu. Pokud chcete provádět úpravy, můžete se vrátit zpět do editačního pohledu. Pokud jste s tímto nápadem dokonale spokojeni, publikujte ho!
+          modify: Upravit nápad
+          not_published: Váš nápad ještě nebyl publikován
+          not_published_description: Váš nápad byl uložen jako koncept. Musí být zveřejněn, aby se mohl zobrazit na webu.
           idea_edit_before_minutes:
-            one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            few: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            many: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            other: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
-          publish: Publish
-          title: Preview your idea
+            one: Tento nápad budete moci upravit během první minuty po zveřejnění nápadu. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            few: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            many: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+            other: Tuto myšlenku budete moci upravit během prvních %{count} minut po zveřejnění myšlenky. Jakmile toto časové okno uplyne, nebudete moci upravovat nápad.
+          publish: Publikovat
+          title: Náhled vašeho nápadu
         idea:
-          creation_date: 'Creation: %{date}'
-          view_idea: View idea
+          creation_date: 'Vytvoření: %{date}'
+          view_idea: Zobrazit nápad
         idea_actions:
-          share: Share idea
-          show_comments: Show idea comments
-          show_on_map: Show idea on map
-          print: Print idea
-          flag: Report idea
+          share: Sdílet nápad
+          show_comments: Zobrazit komentáře nápadu
+          show_on_map: Zobrazit nápad na mapě
+          print: Tisk nápadu
+          flag: Nahlásit nápad
         idea_controls:
-          edit_idea: Edit idea
-          manage_idea: Manage idea
-          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
-          withdraw_idea: Withdraw idea
+          edit_idea: Upravit nápad
+          manage_idea: Spravovat nápad
+          withdraw_confirmation_html: Jste si jisti, že chcete stáhnout tento nápad?<br><br><strong>Tuto akci nelze zrušit!</strong>
+          withdraw_idea: Stáhnout nápad
         idea_full:
-          changes_at_title: Changes at title
-          comments: Comments
-          edit_idea: Edit idea
-          show_versions: Show version history
+          changes_at_title: Změny v názvu
+          comments: Komentáře
+          edit_idea: Upravit nápad
+          show_versions: Zobrazit historii verzí
         ideas:
-          empty: There are no ideas yet
-          empty_filters: There isn't any idea with this criteria
+          empty: Zatím neexistují žádné nápady
+          empty_filters: S těmito kritérii není žádný nápad
         show:
-          answer: Answer
-          back_to: Back to
-          back_to_list: See other ideas
-          changes_at_title: Amendment to "%{title}"
-          feedback_title: Thank you for submitting an idea!
-          link_to_promoted_emendation_help_text: This idea is a promoted emendation
-          link_to_promoted_emendation_text: See the rejected emendation.
-          link_to_idea_from_emendation_help_text: This is a rejected emendation
-          link_to_idea_from_emendation_text: See the Idea
-          idea_accepted_reason: This idea went through.
-          idea_in_evaluation_reason: This idea is being evaluated.
-          idea_rejected_reason: This idea did not go through.
-          read_less: Read less
-          read_more: Read more
-          report: Report
-          withdraw_btn_hint: You can withdraw your idea if you change your mind, as long as you have not received any support. The idea is not deleted, it will appear in the list of withdrawn ideas.
-          withdraw_confirmation: Are you sure you want to withdraw this idea?
-          withdraw_idea: Withdraw idea
+          answer: Odpověď
+          back_to: Zpět na
+          back_to_list: Podívejte se na další nápady
+          changes_at_title: Pozměňovací návrh k "%{title}"
+          feedback_title: Děkujeme, že jste odeslali nápad!
+          link_to_promoted_emendation_help_text: Tento nápad je podporované vylepšení
+          link_to_promoted_emendation_text: Podívejte se na odmítnuté vylepšení.
+          link_to_idea_from_emendation_help_text: Toto je odmítnuté vylepšení
+          link_to_idea_from_emendation_text: Podívejte se na nápad
+          idea_accepted_reason: Tento nápad byl přijat do dalšího kroku
+          idea_in_evaluation_reason: Tento nápad je hodnocen
+          idea_rejected_reason: Tento nápad nebyl přijat do dalšího kroku
+          read_less: Číst méně
+          read_more: Číst více
+          report: Hlášení
+          withdraw_btn_hint: Pokud změníte názor, můžete svůj nápad stáhnout, pokud jste nedostali žádnou podporu. Nápad není smazán, objeví se v seznamu stažených nápadů.
+          withdraw_confirmation: Jste si jisti, že chcete stáhnout tento nápad?
+          withdraw_idea: Stáhnout nápad
         tags:
-          changed_from: "(changed from <u>%{previous_name}</u> by an administrator)"
+          changed_from: "(změněno z <u>%{previous_name}</u> správcem)"
         wizard_steps:
-          see_steps: see steps
-          step_1: Create your idea
-          step_2: Compare
-          step_3: Complete
-          step_4: Publish your idea
-          step_of: Step %{current_step_num} of %{total_steps}
+          see_steps: zobrazit kroky
+          step_1: Vytvořte svůj nápad
+          step_2: Porovnat
+          step_3: Dokončit
+          step_4: Publikovat svůj nápad
+          step_of: Krok %{current_step_num} z %{total_steps}
       ideas_picker:
-        choose_ideas: Choose ideas
-        close: Close
-        more_ideas: There are %{number} more ideas. Refine your search to locate them.
-        no_ideas: No ideas match your search criteria or there isn't any ideas.
+        choose_ideas: Vybrat nápady
+        close: Zavřít
+        more_ideas: Existuje ještě %{number} nápadů. Upřesněte vyhledávání a najděte je.
+        no_ideas: Žádné nápady neodpovídají vašim kritériím vyhledávání, nebo zde nejsou žádné nápady.
+      ideas_picker_inline:
+        attached_ideas_number: Nápady připojené k tomuto návrhu
+        choose_idea: Vybrat nápad
+        chosen_idea: Zvolený nápad
+        filters:
+          activity: Moje aktivita
+          all: Vše
+          all_area_scopes: Všechny oblasti
+          all_categories: Všecha témata
+          area_scope: Oblast
+          category: Téma
+          close_modal: Zavřít okno
+          filter: Filtr
+          filter_by: Filtrovat podle
+          my_favorites: Zobrazit mé oblíbené
+          my_ideas: Zobrazit mé nápady
+          origin: Původ
+          reset: Vymazat filtry
+          search: Hledat
+          state: Hodnocení
+          title: Filtrovat nápady na mapě a v seznamu
+          unfold: Rozbalit
+        pcs_html: "<span>%{number}</span> pcs"
+        remove_idea: Odstranit nápad
+        show_idea_link: Zobrazit stránku nápadů
       info:
         show:
-          back: Back to previous page
+          back: Zpět na předchozí stránku
       publish:
-        error: There was a problem publishing the idea.
-        success: Idea successfully published.
+        error: Při publikování tohoto nápadu došlo k chybě.
+        success: Nápad byl úspěšně zveřejněn.
       publish_answers:
-        success: Ideas answers successfully published.
+        success: Odpovědi na nápady byly úspěšně zveřejněny.
       update:
-        error: There was a problem saving the idea.
-        success: Idea successfully updated.
+        error: Při ukládání nápadu došlo k chybě.
+        success: Nápad byl úspěšně aktualizován.
       update_draft:
-        error: There was a problem saving the idea draft.
-        success: Idea draft successfully updated.
+        error: Při ukládání návrhu nápadu došlo k chybě.
+        success: Návrh nápadu byl úspěšně aktualizován.
       versions:
         index:
-          title: Versions
+          title: Verze
         ideas:
-          back_to_resource: Go back to idea
+          back_to_resource: Přejít zpět k nápadu
       withdraw:
         errors:
-          has_supports: This idea can not be withdrawn because it already has supports.
+          has_supports: Tento nápad nemůže být stažen, protože již má podporu.
     metrics:
       accepted_ideas:
-        description: Number of possible ideas
-        object: ideas
-        title: Possible ideas
+        description: Počet nápadů přijatých k dalšímu kroku
+        object: nápady
+        title: Nápady přijaté k dalšímu kroku
       ideas:
-        description: Number of ideas
-        object: ideas
-        title: Ideas
+        description: Počet nápadů
+        object: nápady
+        title: Nápady
+    pages:
+      home:
+        statistics:
+          ideas_accepted: Accepted ideas
+          ideas_count: Ideas
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
-          ideas: Ideas
+          ideas: Nápady
       statistics:
-        ideas_accepted: Possible ideas
-        ideas_count: Ideas
+        ideas_accepted: Nápady přijaté k dalšímu kroku
+        ideas_count: Nápady
     participatory_spaces:
       highlighted_ideas:
-        see_all: See all (%{count})
+        see_all: Zobrazit všech (%{count})
+    plans:
+      section_types:
+        link_ideas: Propojit nápady
+        link_ideas_inline: Propojit nápady za sebou
     resource_links:
       copied_from_component:
-        idea_idea: Related ideas
+        idea_idea: Související nápady
       included_projects:
-        project_result: 'Results appearing in this plan:'
+        project_result: 'Výsledky uvedené v tomto plánu:'
       included_ideas:
-        idea_project: 'Idea appearing in these plans:'
-        idea_result: 'Idea appearing in these results:'
+        idea_project: 'Nápady, které se objevují v těchto plánech:'
+        idea_result: 'Nápady, které se objevují v těchto výsledcích:'

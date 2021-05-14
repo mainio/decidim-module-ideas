@@ -376,10 +376,10 @@ sv:
           all: Alla
           amendments: Ändringar
           ideas: Idéer
-      attached_idea_helper:
+      attached_ideas_helper:
         attach_idea: Bifoga idé
         close: Stäng
-        current_selection: Sök idéer på namn eller ID
+        current_selection: Sök efter namn eller ID
         select: Välj
       create:
         error: Det uppstod ett problem med att spara idén.
@@ -595,6 +595,7 @@ sv:
           filter_by: Filtrera efter
           my_favorites: Visa mina favoriter
           my_ideas: Visa mina idéer
+          origin: Ursprung
           reset: Rensa filter
           search: Sök
           state: Utvärdering
