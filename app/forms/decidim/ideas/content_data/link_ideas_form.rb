@@ -24,6 +24,12 @@ module Decidim
           { idea_ids: idea_ids }
         end
 
+        def body=(data)
+          return unless data.is_a?(Hash)
+
+          self.idea_ids = data["idea_ids"] || data[:idea_ids]
+        end
+
         def ideas
           Decidim::Ideas::Idea.where(id: idea_ids)
         end

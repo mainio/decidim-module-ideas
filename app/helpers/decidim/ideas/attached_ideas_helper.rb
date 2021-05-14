@@ -9,12 +9,18 @@ module Decidim
       def search_ideas
         respond_to do |format|
           format.html do
-            render partial: "decidim/ideas/attached_ideas/ideas"
+            if params[:layout] == "inline"
+              render partial: "decidim/ideas/attached_ideas/ideas_inline", layout: false
+            else
+              render partial: "decidim/ideas/attached_ideas/ideas", layout: false
+            end
           end
           format.json do
             query = Decidim
                     .find_resource_manifest(:ideas)
                     .try(:resource_scope, current_component)
+                    &.only_amendables
+                    &.not_hidden
                     &.order(title: :asc)
                     &.where("state IS NULL OR state != ?", "rejected")
                     &.where&.not(published_at: nil)
@@ -28,7 +34,11 @@ module Decidim
                         "%#{idterm}%"
                       )
                     else
-                      query&.where("title ilike ?", "%#{params[:term]}%")
+                      query&.where(
+                        "title ilike ? OR body ilike ?",
+                        "%#{params[:term]}%",
+                        "%#{params[:term]}%"
+                      )
                     end
 
             ideas_list = query.all.collect do |p|

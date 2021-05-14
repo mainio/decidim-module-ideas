@@ -105,9 +105,11 @@
           canExit = true;
           $form.submit();
 
-          const $firstField = $("input.is-invalid-input, textarea.is-invalid-input").first();
-          $firstField.focus();
-          $submits.removeAttr("disabled");
+          const $firstField = $("input.is-invalid-input, textarea.is-invalid-input, select.is-invalid-input").first();
+          if ($firstField.length > 0) {
+            $firstField.focus();
+            $submits.removeAttr("disabled");
+          }
         }
       });
 
@@ -218,7 +220,7 @@
       performCoordinatesLookup();
     });
 
-    if ($latitude.val().length > 0 && $longitude.val().length > 0) {
+    if ($latitude.val() && $latitude.val().length > 0 && $longitude.val().length > 0) {
       $map.trigger("coordinates.decidim.ideas", [{
         lat: $latitude.val(),
         lng: $longitude.val()

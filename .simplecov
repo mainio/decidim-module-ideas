@@ -5,6 +5,7 @@ SimpleCov.start do
 
   add_filter "lib/decidim/ideas/version.rb"
   add_filter "/spec"
+	add_filter "lib/decidim/ideas/idea_seeder.rb"
 end
 
 SimpleCov.command_name ENV["COMMAND_NAME"] || File.basename(Dir.pwd)

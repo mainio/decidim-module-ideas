@@ -1,3 +1,13 @@
+<%
+main_row_column_class = begin
+  if display_answer_filter? && display_scope_filter? && display_category_filter?
+    "columns mediumlarge-6 large-3"
+  else
+    "columns mediumlarge-6 large-4"
+  end
+end
+%>
+
 <%= filter_form_for filter do |form| %>
   <div class="row columns">
     <div class="filters__section filters__section--title">
@@ -19,27 +29,37 @@
   </div>
 
   <div class="row">
-    <% if component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id) %>
-      <div class="columns mediumlarge-6 large-4">
+    <% if display_answer_filter? %>
+      <div class="<%= main_row_column_class %>">
+        <div class="filters__section area_scope_id_filter">
+          <fieldset>
+            <legend class="mini-title"><%= t(".state") %></legend>
+            <%= form.select(:state, filter_ideas_state_values, { label: false, include_blank: t(".all_states") }, "aria-label": t(".state")) %>
+          </fieldset>
+        </div>
+      </div>
+    <% end %>
+    <% if display_scope_filter? %>
+      <div class="<%= main_row_column_class %>">
         <div class="filters__section area_scope_id_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".area_scope") %></legend>
-            <%= area_scopes_picker_field(form, :area_scope_id, root: false, options: { label: false, include_blank: t(".all_area_scopes") }) %>
+            <%= area_scopes_picker_field(form, :area_scope_id, root: false, options: { label: false, include_blank: t(".all_area_scopes") }, html_options: { "aria-label": t(".area_scope") }) %>
           </fieldset>
         </div>
       </div>
     <% end %>
-    <% if current_component.categories.any? %>
-      <div class="columns mediumlarge-6 large-4">
+    <% if display_category_filter? %>
+      <div class="<%= main_row_column_class %>">
         <div class="filters__section category_id_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".category") %></legend>
-            <%= form.select(:category_id, filter_ideas_categories_values, label: false, include_blank: t(".all_categories")) %>
+            <%= form.select(:category_id, filter_ideas_categories_values, { label: false, include_blank: t(".all_categories") }, "aria-label": t(".category")) %>
           </fieldset>
         </div>
       </div>
     <% end %>
-    <div class="columns mediumlarge-6 large-4 end">
+    <div class="<%= main_row_column_class %> end">
       <div class="filters__section">
         <div class="filters__search">
           <fieldset>

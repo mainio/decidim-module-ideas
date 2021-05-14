@@ -12,11 +12,11 @@ module Decidim
 
       def resolve(order: nil, filter: nil)
         @query = Idea
-                   .where(component: object)
-                   .published
-                   .not_hidden
-                   .only_amendables
-                   .includes(:category, :component, :area_scope)
+                 .where(component: object)
+                 .published
+                 .not_hidden
+                 .only_amendables
+                 .includes(:category, :component, :area_scope)
 
         add_filter_keys(filter)
         if order
@@ -24,19 +24,15 @@ module Decidim
           add_order_keys(order)
         end
 
-        @query
+        # Add default filter to avoid PostgreSQL random ordering.
+        @query.order(:id)
       end
 
       private
 
-      def filter_keys_by_settings(kwargs, component)
-        kwargs.select do |key, _value|
-          case key
-          when :vote_count
-            !component.current_settings.votes_hidden?
-          else
-            true
-          end
+      def filter_keys_by_settings(kwargs, _component)
+        kwargs.select do |_key, _value|
+          true
         end
       end
     end

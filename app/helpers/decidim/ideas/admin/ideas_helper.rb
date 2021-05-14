@@ -7,21 +7,9 @@ module Decidim
       # in order to use them in select forms for Ideas.
       #
       module IdeasHelper
-        # Public: A formatted collection of Meetings to be used
-        # in forms.
-        def meetings_as_authors_selected
-          return unless @idea.present?
-
-          @meetings_as_authors_selected ||= @idea.authors.pluck(:id)
-        end
-
         def coauthor_presenters_for(idea)
           idea.authors.map do |identity|
-            if identity.is_a?(Decidim::Organization)
-              Decidim::Ideas::OfficialAuthorPresenter.new
-            else
-              present(identity)
-            end
+            present(identity)
           end
         end
 

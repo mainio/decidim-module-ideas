@@ -30,23 +30,13 @@ module Decidim
       end
 
       def extension_whitelist
-        %w(jpg jpeg gif png bmp pdf doc docx xls xlsx ppt ppx rtf txt odt ott odf otg ods ots)
+        Decidim.organization_settings(model).upload_allowed_file_extensions
       end
 
       # CarrierWave automatically calls this method and validates the content
       # type fo the temp file to match against any of these options.
       def content_type_whitelist
-        [
-          %r{image\/},
-          %r{application\/vnd.oasis.opendocument},
-          %r{application\/vnd.ms-},
-          %r{application\/msword},
-          %r{application\/vnd.ms-word},
-          %r{application\/vnd.openxmlformats-officedocument},
-          %r{application\/vnd.oasis.opendocument},
-          %r{application\/pdf},
-          %r{application\/rtf}
-        ]
+        Decidim.organization_settings(model).upload_allowed_content_types
       end
 
       protected

@@ -19,7 +19,9 @@
       </div>
     </div>
   </div>
-  <% if current_settings.creation_enabled && current_component.participatory_space.can_participate?(current_user) %>
+  <% if current_settings.creation_enabled &&
+        current_component.participatory_space.can_participate?(current_user) &&
+        !users_idea_limit_reached? %>
     <div class="columns medium-6 mediumlarge-4">
       <div class="card border-primary" data-equalizer-watch>
         <div class="card__content text-center">
@@ -76,7 +78,6 @@
   </div>
 </div>
 
-<%= render partial: "voting_rules" %>
 <div class="row columns">
   <div class="title-action">
     <h2 id="ideas-count" class="title-action__title section-heading">
@@ -91,7 +92,7 @@
 </div>
 <div class="row">
 <div class="text-right">
-  <%= link_to t(".see_all_withdrawn"), ideas_path("filter[state][]" => "withdrawn") %>
+  <%= link_to t(".see_all_withdrawn"), ideas_path("filter[state]" => "withdrawn") %>
 </div>
 </div>
 <%= javascript_include_tag "decidim/filters" %>

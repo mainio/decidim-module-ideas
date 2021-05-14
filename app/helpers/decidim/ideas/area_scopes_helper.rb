@@ -45,19 +45,6 @@ module Decidim
         final
       end
 
-      # Retrieves the translated name and type for an scope.
-      # scope - a Decidim::Scope
-      # global_name - text to use when scope is nil
-      #
-      # Returns a string
-      def area_scope_name_for_picker(scope, global_name)
-        return global_name unless scope
-
-        name = translated_attribute(scope.name)
-        name << " (#{translated_attribute(scope.scope_type.name)})" if scope.scope_type
-        name
-      end
-
       # Renders a scopes select field in a form.
       # form - FormBuilder object
       # name - attribute name
@@ -107,7 +94,7 @@ module Decidim
       private
 
       def scope_children(scope)
-        scope.children.order("code, name->>'#{current_locale}'")
+        scope.children.order(Arel.sql("code, name->>'#{current_locale}'"))
       end
 
       def area_scopes_options(parent, name_prefix = "")

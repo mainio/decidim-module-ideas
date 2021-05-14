@@ -29,17 +29,23 @@ module Decidim
             name: idea.area_scope.try(:name) || empty_translatable
           },
           category: {
-            id: idea.category.try(:id),
-            name: idea.category.try(:name) || empty_translatable
+            id: topcategory.try(:id),
+            name: topcategory.try(:name) || empty_translatable
+          },
+          subcategory: {
+            id: subcategory.try(:id),
+            name: subcategory.try(:name) || empty_translatable
           },
           title: present(idea).title,
           body: present(idea).body,
           address: idea.address,
-          latitude: idea.latitude,
-          longitude: idea.longitude,
+          coordinates: {
+            available: has_coordinates?,
+            latitude: coordinates[:latitude],
+            longitude: coordinates[:longitude]
+          },
           state: idea.state.to_s,
           answer: ensure_translatable(idea.answer),
-          supports: idea.idea_votes_count,
           comments: idea.comments.count,
           attachments: idea.attachments.count,
           followers: idea.followers.count,
@@ -59,6 +65,54 @@ module Decidim
 
       def component
         idea.component
+      end
+
+      def topcategory
+        @topcategory ||= begin
+          return if idea.category.blank?
+          return idea.category if idea.category.parent_id.blank?
+
+          idea.category.parent
+        end
+      end
+
+      def subcategory
+        @subcategory ||= begin
+          return if idea.category.blank?
+          return if idea.category.parent_id.blank?
+
+          idea.category
+        end
+      end
+
+      def has_coordinates?
+        @has_coordinates ||= idea.latitude.present? && idea.longitude.present?
+      end
+
+      def coordinates
+        @coordinates ||= begin
+          return area_scope_coordinates unless has_coordinates?
+
+          { latitude: idea.latitude, longitude: idea.longitude }
+        end
+      end
+
+      def area_scope_coordinates
+        @area_scope_coordinates ||= begin
+          return blank_coordinates if idea.area_scope.blank?
+
+          scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s]
+          return blank_coordinates if scope_coordinates.blank?
+
+          latlng = scope_coordinates.split(",")
+          return blank_coordinates if latlng.length < 2
+
+          { latitude: latlng[0].to_f, longitude: latlng[1].to_f }
+        end
+      end
+
+      def blank_coordinates
+        { latitude: nil, longitude: nil }
       end
 
       def url

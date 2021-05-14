@@ -14,7 +14,7 @@ module Decidim
       include Paginable
       include Decidim::Ideas::AttachedIdeasHelper
 
-      helper_method :idea_form_builder, :idea_presenter, :form_presenter, :trigger_feedback?
+      helper_method :idea_form_builder, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
 
       before_action :authenticate_user!, only: [:create, :complete]
       before_action :ensure_creation_enabled, only: [:new]
@@ -27,16 +27,6 @@ module Decidim
         @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
-        @voted_ideas = begin
-          if current_user
-            IdeaVote.where(
-              author: current_user,
-              idea: @ideas.pluck(:id)
-            ).pluck(:decidim_idea_id)
-          else
-            []
-          end
-        end
         @ideas = paginate(@ideas)
         @ideas = reorder(@ideas)
 
@@ -51,11 +41,9 @@ module Decidim
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
 
         if @idea.emendation?
-          if @idea.amendable
-            return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path
-          else
-            raise ActionController::RoutingError, "Not Found"
-          end
+          return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path if @idea.amendable
+
+          raise ActionController::RoutingError, "Not Found"
         end
 
         @report_form = form(Decidim::ReportForm).from_params(reason: "spam")
@@ -217,6 +205,13 @@ module Decidim
         end
       end
 
+      def users_idea_limit_reached?
+        return false unless current_component&.settings&.idea_limit&.positive?
+
+        users_idea_count = Idea.from_author(current_user).where(component: current_component).except_withdrawn
+        current_component.settings.idea_limit <= users_idea_count.count
+      end
+
       def search_klass
         IdeaSearch
       end
@@ -228,8 +223,7 @@ module Decidim
           activity: "all",
           area_scope_id: "",
           category_id: "",
-          state: %w(accepted rejected evaluating not_answered),
-          related_to: "",
+          state: "",
           type: "ideas"
         }
       end
@@ -273,10 +267,6 @@ module Decidim
         return Decidim::Ideas::FormBuilderDisabled unless user_signed_in?
 
         Decidim::Ideas::FormBuilder
-      end
-
-      def idea_presenter
-        @idea_presenter ||= present(@idea)
       end
 
       def form_idea_params

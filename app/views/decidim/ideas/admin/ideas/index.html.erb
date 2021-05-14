@@ -39,12 +39,6 @@
               </th>
             <% end %>
 
-            <% if current_settings.votes_enabled? %>
-              <th>
-                <%= sort_link(query, :idea_votes_count, t("models.idea.fields.votes", scope: "decidim.ideas") ) %>
-              </th>
-            <% end %>
-
             <% if current_component.settings.comments_enabled? and !current_settings.comments_blocked? %>
               <th>
                 <%= sort_link(query, :commentable_comments_count, t("models.idea.fields.comments", scope: "decidim.ideas") ) %>

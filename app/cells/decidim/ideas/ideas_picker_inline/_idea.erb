@@ -1,0 +1,23 @@
+<div class="ideas-picker-item" data-idea-id="<%= idea.id %>">
+  <div class="ideas-picker-item-details">
+    <div class="ideas-picker-item-title"><%= presenter_for(idea).id_and_title(html_escape: true) %></div>
+    <div class="ideas-picker-item-info">
+      <ul class="no-bullet">
+        <li><%= presenter_for(idea).area_scope_name %></li>
+        <li><%= presenter_for(idea).category_name %></li>
+        <li><%= presenter_for(idea).published_date %></li>
+        <li>
+          <%= link_to(idea_link_for(idea), target: "_blank", class: "ideas-picker-item-link") do %>
+            <%= t(".show_idea_link") %>
+            <span class="show-for-sr"><%= presenter_for(idea).title(html_escape: true) %></span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="ideas-picker-item-controls">
+    <div class="idea-picker-item-remove" tabindex="0">
+      <%= t(".remove_idea") %>
+    </div>
+  </div>
+</div>

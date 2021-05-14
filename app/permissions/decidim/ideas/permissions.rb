@@ -31,10 +31,6 @@ module Decidim
           can_withdraw_idea?
         when :amend
           can_create_amendment?
-        when :vote
-          can_vote_idea?
-        when :unvote
-          can_unvote_idea?
         when :report
           true
         end
@@ -42,26 +38,6 @@ module Decidim
 
       def idea
         @idea ||= context.fetch(:idea, nil) || context.fetch(:resource, nil)
-      end
-
-      def voting_enabled?
-        return unless current_settings
-
-        current_settings.votes_enabled? && !current_settings.votes_blocked?
-      end
-
-      def vote_limit_enabled?
-        return unless component_settings
-
-        component_settings.vote_limit.present? && component_settings.vote_limit.positive?
-      end
-
-      def remaining_votes
-        return 1 unless vote_limit_enabled?
-
-        ideas = Idea.where(component: component)
-        votes_count = IdeaVote.where(author: user, idea: ideas).size
-        component_settings.vote_limit - votes_count
       end
 
       def can_create_idea?
@@ -80,23 +56,6 @@ module Decidim
         is_allowed = idea &&
                      authorized?(:amend, resource: idea) &&
                      current_settings&.amendments_enabled?
-
-        toggle_allow(is_allowed)
-      end
-
-      def can_vote_idea?
-        is_allowed = idea &&
-                     authorized?(:vote, resource: idea) &&
-                     voting_enabled? &&
-                     remaining_votes.positive?
-
-        toggle_allow(is_allowed)
-      end
-
-      def can_unvote_idea?
-        is_allowed = idea &&
-                     authorized?(:vote, resource: idea) &&
-                     voting_enabled?
 
         toggle_allow(is_allowed)
       end

@@ -26,6 +26,12 @@
     margin-bottom: 3rem;
   }
 
+  .field-label-with-info{
+    .field-info{
+      padding-bottom: 0;
+    }
+  }
+
   .field-info{
     padding: $input-padding 0;
 
@@ -39,6 +45,10 @@
         width: 1.5em;
         height: 1.5em;
       }
+    }
+
+    &.field-info-after{
+      padding-top: 0;
     }
   }
 

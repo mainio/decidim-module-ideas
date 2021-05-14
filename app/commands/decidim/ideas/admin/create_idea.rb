@@ -8,6 +8,7 @@ module Decidim
         include ::Decidim::AttachmentMethods
         include GalleryMethods
         include HashtagsMethods
+        include ImageMethods
 
         # Public: Initializes the command.
         #
@@ -27,7 +28,7 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           # For checking the attachment validations
-          @attached_to = form.organization
+          @attached_to = organization
           attachments_invalid = false
           if process_image?
             build_image

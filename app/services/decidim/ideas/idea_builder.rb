@@ -67,7 +67,6 @@ module Decidim
           "answered_at",
           "decidim_component_id",
           "reference",
-          "idea_votes_count"
         ).merge(
           "category" => original_idea.category
         ).merge(

@@ -34,7 +34,6 @@ module Decidim
               end
             end
           end
-          resource :idea_vote, only: [:create, :destroy]
           resources :versions, only: [:show, :index]
         end
 
@@ -46,9 +45,10 @@ module Decidim
                                            decidim/ideas/idea_form.js
                                            decidim/ideas/ideas_list.js
                                            decidim/ideas/idea_picker.js
+                                           decidim/ideas/idea_picker_inline.js
                                            decidim/ideas/idea_picker.scss
-                                           decidim/ideas/map.js
-                                           decidim/ideas/utils.js)
+                                           decidim/ideas/idea_picker_inline.scss
+                                           decidim/ideas/map.js)
       end
 
       initializer "decidim_ideas.content_processors" do |_app|
@@ -134,14 +134,6 @@ module Decidim
             Decidim::Ideas::Idea.where(id: idea_ids).accepted.count
           }
         end
-
-        Decidim::Gamification.register_badge(:idea_votes) do |badge|
-          badge.levels = [5, 15, 50, 100, 500]
-
-          badge.reset = lambda { |user|
-            Decidim::Ideas::IdeaVote.where(author: user).select(:decidim_idea_id).distinct.count
-          }
-        end
       end
 
       initializer "decidim_ideas.register_metrics" do
@@ -167,17 +159,6 @@ module Decidim
           end
         end
 
-        Decidim.metrics_registry.register(:idea_votes) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Ideas::Metrics::VotesMetricManage"
-
-          metric_registry.settings do |settings|
-            settings.attribute :highlighted, type: :boolean, default: true
-            settings.attribute :scopes, type: :array, default: %w(home participatory_process)
-            settings.attribute :weight, type: :integer, default: 3
-            settings.attribute :stat_block, type: :string, default: "medium"
-          end
-        end
-
         Decidim.metrics_operation.register(:participants, :ideas) do |metric_operation|
           metric_operation.manager_class = "Decidim::Ideas::Metrics::IdeaParticipantsMetricMeasure"
         end
@@ -190,6 +171,12 @@ module Decidim
       initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
+        Decidim::Ideas::ResourceLinkSubject.class_eval do
+          possible_types(Decidim::Plans::PlanType)
+        end
+        Decidim::Plans::ContentSubject.class_eval do
+          possible_types(Decidim::Ideas::SectionContent::LinkIdeasType)
+        end
         Decidim::Plans::ResourceLinkSubject.class_eval do
           possible_types(Decidim::Ideas::IdeaType)
         end
@@ -203,7 +190,29 @@ module Decidim
           type.display_cell = "decidim/ideas/section_type_display/link_ideas"
           type.content_form_class_name = "Decidim::Ideas::ContentData::LinkIdeasForm"
           type.content_control_class_name = "Decidim::Ideas::SectionControl::LinkIdeas"
+          type.api_type_class_name = "Decidim::Ideas::SectionContent::LinkIdeasType"
         end
+        registry.register(:link_ideas_inline) do |type|
+          type.edit_cell = "decidim/ideas/section_type_edit/link_ideas_inline"
+          type.display_cell = "decidim/ideas/section_type_display/link_ideas"
+          type.content_form_class_name = "Decidim::Ideas::ContentData::LinkIdeasForm"
+          type.content_control_class_name = "Decidim::Ideas::SectionControl::LinkIdeas"
+          type.api_type_class_name = "Decidim::Ideas::SectionContent::LinkIdeasType"
+        end
+      end
+
+      initializer "decidim_ideas.api_linking_resources", before: :finisher_hook do
+        Decidim::Ideas::IdeaType.add_linking_resources_field
+      end
+
+      config.to_prepare do
+        # When creating seeds, Decidim goes through all tables and if table name matches a class,
+        # calls "reset_column_information" method for the matching class. Autoload matches table
+        # decidim_ideas_idea_versions with class Decidim::Version which doesn't have above-mentioned
+        # method so seeds crash. To avoid that we call Decidim::Version before we run seeds.
+        Decidim.const_get("Version")
+
+        Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
       end
     end
   end

@@ -16,15 +16,13 @@ Decidim.register_component(:ideas) do |component|
 
   component.newsletter_participant_entities = ["Decidim::Ideas::Idea"]
 
-  component.actions = %w(vote create withdraw amend)
+  component.actions = %w(create withdraw amend)
 
   component.query_type = "Decidim::Ideas::IdeasType"
 
   component.permissions_class_name = "Decidim::Ideas::Permissions"
 
   component.settings(:global) do |settings|
-    settings.attribute :vote_limit, type: :integer, default: 0
-    settings.attribute :minimum_votes_per_user, type: :integer, default: 0
     settings.attribute :idea_limit, type: :integer, default: 0
     settings.attribute :idea_title_length, type: :integer, default: 150
     settings.attribute :idea_length, type: :integer, default: 1000
@@ -33,6 +31,7 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :can_accumulate_supports_beyond_threshold, type: :boolean, default: false
     settings.attribute :idea_answering_enabled, type: :boolean, default: true
     settings.attribute :comments_enabled, type: :boolean, default: true
+    settings.attribute :comments_max_length, type: :integer, default: 1000
     settings.attribute :image_allowed, type: :boolean, default: true
     settings.attribute :attachments_allowed, type: :boolean, default: false
     settings.attribute :resources_permissions_enabled, type: :boolean, default: true
@@ -55,9 +54,6 @@ Decidim.register_component(:ideas) do |component|
   end
 
   component.settings(:step) do |settings|
-    settings.attribute :votes_enabled, type: :boolean
-    settings.attribute :votes_blocked, type: :boolean
-    settings.attribute :votes_hidden, type: :boolean, default: false
     settings.attribute :comments_blocked, type: :boolean, default: false
     settings.attribute :creation_enabled, type: :boolean
     settings.attribute :idea_answering_enabled, type: :boolean, default: true
@@ -77,7 +73,7 @@ Decidim.register_component(:ideas) do |component|
     resource.model_class_name = "Decidim::Ideas::Idea"
     resource.template = "decidim/ideas/ideas/linked_ideas"
     resource.card = "decidim/ideas/idea"
-    resource.actions = %w(vote amend)
+    resource.actions = %w(amend)
     resource.searchable = true
   end
 
@@ -96,11 +92,6 @@ Decidim.register_component(:ideas) do |component|
     .accepted
     .not_hidden
     .count
-  end
-
-  component.register_stat :supports_count, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-    ideas = Decidim::Ideas::FilteredIdeas.for(components, start_at, end_at).only_amendables.published.not_hidden
-    Decidim::Ideas::IdeaVote.where(idea: ideas).count
   end
 
   component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
@@ -147,8 +138,6 @@ Decidim.register_component(:ideas) do |component|
       if participatory_space.allows_steps?
         {
           participatory_space.active_step.id => {
-            votes_enabled: true,
-            votes_blocked: false,
             creation_enabled: true
           }
         }
@@ -198,7 +187,6 @@ Decidim.register_component(:ideas) do |component|
       published_at: Time.current,
       participatory_space: participatory_space,
       settings: {
-        vote_limit: 0,
         area_scope_parent_id: area_parent.id
       },
       step_settings: step_settings
@@ -341,9 +329,6 @@ Decidim.register_component(:ideas) do |component|
           personal_url: Faker::Internet.url,
           about: Faker::Lorem.paragraph(2)
         )
-
-        Decidim::Ideas::IdeaVote.create!(idea: idea, author: author) unless idea.published_state? && idea.rejected?
-        Decidim::Ideas::IdeaVote.create!(idea: emendation, author: author) if emendation
       end
 
       Decidim::Comments::Seed.comments_for(idea)

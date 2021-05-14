@@ -10,13 +10,6 @@ module Decidim
       description "A type used for sorting ideas"
 
       argument :id, String, "Sort by ID, valid values are ASC or DESC", required: false
-      argument :vote_count,
-               type: String,
-               description: "Sort by number of votes, valid values are ASC or DESC. Will be ignored if votes are hidden",
-               required: false,
-               prepare: ->(value, _ctx) do
-                          { idea_votes_count: value }
-                        end
     end
   end
 end

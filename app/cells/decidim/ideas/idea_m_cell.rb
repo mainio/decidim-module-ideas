@@ -8,10 +8,22 @@ module Decidim
     class IdeaMCell < Decidim::CardMCell
       include IdeaCellsHelper
 
-      property :area_scope
+      property :area_scope, :answered?
 
       def badge
         render if has_badge?
+      end
+
+      def resource_utm_params
+        return {} unless context[:utm_params]
+
+        context[:utm_params].map do |key, value|
+          ["utm_#{key}", value]
+        end.to_h
+      end
+
+      def filter_link_params(params = nil)
+        super(params).merge(resource_utm_params)
       end
 
       private
@@ -121,19 +133,11 @@ module Decidim
       end
 
       def progress_bar_progress
-        model.idea_votes_count || 0
+        0
       end
 
       def progress_bar_total
-        model.maximum_votes || 0
-      end
-
-      def progress_bar_subtitle_text
-        if progress_bar_progress >= progress_bar_total
-          t("decidim.ideas.ideas.votes_count.most_popular_idea")
-        else
-          t("decidim.ideas.ideas.votes_count.need_more_votes")
-        end
+        0
       end
 
       def has_image?
@@ -146,7 +150,7 @@ module Decidim
         path = category_image_path(model.category)
         return path if path
 
-        category_image_path(model.category.parent) if model.category.parent.present?
+        category_image_path(model.category.parent) if model.category&.parent.present?
       end
 
       def category_image_path(cat)

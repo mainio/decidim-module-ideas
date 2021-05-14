@@ -1,3 +1,14 @@
+<% if idea.answered? && idea.published_state? %>
+  <div class="row">
+    <div class="columns small-centered large-8">
+      <div class="callout announcement <%= idea_reason_callout_class %> cell-announcement text-center">
+        <p class="h2"><%= idea_reason_callout_title %></p>
+        <%= decidim_sanitize(translated_attribute(@idea.answer)) %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="resource-intro">
   <div class="row" data-equalizer>
     <div class="columns mediumlarge-7">
@@ -81,7 +92,6 @@
       </div>
 
       <%= attachments_for idea %>
-      <%= cell("decidim/announcement", idea_reason_callout_args) if idea.answered? && idea.published_state? %>
 
       <%= linked_resources_for idea, :results, "included_ideas" %>
       <%= linked_resources_for idea, :projects, "included_ideas" %>

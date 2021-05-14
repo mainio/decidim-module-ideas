@@ -6,6 +6,10 @@ module Decidim
   module Ideas
     # This cell renders a ideas picker.
     class IdeasPickerCell < Decidim::ViewModel
+      include Decidim::ComponentPathHelper
+
+      delegate :current_user, to: :controller
+
       MAX_IDEAS = 1000
 
       def show
@@ -19,15 +23,32 @@ module Decidim
       alias component model
 
       def filtered?
-        !search_text.nil?
+        search_activity.present? || search_area.present? ||
+          search_category.present? || search_text.present?
       end
 
       def picker_path
-        request.path
+        @picker_path ||= begin
+          base_path, params = main_component_path(component).split("?")
+          params_part = params.blank? ? "" : "?#{params}"
+          "#{base_path.sub(%r{/$}, "")}/ideas/search_ideas#{params_part}"
+        end
       end
 
       def search_text
         params[:q]
+      end
+
+      def search_activity
+        params[:activity]
+      end
+
+      def search_area
+        params[:area_scope]
+      end
+
+      def search_category
+        params[:category]
       end
 
       def more_ideas?
@@ -50,17 +71,33 @@ module Decidim
 
       def filtered_ideas
         @filtered_ideas ||= if filtered?
-                              ideas.where("title ILIKE ?", "%#{search_text}%")
-                                   .or(ideas.where("reference ILIKE ?", "%#{search_text}%"))
-                                   .or(ideas.where("id::text ILIKE ?", "%#{search_text}%"))
+                              filtered_ideas_query
                             else
                               ideas
                             end
       end
 
+      def filtered_ideas_query
+        params = {
+          component: model,
+          current_user: current_user,
+          search_text: search_text,
+          activity: search_activity,
+          area_scope_id: search_area,
+          category_id: search_category,
+          state: "accepted"
+        }
+
+        search = Decidim::Ideas::IdeaSearch.new(params)
+        search.results.only_amendables.published.not_hidden.order(id: :asc)
+      end
+
       def ideas
         @ideas ||= Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
+                     &.only_amendables
                      &.published
+                     &.not_hidden
+                     &.accepted
                      &.order(id: :asc)
       end
 

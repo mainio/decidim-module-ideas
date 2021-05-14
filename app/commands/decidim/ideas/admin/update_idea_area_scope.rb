@@ -43,7 +43,7 @@ module Decidim
         def update_ideas_scope
           @response[:scope_name] = translated_attribute(scope.name, scope.organization)
           Idea.where(id: idea_ids).find_each do |idea|
-            if scope == idea.scope
+            if scope == idea.area_scope
               @response[:errored] << idea.title
             else
               transaction do

@@ -7,10 +7,8 @@ module Decidim
       class IdeasController < Admin::ApplicationController
         include Decidim::ApplicationHelper
         include Decidim::Ideas::Admin::Filterable
-        include Decidim::Ideas::AttachedIdeasHelper
 
         helper Ideas::ApplicationHelper
-        helper Decidim::Ideas::Admin::IdeaRankingsHelper
         helper Decidim::Messaging::ConversationHelper
         helper_method :ideas, :query, :form_presenter, :idea_form_builder, :idea, :idea_ids
         helper Ideas::Admin::IdeaBulkActionsHelper
@@ -24,6 +22,8 @@ module Decidim
           @form = form(Admin::IdeaForm).from_params(
             attachment: form(AttachmentForm).from_params({})
           )
+          @form.image = form(Decidim::Ideas::ImageAttachmentForm).from_params({})
+          @form.attachment = form(Decidim::Ideas::AttachmentForm).from_params({})
         end
 
         def create
@@ -95,7 +95,7 @@ module Decidim
         def update_area_scope
           enforce_permission_to :update, :idea_scope
 
-          Admin::UpdateIdeaAreaScope.call(params[:scope_id], idea_ids) do
+          Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
             on(:invalid_scope) do
               flash.now[:error] = t(
                 "ideas.update_scope.select_a_scope",
@@ -149,10 +149,10 @@ module Decidim
 
         def collection
           @collection ||= Idea.where(component: current_component)
-                          .only_amendables
-                          .published
-                          .not_hidden
-                          .includes(:amendable, :category, :component, :area_scope)
+                              .only_amendables
+                              .published
+                              .not_hidden
+                              .includes(:amendable, :category, :component, :area_scope)
         end
 
         def ideas
@@ -179,7 +179,7 @@ module Decidim
             )
           elsif subject == :scope
             t(
-              "ideas.update_scope.success",
+              "ideas.update_area_scope.success",
               subject_name: response[:subject_name],
               ideas: response[:successful].to_sentence,
               scope: "decidim.ideas.admin"

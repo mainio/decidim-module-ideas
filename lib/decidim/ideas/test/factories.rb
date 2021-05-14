@@ -9,42 +9,6 @@ FactoryBot.define do
     manifest_name { :ideas }
     participatory_space { create(:participatory_process, :with_steps, organization: organization) }
 
-    trait :with_votes_enabled do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_enabled: true }
-        }
-      end
-    end
-
-    trait :with_votes_disabled do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_enabled: false }
-        }
-      end
-    end
-
-    trait :with_votes_hidden do
-      step_settings do
-        {
-          participatory_space.active_step.id => { votes_hidden: true }
-        }
-      end
-    end
-
-    trait :with_vote_limit do
-      transient do
-        vote_limit { 10 }
-      end
-
-      settings do
-        {
-          vote_limit: vote_limit
-        }
-      end
-    end
-
     trait :with_idea_limit do
       transient do
         idea_limit { 1 }
@@ -65,17 +29,6 @@ FactoryBot.define do
       settings do
         {
           idea_length: idea_length
-        }
-      end
-    end
-
-    trait :with_votes_blocked do
-      step_settings do
-        {
-          participatory_space.active_step.id => {
-            votes_enabled: true,
-            votes_blocked: true
-          }
         }
       end
     end
@@ -120,18 +73,6 @@ FactoryBot.define do
       settings do
         {
           can_accumulate_supports_beyond_threshold: true
-        }
-      end
-    end
-
-    trait :with_minimum_votes_per_user do
-      transient do
-        minimum_votes_per_user { 3 }
-      end
-
-      settings do
-        {
-          minimum_votes_per_user: minimum_votes_per_user
         }
       end
     end
@@ -188,12 +129,24 @@ FactoryBot.define do
     end
   end
 
+  factory :area_scope_parent, class: "Decidim::Scope" do
+    name { Decidim::Faker::Localized.literal(generate(:scope_name)) }
+    code { generate(:scope_code) }
+    scope_type { create(:scope_type, organization: organization) }
+    organization { parent ? parent.organization : build(:organization) }
+
+    after :create do |area_scope|
+      create_list(:subscope, 5, parent: area_scope)
+    end
+  end
+
   factory :idea, class: "Decidim::Ideas::Idea" do
     transient do
       users { nil }
       # user_groups correspondence to users is by sorting order
       user_groups { [] }
       skip_injection { false }
+      area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
     end
 
     title do
@@ -217,7 +170,11 @@ FactoryBot.define do
           user_group = evaluator.user_groups[idx]
           idea.coauthorships.build(author: user, user_group: user_group)
         end
+
+        idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank?
       end
+
+      idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank?
     end
 
     trait :published do
@@ -257,6 +214,11 @@ FactoryBot.define do
       answer { generate_localized_title }
     end
 
+    trait :geocoded do
+      latitude { Faker::Address.latitude }
+      longitude { Faker::Address.longitude }
+    end
+
     trait :with_answer do
       state { "accepted" }
       answer { generate_localized_title }
@@ -278,22 +240,23 @@ FactoryBot.define do
       end
     end
 
-    trait :with_votes do
-      after :create do |idea|
-        create_list(:idea_vote, 5, idea: idea)
-      end
-    end
-
     trait :with_amendments do
       after :create do |idea|
         create_list(:idea_amendment, 5, amendable: idea)
       end
     end
-  end
 
-  factory :idea_vote, class: "Decidim::Ideas::IdeaVote" do
-    idea { build(:idea) }
-    author { build(:user, organization: idea.organization) }
+    trait :with_photo do
+      after :create do |idea|
+        idea.attachments << create(:ideas_attachment, :with_image, attached_to: idea)
+      end
+    end
+
+    trait :with_document do
+      after :create do |idea|
+        idea.attachments << create(:ideas_attachment, :with_pdf, attached_to: idea)
+      end
+    end
   end
 
   factory :idea_amendment, class: "Decidim::Amendment" do
@@ -301,5 +264,26 @@ FactoryBot.define do
     emendation { build(:idea, component: amendable.component) }
     amender { build(:user, organization: amendable.component.participatory_space.organization) }
     state { Decidim::Amendment::STATES.sample }
+  end
+
+  factory :ideas_attachment, class: "Decidim::Ideas::Attachment" do
+    title { generate_localized_title }
+    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    weight { 0 }
+    attached_to { build(:participatory_process) }
+    content_type { "image/jpeg" }
+    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") } # Keep after attached_to
+    file_size { 108_908 }
+
+    trait :with_image do
+      file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
+    end
+
+    trait :with_pdf do
+      weight { rand(1..9) }
+      file { Decidim::Dev.test_file("Exampledocument.pdf", "application/pdf") }
+      content_type { "application/pdf" }
+      file_size { 17_525 }
+    end
   end
 end

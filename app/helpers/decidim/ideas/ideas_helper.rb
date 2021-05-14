@@ -36,6 +36,18 @@ module Decidim
         end
       end
 
+      def display_answer_filter?
+        @display_answer_filter ||= component_settings.idea_answering_enabled && current_settings.idea_answering_enabled
+      end
+
+      def display_scope_filter?
+        @display_scope_filter ||= component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id)
+      end
+
+      def display_category_filter?
+        @display_category_filter ||= current_component.categories.any?
+      end
+
       def category_image_path(category)
         return unless category
         return unless category.respond_to?(:category_image)
@@ -119,15 +131,11 @@ module Decidim
       end
 
       def filter_ideas_state_values
-        Decidim::CheckBoxesTreeHelper::TreeNode.new(
-          Decidim::CheckBoxesTreeHelper::TreePoint.new("", t("decidim.ideas.application_helper.filter_state_values.all")),
-          [
-            Decidim::CheckBoxesTreeHelper::TreePoint.new("accepted", t("decidim.ideas.application_helper.filter_state_values.accepted")),
-            Decidim::CheckBoxesTreeHelper::TreePoint.new("evaluating", t("decidim.ideas.application_helper.filter_state_values.evaluating")),
-            Decidim::CheckBoxesTreeHelper::TreePoint.new("not_answered", t("decidim.ideas.application_helper.filter_state_values.not_answered")),
-            Decidim::CheckBoxesTreeHelper::TreePoint.new("rejected", t("decidim.ideas.application_helper.filter_state_values.rejected"))
-          ]
-        )
+        [
+          [t("decidim.ideas.application_helper.filter_state_values.accepted"), "accepted"],
+          [t("decidim.ideas.application_helper.filter_state_values.rejected"), "rejected"],
+          [t("decidim.ideas.application_helper.filter_state_values.not_answered"), "not_answered"]
+        ]
       end
 
       def resource_version(resource, options = {})

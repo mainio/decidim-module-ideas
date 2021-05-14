@@ -11,20 +11,26 @@ module Decidim
       def build_attachment
         @attachment = Decidim::Ideas::Attachment.new(
           attached_to: @attached_to, # Keep first
-          title: @form.attachment.title,
+          title: { I18n.locale.to_s => @form.attachment.title },
           file: @form.attachment.file,
           weight: 1
         )
       end
 
       def attachment_removed?
-        @form.attachment.remove_file?
+        return false unless attachment_allowed?
+
+        @form.attachment&.remove_file?
       end
 
       def attachment_present?
         return false if attachment_removed?
 
         @form.attachment.present? && @form.attachment.file.present?
+      end
+
+      def attachment_allowed?
+        @form.current_component.settings.attachments_allowed?
       end
     end
   end

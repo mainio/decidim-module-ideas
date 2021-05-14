@@ -13,7 +13,7 @@ module Decidim
         @component = options[:component]
         @current_user = options[:current_user]
 
-        base = options[:state]&.member?("withdrawn") ? Idea.withdrawn : Idea.except_withdrawn
+        base = options[:state] == "withdrawn" ? Idea.withdrawn : Idea.except_withdrawn
         super(base, options)
       end
 
@@ -37,10 +37,6 @@ module Decidim
       # Handle the activity filter
       def search_activity
         case activity
-        when "voted"
-          query
-            .includes(:votes)
-            .where(decidim_ideas_idea_votes: { decidim_author_id: @current_user })
         when "my_ideas"
           query
             .where.not(coauthorships_count: 0)
@@ -56,18 +52,22 @@ module Decidim
 
       # Handle the state filter
       def search_state
-        return query if state.member? "withdrawn"
+        return query if state == "withdrawn"
 
-        accepted = state.member?("accepted") ? query.accepted : nil
-        rejected = state.member?("rejected") ? query.rejected : nil
-        evaluating = state.member?("evaluating") ? query.evaluating : nil
-        not_answered = state.member?("not_answered") ? query.state_not_published : nil
-
-        query
-          .where(id: accepted)
-          .or(query.where(id: rejected))
-          .or(query.where(id: evaluating))
-          .or(query.where(id: not_answered))
+        case state
+        when "accepted"
+          query.accepted
+        when "rejected"
+          query.rejected
+        when "evaluating"
+          query.evaluating
+        when "not_answered"
+          query
+            .where(id: query.state_not_published)
+            .or(query.where(id: query.evaluating))
+        else # Assume 'all' (default scope)
+          query
+        end
       end
 
       # Handle the amendment type filter
@@ -84,50 +84,27 @@ module Decidim
         super
       end
 
-    # Handles the area_scope_id filter. When we want to show only those that do
-    # not have a area_scope_id set, we cannot pass an empty String or nil
-    # because Searchlight will automatically filter out these params, so the
-    # method will not be used. Instead, we need to pass a fake ID and then
-    # convert it inside. In this case, in order to select those elements that do
-    # not have a area_scope_id set we use `"global"` as parameter, and in the
-    # method we do the needed changes to search properly.
-    def search_area_scope_id
-      return query if area_scope_ids.empty? || area_scope_ids.include?("all")
+      # Handles the area_scope_id filter. When we want to show only those that
+      # do not have a area_scope_id set, we cannot pass an empty String or nil
+      # because Searchlight will automatically filter out these params, so the
+      # method will not be used. Instead, we need to pass a fake ID and then
+      # convert it inside. In this case, in order to select those elements that
+      # do not have a area_scope_id set we use `"global"` as parameter, and in
+      # the method we do the needed changes to search properly.
+      def search_area_scope_id
+        return query if area_scope_ids.empty? || area_scope_ids.include?("all")
 
-      conditions = []
-      conditions.concat(["? = ANY(decidim_area_scopes.part_of)"] * area_scope_ids.count)
+        conditions = []
+        conditions.concat(["? = ANY(decidim_area_scopes.part_of)"] * area_scope_ids.count)
 
-      join = %{
-        LEFT OUTER JOIN decidim_scopes AS decidim_area_scopes
-          ON decidim_area_scopes.id = decidim_ideas_ideas.area_scope_id
-      }
-      query.includes(:area_scope).joins(join).where(
-        conditions.join(" OR "),
-        *area_scope_ids.map(&:to_i)
-      )
-    end
-
-      # Filters Ideas by the name of the classes they are linked to. By default,
-      # returns all Ideas. When a `related_to` param is given, then it camelcases item
-      # to find the real class name and checks the links for the Ideas.
-      #
-      # The `related_to` param is expected to be in this form:
-      #
-      #   "decidim/meetings/meeting"
-      #
-      # This can be achieved by performing `klass.name.underscore`.
-      #
-      # Returns only those ideas that are linked to the given class name.
-      def search_related_to
-        from = query
-               .joins(:resource_links_from)
-               .where(decidim_resource_links: { to_type: related_to.camelcase })
-
-        to = query
-             .joins(:resource_links_to)
-             .where(decidim_resource_links: { from_type: related_to.camelcase })
-
-        query.where(id: from).or(query.where(id: to))
+        join = %(
+          LEFT OUTER JOIN decidim_scopes AS decidim_area_scopes
+            ON decidim_area_scopes.id = decidim_ideas_ideas.area_scope_id
+        )
+        query.includes(:area_scope).joins(join).where(
+          conditions.join(" OR "),
+          *area_scope_ids.map(&:to_i)
+        )
       end
 
       # We overwrite the `results` method to ensure we only return unique

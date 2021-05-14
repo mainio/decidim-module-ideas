@@ -8,8 +8,6 @@ module Decidim
       graphql_name "IdeaResourceLinkSubject"
       description "An idea linked resource detailed values"
 
-      possible_types(Decidim::Plans::PlanType)
-
       def self.resolve_type(object, _context)
         "#{object.class}Type".constantize
       end

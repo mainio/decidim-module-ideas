@@ -30,9 +30,7 @@ module Decidim
         maximum: ->(record) { record.component.settings.idea_length }
       }
       validates :address, geocoding: true, if: ->(form) { Decidim.geocoder.present? && form.needs_geocoding? }
-      validates :category_id, presence: true, if: ->(form) { form.categories_available? }
       validates :category, presence: true, if: ->(form) { form.category_id.present? }
-      validates :area_scope_id, presence: true, if: ->(form) { form.areas_enabled? }
       validates :area_scope, presence: true, if: ->(form) { form.area_scope_id.present? }
 
       validate :idea_length
