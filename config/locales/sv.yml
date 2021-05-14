@@ -634,6 +634,11 @@ sv:
         description: Antal idéer
         object: idéer
         title: Idéer
+    pages:
+      home:
+        statistics:
+          ideas_accepted: Godkända idéer
+          ideas_count: Idéer
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
