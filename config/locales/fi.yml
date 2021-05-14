@@ -108,7 +108,7 @@ fi:
             categories_info_intro: Teemojen tietoikkunan intro
             categories_info_text: Teemojen tietoikkunan teksti
             comments_enabled: Kommentit käytössä
-            comments_max_length: Comment max length
+            comments_max_length: Kommentin maksimipituus
             default_map_center_coordinates: Kartan keskipisteen oletuskoordinaatit (pituusaste,leveysaste)
             geocoding_enabled: Geokoodaus käytössä
             idea_answering_enabled: Ideoihin vastaaminen käytössä
@@ -153,18 +153,18 @@ fi:
         idea_accepted:
           affected_user:
             email_intro: 'Ideasi "%{resource_title}" hyväksyttiin jatkoon. Voit lukea vastauksen täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
             email_subject: Ideasi hyväksyttiin jatkoon
             notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> hyväksyttiin jatkoon.
           follower:
-            email_intro: 'Idea "%{resource_title}" etenee jatkoon. Voit lukea vastauksen täältä:'
+            email_intro: 'Idea "%{resource_title}" hyväksyttiin jatkoon. Voit lukea vastauksen täältä:'
             email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
-            email_subject: Seuraamasi idea etenee jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> etenee jatkoon.
+            email_subject: Seuraamasi idea hyväksyttiin jatkoon
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> hyväksyttiin jatkoon.
         idea_evaluating:
           affected_user:
             email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
-            email_outro: Saat tämän ilmoituksen, koska olet luonut kohteen "%{resource_title}".
+            email_outro: Saat tämän ilmoituksen, koska olet luonut idean "%{resource_title}".
             email_subject: Ideaasi arvioidaan
             notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
           follower:
@@ -174,7 +174,7 @@ fi:
             notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on arvioitavana.
         idea_mentioned:
           email_intro: Ideasi "%{mentioned_idea_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
           email_subject: Ideasi "%{mentioned_idea_title}" on mainittu
           notification_title: Ideasi %{mentioned_idea_title} on mainittu <a href="%{resource_path}">tässä tilassa</a> kommentissa.
         idea_published:
@@ -190,7 +190,7 @@ fi:
         idea_rejected:
           affected_user:
             email_intro: 'Ideasi "%{resource_title}" ei päässyt jatkoon. Voit lukea vastauksen täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut kohteen "%{resource_title}".
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
             email_subject: Ideasi ei päässyt jatkoon
             notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> ei päässyt jatkoon.
           follower:
@@ -225,10 +225,10 @@ fi:
           description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita ja ne hyväksytään jatkoon.
           description_another: Tällä käyttäjällä on %{score} jatkoon hyväksyttyä ideaa.
           description_own: Olet saanut %{score} ideaa hyväksyttyä jatkoon.
-          name: Mahdolliset ideat
-          next_level_in: Saa vielä %{score} ideaa jatkoon noustaksesi seuraavalle tasolle!
-          unearned_another: Tällä käyttäjällä ei ole vielä yhtään hyväksyttyä ideaa.
-          unearned_own: Sinulla ei ole vielä hyväksyttyjä ideoita.
+          name: Jatkoon hyväksytyt ideat
+          next_level_in: Saa vielä %{score} ideaa hyväksyttyä jatkoon noustaksesi seuraavalle tasolle!
+          unearned_another: Tällä käyttäjällä ei ole vielä yhtään jatkoon hyväksyttyä ideaa.
+          unearned_own: Sinulla ei ole vielä jatkoon hyväksyttyjä ideoita.
         ideas:
           conditions:
             - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen on mahdollista
@@ -556,9 +556,9 @@ fi:
           link_to_promoted_emendation_text: Näytä hylätty muutos.
           link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
           link_to_idea_from_emendation_text: Näytä idea
-          idea_accepted_reason: This idea was accepted to the next step
-          idea_in_evaluation_reason: This idea is being evaluated
-          idea_rejected_reason: This idea was not accepted to the next step
+          idea_accepted_reason: Tämä idea hyväksyttiin jatkoon
+          idea_in_evaluation_reason: Tätä ideaa arvioidaan
+          idea_rejected_reason: Tämä idea ei päässyt jatkoon
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
@@ -603,7 +603,7 @@ fi:
           unfold: Avaa
         pcs_html: "<span>%{number}</span> kpl"
         remove_idea: Poista idea
-        show_idea_link: Show idea page
+        show_idea_link: Näytä ideasivu
       info:
         show:
           back: Palaa edelliselle sivulle
@@ -638,8 +638,8 @@ fi:
     pages:
       home:
         statistics:
-          ideas_accepted: Accepted ideas
-          ideas_count: Ideas
+          ideas_accepted: Hyväksytyt ideat
+          ideas_count: Ideat
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
