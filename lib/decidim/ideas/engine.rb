@@ -201,6 +201,10 @@ module Decidim
         end
       end
 
+      initializer "decidim_ideas.api_linking_resources", before: :finisher_hook do
+        Decidim::Ideas::IdeaType.add_linking_resources_field
+      end
+
       config.to_prepare do
         Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
       end

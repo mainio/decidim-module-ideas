@@ -54,7 +54,9 @@ module Decidim
         description "This object's versions"
       end
 
-      if Decidim::Ideas::ResourceLinkSubject.possible_types.any?
+      def self.add_linking_resources_field
+        return unless Decidim::Ideas::ResourceLinkSubject.possible_types.any?
+
         # These are the resources that are linked from the related object to the
         # idea.
         field(
