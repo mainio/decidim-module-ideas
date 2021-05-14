@@ -108,7 +108,7 @@ sv:
             categories_info_intro: Teman information intro
             categories_info_text: Teman informationstext
             comments_enabled: Kommentarer tillåtna
-            comments_max_length: Comment max length
+            comments_max_length: Kommentar max längd
             default_map_center_coordinates: Standard kartcenter koordinater (latitud,longitud)
             geocoding_enabled: Geokodning aktiverad
             idea_answering_enabled: Svar på idéer aktiverat
@@ -556,9 +556,9 @@ sv:
           link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
           link_to_idea_from_emendation_text: Se idén
-          idea_accepted_reason: This idea was accepted to the next step
-          idea_in_evaluation_reason: This idea is being evaluated
-          idea_rejected_reason: This idea was not accepted to the next step
+          idea_accepted_reason: Denna idé gick vidare
+          idea_in_evaluation_reason: Denna idé utvärderas
+          idea_rejected_reason: Denna idé gick inte vidare
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
@@ -580,7 +580,7 @@ sv:
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_inline:
-        attached_ideas_number: Idéer bifogade detta förslag
+        attached_ideas_number: Idéer valda till förslaget
         choose_idea: Välj idén
         chosen_idea: Vält idé
         filters:
@@ -603,7 +603,7 @@ sv:
           unfold: Öppna
         pcs_html: "<span>%{number}</span> st"
         remove_idea: Ta bort idén
-        show_idea_link: Show idea page
+        show_idea_link: Visa idé-sidan
       info:
         show:
           back: Tillbaka till föregående sida
@@ -638,8 +638,8 @@ sv:
     pages:
       home:
         statistics:
-          ideas_accepted: Accepted ideas
-          ideas_count: Ideas
+          ideas_accepted: Godkända idéer
+          ideas_count: Idéer
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
