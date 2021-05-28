@@ -110,7 +110,7 @@ cs:
             categories_info_intro: Úvod k informacím o tématech
             categories_info_text: Informační text témat
             comments_enabled: Komentáře povoleny
-            comments_max_length: Comment max length
+            comments_max_length: Maximální délka komentáře
             default_map_center_coordinates: Výchozí souřadnice středu mapy (zeměpisná šířka, zeměpisná délka)
             geocoding_enabled: Geokódování povoleno
             idea_answering_enabled: Odpovídání na nápady povoleno
@@ -644,8 +644,8 @@ cs:
     pages:
       home:
         statistics:
-          ideas_accepted: Accepted ideas
-          ideas_count: Ideas
+          ideas_accepted: Přijaté nápady
+          ideas_count: Nápady
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
