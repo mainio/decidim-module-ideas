@@ -13,6 +13,7 @@ module Decidim
 
         def map_model(model)
           super
+          return unless model.body
 
           ids = model.body["idea_ids"]
           return unless ids.is_a?(Array)
