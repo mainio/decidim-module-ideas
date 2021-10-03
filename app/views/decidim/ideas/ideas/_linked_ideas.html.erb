@@ -12,11 +12,11 @@
           <% present(idea) do |idea| %>
             <div class="author">
               <span class="author__avatar">
-                <%= image_tag idea.author.avatar_url %>
+                <%= image_tag idea.authors.first.avatar_url %>
               </span>
               <span class="author__name">
-                <strong><%= idea.author.name %></strong>
-                <%= idea.author.nickname %>
+                <strong><%= idea.authors.first.name %></strong>
+                <%= idea.authors.first.nickname %>
               </span>
             </div>
           <% end %>
