@@ -579,6 +579,8 @@ fi:
         close: Sulje
         more_ideas: Ideoita on vielä %{number} kpl lisää. Muuta hakuehtoja löytääksesi ne.
         no_ideas: Hakuehtosi eivät vastaa yhtään ideaa tai yhtään ideaa ei vielä ole olemassa.
+      ideas_picker_field:
+        ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Ehdotukseen liitetyt ideat
         choose_idea: Valitse idea
@@ -658,7 +660,8 @@ fi:
       copied_from_component:
         idea_idea: Liittyvät ideat
       included_projects:
-        project_result: 'Tulokset, jotka sisältyvät tähän suunnitelmaan:'
+        project_result: 'Attached results:'
       included_ideas:
-        idea_project: 'Idea esiintyy seuraavissa suunnitelmissa:'
+        idea_project: 'Idea appearing in these votable proposals:'
         idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
+        project_idea: 'Attached ideas:'
