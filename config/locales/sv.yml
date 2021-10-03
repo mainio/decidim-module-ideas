@@ -579,6 +579,8 @@ sv:
         close: Stäng
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
+      ideas_picker_field:
+        ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Idéer valda till förslaget
         choose_idea: Välj idén
@@ -658,7 +660,8 @@ sv:
       copied_from_component:
         idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Resultat som ingår i denna plan:'
+        project_result: 'Attached results:'
       included_ideas:
-        idea_project: 'Resultat som ingår i dessa planer:'
+        idea_project: 'Idea appearing in these votable proposals:'
         idea_result: 'Idé som ingår i dessa resultat:'
+        project_idea: 'Attached ideas:'
