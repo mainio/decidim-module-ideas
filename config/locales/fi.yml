@@ -660,7 +660,8 @@ fi:
       copied_from_component:
         idea_idea: Liittyvät ideat
       included_projects:
-        project_result: 'Tulokset, jotka sisältyvät tähän suunnitelmaan:'
+        project_result: 'Liitetyt tulokset:'
       included_ideas:
-        idea_project: 'Idea esiintyy seuraavissa suunnitelmissa:'
+        idea_project: 'Idea esiintyy seuraavissa äänestettävissä ehdotuksissa:'
         idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
+        project_idea: 'Liitetyt ideat:'

@@ -662,5 +662,6 @@ sv:
       included_projects:
         project_result: 'Resultat som ingår i denna plan:'
       included_ideas:
-        idea_project: 'Resultat som ingår i dessa planer:'
-        idea_result: 'Idé som ingår i dessa resultat:'
+        idea_project: 'Idé visas i dessa röstbara förslag:'
+        idea_result: 'Idé visas i dessa resultat:'
+        project_idea: 'Bifogade idéer:'

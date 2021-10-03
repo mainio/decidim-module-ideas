@@ -661,7 +661,8 @@ en:
       copied_from_component:
         idea_idea: Related ideas
       included_projects:
-        project_result: 'Results appearing in this plan:'
+        project_result: 'Attached results:'
       included_ideas:
-        idea_project: 'Idea appearing in these plans:'
+        idea_project: 'Idea appearing in these votable proposals:'
         idea_result: 'Idea appearing in these results:'
+        project_idea: 'Attached ideas:'
