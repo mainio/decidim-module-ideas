@@ -79,7 +79,7 @@ module Decidim
 
       def filtered_ideas_query
         params = {
-          component: model,
+          component: idea_components,
           current_user: current_user,
           search_text: search_text,
           activity: search_activity,
@@ -90,6 +90,10 @@ module Decidim
 
         search = Decidim::Ideas::IdeaSearch.new(params)
         search.results.only_amendables.published.not_hidden.order(id: :asc)
+      end
+
+      def idea_components
+        @idea_components ||= component.participatory_space.components.where(manifest_name: "ideas")
       end
 
       def ideas

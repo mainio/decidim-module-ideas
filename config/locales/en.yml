@@ -580,6 +580,8 @@ en:
         close: Close
         more_ideas: There are %{number} more ideas. Refine your search to locate them.
         no_ideas: No ideas match your search criteria or there isn't any ideas.
+      ideas_picker_field:
+        ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Ideas attached to this proposal
         choose_idea: Select idea
