@@ -586,7 +586,7 @@ cs:
         more_ideas: Existuje ještě %{number} nápadů. Upřesněte vyhledávání a najděte je.
         no_ideas: Žádné nápady neodpovídají vašim kritériím vyhledávání, nebo zde nejsou žádné nápady.
       ideas_picker_field:
-        ideas: Ideas
+        ideas: Nápady
       ideas_picker_inline:
         attached_ideas_number: Nápady připojené k tomuto návrhu
         choose_idea: Vybrat nápad
@@ -666,8 +666,8 @@ cs:
       copied_from_component:
         idea_idea: Související nápady
       included_projects:
-        project_result: 'Attached results:'
+        project_result: 'Připojené výsledky:'
       included_ideas:
-        idea_project: 'Idea appearing in these votable proposals:'
+        idea_project: 'Nápad, který se objevuje v těchto hlasovacích návrzích:'
         idea_result: 'Nápady, které se objevují v těchto výsledcích:'
-        project_idea: 'Attached ideas:'
+        project_idea: 'Přiložené nápady:'
