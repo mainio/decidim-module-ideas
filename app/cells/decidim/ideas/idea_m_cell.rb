@@ -141,7 +141,7 @@ module Decidim
       end
 
       def has_image?
-        model.image.present? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
+        model.image && model.image.url.present? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
       end
 
       def resource_image_path
