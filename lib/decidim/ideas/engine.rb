@@ -168,6 +168,14 @@ module Decidim
         end
       end
 
+      initializer "decidim_ideas.budgets_integration", after: "decidim_plans.register_section_types" do
+        next unless Decidim.const_defined?("Budgets")
+
+        Decidim::Ideas::ResourceLinkSubject.class_eval do
+          possible_types(Decidim::Budgets::ProjectType)
+        end
+      end
+
       initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
