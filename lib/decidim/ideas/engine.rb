@@ -176,6 +176,14 @@ module Decidim
         end
       end
 
+      initializer "decidim_ideas.accountability_integration", after: "decidim_plans.register_section_types" do
+        next unless Decidim.const_defined?("Accountability")
+
+        Decidim::Ideas::ResourceLinkSubject.class_eval do
+          possible_types(Decidim::Accountability::ResultType)
+        end
+      end
+
       initializer "decidim_ideas.plans_integration", after: "decidim_plans.register_section_types" do
         next unless Decidim.const_defined?("Plans")
 
