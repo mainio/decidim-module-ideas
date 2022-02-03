@@ -53,6 +53,11 @@ module Decidim
       end
 
       config.to_prepare do
+        # Required for the component settings customizations
+        Decidim::Admin::ApplicationController.send(
+          :helper,
+          Decidim::Ideas::AreaScopesHelper
+        )
         Decidim::Admin::SettingsHelper.send(
           :include,
           Decidim::Ideas::Admin::ComponentSettings
