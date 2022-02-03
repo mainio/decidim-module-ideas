@@ -388,6 +388,8 @@ en:
       destroy_draft:
         error: Destroying the draft failed.
         success: Draft destroyed successfully.
+      idea_m:
+        card_label: "Idea: %{title}"
       last_activity:
         new_idea_at_html: "<span>New idea at %{link}</span>"
       models:

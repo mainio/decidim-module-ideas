@@ -1,4 +1,4 @@
-<div class="card <%= card_classes %>">
+<div class="card <%= card_classes %>" role="region" aria-label="<%= t(".card_label", title: title) %>">
   <%= render :top if render_top? %>
   <%= render :state if answered? %>
   <%= render :image %>

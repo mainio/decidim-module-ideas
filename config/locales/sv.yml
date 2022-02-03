@@ -387,6 +387,8 @@ sv:
       destroy_draft:
         error: Det gick inte att förstöra utkastet.
         success: Utkast förstördes framgångsrikt.
+      idea_m:
+        card_label: "Idé: %{title}"
       last_activity:
         new_idea_at_html: "<span>Ny idé på %{link}</span>"
       models:
