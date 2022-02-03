@@ -387,6 +387,8 @@ fi:
       destroy_draft:
         error: Luonnoksen poisto epäonnistui.
         success: Luonnoksen poisto onnistui.
+      idea_m:
+        card_label: "Idea: %{title}"
       last_activity:
         new_idea_at_html: "<span>Uusi idea %{link}</span>"
       models:
