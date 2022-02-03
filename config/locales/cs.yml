@@ -389,6 +389,8 @@ cs:
       destroy_draft:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
+      idea_m:
+        card_label: "Idea: %{title}"
       last_activity:
         new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
