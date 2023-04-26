@@ -220,7 +220,7 @@
       performCoordinatesLookup();
     });
 
-    if ($latitude.val() && $latitude.val().length > 0 && $longitude.val().length > 0) {
+    if ($latitude.val() && $latitude.val().length > 0 && $longitude.val() && $longitude.val().length > 0) {
       $map.trigger("coordinates.decidim.ideas", [{
         lat: $latitude.val(),
         lng: $longitude.val()
@@ -380,13 +380,16 @@
       }
     });
 
-    window.onbeforeunload = () => {
+    window.addEventListener("beforeunload", (ev) => {
       if (canExit) {
-        return null;
+        return;
       }
 
-      return "";
-    }
+      // Confirm exit. Setting this to an empty string would not work in
+      // Firefox (although it should according to the spec), so we set it to
+      // `true` instead.
+      ev.returnValue = true;
+    });
   };
 
   exports.Decidim = exports.Decidim || {};
