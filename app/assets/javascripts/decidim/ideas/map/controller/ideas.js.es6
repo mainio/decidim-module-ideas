@@ -9,13 +9,18 @@
     start() {
       this.markerClusters = null;
 
-      if (Array.isArray(this.config.markers) && this.config.markers.length > 0) {
+      let markersWithLocation = [];
+      if (Array.isArray(this.config.markers)) {
+        markersWithLocation = this.config.markers.filter((marker) => marker.latitude && marker.longitude);
+      }
+
+      if (markersWithLocation.length > 0) {
         this.addMarkers(this.config.markers);
 
         if (this.config.markers.length < 10) {
           this.map.setZoom(10);
         }
-      } else if (this.config.centerCoordinates) {
+      } else if (Array.isArray(this.config.centerCoordinates) && this.config.centerCoordinates.length > 1) {
         this.map.panTo(this.config.centerCoordinates);
         this.map.setZoom(10);
       } else {
