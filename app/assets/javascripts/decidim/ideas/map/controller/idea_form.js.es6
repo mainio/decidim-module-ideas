@@ -12,7 +12,7 @@
 
       const zoom = parseInt(this.config.zoom) || 11;
 
-      if (this.config.centerCoordinates) {
+      if (Array.isArray(this.config.centerCoordinates) && this.config.centerCoordinates > 1) {
         this.map.setView(this.config.centerCoordinates, zoom);
       } else {
         this.map.setZoom(zoom);
