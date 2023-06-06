@@ -668,8 +668,8 @@ cs:
       copied_from_component:
         idea_idea: Související nápady
       included_projects:
-        project_result: 'Připojené výsledky:'
+        project_result: 'Výsledky uvedené v tomto plánu:'
       included_ideas:
-        idea_project: 'Nápad, který se objevuje v těchto hlasovacích návrzích:'
+        idea_project: 'Nápady, které se objevují v těchto plánech:'
         idea_result: 'Nápady, které se objevují v těchto výsledcích:'
         project_idea: 'Přiložené nápady:'
