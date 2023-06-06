@@ -388,7 +388,7 @@ sv:
         error: Det gick inte att förstöra utkastet.
         success: Utkast förstördes framgångsrikt.
       idea_m:
-        card_label: "Idea: %{title}"
+        card_label: "Idé: %{title}"
       last_activity:
         new_idea_at_html: "<span>Ny idé på %{link}</span>"
       models:
@@ -582,7 +582,7 @@ sv:
         more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_field:
-        ideas: Ideas
+        ideas: Idéer
       ideas_picker_inline:
         attached_ideas_number: Idéer valda till förslaget
         choose_idea: Välj idén
@@ -662,8 +662,8 @@ sv:
       copied_from_component:
         idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Attached results:'
+        project_result: 'Resultat som ingår i denna idé:'
       included_ideas:
-        idea_project: 'Idea appearing in these votable proposals:'
+        idea_project: 'Idé visas i dessa röstbara förslag:'
         idea_result: 'Idé som ingår i dessa resultat:'
-        project_idea: 'Attached ideas:'
+        project_idea: 'Bifogade idéer:'
