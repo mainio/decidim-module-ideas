@@ -8,10 +8,8 @@ module Decidim
       module ComponentSettings
         extend ActiveSupport::Concern
 
-        include Decidim::Ideas::AreaScopesHelper
-
         included do
-          unless respond_to?(:settings_attribute_input_orig_ideas)
+          unless method_defined?(:settings_attribute_input_orig_ideas)
             alias_method :settings_attribute_input_orig_ideas, :settings_attribute_input
 
             def settings_attribute_input(form, attribute, name, i18n_scope, options = {})
@@ -53,7 +51,15 @@ module Decidim
                 } do
                   content_tag :fieldset do
                     content_tag :div, class: "card" do
-                      label + coordinates_element + ideas_settings_js
+                      settings_js =
+                        if @ideas_settings_js_included
+                          ""
+                        else
+                          @ideas_settings_js_included = true
+                          javascript_include_tag("decidim/ideas/admin/component_settings")
+                        end
+
+                      label + coordinates_element + settings_js
                     end
                   end
                 end
@@ -62,15 +68,6 @@ module Decidim
               end
             end
           end
-        end
-
-        private
-
-        def ideas_settings_js
-          return "" if @ideas_settings_js_included
-
-          @ideas_settings_js_included = true
-          javascript_include_tag("decidim/ideas/admin/component_settings")
         end
       end
     end

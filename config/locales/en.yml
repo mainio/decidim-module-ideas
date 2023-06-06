@@ -388,6 +388,8 @@ en:
       destroy_draft:
         error: Destroying the draft failed.
         success: Draft destroyed successfully.
+      idea_m:
+        card_label: "Idea: %{title}"
       last_activity:
         new_idea_at_html: "<span>New idea at %{link}</span>"
       models:
@@ -580,6 +582,8 @@ en:
         close: Close
         more_ideas: There are %{number} more ideas. Refine your search to locate them.
         no_ideas: No ideas match your search criteria or there isn't any ideas.
+      ideas_picker_field:
+        ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Ideas attached to this proposal
         choose_idea: Select idea
@@ -659,7 +663,8 @@ en:
       copied_from_component:
         idea_idea: Related ideas
       included_projects:
-        project_result: 'Results appearing in this plan:'
+        project_result: 'Attached results:'
       included_ideas:
-        idea_project: 'Idea appearing in these plans:'
+        idea_project: 'Idea appearing in these votable proposals:'
         idea_result: 'Idea appearing in these results:'
+        project_idea: 'Attached ideas:'

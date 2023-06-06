@@ -72,7 +72,7 @@
 <div class="row columns">
   <%= render partial: "filters_small_view" %>
   <div class="card card--secondary show-for-mediumlarge">
-    <div class="idea-filters">
+    <div class="idea-filters record-filters">
       <%= render partial: "filters" %>
     </div>
   </div>
@@ -86,7 +86,7 @@
   </div>
 </div>
 <div class="row">
-  <div id="ideas" class="columns">
+  <div id="ideas" class="columns" aria-live="polite">
     <%= render partial: "ideas" %>
   </div>
 </div>

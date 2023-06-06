@@ -120,7 +120,7 @@ module Decidim
         cat = icon_category
         return unless cat
 
-        content_tag(:span, class: "card__category__icon" , "aria-hidden": true) do
+        content_tag(:span, class: "card__category__icon", "aria-hidden": true) do
           image_tag(cat.category_icon.url, alt: full_category)
         end
       end
@@ -129,7 +129,7 @@ module Decidim
         cat = color_category
         return unless cat
 
-        "background-color:#{cat.color};";
+        "background-color:#{cat.color};"
       end
 
       def progress_bar_progress
@@ -141,7 +141,7 @@ module Decidim
       end
 
       def has_image?
-        model.image.present? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
+        model.image && model.image.url.present? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
       end
 
       def resource_image_path
