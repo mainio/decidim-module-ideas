@@ -110,7 +110,7 @@ cs:
             categories_info_intro: Úvod k informacím o tématech
             categories_info_text: Informační text témat
             comments_enabled: Komentáře povoleny
-            comments_max_length: Comment max length
+            comments_max_length: Maximální délka komentáře
             default_map_center_coordinates: Výchozí souřadnice středu mapy (zeměpisná šířka, zeměpisná délka)
             geocoding_enabled: Geokódování povoleno
             idea_answering_enabled: Odpovídání na nápady povoleno
@@ -389,6 +389,8 @@ cs:
       destroy_draft:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
+      idea_m:
+        card_label: "Nápad: %{title}"
       last_activity:
         new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
@@ -585,6 +587,8 @@ cs:
         close: Zavřít
         more_ideas: Existuje ještě %{number} nápadů. Upřesněte vyhledávání a najděte je.
         no_ideas: Žádné nápady neodpovídají vašim kritériím vyhledávání, nebo zde nejsou žádné nápady.
+      ideas_picker_field:
+        ideas: Nápady
       ideas_picker_inline:
         attached_ideas_number: Nápady připojené k tomuto návrhu
         choose_idea: Vybrat nápad
@@ -644,8 +648,8 @@ cs:
     pages:
       home:
         statistics:
-          ideas_accepted: Accepted ideas
-          ideas_count: Ideas
+          ideas_accepted: Přijaté nápady
+          ideas_count: Nápady
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
@@ -668,3 +672,4 @@ cs:
       included_ideas:
         idea_project: 'Nápady, které se objevují v těchto plánech:'
         idea_result: 'Nápady, které se objevují v těchto výsledcích:'
+        project_idea: 'Přiložené nápady:'

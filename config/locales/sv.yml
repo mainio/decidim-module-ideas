@@ -662,8 +662,8 @@ sv:
       copied_from_component:
         idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Resultat som ingår i denna plan:'
+        project_result: 'Resultat som ingår i denna idé:'
       included_ideas:
         idea_project: 'Idé visas i dessa röstbara förslag:'
-        idea_result: 'Idé visas i dessa resultat:'
+        idea_result: 'Idé som ingår i dessa resultat:'
         project_idea: 'Bifogade idéer:'

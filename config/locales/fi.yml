@@ -449,7 +449,7 @@ fi:
           my_ideas: Näytä omat ideasi
           origin: Alkuperä
           reset: Tyhjennä rajaukset
-          search: Haku
+          search: Hae
           state: Arviointi
           title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
@@ -601,7 +601,7 @@ fi:
           my_ideas: Näytä omat ideasi
           origin: Alkuperä
           reset: Tyhjennä rajaukset
-          search: Haku
+          search: Hae
           state: Arviointi
           title: Etsi ideoita
           unfold: Avaa
