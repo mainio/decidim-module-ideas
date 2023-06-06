@@ -33,6 +33,7 @@ describe "User filters ideas", type: :system do
   shared_examples "has clear filters button" do
     it "clears filters" do
       click_button "Clear filters"
+      perform_search
       expect(page).to have_content(idea.title)
       expect(page).to have_content(idea2.title)
       expect(page).to have_content(idea3.title)
@@ -56,10 +57,10 @@ describe "User filters ideas", type: :system do
 
     before do
       visit current_path
-      within ".filters__search" do
+      within ".filters__section.text_filter" do
         fill_in "filter[search_text]", with: title
-        find(".icon--magnifying-glass").click
       end
+      perform_search
     end
 
     it "can search" do
@@ -83,6 +84,7 @@ describe "User filters ideas", type: :system do
     describe "when has filter selected" do
       before do
         select "Accepted to the next step", from: "filter[state]"
+        perform_search
       end
 
       it_behaves_like "has clear filters button"
@@ -96,6 +98,7 @@ describe "User filters ideas", type: :system do
 
     it "shows not accepted to the next step" do
       select "Not accepted to the next step", from: "filter[state]"
+      perform_search
       expect(page).to have_content(title3)
       expect(page).not_to have_content(title)
       expect(page).not_to have_content(title2)
@@ -103,6 +106,7 @@ describe "User filters ideas", type: :system do
 
     it "shows not answered" do
       select "Not answered", from: "filter[state]"
+      perform_search
       expect(page).to have_content(title)
       expect(page).not_to have_content(title2)
       expect(page).not_to have_content(title3)
@@ -141,6 +145,7 @@ describe "User filters ideas", type: :system do
     describe "filter selected" do
       before do
         select area_scope_parent.children.first.name["en"], from: "filter[area_scope_id]"
+        perform_search
       end
 
       it_behaves_like "has clear filters button"
@@ -165,6 +170,7 @@ describe "User filters ideas", type: :system do
       before do
         visit current_path
         select category.name["en"], from: "filter[category_id]"
+        perform_search
       end
 
       it_behaves_like "has clear filters button"
@@ -219,6 +225,12 @@ describe "User filters ideas", type: :system do
           expect(page.body).to match(/#{title2}.*#{title3}.*#{title}/)
         end
       end
+    end
+  end
+
+  def perform_search
+    within all(".filters__section")[-1] do
+      find("button[type='submit']").click
     end
   end
 end
