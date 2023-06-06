@@ -449,7 +449,7 @@ fi:
           my_ideas: Näytä omat ideasi
           origin: Alkuperä
           reset: Tyhjennä rajaukset
-          search: Haku
+          search: Hae
           state: Arviointi
           title: Rajaa ideoita kartalla ja listassa
           type: Tyyppi
@@ -582,7 +582,7 @@ fi:
         more_ideas: Ideoita on vielä %{number} kpl lisää. Muuta hakuehtoja löytääksesi ne.
         no_ideas: Hakuehtosi eivät vastaa yhtään ideaa tai yhtään ideaa ei vielä ole olemassa.
       ideas_picker_field:
-        ideas: Ideas
+        ideas: Ideat
       ideas_picker_inline:
         attached_ideas_number: Ehdotukseen liitetyt ideat
         choose_idea: Valitse idea
@@ -601,7 +601,7 @@ fi:
           my_ideas: Näytä omat ideasi
           origin: Alkuperä
           reset: Tyhjennä rajaukset
-          search: Haku
+          search: Hae
           state: Arviointi
           title: Etsi ideoita
           unfold: Avaa
@@ -662,8 +662,8 @@ fi:
       copied_from_component:
         idea_idea: Liittyvät ideat
       included_projects:
-        project_result: 'Attached results:'
+        project_result: 'Liitetyt tulokset:'
       included_ideas:
-        idea_project: 'Idea appearing in these votable proposals:'
+        idea_project: 'Idea esiintyy seuraavissa äänestettävissä ehdotuksissa:'
         idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
-        project_idea: 'Attached ideas:'
+        project_idea: 'Liitetyt ideat:'
