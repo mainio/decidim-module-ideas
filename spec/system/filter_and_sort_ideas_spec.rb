@@ -199,6 +199,9 @@ describe "User filters ideas", type: :system do
           page.find("a", text: "Recent").click
           click_link(selected_option, match: :first)
         end
+        within ".order-by__dropdown .dropdown.menu li.is-dropdown-submenu-parent a" do
+          expect(page).to have_content(selected_option)
+        end
         expect(page).to have_content("Browse ideas", wait: 1)
       end
 
@@ -206,7 +209,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Recent" }
 
         it "shows newest first" do
-          expect(page.body).to match(/#{title3}.*#{title2}.*#{title}/)
+          expect(page).to have_content(/#{title3}.*#{title2}.*#{title}/m)
         end
       end
 
@@ -214,7 +217,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Oldest" }
 
         it "shows oldest first" do
-          expect(page.body).to match(/#{title}.*#{title2}.*#{title3}/)
+          expect(page).to have_content(/#{title}.*#{title2}.*#{title3}/m)
         end
       end
 
@@ -222,7 +225,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Most commented" }
 
         it "shows most commented first" do
-          expect(page.body).to match(/#{title2}.*#{title3}.*#{title}/)
+          expect(page).to have_content(/#{title2}.*#{title3}.*#{title}/m)
         end
       end
     end
