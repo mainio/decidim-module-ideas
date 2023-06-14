@@ -24,7 +24,7 @@ module Decidim
 
       def ideas_to_render
         @ideas_to_render ||= ideas.includes(
-          [:amendable, :category, :component, :scope]
+          [:amendable, :category, :component, :area_scope]
         ).limit(
           Decidim::Ideas.config.participatory_space_highlighted_ideas_limit
         )
