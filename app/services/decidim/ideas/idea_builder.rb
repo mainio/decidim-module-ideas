@@ -65,13 +65,13 @@ module Decidim
           "state",
           "answer",
           "answered_at",
-          "decidim_component_id",
-          "reference",
+          "reference"
         ).merge(
           "category" => original_idea.category
         ).merge(
           extra_attributes
         )
+        origin_attributes.delete("decidim_component_id") if extra_attributes.has_key?(:component) || extra_attributes.has_key?("component")
 
         idea = begin
           if author.nil?
