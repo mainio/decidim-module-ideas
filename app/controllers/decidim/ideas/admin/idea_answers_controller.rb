@@ -23,7 +23,7 @@ module Decidim
           Admin::AnswerIdea.call(@answer_form, idea) do
             on(:ok) do
               flash[:notice] = I18n.t("ideas.answer.success", scope: "decidim.ideas.admin")
-              redirect_to ideas_path
+              redirect_to Decidim::ResourceLocatorPresenter.new(idea).index
             end
 
             on(:invalid) do

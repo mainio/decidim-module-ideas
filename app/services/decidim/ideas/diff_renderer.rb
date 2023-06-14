@@ -30,10 +30,6 @@ module Decidim
       def parse_changeset(attribute, values, type, diff)
         return parse_scope_changeset(attribute, values, type, diff) if type == :scope
 
-        unless [:string].include?(type)
-          raise type.inspect
-        end
-
         values = parse_values(attribute, values)
 
         diff.update(
@@ -77,7 +73,7 @@ module Decidim
 
       def related_changes_diff
         {}.tap do |final|
-          if values = version.related_changes["decidim_category_id"]
+          if (values = version.related_changes["decidim_category_id"])
             old_cat = Decidim::Category.find_by(id: values[0])
             new_cat = Decidim::Category.find_by(id: values[1])
             final[:category_id] = {

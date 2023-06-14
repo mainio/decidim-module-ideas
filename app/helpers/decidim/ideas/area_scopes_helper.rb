@@ -67,7 +67,7 @@ module Decidim
       # Returns nothing.
       def area_scopes_picker_tag(name, value, options: {}, html_options: {})
         root = area_scopes_parent
-        field = options[:field] || name
+        # field = options[:field] || name
 
         select_tag(
           name,

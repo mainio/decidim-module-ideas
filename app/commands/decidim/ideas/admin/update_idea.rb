@@ -34,12 +34,12 @@ module Decidim
           idea.image.destroy! if idea.image.present? && (process_image? || image_removed?)
           if process_image?
             build_image
-            attachments_invalid = attachments_invalid || image_invalid?
+            attachments_invalid ||= image_invalid?
           end
           idea.actual_attachments.destroy_all if process_attachments? || attachment_removed?
           if process_attachments?
             build_attachment
-            attachments_invalid = attachments_invalid || attachment_invalid?
+            attachments_invalid ||= attachment_invalid?
           end
           return broadcast(:invalid) if attachments_invalid
 

@@ -46,29 +46,21 @@ module Decidim
       def component
         @component ||= begin
           comp = Decidim::Component.find_by(id: params[:id])
-          if comp && comp.organization == current_organization
-            comp
-          else
-            nil
-          end
+          comp if comp && comp.organization == current_organization
         end
       end
 
       def settings_manifest
         @settings_manifest ||= begin
           setting_name = params[:setting_name]
-          settings_manifest = component_manifest.settings(:global).attributes[setting_name.to_sym]
+          component_manifest.settings(:global).attributes[setting_name.to_sym]
         end
       end
 
       def scope_parent
         @scope_parent ||= begin
           scope = Decidim::Scope.find_by(id: params[:parent_scope_id])
-          if scope && scope.organization == current_organization
-            scope
-          else
-            nil
-          end
+          scope if scope && scope.organization == current_organization
         end
       end
     end

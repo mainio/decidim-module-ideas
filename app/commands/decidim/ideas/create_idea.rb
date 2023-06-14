@@ -38,11 +38,11 @@ module Decidim
         attachments_invalid = false
         if process_image?
           build_image
-          attachments_invalid = attachments_invalid || image_invalid?
+          attachments_invalid ||= image_invalid?
         end
         if process_attachments?
           build_attachment
-          attachments_invalid = attachments_invalid || attachment_invalid?
+          attachments_invalid ||= attachment_invalid?
         end
         return broadcast(:invalid) if attachments_invalid
 
