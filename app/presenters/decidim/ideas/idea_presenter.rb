@@ -20,7 +20,7 @@ module Decidim
       end
 
       def display_mention
-        link_to title, idea_path
+        link_to title(html_escape: true), idea_path
       end
 
       # Render the idea title
@@ -46,7 +46,7 @@ module Decidim
 
         if strip_tags
           text = text.gsub(%r{<\/p>}, "\n\n")
-          text = strip_tags(text)
+          text = strip_tags(text).strip
         end
 
         renderer = Decidim::ContentRenderers::HashtagRenderer.new(text)
