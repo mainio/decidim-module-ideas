@@ -390,6 +390,7 @@ sv:
       idea_m:
         card_label: "Idé: %{title}"
       last_activity:
+        idea_updated_html: "<span>Idea updated at %{link}</span>"
         new_idea_at_html: "<span>Ny idé på %{link}</span>"
       models:
         idea:
