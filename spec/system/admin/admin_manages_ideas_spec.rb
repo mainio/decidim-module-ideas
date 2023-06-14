@@ -44,7 +44,9 @@ describe "Admin creates idea", type: :system do
       find(".js-idea-id-#{idea.id}").set(true)
       click_button "Actions"
       click_button "Change scope"
-      click_link "Global scope"
+      within "[data-picker-name='area_scope_id']" do
+        click_link "Global"
+      end
       click_link scope.name["en"]
       click_link "Select"
       find("#js-submit-scope-change-ideas").click

@@ -45,7 +45,9 @@ describe "Admin manages idea component", type: :system do
     it "updates component's settings" do
       fill_in :component_settings_idea_title_length, with: max_title_length
       fill_in :component_settings_idea_length, with: max_body_length
-      click_link "Global scope"
+      within "[data-picker-name='component[settings][area_scope_parent_id]']" do
+        click_link "Global"
+      end
       click_link scope.name["en"]
       click_link("Select", wait: 1)
       fill_in "component[settings][area_scope_coordinates]_#{subscope.id}", with: coordinates
