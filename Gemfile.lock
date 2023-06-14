@@ -217,6 +217,28 @@ GIT
       decidim-admin (~> 0.23.0.dev)
       decidim-core (~> 0.23.0.dev)
 
+GIT
+  remote: https://github.com/mainio/decidim-module-plans.git
+  revision: 9b483e246140af30a044ea2af9273affc804a1ac
+  branch: develop
+  specs:
+    decidim-plans (0.23.0)
+      decidim-core (~> 0.23.0)
+      decidim-favorites (~> 0.23.0)
+      decidim-feedback (~> 0.23.0)
+      decidim-proposals (~> 0.23.0)
+      decidim-tags (~> 0.23.0)
+      graphql (~> 1.9.19)
+      paper_trail-association_tracking (~> 2.0)
+
+GIT
+  remote: https://github.com/mainio/decidim-module-tags.git
+  revision: e836c0b722e1cabb74da1a11c7ee36085da85c57
+  branch: release/0.23-stable
+  specs:
+    decidim-tags (0.23.0)
+      decidim-core (~> 0.23.0)
+
 PATH
   remote: .
   specs:
@@ -578,6 +600,8 @@ GEM
     paper_trail (10.3.1)
       activerecord (>= 4.2)
       request_store (~> 1.1)
+    paper_trail-association_tracking (2.1.3)
+      paper_trail (< 12.0)
     parallel (1.20.1)
     parser (3.0.1.0)
       ast (~> 2.4.1)
@@ -818,6 +842,8 @@ DEPENDENCIES
   decidim-favorites!
   decidim-feedback!
   decidim-ideas!
+  decidim-plans!
+  decidim-tags!
   faker (~> 1.9)
   letter_opener_web (~> 1.3)
   listen (~> 3.1)

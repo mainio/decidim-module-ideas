@@ -27,6 +27,8 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
+  gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "develop"
+  gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "release/0.23-stable"
 end
 
 group :development do

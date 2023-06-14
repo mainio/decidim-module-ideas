@@ -39,4 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "graphql", "~> 1.9.19"
 
   spec.add_development_dependency "decidim-dev", Decidim::Ideas::DECIDIM_VERSION
+  spec.add_development_dependency "decidim-plans", Decidim::Ideas::DECIDIM_VERSION
+  spec.add_development_dependency "decidim-tags", Decidim::Ideas::DECIDIM_VERSION
 end
