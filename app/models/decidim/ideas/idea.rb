@@ -16,6 +16,7 @@ module Decidim
       include Decidim::Followable
       include Decidim::Ideas::CommentableIdea
       include Decidim::Searchable
+      include Decidim::Randomable
       include Decidim::Ideas::Traceability
       include Decidim::Loggable
       include Decidim::Fingerprintable
