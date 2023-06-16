@@ -392,7 +392,7 @@ cs:
       idea_m:
         card_label: "Nápad: %{title}"
       last_activity:
-        idea_updated_html: "<span>Idea updated at %{link}</span>"
+        idea_updated_html: "<span>Nápad aktualizován na %{link}</span>"
         new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
         idea:
