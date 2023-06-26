@@ -26,6 +26,7 @@ module Decidim
       # - :invalid if the form wasn't valid and we couldn't proceed.
       #
       # Returns nothing.
+      # rubocop:disable Metrics/PerceivedComplexity
       def call
         return broadcast(:invalid) if form.invalid?
 
@@ -64,6 +65,7 @@ module Decidim
           broadcast(:ok, emendation)
         end
       end
+      # rubocop:enable Metrics/PerceivedComplexity
 
       private
 
@@ -94,6 +96,7 @@ module Decidim
       #
       # A first version will be created in step 4: publish
       # for diff rendering in the amendment control version
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def create_emendation!
         PaperTrail.request(enabled: false) do
           @emendation = Decidim.traceability.perform_action!(
@@ -158,6 +161,7 @@ module Decidim
           end
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       def create_amendment!
         @amendment = Decidim::Amendment.create!(

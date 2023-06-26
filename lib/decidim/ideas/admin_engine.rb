@@ -58,10 +58,7 @@ module Decidim
           :helper,
           Decidim::Ideas::AreaScopesHelper
         )
-        Decidim::Admin::SettingsHelper.send(
-          :include,
-          Decidim::Ideas::Admin::ComponentSettings
-        )
+        Decidim::Admin::SettingsHelper.include Decidim::Ideas::Admin::ComponentSettings
       end
     end
   end

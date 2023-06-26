@@ -12,8 +12,10 @@ module Decidim
           unless method_defined?(:settings_attribute_input_orig_ideas)
             alias_method :settings_attribute_input_orig_ideas, :settings_attribute_input
 
+            # rubocop:disable Rails/HelperInstanceVariable
             def settings_attribute_input(form, attribute, name, i18n_scope, options = {})
-              if attribute.type == :idea_area_scope
+              case attribute.type
+              when :idea_area_scope
                 content_tag :div, class: "#{name}_container" do
                   scopes_picker_field(
                     form,
@@ -24,7 +26,7 @@ module Decidim
                     }
                   )
                 end
-              elsif attribute.type == :idea_area_scope_coordinates
+              when :idea_area_scope_coordinates
                 component_id = @component.new_record? ? "new" : @component.id
                 visibility_class = @component.settings.geocoding_enabled ? "" : "hide"
                 value = area_scopes_coordinates(@component)
@@ -67,6 +69,7 @@ module Decidim
                 settings_attribute_input_orig_ideas(form, attribute, name, i18n_scope, options)
               end
             end
+            # rubocop:enable Rails/HelperInstanceVariable
           end
         end
       end

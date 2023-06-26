@@ -93,13 +93,14 @@ module Decidim
           badge.valid_for = [:user, :user_group]
 
           badge.reset = lambda { |model|
-            if model.is_a?(User)
+            case model
+            when User
               Decidim::Coauthorship.where(
                 coauthorable_type: "Decidim::Ideas::Idea",
                 author: model,
                 user_group: nil
               ).count
-            elsif model.is_a?(UserGroup)
+            when UserGroup
               Decidim::Coauthorship.where(
                 coauthorable_type: "Decidim::Ideas::Idea",
                 user_group: model
@@ -115,13 +116,14 @@ module Decidim
 
           badge.reset = lambda { |model|
             idea_ids = begin
-              if model.is_a?(User)
+              case model
+              when User
                 Decidim::Coauthorship.where(
                   coauthorable_type: "Decidim::Ideas::Idea",
                   author: model,
                   user_group: nil
                 ).select(:coauthorable_id)
-              elsif model.is_a?(UserGroup)
+              when UserGroup
                 Decidim::Coauthorship.where(
                   coauthorable_type: "Decidim::Ideas::Idea",
                   user_group: model

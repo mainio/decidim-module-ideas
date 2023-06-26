@@ -26,6 +26,7 @@ module Decidim
       # - :invalid if the form wasn't valid and we couldn't proceed.
       #
       # Returns nothing.
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def call
         return broadcast(:invalid) if form.invalid?
         return broadcast(:invalid) unless idea.editable_by?(current_user)
@@ -55,6 +56,7 @@ module Decidim
 
         broadcast(:ok, idea)
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       private
 

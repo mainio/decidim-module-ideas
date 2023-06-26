@@ -13,7 +13,7 @@ module Decidim
       # CarrierWave automatically calls this method and validates the content
       # type fo the temp file to match against any of these options.
       def content_type_allowlist
-        [%r{image\/}]
+        [%r{image/}]
       end
     end
   end

@@ -21,6 +21,7 @@ module Decidim
 
         # Internal: A method to cache to queries to find the valuators for the
         # current space.
+        # rubocop:disable Rails/HelperInstanceVariable
         def find_valuators_for_select(participatory_space)
           return @valuators_for_select if @valuators_for_select
 
@@ -33,6 +34,7 @@ module Decidim
             [valuator.name, role.id]
           end
         end
+        # rubocop:enable Rails/HelperInstanceVariable
       end
     end
   end

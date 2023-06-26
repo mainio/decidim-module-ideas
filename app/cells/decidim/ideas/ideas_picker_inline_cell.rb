@@ -80,12 +80,11 @@ module Decidim
 
       # Options to filter Ideas by activity.
       def activity_filter_values
-        base = [
+        [
           ["all", t(".filters.all")],
           ["my_ideas", t(".filters.my_ideas")],
           ["my_favorites", t(".filters.my_favorites")]
         ]
-        base
       end
 
       def filter_ideas_categories_values

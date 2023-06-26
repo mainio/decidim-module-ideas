@@ -25,6 +25,7 @@ module Decidim
       # - :invalid if the form wasn't valid and we couldn't proceed.
       #
       # Returns nothing.
+      # rubocop:disable Metrics/CyclomaticComplexity
       def call
         return broadcast(:invalid) if form.invalid?
 
@@ -57,6 +58,7 @@ module Decidim
 
         broadcast(:ok, idea)
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       private
 

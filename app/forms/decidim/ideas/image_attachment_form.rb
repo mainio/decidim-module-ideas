@@ -23,7 +23,7 @@ module Decidim
       alias component current_component
       alias organization current_organization
 
-      def map_model(model)
+      def map_model(_model)
         self.remove_file = false
       end
     end

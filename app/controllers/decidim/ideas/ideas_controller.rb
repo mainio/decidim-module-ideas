@@ -31,9 +31,7 @@ module Decidim
         @ideas = reorder(@ideas)
 
         if idea_draft && current_settings&.creation_enabled? && allowed_to?(:edit, :idea, idea: idea_draft)
-          @draft_idea_link = Decidim::ResourceLocatorPresenter.new(
-            idea_draft
-          ).path + "/edit_draft"
+          @draft_idea_link = "#{Decidim::ResourceLocatorPresenter.new(idea_draft).path}/edit_draft"
         end
       end
 
@@ -78,9 +76,9 @@ module Decidim
             flash[:notice] = I18n.t("ideas.create.success", scope: "decidim")
 
             if show_preview
-              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+              redirect_to "#{Decidim::ResourceLocatorPresenter.new(idea).path}/preview"
             else
-              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+              redirect_to "#{Decidim::ResourceLocatorPresenter.new(idea).path}/edit_draft"
             end
           end
 
@@ -125,9 +123,9 @@ module Decidim
           on(:ok) do |idea|
             flash[:notice] = I18n.t("ideas.update_draft.success", scope: "decidim")
             if show_preview
-              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/preview"
+              redirect_to "#{Decidim::ResourceLocatorPresenter.new(idea).path}/preview"
             else
-              redirect_to Decidim::ResourceLocatorPresenter.new(idea).path + "/edit_draft"
+              redirect_to "#{Decidim::ResourceLocatorPresenter.new(idea).path}/edit_draft"
             end
           end
 

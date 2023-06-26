@@ -170,14 +170,15 @@ module Decidim
         def update_ideas_bulk_response_successful(response, subject)
           return if response[:successful].blank?
 
-          if subject == :category
+          case subject
+          when :category
             t(
               "ideas.update_category.success",
               subject_name: response[:subject_name],
               ideas: response[:successful].to_sentence,
               scope: "decidim.ideas.admin"
             )
-          elsif subject == :scope
+          when :scope
             t(
               "ideas.update_area_scope.success",
               subject_name: response[:subject_name],
@@ -190,14 +191,15 @@ module Decidim
         def update_ideas_bulk_response_errored(response, subject)
           return if response[:errored].blank?
 
-          if subject == :category
+          case subject
+          when :category
             t(
               "ideas.update_category.invalid",
               subject_name: response[:subject_name],
               ideas: response[:errored].to_sentence,
               scope: "decidim.ideas.admin"
             )
-          elsif subject == :scope
+          when :scope
             t(
               "ideas.update_scope.invalid",
               subject_name: response[:subject_name],

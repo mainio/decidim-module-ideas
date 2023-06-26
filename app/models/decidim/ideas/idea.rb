@@ -107,7 +107,7 @@ module Decidim
         return unless author.is_a?(Decidim::User)
 
         joins(:coauthorships)
-          .where("decidim_coauthorships.coauthorable_type = ?", name)
+          .where(decidim_coauthorships: { coauthorable_type: name })
           .where("decidim_coauthorships.decidim_author_id = ? AND decidim_coauthorships.decidim_author_type = ? ", author.id, author.class.base_class.name)
       end
 
@@ -169,7 +169,7 @@ module Decidim
       end
 
       def image
-        attachments.where(weight: 0).first
+        attachments.find_by(weight: 0)
       end
 
       def actual_attachments
@@ -304,7 +304,7 @@ module Decidim
 
       # method for sort_link by number of comments
       ransacker :commentable_comments_count do
-        query = <<-SQL
+        query = <<-SQL.squish
         (SELECT COUNT(decidim_comments_comments.id)
          FROM decidim_comments_comments
          WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
@@ -337,7 +337,7 @@ module Decidim
       end
 
       ransacker :is_emendation do |_parent|
-        query = <<-SQL
+        query = <<-SQL.squish
         (
           SELECT EXISTS (
             SELECT 1 FROM decidim_amendments
@@ -373,6 +373,7 @@ module Decidim
         end
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def generate_related_changes
         final = {}.tap do |changes|
           if categorization&.saved_changes && categorization.saved_changes["decidim_category_id"].present?
@@ -380,8 +381,8 @@ module Decidim
           end
           if pending_image.present? && pending_image != image
             changes["image"] = [
-              {id: image.id, title: image.title},
-              {id: pending_image.id, title: pending_image.title}
+              { id: image.id, title: image.title },
+              { id: pending_image.id, title: pending_image.title }
             ]
           end
           if pending_attachments.present?
@@ -390,10 +391,10 @@ module Decidim
             attachment_changes = []
             pending_attachments.map do |attachment|
               old = attachments.find_by(weight: attachment.weight)
-              old_val = old ? {id: old.id, title: old.title} : nil
+              old_val = old ? { id: old.id, title: old.title } : nil
               attachment_changes << [
                 old_val,
-                {id: attachment.id, title: attachment.title}
+                { id: attachment.id, title: attachment.title }
               ]
             end
 
@@ -405,6 +406,7 @@ module Decidim
 
         PaperTrail.serializer.dump(final)
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       private
 

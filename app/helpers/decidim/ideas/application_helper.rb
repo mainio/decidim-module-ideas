@@ -77,9 +77,11 @@ module Decidim
         component_settings.idea_limit
       end
 
+      # rubocop:disable Rails/HelperInstanceVariable
       def form_has_address?
         @form.address.present? || @form.has_address?
       end
+      # rubocop:enable Rails/HelperInstanceVariable
 
       def authors_for(idea)
         idea.identities.map { |identity| present(identity) }
@@ -87,12 +89,11 @@ module Decidim
 
       # Options to filter Ideas by activity.
       def activity_filter_values
-        base = [
+        [
           ["all", t(".all")],
           ["my_ideas", t(".my_ideas")],
           ["my_favorites", t(".my_favorites")]
         ]
-        base
       end
     end
   end

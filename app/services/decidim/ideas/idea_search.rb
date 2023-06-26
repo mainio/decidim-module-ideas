@@ -80,9 +80,9 @@ module Decidim
         end
       end
 
-      def search_category_id
-        super
-      end
+      # def search_category_id
+      #   super
+      # end
 
       # Handles the area_scope_id filter. When we want to show only those that
       # do not have a area_scope_id set, we cannot pass an empty String or nil

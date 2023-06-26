@@ -10,7 +10,7 @@ module Decidim
       #
       # Returns nothing.
       def user_group_select_field(form, name)
-        selected = @form.user_group_id.presence
+        selected = @form.user_group_id.presence # rubocop:disable Rails/HelperInstanceVariable
         user_groups = Decidim::UserGroups::ManageableUserGroups.for(current_user).verified
         form.select(
           name,

@@ -10,9 +10,8 @@ module Decidim
 
       included do
         belongs_to :area_scope,
-                  foreign_key: "area_scope_id",
-                  class_name: "Decidim::Scope",
-                  optional: true
+                   class_name: "Decidim::Scope",
+                   optional: true
 
         delegate :area_scopes, to: :organization
 
@@ -57,7 +56,7 @@ module Decidim
       def area_scope_belongs_to_organization
         return if !area_scope || !organization
 
-        errors.add(:area_scope, :invalid) unless organization.scopes.where(id: area_scope.id).exists?
+        errors.add(:area_scope, :invalid) unless organization.scopes.exists?(id: area_scope.id)
       end
     end
   end

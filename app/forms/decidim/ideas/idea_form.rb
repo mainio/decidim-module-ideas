@@ -51,13 +51,13 @@ module Decidim
         return unless model.categorization
 
         model_category = model.category
-        if model_category
-          if model_category.parent_id
-            self.category_id = model_category.parent_id
-            self.sub_category_id = model_category.id
-          else
-            self.category_id = model_category.id
-          end
+        return unless model_category
+
+        if model_category.parent_id
+          self.category_id = model_category.parent_id
+          self.sub_category_id = model_category.id
+        else
+          self.category_id = model_category.id
         end
       end
 
@@ -158,7 +158,7 @@ module Decidim
         return unless area_parent_scope
         return unless area_scope
 
-        errors.add(:area_scope_id, :invalid) if !area_parent_scope.ancestor_of?(area_scope)
+        errors.add(:area_scope_id, :invalid) unless area_parent_scope.ancestor_of?(area_scope)
       end
 
       def area_parent_scope

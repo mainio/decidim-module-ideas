@@ -10,7 +10,7 @@ module Decidim
       field :number, GraphQL::Types::Int, null: false do
         description "The version number in the order of all versions for this object"
       end
-      field :createdAt, Decidim::Core::DateTimeType , method: :created_at, null: false do
+      field :createdAt, Decidim::Core::DateTimeType, method: :created_at, null: false do
         description "The date and time this version was created"
       end
       field :editor, Decidim::Core::AuthorInterface, null: true do

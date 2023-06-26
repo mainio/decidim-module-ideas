@@ -33,7 +33,7 @@ module Decidim
           authors_amount = amount if authors_amount > amount
 
           # Create a dummy authors if they are not provided
-          @authors = Array.new(authors_amount) do |i|
+          @authors = Array.new(authors_amount) do |_i|
             author = Decidim::User.find_or_initialize_by(
               email: Faker::Internet.email
             )
@@ -50,18 +50,18 @@ module Decidim
           end
         end
 
-        if component.settings.area_scope_parent_id
-          parent_scope = Decidim::Scope.find(
-            component.settings.area_scope_parent_id
-          )
-        end
+        # if component.settings.area_scope_parent_id
+        #   parent_scope = Decidim::Scope.find(
+        #     component.settings.area_scope_parent_id
+        #   )
+        # end
 
         amount.times do
-          coordinates = dummy_coordinates
+          # coordinates = dummy_coordinates
 
           idea = Idea.new(idea_params.merge(
-            published_at: Time.current
-          ))
+                            published_at: Time.current
+                          ))
           idea.add_coauthor(authors.sample)
           idea.save!
 
@@ -85,8 +85,8 @@ module Decidim
       def idea_params
         params = {
           component: component,
-          title: Faker::Lorem.sentence(2),
-          body: Faker::Lorem.paragraphs(2).join("\n"),
+          title: Faker::Lorem.sentence(word_count: 2),
+          body: Faker::Lorem.paragraphs(number: 2).join("\n"),
           category: component.participatory_space.categories.sample
         }
         params[:area_scope] = parent_scope.children.sample if parent_scope

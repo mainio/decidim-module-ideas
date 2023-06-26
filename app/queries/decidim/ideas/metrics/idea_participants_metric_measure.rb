@@ -16,7 +16,7 @@ module Decidim
           cumulative_users |= retrieve_ideas.pluck("decidim_coauthorships.decidim_author_id") # To avoid ambiguosity must be called this way
 
           quantity_users = []
-          quantity_users |= retrieve_ideas(true).pluck("decidim_coauthorships.decidim_author_id") # To avoid ambiguosity must be called this way
+          quantity_users |= retrieve_ideas(from_start: true).pluck("decidim_coauthorships.decidim_author_id") # To avoid ambiguosity must be called this way
 
           {
             cumulative_users: cumulative_users.uniq,
@@ -26,7 +26,7 @@ module Decidim
 
         private
 
-        def retrieve_ideas(from_start = false)
+        def retrieve_ideas(from_start: false)
           @ideas ||= Decidim::Ideas::Idea.where(component: @resource).joins(:coauthorships)
                                          .where(
                                            decidim_coauthorships: {

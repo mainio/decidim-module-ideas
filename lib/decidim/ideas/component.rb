@@ -79,19 +79,19 @@ Decidim.register_component(:ideas) do |component|
 
   component.register_stat :ideas_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
     Decidim::Ideas::FilteredIdeas.for(components, start_at, end_at)
-      .only_amendables
-      .published
-      .except_withdrawn
-      .not_hidden
-      .count
+                                 .only_amendables
+                                 .published
+                                 .except_withdrawn
+                                 .not_hidden
+                                 .count
   end
 
   component.register_stat :ideas_accepted, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
     Decidim::Ideas::FilteredIdeas.for(components, start_at, end_at)
-    .only_amendables
-    .accepted
-    .not_hidden
-    .count
+                                 .only_amendables
+                                 .accepted
+                                 .not_hidden
+                                 .count
   end
 
   component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
@@ -107,10 +107,10 @@ Decidim.register_component(:ideas) do |component|
   component.exports :ideas do |exports|
     exports.collection do |component_instance, _user|
       Decidim::Ideas::Idea.where(component: component_instance)
-        .only_amendables
-        .published
-        .not_hidden
-        .includes(:category, :component, :area_scope)
+                          .only_amendables
+                          .published
+                          .not_hidden
+                          .includes(:category, :component, :area_scope)
     end
 
     exports.include_in_open_data = true
@@ -146,13 +146,13 @@ Decidim.register_component(:ideas) do |component|
       end
     end
 
-    if participatory_space.scope
-      scopes = participatory_space.scope.descendants
-      global = participatory_space.scope
-    else
-      scopes = participatory_space.organization.scopes
-      global = nil
-    end
+    # if participatory_space.scope
+    #   scopes = participatory_space.scope.descendants
+    #   global = participatory_space.scope
+    # else
+    #   scopes = participatory_space.organization.scopes
+    #   global = nil
+    # end
 
     areas = []
     area_type = Decidim::ScopeType.find_or_create_by(
@@ -173,7 +173,7 @@ Decidim.register_component(:ideas) do |component|
       10.times do
         areas << Decidim::Scope.create!(
           name: Decidim::Faker::Localized.literal(Faker::Address.unique.community),
-          code: area_parent.code + "-" + Faker::Address.unique.postcode,
+          code: "#{area_parent.code}-#{Faker::Address.unique.postcode}",
           scope_type: area_type,
           organization: participatory_space.organization,
           parent: area_parent
@@ -218,9 +218,9 @@ Decidim.register_component(:ideas) do |component|
       params = {
         component: component,
         category: participatory_space.categories.sample,
-        area_scope: Faker::Boolean.boolean(0.5) ? nil : areas.sample,
-        title: Faker::Lorem.sentence(2),
-        body: Faker::Lorem.paragraphs(2).join("\n"),
+        area_scope: Faker::Boolean.boolean(true_ratio: 0.5) ? nil : areas.sample,
+        title: Faker::Lorem.sentence(word_count: 2),
+        body: Faker::Lorem.paragraphs(number: 2).join("\n"),
         state: state,
         answer: answer,
         answered_at: state.present? ? Time.current : nil,
@@ -284,9 +284,9 @@ Decidim.register_component(:ideas) do |component|
         params = {
           component: component,
           category: participatory_space.categories.sample,
-          area_scope: Faker::Boolean.boolean(0.5) ? nil : areas.sample,
-          title: "#{idea.title} #{Faker::Lorem.sentence(1)}",
-          body: "#{idea.body} #{Faker::Lorem.sentence(3)}",
+          area_scope: Faker::Boolean.boolean(true_ratio: 0.5) ? nil : areas.sample,
+          title: "#{idea.title} #{Faker::Lorem.sentence(word_count: 1)}",
+          body: "#{idea.body} #{Faker::Lorem.sentence(word_count: 3)}",
           state: "evaluating",
           answer: nil,
           answered_at: Time.current,
@@ -327,7 +327,7 @@ Decidim.register_component(:ideas) do |component|
           tos_agreement: "1",
           confirmed_at: Time.current,
           personal_url: Faker::Internet.url,
-          about: Faker::Lorem.paragraph(2)
+          about: Faker::Lorem.paragraph(sentence_count: 2)
         )
       end
 

@@ -6,6 +6,7 @@ module Decidim
       include Decidim::ApplicationHelper
       include ActionView::Helpers::FormTagHelper
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def search_ideas
         respond_to do |format|
           format.html do
@@ -49,6 +50,7 @@ module Decidim
           end
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     end
   end
 end

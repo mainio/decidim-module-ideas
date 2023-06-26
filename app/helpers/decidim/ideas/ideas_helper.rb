@@ -52,9 +52,7 @@ module Decidim
         return unless category
         return unless category.respond_to?(:category_image)
 
-        if category.category_image.blank? || category.category_image.url.blank?
-          return category_image_path(category.parent) if category.parent
-        end
+        return category_image_path(category.parent) if (category.category_image.blank? || category.category_image.url.blank?) && category.parent
 
         category.category_image.url
       end
@@ -63,12 +61,13 @@ module Decidim
         {
           announcement: {
             title: idea_reason_callout_title,
-            body: decidim_sanitize(translated_attribute(@idea.answer))
+            body: decidim_sanitize(translated_attribute(@idea.answer)) # rubocop:disable Rails/HelperInstanceVariable
           },
           callout_class: idea_reason_callout_class
         }
       end
 
+      # rubocop:disable Rails/HelperInstanceVariable
       def idea_map_link(resource, options = {})
         @map_utility_static ||= Decidim::Map.static(
           organization: current_organization
@@ -81,9 +80,10 @@ module Decidim
           options: options
         )
       end
+      # rubocop:enable Rails/HelperInstanceVariable
 
       def idea_reason_callout_class
-        case @idea.state
+        case @idea.state # rubocop:disable Rails/HelperInstanceVariable
         when "accepted"
           "success"
         when "evaluating"
@@ -95,6 +95,7 @@ module Decidim
         end
       end
 
+      # rubocop:disable Rails/HelperInstanceVariable
       def idea_reason_callout_title
         i18n_key = case @idea.state
                    when "evaluating"
@@ -105,6 +106,7 @@ module Decidim
 
         t(i18n_key, scope: "decidim.ideas.ideas.show")
       end
+      # rubocop:enable Rails/HelperInstanceVariable
 
       def filter_ideas_categories_values
         organization = current_participatory_space.organization

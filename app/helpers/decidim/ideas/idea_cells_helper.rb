@@ -48,9 +48,11 @@ module Decidim
         model.component
       end
 
+      # rubocop:disable Rails/HelperInstanceVariable
       def from_context
         @options[:from]
       end
+      # rubocop:enable Rails/HelperInstanceVariable
 
       def badge_name
         humanize_idea_state state

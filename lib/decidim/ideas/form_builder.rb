@@ -47,6 +47,7 @@ module Decidim
       # options - A Hash of options to extract validations.
       #
       # Returns a Hash.
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def extract_validations(attribute, options)
         min_length = options.delete(:minlength) || length_for_attribute(attribute, :minimum) || 0
         max_length = options.delete(:maxlength) || length_for_attribute(attribute, :maximum)
@@ -59,7 +60,7 @@ module Decidim
         validation_options[:maxlength] ||= max_length if max_length.to_i.positive?
         validation_options
       end
-
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # Private: Tries to find a length validator in the form object.
       #

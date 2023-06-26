@@ -19,11 +19,11 @@ module Decidim
         end
 
         it "publish the answers" do
-          expect { subject }.to change { ideas.map { |idea| idea.reload.published_state? } .uniq } .to([true])
+          expect { subject }.to change { ideas.map { |idea| idea.reload.published_state? }.uniq }.to([true])
         end
 
         it "changes the ideas published state" do
-          expect { subject }.to change { ideas.map { |idea| idea.reload.state } .uniq } .from([nil]).to(["accepted"])
+          expect { subject }.to change { ideas.map { |idea| idea.reload.state }.uniq }.from([nil]).to(["accepted"])
         end
 
         it "traces the action", versioning: true do
@@ -58,7 +58,7 @@ module Decidim
           end
 
           it "doesn't publish the answers" do
-            expect { subject }.not_to(change { ideas.map { |idea| idea.reload.published_state? } .uniq })
+            expect { subject }.not_to(change { ideas.map { |idea| idea.reload.published_state? }.uniq })
           end
 
           it "doesn't trace the action" do
