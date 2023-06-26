@@ -19,7 +19,7 @@ module Decidim
       end
 
       def idea(id:)
-        Idea.published.find(args[:id])
+        Idea.published.find(id)
       end
     end
   end
