@@ -8,10 +8,10 @@ module Decidim
 
       implements Decidim::Core::ComponentInterface
 
-      field :ideas, IdeaType.connection_type, resolver: Decidim::Ideas::IdeasSearchResolver, description: "List all ideas", null: true
+      field :ideas, Decidim::Ideas::IdeaType.connection_type, resolver: Decidim::Ideas::IdeasSearchResolver, description: "List all ideas", null: true
 
-      field :idea, IdeaType, description: "Finds one idea", null: true do
-        argument :id, ID, required: true
+      field :idea, Decidim::Ideas::IdeaType, description: "Finds one idea", null: true do
+        argument :id, GraphQL::Types::ID, required: true
       end
 
       def idea(id:)

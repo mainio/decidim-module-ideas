@@ -6,8 +6,8 @@ module Decidim
       graphql_name "IdeaVersion"
       description "An idea version type"
 
-      field :id, ID, null: false
-      field :number, Integer, null: false do
+      field :id, GraphQL::Types::ID, null: false
+      field :number, GraphQL::Types::Int, null: false do
         description "The version number in the order of all versions for this object"
       end
       field :createdAt, Decidim::Core::DateTimeType , method: :created_at, null: false do

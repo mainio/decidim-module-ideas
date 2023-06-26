@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "ideas/version"
-require_relative "ideas/engine"
-require_relative "ideas/admin"
-require_relative "ideas/admin_engine"
-require_relative "ideas/component_settings_extensions"
-require_relative "ideas/component"
+require "decidim/ideas/version"
+require "decidim/ideas/engine"
+require "decidim/ideas/admin"
+require "decidim/ideas/admin_engine"
+require "decidim/ideas/component_settings_extensions"
+require "decidim/ideas/component"
+require "decidim/ideas/api"
 require "acts_as_list"
 require "decidim/favorites"
 

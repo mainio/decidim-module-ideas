@@ -29,13 +29,13 @@ module Decidim
         process resize_to_fill: [1480, 740]
       end
 
-      def extension_whitelist
+      def extension_allowlist
         Decidim.organization_settings(model).upload_allowed_file_extensions
       end
 
       # CarrierWave automatically calls this method and validates the content
       # type fo the temp file to match against any of these options.
-      def content_type_whitelist
+      def content_type_allowlist
         Decidim.organization_settings(model).upload_allowed_content_types
       end
 

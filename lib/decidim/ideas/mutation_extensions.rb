@@ -10,16 +10,16 @@ module Decidim
       # type - A GraphQL::BaseType to extend.
       #
       # Returns nothing.
-      def self.define(type)
+      def self.included(type)
         type.field :idea, Decidim::Ideas::IdeaMutationType do
           description "An idea"
 
-          argument :id, !types.ID, description: "The idea's id"
-
-          resolve lambda { |_obj, args, _ctx|
-            Idea.published.find(args[:id])
-          }
+          argument :id, GraphQL::Types::ID, description: "The idea's id", required: true
         end
+      end
+
+      def idea(id:)
+        Idea.published.find(args[:id])
       end
     end
   end

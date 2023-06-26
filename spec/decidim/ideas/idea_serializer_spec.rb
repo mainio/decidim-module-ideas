@@ -76,7 +76,7 @@ module Decidim
           let!(:idea) { create(:idea, :with_answer) }
 
           it "serializes answer" do
-            expect(serialized).to include(answer: idea.answer)
+            expect(serialized).to include(answer: idea.answer.reject { |k| k == "machine_translations" }.merge("es" => ""))
           end
         end
 

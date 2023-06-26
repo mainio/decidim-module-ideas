@@ -6,13 +6,13 @@ module Decidim
     # This is in order to pass the correct extensions and content types for the
     # image validations. These differ from the "any" type of attachments.
     class ImageUploader < ::Decidim::Ideas::AttachmentUploader
-      def extension_whitelist
+      def extension_allowlist
         %w(jpg jpeg png)
       end
 
       # CarrierWave automatically calls this method and validates the content
       # type fo the temp file to match against any of these options.
-      def content_type_whitelist
+      def content_type_allowlist
         [%r{image\/}]
       end
     end

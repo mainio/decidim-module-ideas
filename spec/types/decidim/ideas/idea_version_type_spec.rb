@@ -4,33 +4,33 @@ require "spec_helper"
 require "decidim/api/test/type_context"
 
 describe Decidim::Ideas::IdeaVersionType, type: :graphql do
-  include_context "with a graphql type"
+  include_context "with a graphql class type"
 
-  # After upgrade to 0.24, the schema definition and response can be
-  # removed. They are workarounds to make it work with the old schema in
-  # 0.23.
-  let(:schema) { Decidim::Api::Schema }
-  let(:response) do
-    actual_query = %(
-      {
-        participatoryProcess(id: #{participatory_process.id}){
-          components{
-            ...on Ideas{
-              ideas{
-                edges{
-                  node{
-                    versions #{query}
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    )
-    resp = execute_query actual_query, variables.stringify_keys
-    resp["participatoryProcess"]["components"].first["ideas"]["edges"].first["node"]["versions"].first
-  end
+  # # After upgrade to 0.24, the schema definition and response can be
+  # # removed. They are workarounds to make it work with the old schema in
+  # # 0.23.
+  # let(:schema) { Decidim::Api::Schema }
+  # let(:response) do
+  #   actual_query = %(
+  #     {
+  #       participatoryProcess(id: #{participatory_process.id}){
+  #         components{
+  #           ...on Ideas{
+  #             ideas{
+  #               edges{
+  #                 node{
+  #                   versions #{query}
+  #                 }
+  #               }
+  #             }
+  #           }
+  #         }
+  #       }
+  #     }
+  #   )
+  #   resp = execute_query actual_query, variables.stringify_keys
+  #   resp["participatoryProcess"]["components"].first["ideas"]["edges"].first["node"]["versions"].first
+  # end
 
   let!(:component) do
     create(:idea_component,

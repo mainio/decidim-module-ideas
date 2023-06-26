@@ -9,7 +9,7 @@ module Decidim
       graphql_name "IdeaSort"
       description "A type used for sorting ideas"
 
-      argument :id, String, "Sort by ID, valid values are ASC or DESC", required: false
+      argument :id, GraphQL::Types::String, "Sort by ID, valid values are ASC or DESC", required: false
     end
   end
 end

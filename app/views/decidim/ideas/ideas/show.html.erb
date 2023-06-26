@@ -38,10 +38,4 @@ extra_admin_link(
 
 <%= comments_for @idea %>
 
-<%=
-  render partial: "decidim/shared/flag_modal", locals: {
-    reportable: @idea,
-    form: @report_form,
-    url: decidim.report_path(sgid: @idea.to_sgid.to_s)
-  }
-%>
+<%= cell("decidim/flag_modal", @idea) %>

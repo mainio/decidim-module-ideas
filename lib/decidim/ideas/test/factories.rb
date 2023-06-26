@@ -155,7 +155,7 @@ FactoryBot.define do
       content
     end
     body do
-      content = Faker::Lorem.sentences(3).join("\n")
+      content = Faker::Lorem.sentences(number: 3).join("\n")
       content.prepend("<script>alert('BODY');</script> ") unless skip_injection
       content
     end

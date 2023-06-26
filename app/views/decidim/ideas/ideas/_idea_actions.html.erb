@@ -44,9 +44,5 @@
 
 <% if show_actions %>
   <%= render partial: "share_modal" %>
-  <%= render partial: "decidim/shared/flag_modal", locals: {
-    reportable: idea,
-    form: @report_form,
-    url: decidim.report_path(sgid: idea.to_sgid.to_s)
-  } %>
+  <%= cell("decidim/flag_modal", idea) %>
 <% end %>

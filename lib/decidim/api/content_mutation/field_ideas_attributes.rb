@@ -7,7 +7,7 @@ module Decidim
         graphql_name "PlanIdeasFieldAttributes"
         description "A plan attributes for linked ideas field"
 
-        argument :ids, [ID], required: true
+        argument :ids, [GraphQL::Types::ID], required: true
 
         def to_h
           existing_ids = ids.map do |id|

@@ -16,23 +16,23 @@ module Decidim
       implements Decidim::Core::TimestampsInterface
       implements Decidim::Favorites::Api::FavoritesInterface
 
-      field :id, ID, null: false
-      field :title, String, description: "This idea's title", null: false
-      field :body, String, description: "This idea's body", null: false
+      field :id, GraphQL::Types::ID, null: false
+      field :title, GraphQL::Types::String, description: "This idea's title", null: false
+      field :body, GraphQL::Types::String, description: "This idea's body", null: false
       field :image, Decidim::Core::AttachmentType, "This object's attachments", null: true
       field :attachments, [Decidim::Core::AttachmentType], "This object's attachments", null: true, method: :actual_attachments
       field :areaScope, Decidim::Core::ScopeApiType, method: :area_scope, null: true do
         description "The object's scope"
       end
-      field :address, String, null: true do
+      field :address, GraphQL::Types::String, null: true do
         description "The physical address (location) of this idea"
       end
       field :coordinates, Decidim::Core::CoordinatesType, null: true do
         description "Physical coordinates for this idea"
       end
 
-      field :reference, String, description: "This idea's unique reference", null: true
-      field :state, String, description: "The answer status in which idea is in (null|accepted|rejected|evaluating|withdrawn)", null: true
+      field :reference, GraphQL::Types::String, description: "This idea's unique reference", null: true
+      field :state, GraphQL::Types::String, description: "The answer status in which idea is in (null|accepted|rejected|evaluating|withdrawn)", null: true
       field :answer, Decidim::Core::TranslatedFieldType, null: true do
         description "The answer feedback for the status for this idea"
       end
@@ -47,7 +47,7 @@ module Decidim
 
       # Modifies Decidim::Core::TraceableInterface because we use different
       # version type in order to add our customizations.
-      field :versionsCount, Integer, method: :versions_count, null: false do
+      field :versionsCount, GraphQL::Types::Int, method: :versions_count, null: false do
         description "Total number of versions"
       end
       field :versions, [Decidim::Ideas::IdeaVersionType], null: false do

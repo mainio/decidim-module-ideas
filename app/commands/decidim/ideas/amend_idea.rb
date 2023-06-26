@@ -206,8 +206,8 @@ module Decidim
           if emendation.image.present?
             @image = Decidim::Ideas::Attachment.create!(
               attached_to: @amendable, # Keep first
-              title: emendation.image.title,
-              file: emendation.image.file,
+              title: image.title,
+              file: image.file,
               weight: 0
             )
           end
@@ -215,8 +215,8 @@ module Decidim
           if emendation.actual_attachments.any?
             @attachment = Decidim::Ideas::Attachment.create!(
               attached_to: @amendable, # Keep first
-              title: emendation.actual_attachments.first.title,
-              file: emendation.actual_attachments.first.file,
+              title: attachment.title,
+              file: attachment.file,
               weight: 1
             )
           end

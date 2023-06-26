@@ -86,15 +86,14 @@ describe "User browses ideas", type: :system do
   end
 
   describe "report idea" do
-    let(:report_reason) { "report_reason_#{reason}" }
     let(:reason) { %w(spam offensive does_not_belong).sample }
     let(:report_body) { ::Faker::Lorem.paragraph }
 
     it "creates report" do
       click_link idea.title
       click_button "Report idea"
-      choose report_reason
-      fill_in :report_details, with: report_body
+      choose "report[reason]", option: reason
+      fill_in "report[details]", with: report_body
       click_button "Report"
       expect(page).to have_content("The report has been created successfully and it will be reviewed by an admin")
       expect(Decidim::Report.last.details).to eq(report_body)
@@ -115,7 +114,7 @@ describe "User browses ideas", type: :system do
 
     it "follows link" do
       click_link idea2.title
-      fill_in "add-comment-Decidim::Ideas::Idea-#{idea2.id}", with: add_comment
+      fill_in "add-comment-Idea-#{idea2.id}", with: add_comment
       click_button "Send"
       click_link idea3_title
       expect(page).to have_content(idea3_body)

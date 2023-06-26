@@ -10,6 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
 
+  spec.required_ruby_version = ">= 2.7"
+
   spec.summary = "Provides a module for ideation phase to Decidim."
   spec.description = "This module provides an easier user experience to collect ideas in participatory processes."
   spec.homepage = "https://github.com/mainio/decidim-module-ideas"
@@ -33,10 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "kaminari", "~> 1.2", ">= 1.2.1"
   spec.add_dependency "ransack", "~> 2.1.1"
   spec.add_dependency "social-share-button", "~> 1.2", ">= 1.2.1"
-
-  # We need to lock the GraphQL gem to 1.9.x until the Decidim core type
-  # definitions have been updated to the new GraphQL class based definitions.
-  spec.add_dependency "graphql", "~> 1.9.19"
 
   spec.add_development_dependency "decidim-dev", Decidim::Ideas::DECIDIM_VERSION
   spec.add_development_dependency "decidim-plans", Decidim::Ideas::DECIDIM_VERSION
