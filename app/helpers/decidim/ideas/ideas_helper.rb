@@ -52,9 +52,9 @@ module Decidim
         return unless category
         return unless category.respond_to?(:category_image)
 
-        return category_image_path(category.parent) if (category.category_image.blank? || category.category_image.url.blank?) && category.parent
+        return category_image_path(category.parent) if (category.category_image.blank? || !category.category_image.attached?) && category.parent
 
-        category.category_image.url
+        category.attached_uploader(:category_image).path
       end
 
       def idea_reason_callout_args

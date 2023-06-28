@@ -31,7 +31,7 @@
               <% end %>
 
               <% user = presented_author.__getobj__ %>
-              <% if allowed_to? :show_email, :user, user: user %>
+              <% if user.respond_to?(:id) && allowed_to?(:show_email, :user, user: user) %>
                 <%= icon_link_to "envelope-open", decidim_admin.show_email_officialization_path(user_id: user.id), t(".show_email"), class: "action-icon action-icon--show-email", data: { full_name: user.name, toggle: "show-email-modal" } %>
               <% end %>
             </li>

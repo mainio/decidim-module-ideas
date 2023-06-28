@@ -18,7 +18,7 @@
         <% elsif category_image_path(idea.category) %>
           <%= image_tag category_image_path(idea.category), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
-          <%= image_tag "decidim/ideas/idea-default.jpg", class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+          <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
       </div>
     </div>

@@ -59,7 +59,9 @@ $ bundle exec rails db:migrate
 
 ## Usage
 
-TBD
+Similarly to the proposals component, this component is available for any
+participatory space. The default development application seeds add the ideas
+component to all participatory spaces by default.
 
 ## Contributing
 

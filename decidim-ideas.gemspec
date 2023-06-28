@@ -6,7 +6,7 @@ require "decidim/ideas/version"
 
 Gem::Specification.new do |spec|
   spec.name = "decidim-ideas"
-  spec.version = Decidim::Ideas::VERSION
+  spec.version = Decidim::Ideas.version
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
 
@@ -26,17 +26,11 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "acts_as_list", "~> 0.9"
-  spec.add_dependency "cells-erb", "~> 0.1.0"
-  spec.add_dependency "cells-rails", "~> 0.0.9"
-  spec.add_dependency "decidim-core", Decidim::Ideas::DECIDIM_VERSION
-  spec.add_dependency "decidim-favorites", Decidim::Ideas::DECIDIM_VERSION
-  spec.add_dependency "decidim-feedback", Decidim::Ideas::DECIDIM_VERSION
-  spec.add_dependency "kaminari", "~> 1.2", ">= 1.2.1"
-  spec.add_dependency "ransack", "~> 2.1.1"
-  spec.add_dependency "social-share-button", "~> 1.2", ">= 1.2.1"
+  spec.add_dependency "decidim-core", Decidim::Ideas.decidim_version
+  spec.add_dependency "decidim-favorites", Decidim::Ideas.decidim_version
+  spec.add_dependency "decidim-feedback", Decidim::Ideas.decidim_version
 
-  spec.add_development_dependency "decidim-dev", Decidim::Ideas::DECIDIM_VERSION
-  spec.add_development_dependency "decidim-plans", Decidim::Ideas::DECIDIM_VERSION
-  spec.add_development_dependency "decidim-tags", Decidim::Ideas::DECIDIM_VERSION
+  spec.add_development_dependency "decidim-dev", Decidim::Ideas.decidim_version
+  spec.add_development_dependency "decidim-plans", Decidim::Ideas.decidim_version
+  spec.add_development_dependency "decidim-tags", Decidim::Ideas.decidim_version
 end

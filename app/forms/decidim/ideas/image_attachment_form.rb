@@ -5,6 +5,8 @@ module Decidim
     # A form object used to create image attachments.
     #
     class ImageAttachmentForm < Form
+      include Decidim::TranslatableAttributes
+
       attribute :title, String
       attribute :file
       attribute :remove_file, Boolean, default: false
@@ -23,8 +25,11 @@ module Decidim
       alias component current_component
       alias organization current_organization
 
-      def map_model(_model)
+      def map_model(model)
         self.remove_file = false
+        return unless model
+
+        self.title = translated_attribute(model.title)
       end
     end
   end

@@ -1,4 +1,4 @@
-// = require decidim/ideas/map/factory
+import "src/decidim/ideas/map/factory";
 
 ((exports) => {
   const $ = exports.$; // eslint-disable-line

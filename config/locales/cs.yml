@@ -645,11 +645,6 @@ cs:
         description: Počet nápadů
         object: nápady
         title: Nápady
-    pages:
-      home:
-        statistics:
-          ideas_accepted: Přijaté nápady
-          ideas_count: Nápady
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
@@ -673,3 +668,6 @@ cs:
         idea_project: 'Nápady, které se objevují v těchto plánech:'
         idea_result: 'Nápady, které se objevují v těchto výsledcích:'
         project_idea: 'Přiložené nápady:'
+    statistics:
+      ideas_accepted: Přijaté nápady
+      ideas_count: Nápady

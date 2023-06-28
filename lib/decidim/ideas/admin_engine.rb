@@ -15,7 +15,6 @@ module Decidim
             post :update_category
             post :publish_answers
             post :update_area_scope
-            resource :ideas_import, only: [:new, :create]
             resource :ideas_merge, only: [:create]
             resource :ideas_split, only: [:create]
             resource :valuation_assignment, only: [:create, :destroy]
@@ -27,15 +26,7 @@ module Decidim
         root to: "ideas#index"
       end
 
-      initializer "decidim_ideas.assets" do |app|
-        app.config.assets.precompile += %w(admin/decidim_ideas_manifest.js
-                                           decidim/ideas/admin/component_settings.js
-                                           decidim/ideas/admin/ideas.js
-                                           decidim/ideas/admin/ideas_form.js
-                                           decidim/ideas/admin/ideas_picker.js)
-      end
-
-      initializer "decidim_ideas.extra_admin_routes", before: :add_routing_paths do
+      initializer "decidim_ideas_admin.routes", before: :add_routing_paths do
         # Mount the extra admin routes to Decidim::Admin::Engine because
         # otherwise they get mounted under the component itself. We need these
         # specific routes at the admin level.
@@ -52,13 +43,15 @@ module Decidim
         nil
       end
 
-      config.to_prepare do
-        # Required for the component settings customizations
-        Decidim::Admin::ApplicationController.send(
-          :helper,
-          Decidim::Ideas::AreaScopesHelper
-        )
-        Decidim::Admin::SettingsHelper.include Decidim::Ideas::Admin::ComponentSettings
+      initializer "decidim_ideas_admin.overrides", after: "decidim.action_controller" do |app|
+        app.config.to_prepare do
+          # Required for the component settings customizations
+          Decidim::Admin::ApplicationController.send(
+            :helper,
+            Decidim::Ideas::AreaScopesHelper
+          )
+          Decidim::Admin::SettingsHelper.include Decidim::Ideas::Admin::ComponentSettings
+        end
       end
     end
   end

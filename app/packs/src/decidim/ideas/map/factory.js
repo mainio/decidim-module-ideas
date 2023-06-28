@@ -1,6 +1,5 @@
-// = require decidim/ideas/map/controller/ideas
-// = require decidim/ideas/map/controller/idea_form
-// = require_self
+import "src/decidim/ideas/map/controller/ideas";
+import "src/decidim/ideas/map/controller/idea_form";
 
 ((exports) => {
   exports.Decidim = exports.Decidim || {};

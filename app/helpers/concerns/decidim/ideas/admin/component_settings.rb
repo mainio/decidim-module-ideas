@@ -58,7 +58,7 @@ module Decidim
                           ""
                         else
                           @ideas_settings_js_included = true
-                          javascript_include_tag("decidim/ideas/admin/component_settings")
+                          javascript_pack_tag("decidim_ideas_admin_component_settings")
                         end
 
                       label + coordinates_element + settings_js

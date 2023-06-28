@@ -2,8 +2,6 @@
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/dropdown" %>
 
   <div id="js-other-actions-wrapper">
-    <%= link_to t("actions.import", scope: "decidim.ideas", name: t("models.idea.name", scope: "decidim.ideas.admin")), new_ideas_import_path, class: "button tiny button--simple" if allowed_to? :import, :ideas %>
-
     <% if allowed_to? :export, :ideas %>
       <%= export_dropdown %>
     <% end %>

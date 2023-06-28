@@ -5,7 +5,7 @@ module Decidim
     # A form object used to create attachments.
     #
     class AttachmentForm < Form
-      include TranslatableAttributes
+      include Decidim::TranslatableAttributes
 
       attribute :title, String
       attribute :file

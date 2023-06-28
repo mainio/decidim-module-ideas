@@ -1,5 +1,5 @@
-// = require decidim/ideas/reset_inputs
-// = require decidim/ideas/info_modals
+import "src/decidim/ideas/reset_inputs";
+import "src/decidim/ideas/info_modals";
 
 ((exports) => {
   const $ = exports.$; // eslint-disable-line

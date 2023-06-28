@@ -17,16 +17,16 @@ module Decidim
         map_options[:center_coordinates] = map_center.split(",").map(&:to_f) if map_center
 
         dynamic_map_for(map_options, map_html_options) do
-          javascript_include_tag "decidim/ideas/map"
+          javascript_pack_tag "decidim_ideas_map"
         end
       end
 
       def file_is_present?(form, attribute)
         file_form = form.object.send attribute
-        return unless file_form
+        return false unless file_form
 
         file = file_form.file
-        return unless file && file.respond_to?(:url)
+        return false unless file && file.respond_to?(:attached?) && file.attached?
 
         file.present?
       end

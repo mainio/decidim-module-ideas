@@ -65,7 +65,7 @@
         </div>
       </div>
     </template>
-    <%= javascript_include_tag "decidim/ideas/map" %>
+    <%= javascript_pack_tag "decidim_ideas_map" %>
   <% end %>
 <% end %>
 
@@ -95,6 +95,4 @@
   <%= link_to t(".see_all_withdrawn"), ideas_path("filter[state]" => "withdrawn") %>
 </div>
 </div>
-<%= javascript_include_tag "decidim/filters" %>
-<%= javascript_include_tag "decidim/results_listing" %>
-<%= javascript_include_tag "decidim/ideas/ideas_list" %>
+<%= javascript_pack_tag "decidim_ideas_ideas_list" %>

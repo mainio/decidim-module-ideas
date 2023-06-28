@@ -2,8 +2,6 @@
 
 require "decidim/dev/common_rake"
 
-Rake.application.options.trace = true
-
 def install_module(path)
   Dir.chdir(path) do
     system("bundle exec rails decidim_favorites:install:migrations")

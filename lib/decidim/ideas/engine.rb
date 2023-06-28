@@ -40,15 +40,8 @@ module Decidim
         root to: "ideas#index"
       end
 
-      initializer "decidim_ideas.assets" do |app|
-        app.config.assets.precompile += %w(decidim_ideas_manifest.js
-                                           decidim/ideas/idea_form.js
-                                           decidim/ideas/ideas_list.js
-                                           decidim/ideas/idea_picker.js
-                                           decidim/ideas/idea_picker_inline.js
-                                           decidim/ideas/idea_picker.scss
-                                           decidim/ideas/idea_picker_inline.scss
-                                           decidim/ideas/map.js)
+      initializer "decidim_plans.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
       initializer "decidim_ideas.content_processors" do |_app|
@@ -223,14 +216,11 @@ module Decidim
         Decidim::Ideas::IdeaType.add_linking_resources_field
       end
 
-      config.to_prepare do
-        # When creating seeds, Decidim goes through all tables and if table name matches a class,
-        # calls "reset_column_information" method for the matching class. Autoload matches table
-        # decidim_ideas_idea_versions with class Decidim::Version which doesn't have above-mentioned
-        # method so seeds crash. To avoid that we call Decidim::Version before we run seeds.
-        Decidim.const_get("Version")
-
-        Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
+      initializer "decidim_ideas.overrides", after: "decidim.action_controller" do |app|
+        app.config.to_prepare do
+          Decidim::Organization.include Decidim::Ideas::CoercableModel
+          Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
+        end
       end
     end
   end

@@ -26,9 +26,9 @@ describe Decidim::Ideas::Idea do
     let(:user) { idea.authors.first }
 
     it "matches attachment" do
-      expect(described_class.data_portability_images(user).first.first.model.title).to eq(image.title)
-      expect(described_class.data_portability_images(user).first.first.model.content_type).to eq(image.content_type)
-      expect(described_class.data_portability_images(user).first.first.model.file_size).to eq(image.file_size)
+      expect(described_class.data_portability_images(user).first.first.record.title).to eq(image.title)
+      expect(described_class.data_portability_images(user).first.first.record.content_type).to eq(image.content_type)
+      expect(described_class.data_portability_images(user).first.first.record.file_size).to eq(image.file_size)
     end
   end
 

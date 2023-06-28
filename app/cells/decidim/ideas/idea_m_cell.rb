@@ -121,7 +121,7 @@ module Decidim
         return unless cat
 
         content_tag(:span, class: "card__category__icon", "aria-hidden": true) do
-          image_tag(cat.category_icon.url, alt: full_category)
+          image_tag(cat.attached_uploader(:category_icon).path, alt: full_category)
         end
       end
 
@@ -141,7 +141,7 @@ module Decidim
       end
 
       def has_image?
-        model.image && model.image.url.present? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
+        model.image && model.image.attached? && model.image.file.content_type.start_with?("image") && model.component.settings.image_allowed?
       end
 
       def resource_image_path
@@ -157,9 +157,8 @@ module Decidim
         return unless has_category?
         return unless cat.respond_to?(:category_image)
         return unless cat.category_image
-        return cat.category_image.url unless cat.category_image.respond_to?(:card)
 
-        cat.category_image.card.url
+        cat.attached_uploader(:category_image).path(variant: :card)
       end
 
       def icon_category(cat = nil)
@@ -167,7 +166,7 @@ module Decidim
 
         cat ||= model.category
         return unless cat.respond_to?(:category_icon)
-        return cat if cat.category_icon && cat.category_icon.url
+        return cat if cat.category_icon && cat.category_icon.attached?
         return unless cat.parent
 
         icon_category(cat.parent)

@@ -20,11 +20,11 @@ module Decidim
         unless snippets.any?(:idea_picker_inline)
           snippets.add(
             :idea_picker_inline,
-            javascript_include_tag("decidim/ideas/idea_picker_inline")
+            javascript_pack_tag("decidim_ideas_idea_picker_inline")
           )
           snippets.add(
             :idea_picker_inline,
-            stylesheet_link_tag("decidim/ideas/idea_picker_inline")
+            stylesheet_pack_tag("decidim_ideas_idea_picker_inline")
           )
 
           # This will display the snippets in the <head> part of the page.

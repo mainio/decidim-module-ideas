@@ -101,13 +101,15 @@ module Decidim
 
       def copy_attachments(original_idea, idea)
         original_idea.attachments.each do |attachment|
-          new_attachment = Decidim::Attachment.new(attachment.attributes.slice("content_type", "description", "file", "file_size", "title", "weight"))
+          new_attachment = Decidim::Attachment.new(
+            attachment.attributes.slice("content_type", "description", "file_size", "title", "weight")
+          )
           new_attachment.attached_to = idea
 
-          if File.exist?(attachment.file.file.path)
-            new_attachment.file = File.open(attachment.file.file.path)
+          if attachment.file.attached?
+            new_attachment.file = attachment.file.blob
           else
-            new_attachment.remote_file_url = attachment.url
+            new_attachment.attached_uploader(:file).remote_url = attachment.attached_uploader(:file)
           end
 
           new_attachment.save!
