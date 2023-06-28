@@ -640,11 +640,6 @@ fi:
         description: Ideoiden lukumäärä
         object: ideat
         title: Ideat
-    pages:
-      home:
-        statistics:
-          ideas_accepted: Hyväksytyt ideat
-          ideas_count: Ideat
     participatory_processes:
       participatory_process_groups:
         highlighted_ideas:
@@ -668,3 +663,6 @@ fi:
         idea_project: 'Idea esiintyy seuraavissa äänestettävissä ehdotuksissa:'
         idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
         project_idea: 'Liitetyt ideat:'
+    statistics:
+      ideas_accepted: Accepted ideas
+      ideas_count: Ideas
