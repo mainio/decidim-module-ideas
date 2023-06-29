@@ -1,35 +1,30 @@
-((exports) => {
-  // const L = exports.L; // eslint-disable-line
+import MapMarkersController from "src/decidim/map/controller/markers";
 
-  exports.Decidim = exports.Decidim || {};
+export default class IdeasMapController extends MapMarkersController {
+  start() {
+    this.markerClusters = null;
 
-  const MapMarkersController = exports.Decidim.MapMarkersController;
+    let markersWithLocation = [];
+    if (Array.isArray(this.config.markers)) {
+      markersWithLocation = this.config.markers.filter((marker) => marker.latitude && marker.longitude);
+    }
 
-  class IdeasMapController extends MapMarkersController {
-    start() {
-      this.markerClusters = null;
+    if (markersWithLocation.length > 0) {
+      this.addMarkers(markersWithLocation);
 
-      let markersWithLocation = [];
-      if (Array.isArray(this.config.markers)) {
-        markersWithLocation = this.config.markers.filter((marker) => marker.latitude && marker.longitude);
-      }
-
-      if (markersWithLocation.length > 0) {
-        this.addMarkers(this.config.markers);
-
-        if (this.config.markers.length < 10) {
-          this.map.setZoom(10);
-        }
-      } else if (Array.isArray(this.config.centerCoordinates) && this.config.centerCoordinates.length > 1) {
-        this.map.panTo(this.config.centerCoordinates);
+      if (this.config.markers.length < 10) {
         this.map.setZoom(10);
+      }
+    } else {
+      this.map.fitWorld();
+
+      if (Array.isArray(this.config.centerCoordinates) && this.config.centerCoordinates.length > 1) {
+        this.map.setZoom(10);
+        this.map.panTo(this.config.centerCoordinates);
       } else {
-        this.map.fitWorld();
-        this.map.panTo([0, 0]);
         this.map.setZoom(1)
+        this.map.panTo([0, 0]);
       }
     }
   }
-
-  exports.Decidim.IdeasMapController = IdeasMapController;
-})(window);
+}
