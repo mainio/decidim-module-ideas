@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe Decidim::Ideas::Metrics::IdeaParticipantsMetricMeasure do
   let(:day) { Time.zone.yesterday }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:not_valid_resource) { create(:dummy_resource) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
 

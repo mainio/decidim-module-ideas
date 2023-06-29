@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module ContentParsers
     describe IdeaParser do
-      let(:organization) { create(:organization) }
+      let(:organization) { create(:organization, tos_version: Time.current) }
       let(:component) { create(:idea_component, organization: organization) }
       let(:context) { { current_organization: organization } }
       let!(:parser) { described_class.new(content, context) }
@@ -64,7 +64,7 @@ module Decidim
 
         context "when content links to an organization different from current" do
           let(:idea) { create(:idea, component: component) }
-          let(:external_idea) { create(:idea, component: create(:idea_component, organization: create(:organization))) }
+          let(:external_idea) { create(:idea, component: create(:idea_component, organization: create(:organization, tos_version: Time.current))) }
           let(:content) do
             url = idea_url(external_idea)
             "This content references idea #{url}."

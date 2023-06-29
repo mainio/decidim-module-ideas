@@ -5,11 +5,11 @@ require "spec_helper"
 describe "Admin filters ideas", type: :system do
   include_context "when managing a component"
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let!(:component) { create(:idea_component, :with_creation_enabled, manifest: manifest, participatory_space: participatory_process) }
   let(:manifest) { Decidim.find_component_manifest("ideas") }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, :confirmed, organization: organization) }
   let!(:parent_area_scope) { create(:scope, organization: organization) }
 
   let(:idea_title) { ::Faker::Lorem.sentence }

@@ -12,7 +12,7 @@ module Decidim
         let(:idea_ids) { ideas.map(&:id) }
         let(:ideas) { create_list(:idea, 5, :accepted_not_published, component: component) }
         let(:component) { create(:idea_component) }
-        let(:user) { create(:user, :admin) }
+        let(:user) { create(:user, :confirmed, :admin) }
 
         it "broadcasts ok" do
           expect { subject }.to broadcast(:ok)

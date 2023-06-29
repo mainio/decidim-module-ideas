@@ -3,7 +3,7 @@
 shared_examples "a idea form" do |options|
   subject { form }
 
-  let(:organization) { create(:organization, available_locales: [:en]) }
+  let(:organization) { create(:organization, tos_version: Time.current, available_locales: [:en]) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let(:title) do
@@ -20,8 +20,8 @@ shared_examples "a idea form" do |options|
       { en: "Everything would be better" }
     end
   end
-  let(:author) { create(:user, organization: organization) }
-  let(:user_group) { create(:user_group, :verified, users: [author], organization: organization) }
+  let(:author) { create(:user, :confirmed, organization: organization) }
+  let(:user_group) { create(:user_group, :confirmed, :verified, users: [author], organization: organization) }
   let(:user_group_id) { user_group.id }
   let(:category) { create(:category, participatory_space: participatory_space) }
   let(:parent_scope) { create(:scope, organization: organization) }
@@ -324,7 +324,7 @@ end
 shared_examples "a idea form with meeting as author" do |options|
   subject { form }
 
-  let(:organization) { create(:organization, available_locales: [:en]) }
+  let(:organization) { create(:organization, tos_version: Time.current, available_locales: [:en]) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let(:title) { { en: "More sidewalks and less roads!" } }

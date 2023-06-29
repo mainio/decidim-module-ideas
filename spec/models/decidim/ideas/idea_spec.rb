@@ -6,7 +6,7 @@ require "decidim/core/test/shared_examples/counts_commentators_as_newsletter_par
 describe Decidim::Ideas::Idea do
   subject { idea }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:component) { build :idea_component, organization: organization }
   let(:idea) { create(:idea, component: component) }
 
@@ -63,7 +63,7 @@ describe Decidim::Ideas::Idea do
     end
 
     describe "#editable_by?" do
-      let(:author) { create(:user, organization: organization) }
+      let(:author) { create(:user, :confirmed, organization: organization) }
 
       context "when user is author" do
         let(:idea) { create :idea, component: component, users: [author], updated_at: Time.current }
@@ -126,7 +126,7 @@ describe Decidim::Ideas::Idea do
     end
 
     describe "#withdrawable_by" do
-      let(:author) { create(:user, organization: organization) }
+      let(:author) { create(:user, :confirmed, organization: organization) }
 
       context "when user is author" do
         let(:idea) { create :idea, component: component, users: [author], created_at: Time.current }

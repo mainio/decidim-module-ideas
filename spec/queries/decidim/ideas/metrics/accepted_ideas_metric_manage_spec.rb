@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, :published, participatory_space: participatory_space) }
   let(:day) { Time.zone.yesterday }

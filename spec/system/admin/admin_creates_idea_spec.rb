@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Admin creates idea", type: :system do
   include_context "when managing a component"
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let!(:component) do
     create(:idea_component,
            :with_creation_enabled,
@@ -20,7 +20,7 @@ describe "Admin creates idea", type: :system do
   let(:scope) { create :scope, organization: organization }
   let!(:subscope) { create :scope, parent: scope }
   let!(:category) { create :category, participatory_space: participatory_process }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, :confirmed, organization: organization) }
 
   let(:idea_title) { ::Faker::Lorem.sentence }
   let(:idea_body) { ::Faker::Lorem.paragraph }

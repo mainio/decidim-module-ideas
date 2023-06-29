@@ -20,12 +20,12 @@ describe Decidim::Ideas::Admin::UpdateIdea do
       area_scope_id: area_scope.id
     }
   end
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let(:category) { create(:category, participatory_space: participatory_space) }
   let(:area_scope) { create(:scope, organization: organization) }
-  let(:user) { create(:user, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
 
   before do
     allow(form).to receive(:current_organization).and_return(organization)

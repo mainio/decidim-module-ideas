@@ -8,7 +8,7 @@ describe Decidim::Ideas::IdeasPickerCell, type: :cell do
   subject { my_cell.call }
 
   let(:my_cell) { cell("decidim/ideas/ideas_picker", component) }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let!(:ideas) { create_list(:idea, 30, :accepted, component: component) }

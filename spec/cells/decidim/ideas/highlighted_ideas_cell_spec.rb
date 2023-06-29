@@ -8,7 +8,7 @@ describe Decidim::Ideas::HighlightedIdeasCell, type: :cell do
   subject { my_cell.call }
 
   let(:my_cell) { cell("decidim/ideas/highlighted_ideas", participatory_space) }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component_1) { create(:idea_component, participatory_space: participatory_space) }
   let(:component_2) { create(:idea_component, participatory_space: participatory_space) }

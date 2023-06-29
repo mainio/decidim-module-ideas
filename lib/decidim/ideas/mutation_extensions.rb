@@ -11,7 +11,7 @@ module Decidim
       #
       # Returns nothing.
       def self.included(type)
-        type.field :idea, Decidim::Ideas::IdeaMutationType do
+        type.field :idea, Decidim::Ideas::IdeaMutationType, null: false do
           description "An idea"
 
           argument :id, GraphQL::Types::ID, description: "The idea's id", required: true

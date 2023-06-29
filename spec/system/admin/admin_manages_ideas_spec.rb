@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Admin creates idea", type: :system do
   include_context "when managing a component"
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
   let!(:component) do
     create(:idea_component,

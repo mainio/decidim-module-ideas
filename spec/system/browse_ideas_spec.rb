@@ -102,8 +102,8 @@ describe "User browses ideas", type: :system do
   end
 
   describe "comment another user's idea" do
-    let!(:idea2) { create(:idea, component: component, users: [create(:user, organization: organization)]) }
-    let!(:idea3) { create(:idea, title: idea3_title, body: idea3_body, component: component, users: [create(:user, organization: organization)]) }
+    let!(:idea2) { create(:idea, component: component, users: [create(:user, :confirmed, organization: organization)]) }
+    let!(:idea3) { create(:idea, title: idea3_title, body: idea3_body, component: component, users: [create(:user, :confirmed, organization: organization)]) }
     let(:idea3_title) { ::Faker::Lorem.sentence }
     let(:idea3_body) { ::Faker::Lorem.paragraph }
     let(:add_comment) { "Heres link to another idea: http://#{organization.host}/processes/#{participatory_process.slug}/f/#{component.id}/ideas/#{idea3.id}" }

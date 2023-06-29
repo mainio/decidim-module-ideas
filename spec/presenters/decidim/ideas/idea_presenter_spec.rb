@@ -6,7 +6,7 @@ describe Decidim::Ideas::IdeaPresenter do
   let(:presenter) { described_class.new(idea) }
   let(:idea) { create(:idea, component: component) }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
 
@@ -110,7 +110,7 @@ describe Decidim::Ideas::IdeaPresenter do
           <<~HTML
             This is the idea body.
 
-            <a href="https://decidim.org" target="_blank" rel="nofollow noopener">https://decidim.org</a>
+            <a href="https://decidim.org" target="_blank" rel="nofollow noopener noreferrer ugc">https://decidim.org</a>
           HTML
         )
       end
@@ -184,7 +184,7 @@ describe Decidim::Ideas::IdeaPresenter do
   describe "#versions", versioning: true do
     subject { presenter.versions }
 
-    let(:admin) { create(:user, :admin, organization: organization) }
+    let(:admin) { create(:user, :confirmed, :admin, organization: organization) }
 
     before do
       # Same update twice on purpose as it should not return duplicate changes.

@@ -9,7 +9,7 @@ describe Decidim::Ideas::Admin::AnswerIdea do
   let(:form) { Decidim::Ideas::Admin::IdeaAnswerForm.new(answer: { en: "Good idea." }, internal_state: "accepted") }
   let(:idea) { create(:idea, component: component) }
   let(:component) { create(:idea_component) }
-  let(:user) { create(:user, :admin) }
+  let(:user) { create(:user, :confirmed, :admin) }
 
   before do
     allow(form).to receive(:current_component).and_return(component)

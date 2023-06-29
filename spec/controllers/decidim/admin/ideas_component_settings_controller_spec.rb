@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::Admin::IdeasComponentSettingsController, type: :controller do
   routes { Decidim::Admin::Engine.routes }
 
-  let(:user) { create(:user, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
   let(:parent_scope) { create(:scope, organization: organization) }

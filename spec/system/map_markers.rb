@@ -5,7 +5,7 @@ require "spec_helper"
 describe "map markers", type: :system do
   include_context "with a component"
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:component) { create(:idea_component, :with_geocoding_enabled, organization: organization) }
   let!(:area_scope_parent) { create(:area_scope_parent, organization: organization) }
 

@@ -11,9 +11,9 @@ module Decidim
         let(:command) { described_class.new(idea, initial_state) }
         let(:idea) { create(:idea, :accepted) }
         let(:initial_state) { nil }
-        let(:current_user) { create(:user, :admin) }
+        let(:current_user) { create(:user, :confirmed, :admin) }
         let(:follow) { create(:follow, followable: idea, user: follower) }
-        let(:follower) { create(:user, organization: idea.organization) }
+        let(:follower) { create(:user, :confirmed, organization: idea.organization) }
 
         before do
           follow

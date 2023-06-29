@@ -30,7 +30,7 @@ describe Decidim::Ideas::SectionTypeEdit::LinkIdeasInlineCell, type: :cell do
   end
   let(:template) { template_class.new(ActionView::LookupContext.new(ActionController::Base.view_paths), {}, controller) }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:plan_component, participatory_space: participatory_space) }
   let(:section) { create(:section, section_type: "link_ideas", component: component) }

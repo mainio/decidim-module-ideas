@@ -7,7 +7,7 @@ RSpec.describe "Idea component area coordinates", type: :request do
 
   subject { response.body }
 
-  let(:user) { create(:user, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
   let(:parent_scope) { create(:scope, organization: organization) }
@@ -34,7 +34,7 @@ RSpec.describe "Idea component area coordinates", type: :request do
   end
 
   context "with a regular user" do
-    let(:user) { create(:user, organization: organization) }
+    let(:user) { create(:user, :confirmed, organization: organization) }
 
     it "redirects" do
       expect(response.status).to be(302)

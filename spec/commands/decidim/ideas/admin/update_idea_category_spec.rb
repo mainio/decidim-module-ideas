@@ -7,7 +7,7 @@ describe Decidim::Ideas::Admin::UpdateIdeaCategory do
 
   let(:command) { described_class.new(category&.id, ideas.map(&:id)) }
   let!(:ideas) { create_list(:idea, 10, component: component) }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let(:category) { create(:category, participatory_space: participatory_space) }

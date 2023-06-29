@@ -7,7 +7,7 @@ describe Decidim::Ideas::DestroyIdea do
 
   let(:command) { described_class.new(idea, user) }
   let!(:idea) { create(:idea, :draft, component: component, users: [user]) }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:idea_component, participatory_space: participatory_space) }
   let(:user) { create(:user, organization: organization) }

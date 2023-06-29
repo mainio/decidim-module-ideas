@@ -140,7 +140,7 @@ module Decidim
         end
 
         describe "when current user is NOT the author of the idea" do
-          let(:current_user) { create(:user, organization: component.organization) }
+          let(:current_user) { create(:user, :confirmed, organization: component.organization) }
           let(:idea) { create(:idea, component: component, users: [current_user]) }
 
           context "and the idea has no supports" do

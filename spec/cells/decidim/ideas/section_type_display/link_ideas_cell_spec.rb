@@ -11,7 +11,7 @@ describe Decidim::Ideas::SectionTypeDisplay::LinkIdeasCell, type: :cell do
 
   let(:my_cell) { cell("decidim/ideas/section_type_display/link_ideas", content) }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
   let(:component) { create(:plan_component, participatory_space: participatory_space) }
   let(:section) { create(:section, section_type: "link_ideas", component: component) }

@@ -21,7 +21,7 @@ describe Decidim::Ideas::IdeaBuilder do
   let(:area_scope) { area_scope_parent.children.sample }
   let(:component) { create(:idea_component) }
   let(:category) { create(:category, participatory_space: component.participatory_space) }
-  let(:author) { create(:user, organization: organization) }
+  let(:author) { create(:user, :confirmed, organization: organization) }
   let(:action_user) { author }
   let(:user_group_author) { nil }
 
@@ -64,7 +64,7 @@ describe Decidim::Ideas::IdeaBuilder do
     context "without author" do
       let(:original_idea) { create(:idea, users: [original_author], **attributes) }
       let(:author) { nil }
-      let(:original_author) { create(:user, organization: organization) }
+      let(:original_author) { create(:user, :confirmed, organization: organization) }
 
       it "copies the idea with authors" do
         expect(subject).to be_a(Decidim::Ideas::Idea)

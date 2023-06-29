@@ -22,10 +22,6 @@ module Decidim
         end
       end
 
-      def filter_link_params(params = nil)
-        super(params).merge(resource_utm_params)
-      end
-
       private
 
       def preview?
