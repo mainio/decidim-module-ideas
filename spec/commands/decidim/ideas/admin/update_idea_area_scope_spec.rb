@@ -31,7 +31,7 @@ describe Decidim::Ideas::Admin::UpdateIdeaAreaScope do
       expect { subject }.to broadcast(:invalid_scope)
 
       ideas.each do |idea|
-        expect(idea.reload.area_scope).not_to be(nil)
+        expect(idea.reload.area_scope).not_to be_nil
       end
     end
   end

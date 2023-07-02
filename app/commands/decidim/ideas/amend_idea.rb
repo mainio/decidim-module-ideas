@@ -125,13 +125,12 @@ module Decidim
             if process_image?
               create_image
             elsif !image_removed? && amendable.image.present?
-              title = begin
-                if @form.image.title.blank?
-                  amendable.image.title if title.blank?
-                else
-                  { I18n.locale.to_s => @form.image.title }
-                end
-              end
+              title = if @form.image.title.blank?
+                        amendable.image.title if title.blank?
+                      else
+                        { I18n.locale.to_s => @form.image.title }
+                      end
+
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
                 title: title,
@@ -142,13 +141,12 @@ module Decidim
             if process_attachments?
               create_attachment
             elsif !attachment_removed? && amendable.actual_attachments.any?
-              title = begin
-                if @form.attachment.title.blank?
-                  amendable.actual_attachments.first.title
-                else
-                  { I18n.locale.to_s => @form.attachment.title }
-                end
-              end
+              title = if @form.attachment.title.blank?
+                        amendable.actual_attachments.first.title
+                      else
+                        { I18n.locale.to_s => @form.attachment.title }
+                      end
+
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
                 title: title,

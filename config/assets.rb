@@ -19,7 +19,7 @@ Decidim::Webpacker.register_entrypoints(
   decidim_ideas_map: "#{base_path}/app/packs/entrypoints/decidim_ideas_map.js",
   decidim_ideas_admin_component_settings: "#{base_path}/app/packs/entrypoints/decidim_ideas_admin_component_settings.js",
   decidim_ideas_admin_ideas_form: "#{base_path}/app/packs/entrypoints/decidim_ideas_admin_ideas_form.js",
-  decidim_ideas_admin_ideas: "#{base_path}/app/packs/entrypoints/decidim_ideas_admin_ideas.js",
+  decidim_ideas_admin_ideas: "#{base_path}/app/packs/entrypoints/decidim_ideas_admin_ideas.js"
 )
 
 # Register the main application's stylesheet include statement

@@ -39,7 +39,7 @@ describe Decidim::Ideas::Admin::UpdateIdea do
   end
 
   it "updates the idea" do
-    expect { subject }.to change(Decidim::Ideas::Idea, :count).by(0)
+    expect { subject }.not_to change(Decidim::Ideas::Idea, :count)
 
     idea.reload
     expect(idea.title).to eq(idea_data[:title])

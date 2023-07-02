@@ -11,16 +11,16 @@ describe Decidim::Ideas::HighlightedIdeasForComponentCell, type: :cell do
   let(:organization) { participatory_space.organization }
   let(:participatory_space) { component.participatory_space }
   let(:component) { create(:idea_component) }
-  let!(:idea_1) { create(:idea, component: component) }
-  let!(:idea_2) { create(:idea, component: component) }
+  let!(:idea1) { create(:idea, component: component) }
+  let!(:idea2) { create(:idea, component: component) }
   let!(:unpublished_idea) { create(:idea, :unpublished, component: component) }
   let!(:withdrawn_idea) { create(:idea, :withdrawn, component: component) }
   let!(:hidden_idea) { create(:idea, :hidden, component: component) }
 
   it "renders only the visible ideas" do
     expect(subject).to have_css(".card.card--idea", count: 2)
-    expect(subject).to have_content(translated(idea_1.title))
-    expect(subject).to have_content(translated(idea_2.title))
+    expect(subject).to have_content(translated(idea1.title))
+    expect(subject).to have_content(translated(idea2.title))
     expect(subject).not_to have_content(translated(unpublished_idea.title))
     expect(subject).not_to have_content(translated(withdrawn_idea.title))
     expect(subject).not_to have_content(translated(hidden_idea.title))

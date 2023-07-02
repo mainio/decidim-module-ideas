@@ -134,17 +134,15 @@ Decidim.register_component(:ideas) do |component|
       email: "admin@example.org"
     )
 
-    step_settings = begin
-      if participatory_space.allows_steps?
-        {
-          participatory_space.active_step.id => {
-            creation_enabled: true
-          }
-        }
-      else
-        {}
-      end
-    end
+    step_settings = if participatory_space.allows_steps?
+                      {
+                        participatory_space.active_step.id => {
+                          creation_enabled: true
+                        }
+                      }
+                    else
+                      {}
+                    end
 
     # if participatory_space.scope
     #   scopes = participatory_space.scope.descendants
@@ -202,19 +200,18 @@ Decidim.register_component(:ideas) do |component|
     end
 
     5.times do |n|
-      state, answer, state_published_at = begin
-        if n > 3
-          ["accepted", Decidim::Faker::Localized.sentence(word_count: 10), Time.current]
-        elsif n > 2
-          ["rejected", nil, Time.current]
-        elsif n > 1
-          ["evaluating", nil, Time.current]
-        elsif n.positive?
-          ["accepted", Decidim::Faker::Localized.sentence(word_count: 10), nil]
-        else
-          [nil, nil, nil]
-        end
-      end
+      state, answer, state_published_at = if n > 3
+                                            ["accepted", Decidim::Faker::Localized.sentence(word_count: 10), Time.current]
+                                          elsif n > 2
+                                            ["rejected", nil, Time.current]
+                                          elsif n > 1
+                                            ["evaluating", nil, Time.current]
+                                          elsif n.positive?
+                                            ["accepted", Decidim::Faker::Localized.sentence(word_count: 10), nil]
+                                          else
+                                            [nil, nil, nil]
+                                          end
+
       params = {
         component: component,
         category: participatory_space.categories.sample,

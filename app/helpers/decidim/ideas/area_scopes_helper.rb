@@ -19,12 +19,10 @@ module Decidim
       end
 
       def area_scopes_parent(component = current_component)
-        @area_scopes_parent ||= begin
-          parent_id = component.settings.area_scope_parent_id
-          return unless parent_id
+        parent_id = component.settings.area_scope_parent_id
+        return unless parent_id
 
-          Decidim::Scope.find_by(id: parent_id)
-        end
+        @area_scopes_parent ||= Decidim::Scope.find_by(id: parent_id)
       end
 
       def area_scopes_coordinates(component = current_component)

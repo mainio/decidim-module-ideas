@@ -23,13 +23,12 @@ module Decidim
         end
 
         if authors.blank? || authors.is_a?(Integer)
-          authors_amount = begin
-            if authors.is_a?(Integer)
-              authors
-            else
-              10
-            end
-          end
+          authors_amount = if authors.is_a?(Integer)
+                             authors
+                           else
+                             10
+                           end
+
           authors_amount = amount if authors_amount > amount
 
           # Create a dummy authors if they are not provided

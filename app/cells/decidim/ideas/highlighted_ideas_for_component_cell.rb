@@ -19,7 +19,7 @@ module Decidim
       def ideas
         @ideas ||= Decidim::Ideas::Idea.published.not_hidden.except_withdrawn
                                        .where(component: model)
-                                       .order_randomly(rand * 2 - 1)
+                                       .order_randomly((rand * 2) - 1)
       end
 
       def ideas_to_render

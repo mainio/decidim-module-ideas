@@ -68,21 +68,17 @@ module Decidim
       end
 
       def topcategory
-        @topcategory ||= begin
-          return if idea.category.blank?
-          return idea.category if idea.category.parent_id.blank?
+        return if idea.category.blank?
+        return idea.category if idea.category.parent_id.blank?
 
-          idea.category.parent
-        end
+        @topcategory ||= idea.category.parent
       end
 
       def subcategory
-        @subcategory ||= begin
-          return if idea.category.blank?
-          return if idea.category.parent_id.blank?
+        return if idea.category.blank?
+        return if idea.category.parent_id.blank?
 
-          idea.category
-        end
+        @subcategory ||= idea.category
       end
 
       def has_coordinates?
@@ -90,25 +86,22 @@ module Decidim
       end
 
       def coordinates
-        @coordinates ||= begin
-          return area_scope_coordinates unless has_coordinates?
+        return area_scope_coordinates unless has_coordinates?
 
-          { latitude: idea.latitude, longitude: idea.longitude }
-        end
+        @coordinates ||= { latitude: idea.latitude, longitude: idea.longitude }
       end
 
       def area_scope_coordinates
-        @area_scope_coordinates ||= begin
-          return blank_coordinates if idea.area_scope.blank?
+        return @area_scope_coordinates if @area_scope_coordinates
+        return blank_coordinates if idea.area_scope.blank?
 
-          scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s.to_sym]
-          return blank_coordinates if scope_coordinates.blank?
+        scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s.to_sym]
+        return blank_coordinates if scope_coordinates.blank?
 
-          latlng = scope_coordinates.split(",")
-          return blank_coordinates if latlng.length < 2
+        latlng = scope_coordinates.split(",")
+        return blank_coordinates if latlng.length < 2
 
-          { latitude: latlng[0].to_f, longitude: latlng[1].to_f }
-        end
+        @area_scope_coordinates ||= { latitude: latlng[0].to_f, longitude: latlng[1].to_f }
       end
 
       def blank_coordinates

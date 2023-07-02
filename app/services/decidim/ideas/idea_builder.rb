@@ -73,22 +73,20 @@ module Decidim
         )
         origin_attributes.delete("decidim_component_id") if extra_attributes.has_key?(:component) || extra_attributes.has_key?("component")
 
-        idea = begin
-          if author.nil?
-            create_with_authors(
-              attributes: origin_attributes,
-              original_idea: original_idea,
-              action_user: action_user
-            )
-          else
-            create(
-              attributes: origin_attributes,
-              author: author,
-              user_group_author: user_group_author,
-              action_user: action_user
-            )
-          end
-        end
+        idea = if author.nil?
+                 create_with_authors(
+                   attributes: origin_attributes,
+                   original_idea: original_idea,
+                   action_user: action_user
+                 )
+               else
+                 create(
+                   attributes: origin_attributes,
+                   author: author,
+                   user_group_author: user_group_author,
+                   action_user: action_user
+                 )
+               end
 
         idea.link_resources(original_idea, "copied_from_component") unless skip_link
         copy_attachments(original_idea, idea)

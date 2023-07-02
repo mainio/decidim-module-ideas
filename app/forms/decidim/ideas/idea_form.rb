@@ -170,12 +170,10 @@ module Decidim
       end
 
       def area_parent_scope
-        @area_parent_scope ||= begin
-          parent_scope_id = current_component.settings.area_scope_parent_id
-          return if parent_scope_id.blank?
+        parent_scope_id = current_component.settings.area_scope_parent_id
+        return if parent_scope_id.blank?
 
-          current_organization.scopes.find_by(id: parent_scope_id)
-        end
+        @area_parent_scope ||= current_organization.scopes.find_by(id: parent_scope_id)
       end
 
       # This method will add an error to the `attachment` field only if there's

@@ -10,7 +10,7 @@ module Decidim::Ideas
 
     let(:my_cell) { cell("decidim/ideas/idea_m", idea, context: { show_space: show_space }) }
     let(:cell_html) { my_cell.call }
-    let(:created_at) { Time.current - 1.month }
+    let(:created_at) { 1.month.ago }
     let(:published_at) { Time.current }
     let(:component) { create(:idea_component, :with_attachments_allowed, :with_card_image_allowed) }
     let!(:idea) { create(:idea, component: component, created_at: created_at, published_at: published_at) }

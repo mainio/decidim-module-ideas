@@ -71,7 +71,7 @@ describe "Admin creates idea", type: :system do
     it "hides" do
       find(".icon--eye").click
       expect(page).to have_content("Resource successfully hidden")
-      expect(Decidim::Ideas::Idea.find(idea.id).hidden?).to eq(true)
+      expect(Decidim::Ideas::Idea.find(idea.id).hidden?).to be(true)
     end
   end
 end

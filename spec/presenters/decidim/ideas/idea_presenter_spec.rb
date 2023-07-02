@@ -144,7 +144,7 @@ describe Decidim::Ideas::IdeaPresenter do
       let(:idea) { create(:idea, area_scope: false, component: component) }
 
       it "returns nil" do
-        expect(subject).to be(nil)
+        expect(subject).to be_nil
       end
     end
   end
@@ -160,7 +160,7 @@ describe Decidim::Ideas::IdeaPresenter do
       let(:idea) { create(:idea, category: false, component: component) }
 
       it "returns nil" do
-        expect(subject).to be(nil)
+        expect(subject).to be_nil
       end
     end
   end
@@ -176,7 +176,7 @@ describe Decidim::Ideas::IdeaPresenter do
       let(:idea) { create(:idea, :draft, component: component) }
 
       it "returns nil" do
-        expect(subject).to be(nil)
+        expect(subject).to be_nil
       end
     end
   end

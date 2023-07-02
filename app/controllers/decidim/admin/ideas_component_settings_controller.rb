@@ -19,13 +19,11 @@ module Decidim
         raise ActionController::RoutingError, "Not found" unless settings_manifest
         raise ActionController::RoutingError, "Not found" if settings_manifest.type != :idea_area_scope_coordinates
 
-        value = begin
-          if component
-            area_scopes_coordinates(component)
-          else
-            {}
-          end
-        end
+        value = if component
+                  area_scopes_coordinates(component)
+                else
+                  {}
+                end
 
         render(
           partial: "decidim/ideas/admin/shared/area_scope_coordinates",

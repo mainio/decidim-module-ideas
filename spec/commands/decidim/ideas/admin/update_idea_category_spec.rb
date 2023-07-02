@@ -31,7 +31,7 @@ describe Decidim::Ideas::Admin::UpdateIdeaCategory do
       expect { subject }.to broadcast(:invalid_category)
 
       ideas.each do |idea|
-        expect(idea.reload.category).not_to be(nil)
+        expect(idea.reload.category).not_to be_nil
       end
     end
   end
