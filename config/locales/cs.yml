@@ -464,18 +464,15 @@ cs:
           filter_by: Filtrovat podle
           unfold: Rozbalit
         form:
-          attachment_added: Příloha byla přidána
-          attachment_file_required: Soubor musí být připojen
-          attachment_modal_mobile_notice: Tlačítko přidávání je dole v tomto okně. Pokud ho nevidíte na mobilní obrazovce, posuňte obrazovku dolů.
-          attachment_title_required: Název souboru musí být definován
           add_attachment: Přidat přílohu
           add_image: Přidat obrázek
           address_lookup_button: Vyhledat
           attachment_legend: "Přidat přílohu k nápadu"
-          cancel: Zrušit
           characters_min: "(je vyžadováno alespoň %count% znaků)"
           characters_used: "použito %count%/%total% znaků"
           close_modal: Zavřít okno
+          edit_attachment: Change attachment
+          edit_image: Change image
           files_info_attachments: Můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Je třeba přidat názvy k obrázkům a přílohám.
           files_info_images: Můžete přidat jeden obrázek k nápadu, který bude zobrazen s nápadem. Musíte přidat název obrázku.
           files_info_images_and_attachments: Můžete přidat jeden obrázek k nápadu, která bude zobrazen s nápadem. Kromě toho můžete připojit obrázky nebo soubory k nápadu, který pomáhá vizualizovat nápad. Musíte přidat názvy obrázků a příloh.
@@ -483,8 +480,6 @@ cs:
           image_legend: "Přidat obrázek pro nápad"
           remove_attachment: Odstranit přílohu
           remove_attachment_confirm: Opravdu chcete odstranit přílohu z nápadu?
-          remove_image: Odebrat obrázek
-          remove_image_confirm: Jste si jisti, že chcete odebrat obrázek z tohoto nápadu?
           required_fields_text: Povinná pole jsou označena *-znakem.
           reset_field: Obnovit pole
           select_a_category: Vyberte si primární téma pro nápad
