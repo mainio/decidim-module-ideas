@@ -15,8 +15,8 @@ DECIDIM_VERSION = Decidim::Ideas.decidim_version
 gem "decidim", DECIDIM_VERSION
 gem "decidim-ideas", path: "."
 
-gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "master"
-gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "master"
+gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "main"
+gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "main"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", ">= 5.6.2"
@@ -27,7 +27,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
-  gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "develop"
+  gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "main"
   gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "main"
 end
 
