@@ -459,18 +459,15 @@ sv:
           filter_by: Filtrera efter
           unfold: Öppna
         form:
-          attachment_added: Bilaga tillagd
-          attachment_file_required: Filen måste bifogas
-          attachment_modal_mobile_notice: Tilläggsknappen finns längst ner i det här fönstret. Om du inte ser det på en mobilskärm, bläddra nedåt på skärmen.
-          attachment_title_required: Titel måste definieras för filen
           add_attachment: Lägg till bilagan
           add_image: Lägg till bilden
           address_lookup_button: Slå upp
           attachment_legend: "Lägg till en bilaga till idén"
-          cancel: Avbryt
           characters_min: "(minst %count% tecken krävs)"
           characters_used: "%count%/%total% tecken används"
           close_modal: Stäng fönstret
+          edit_attachment: Ändra bilaga
+          edit_image: Ändra bild
           files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
           files_info_images: Du kan lägga till en bild till idén som kommer att visas med idén. Du måste lägga till en titel till bilden.
           files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
@@ -478,8 +475,6 @@ sv:
           image_legend: "Lägg till en bild för idén"
           remove_attachment: Ta bort bilagan
           remove_attachment_confirm: Är du säker på att du vill ta bort bilagan från idén?
-          remove_image: Ta bort bilden
-          remove_image_confirm: Är du säker på att du vill ta bort bilden från idén?
           required_fields_text: Obligatoriska fält är markerade med *-tecknet.
           reset_field: Återställ fältet
           select_a_category: Välj ett primärt tema för idén

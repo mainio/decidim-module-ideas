@@ -139,10 +139,7 @@ describe "User creates idea", type: :system do
 
       context "when uploading a file", processing_uploads_for: Decidim::Ideas::AttachmentUploader do
         it "creates a new idea with image" do
-          click_button "Add an image for the idea"
-          attach_file(:idea_image_file, Decidim::Dev.asset("avatar.jpg"))
-          fill_in :idea_image_title, with: "Foo bar"
-          click_button "Add image"
+          dynamically_attach_file(:idea_images, Decidim::Dev.asset("avatar.jpg"), title: "Foo bar")
           click_button "Continue"
           click_button "Publish"
           expect(page).to have_content("Idea successfully published")

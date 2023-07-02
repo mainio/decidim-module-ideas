@@ -9,24 +9,40 @@ module Decidim
       private
 
       def build_attachment
-        @attachment = Decidim::Ideas::Attachment.new(
-          attached_to: @attached_to, # Keep first
-          title: { I18n.locale.to_s => @form.attachment.title },
-          file: @form.attachment.file,
-          weight: 1
-        )
+        @form.add_actual_attachments.compact_blank.each_with_index do |form_attachment, ind|
+          @attachment = Decidim::Ideas::Attachment.new(
+            attached_to: @attached_to, # Keep first
+            title: { I18n.locale.to_s => form_attachment["title"] },
+            file: form_attachment["file"],
+            weight: 1 + ind
+          )
+        end
+      end
+
+      def create_attachment(*)
+        attachment.attached_to = @attached_to
+        attachment.save!
       end
 
       def attachment_removed?
         return false unless attachment_allowed?
 
-        @form.attachment&.remove_file?
+        @form.actual_attachments.blank?
       end
 
       def attachment_present?
-        return false if attachment_removed?
+        return false unless attachment_allowed?
 
-        @form.attachment.present? && @form.attachment.file.present?
+        @form.add_actual_attachments.compact_blank.present?
+      end
+
+      def attachment_file_uploaded?
+        return false unless attachment_present?
+
+        form_attachment = @form.add_actual_attachments.first
+        return unless form_attachment
+
+        form_attachment["file"].present?
       end
 
       def attachment_allowed?

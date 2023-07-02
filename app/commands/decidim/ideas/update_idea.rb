@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A command with all the business logic when a user updates a idea.
-    class UpdateIdea < Rectify::Command
+    class UpdateIdea < Decidim::Command
       include ::Decidim::Ideas::AttachmentMethods
       include ::Decidim::Ideas::ImageMethods
       include HashtagsMethods

@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A command with all the business logic when amends an idea.
-    class AmendIdea < Rectify::Command
+    class AmendIdea < Decidim::Command
       include ::Decidim::Ideas::AttachmentMethods
       include ::Decidim::Ideas::ImageMethods
       include HashtagsMethods

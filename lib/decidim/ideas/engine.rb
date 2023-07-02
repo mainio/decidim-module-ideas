@@ -218,7 +218,6 @@ module Decidim
 
       initializer "decidim_ideas.overrides", after: "decidim.action_controller" do |app|
         app.config.to_prepare do
-          Decidim::Organization.include Decidim::Ideas::CoercableModel
           Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
         end
       end

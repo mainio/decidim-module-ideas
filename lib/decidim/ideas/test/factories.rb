@@ -3,14 +3,6 @@
 require "decidim/core/test/factories"
 require "decidim/participatory_processes/test/factories"
 
-# Needed until 0.27 to fix the password too similar validation errors that
-# happen randomly.
-FactoryBot.modify do
-  factory :user, class: "Decidim::User" do
-    password { "decidim123456789" }
-  end
-end
-
 FactoryBot.define do
   factory :idea_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :ideas).i18n_name }

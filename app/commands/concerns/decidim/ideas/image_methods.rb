@@ -7,10 +7,11 @@ module Decidim
       private
 
       def build_image
+        form_image = @form.add_images.compact_blank.first
         @image = Decidim::Ideas::Attachment.new(
           attached_to: @attached_to, # Keep first
-          title: { I18n.locale.to_s => @form.image.title },
-          file: @form.image.file,
+          title: { I18n.locale.to_s => form_image["title"] },
+          file: form_image["file"],
           weight: 0
         )
       end
@@ -25,13 +26,13 @@ module Decidim
       def image_removed?
         return false unless image_allowed?
 
-        @form.image&.remove_file?
+        @form.images.blank?
       end
 
       def image_present?
         return false unless image_allowed?
 
-        @form.image.present? && @form.image.file.present?
+        @form.add_images.compact_blank.present?
       end
 
       def create_image

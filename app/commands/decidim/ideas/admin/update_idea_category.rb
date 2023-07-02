@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     module Admin
       #  A command with all the business logic when an admin batch updates ideas category.
-      class UpdateIdeaCategory < Rectify::Command
+      class UpdateIdeaCategory < Decidim::Command
         # Public: Initializes the command.
         #
         # category_id - the category id to update

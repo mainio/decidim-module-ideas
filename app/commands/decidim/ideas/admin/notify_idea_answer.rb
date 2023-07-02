@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     module Admin
       # A command to notify about the change of the published state for a idea.
-      class NotifyIdeaAnswer < Rectify::Command
+      class NotifyIdeaAnswer < Decidim::Command
         # Public: Initializes the command.
         #
         # idea - The idea to write the answer for.

@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     module Admin
       # A command with all the business logic when an admin answers a idea.
-      class AnswerIdea < Rectify::Command
+      class AnswerIdea < Decidim::Command
         # Public: Initializes the command.
         #
         # form - A form object with the params.

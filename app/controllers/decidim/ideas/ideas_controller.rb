@@ -23,7 +23,7 @@ module Decidim
       before_action :edit_form, only: [:edit_draft, :edit]
 
       def index
-        base_query = search.results.published.not_hidden
+        base_query = search.result.published
         @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
@@ -57,8 +57,6 @@ module Decidim
         else
           @idea ||= Idea.new(component: current_component)
           @form = form_idea_model
-          @form.image = form_image_attachment_new
-          @form.attachment = form_attachment_new
         end
       end
 
@@ -84,9 +82,6 @@ module Decidim
 
           on(:invalid) do
             flash.now[:alert] = I18n.t("ideas.create.error", scope: "decidim")
-
-            @form.image = form_image_attachment_new
-            @form.attachment = form_attachment_new
 
             render :new
           end
@@ -210,18 +205,18 @@ module Decidim
         current_component.settings.idea_limit <= users_idea_count.count
       end
 
-      def search_klass
-        IdeaSearch
+      def search_collection
+        Idea.where(component: current_component).not_hidden.with_availability(params[:filter].try(:[], :with_availability))
       end
 
       def default_filter_params
         {
-          search_text: "",
-          origin: default_filter_origin_params,
+          search_text_cont: "",
+          with_any_origin: default_filter_origin_params,
           activity: "all",
-          area_scope_id: "",
-          category_id: "",
-          state: "",
+          with_any_area_scope: "",
+          with_category: "",
+          with_any_state: %w(),
           type: "ideas"
         }
       end
@@ -277,14 +272,6 @@ module Decidim
 
       def form_presenter
         @form_presenter ||= present(@form, presenter_class: Decidim::Ideas::IdeaPresenter)
-      end
-
-      def form_image_attachment_new
-        form(Decidim::Ideas::ImageAttachmentForm).from_params({})
-      end
-
-      def form_attachment_new
-        form(Decidim::Ideas::AttachmentForm).from_params({})
       end
 
       def edit_form

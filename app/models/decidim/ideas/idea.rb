@@ -20,8 +20,9 @@ module Decidim
       include Decidim::Ideas::Traceability
       include Decidim::Loggable
       include Decidim::Fingerprintable
-      include Decidim::DataPortability
+      include Decidim::DownloadYourData
       include Decidim::Amendable
+      include Decidim::FilterableResource
       include Decidim::Favorites::Favoritable
 
       has_paper_trail(
@@ -69,9 +70,8 @@ module Decidim
       scope :except_rejected, -> { where.not(state: "rejected").or(state_not_published) }
       scope :except_withdrawn, -> { where.not(state: "withdrawn").or(where(state: nil)) }
       scope :drafts, -> { where(published_at: nil) }
-      scope :except_drafts, -> { where.not(published_at: nil) }
       scope :published, -> { where.not(published_at: nil) }
-      scope :citizens_origin, lambda {
+      scope :participants_origin, lambda {
         where.not(coauthorships_count: 0)
              .joins(:coauthorships)
              .where.not(decidim_coauthorships: { decidim_author_type: "Decidim::Organization" })
@@ -82,6 +82,31 @@ module Decidim
              .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
              .where.not(decidim_coauthorships: { decidim_user_group_id: nil })
       }
+
+      scope :with_availability, lambda { |availability_key|
+        case availability_key
+        when "withdrawn"
+          withdrawn
+        else
+          except_withdrawn
+        end
+      }
+
+      scope :with_any_area_scope, lambda { |*original_scope_ids|
+        scope_ids = original_scope_ids.flatten
+        return self if scope_ids.include?("all")
+
+        clean_scope_ids = scope_ids
+
+        conditions = []
+        conditions.concat(["? = ANY(decidim_area_scopes.part_of)"] * clean_scope_ids.count) if clean_scope_ids.any?
+
+        includes(:area_scope).joins(
+          "LEFT OUTER JOIN decidim_scopes AS decidim_area_scopes ON decidim_area_scopes.id = decidim_ideas_ideas.area_scope_id"
+        ).where(Arel.sql(conditions.join(" OR ")).to_s, *clean_scope_ids.map(&:to_i))
+      }
+
+      scope_search_multi :with_any_state, [:accepted, :rejected, :evaluating, :state_not_published, :not_answered, :withdrawn]
 
       acts_as_list scope: :decidim_component_id
 
@@ -102,7 +127,7 @@ module Decidim
       end
 
       # Returns a collection scoped by an author.
-      # Overrides this method in DataPortability to support Coauthorable.
+      # Overrides this method in DownloadYourData to support Coauthorable.
       def self.user_collection(author)
         return unless author.is_a?(Decidim::User)
 
@@ -170,6 +195,10 @@ module Decidim
 
       def image
         attachments.find_by(weight: 0)
+      end
+
+      def attachment
+        actual_attachments.first
       end
 
       def actual_attachments
@@ -302,6 +331,10 @@ module Decidim
         Time.current < limit
       end
 
+      # Create i18n ransackers for :title and :body.
+      # Create the :search_text ransacker alias for searching from both of these.
+      ransacker_text_multi :search_text, [:title, :body]
+
       # method for sort_link by number of comments
       ransacker :commentable_comments_count do
         query = <<-SQL.squish
@@ -347,6 +380,14 @@ module Decidim
         )
         SQL
         Arel.sql(query)
+      end
+
+      def self.ransack(params = {}, options = {})
+        IdeaSearch.new(self, params, options)
+      end
+
+      def self.ransackable_scopes(_auth_object = nil)
+        [:with_availability, :with_any_state, :with_any_area_scope, :with_category]
       end
 
       def self.export_serializer

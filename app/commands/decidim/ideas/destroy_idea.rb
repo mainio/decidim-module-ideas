@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A command with all the business logic when a user destroys a draft idea.
-    class DestroyIdea < Rectify::Command
+    class DestroyIdea < Decidim::Command
       # Public: Initializes the command.
       #
       # idea     - The idea to destroy.

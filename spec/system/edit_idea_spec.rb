@@ -63,10 +63,7 @@ describe "User edits idea", type: :system do
         let(:add_attachment_title) { ::Faker::Hipster.sentence }
 
         it "adds image" do
-          click_button "Add an image for the idea"
-          attach_file(:idea_image_file, Decidim::Dev.asset("avatar.jpg"))
-          fill_in :idea_image_title, with: add_attachment_title
-          click_button "Add image"
+          dynamically_attach_file(:idea_images, Decidim::Dev.asset("avatar.jpg"), title: add_attachment_title)
           click_button "Save"
           expect(page).to have_content("Idea successfully updated")
           expect(idea.attachments.last.content_type).to eq("image/jpeg")
@@ -74,10 +71,7 @@ describe "User edits idea", type: :system do
         end
 
         it "adds document" do
-          click_button "Add an attachment for the idea"
-          attach_file(:idea_attachment_file, Decidim::Dev.asset("Exampledocument.pdf"))
-          fill_in :idea_attachment_title, with: add_attachment_title
-          click_button "Add attachment"
+          dynamically_attach_file(:idea_actual_attachments, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
           click_button "Save"
           expect(page).to have_content("Idea successfully updated")
           expect(idea.attachments.last.content_type).to eq("application/pdf")
@@ -110,8 +104,11 @@ describe "User edits idea", type: :system do
       end
 
       it "remove image" do
-        click_button "Remove image"
-        click_link "OK"
+        click_button "Change image"
+        within ".reveal.upload-modal" do
+          click_button "× Remove"
+          click_button "Save"
+        end
         expect { click_button "Save" }.to change(idea2.attachments, :count).by(-1)
         expect(page).to have_content("Idea successfully updated")
       end
@@ -140,8 +137,11 @@ describe "User edits idea", type: :system do
       end
 
       it "removes attached pdf" do
-        click_button "Remove attachment"
-        click_link "OK"
+        click_button "Change attachment"
+        within ".reveal.upload-modal" do
+          click_button "× Remove"
+          click_button "Save"
+        end
         expect { click_button "Save" }.to change(idea3.attachments, :count).by(-1)
         expect(page).to have_content("Idea successfully updated")
       end

@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A command with all the business logic when a user withdraws a new idea.
-    class WithdrawIdea < Rectify::Command
+    class WithdrawIdea < Decidim::Command
       # Public: Initializes the command.
       #
       # idea     - The idea to withdraw.

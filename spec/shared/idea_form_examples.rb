@@ -71,9 +71,9 @@ shared_examples "a idea form" do |options|
     it "only adds errors to this field" do
       subject.valid?
       if options[:i18n]
-        expect(subject.errors.keys).to eq [:title_en]
+        expect(subject.errors.attribute_names).to eq [:title_en]
       else
-        expect(subject.errors.keys).to eq [:title]
+        expect(subject.errors.attribute_names).to eq [:title]
       end
     end
   end
@@ -265,10 +265,10 @@ shared_examples "a idea form" do |options|
 
         if options[:i18n]
           expect(subject.errors.full_messages).to match_array(["Idea en can't be blank", "Attachment Needs to be reattached"])
-          expect(subject.errors.keys).to match_array([:title_en, :attachment])
+          expect(subject.errors.attribute_names).to match_array([:title_en, :attachment])
         else
           expect(subject.errors.full_messages).to match_array(["Idea title can't be blank", "Attachment Needs to be reattached"])
-          expect(subject.errors.keys).to match_array([:title, :attachment])
+          expect(subject.errors.attribute_names).to match_array([:title, :attachment])
         end
       end
     end

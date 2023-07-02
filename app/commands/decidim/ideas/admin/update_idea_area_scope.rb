@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     module Admin
       #  A command with all the business logic when an admin batch updates ideas scope.
-      class UpdateIdeaAreaScope < Rectify::Command
+      class UpdateIdeaAreaScope < Decidim::Command
         include TranslatableAttributes
         # Public: Initializes the command.
         #

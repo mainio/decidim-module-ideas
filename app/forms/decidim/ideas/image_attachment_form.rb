@@ -6,6 +6,7 @@ module Decidim
     #
     class ImageAttachmentForm < Form
       include Decidim::TranslatableAttributes
+      include Decidim::HasUploadValidations
 
       attribute :title, String
       attribute :file
@@ -24,12 +25,18 @@ module Decidim
 
       alias component current_component
       alias organization current_organization
+      alias image file
 
       def map_model(model)
         self.remove_file = false
         return unless model
 
         self.title = translated_attribute(model.title)
+      end
+
+      # Needed for the image upload modal
+      def url
+        "dummy.jpg"
       end
     end
   end

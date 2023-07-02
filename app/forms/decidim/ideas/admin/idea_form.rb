@@ -6,6 +6,8 @@ module Decidim
       # A form object to be used when admin users want to create a idea.
       class IdeaForm < Decidim::Form
         include Decidim::ApplicationHelper
+        include Decidim::AttachmentAttributes
+
         mimic :idea
 
         attribute :user_group_id, Integer
@@ -21,6 +23,9 @@ module Decidim
         attribute :suggested_hashtags, Array[String]
         attribute :image, Decidim::Ideas::ImageAttachmentForm
         attribute :attachment, Decidim::Ideas::AttachmentForm
+
+        attachments_attribute :images
+        attachments_attribute :actual_attachments
 
         validates :title, presence: true, idea_length: {
           minimum: 5,
@@ -43,7 +48,7 @@ module Decidim
         delegate :categories, to: :current_component
 
         def map_model(model)
-          @suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
+          self.suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
 
           self.user_group_id = model.user_groups.first&.id
           return unless model.categorization
@@ -90,7 +95,7 @@ module Decidim
         #
         # Returns a Decidim::Scope
         def area_scope
-          @area_scope ||= current_organization.scopes.find_by(id: @area_scope_id)
+          @area_scope ||= current_organization.scopes.find_by(id: attributes["area_scope_id"])
         end
 
         # Area Scope identifier
@@ -118,7 +123,7 @@ module Decidim
         end
 
         def suggested_hashtags
-          downcased_suggested_hashtags = Array(@suggested_hashtags&.map(&:downcase)).to_set
+          downcased_suggested_hashtags = Array(attributes["suggested_hashtags"]&.map(&:downcase)).to_set
           component_suggested_hashtags.select { |hashtag| downcased_suggested_hashtags.member?(hashtag.downcase) }
         end
 

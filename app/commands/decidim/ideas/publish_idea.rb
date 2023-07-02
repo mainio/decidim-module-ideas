@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A command with all the business logic when a user publishes a draft idea.
-    class PublishIdea < Rectify::Command
+    class PublishIdea < Decidim::Command
       # Public: Initializes the command.
       #
       # idea     - The idea to publish.

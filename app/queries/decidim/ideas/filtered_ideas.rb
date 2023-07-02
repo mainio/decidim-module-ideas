@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A class used to find ideas filtered by components and a date range
-    class FilteredIdeas < Rectify::Query
+    class FilteredIdeas
       # Syntactic sugar to initialize the class and return the queried objects.
       #
       # components - An array of Decidim::Component

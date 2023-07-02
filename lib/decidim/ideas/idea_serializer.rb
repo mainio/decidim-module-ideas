@@ -101,7 +101,7 @@ module Decidim
         @area_scope_coordinates ||= begin
           return blank_coordinates if idea.area_scope.blank?
 
-          scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s]
+          scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s.to_sym]
           return blank_coordinates if scope_coordinates.blank?
 
           latlng = scope_coordinates.split(",")

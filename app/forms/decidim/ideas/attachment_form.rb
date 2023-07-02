@@ -6,6 +6,7 @@ module Decidim
     #
     class AttachmentForm < Form
       include Decidim::TranslatableAttributes
+      include Decidim::HasUploadValidations
 
       attribute :title, String
       attribute :file
@@ -25,6 +26,11 @@ module Decidim
         return unless model
 
         self.title = translated_attribute(model.title)
+      end
+
+      # Needed for the image upload modal
+      def url
+        "dummy.pdf"
       end
     end
   end

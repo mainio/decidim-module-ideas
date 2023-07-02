@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     module Admin
       # A command with all the business logic when a user creates a new idea.
-      class CreateIdea < Rectify::Command
+      class CreateIdea < Decidim::Command
         include ::Decidim::AttachmentMethods
         include GalleryMethods
         include HashtagsMethods

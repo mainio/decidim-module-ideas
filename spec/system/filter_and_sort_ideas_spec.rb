@@ -58,7 +58,7 @@ describe "User filters ideas", type: :system do
     before do
       visit current_path
       within ".filters__section.text_filter" do
-        fill_in "filter[search_text]", with: title
+        fill_in "filter[search_text_cont]", with: title
       end
       perform_search
     end
@@ -83,7 +83,7 @@ describe "User filters ideas", type: :system do
 
     describe "when has filter selected" do
       before do
-        select "Accepted to the next step", from: "filter[state]"
+        select "Accepted to the next step", from: "filter[with_any_state]"
         perform_search
       end
 
@@ -97,7 +97,7 @@ describe "User filters ideas", type: :system do
     end
 
     it "shows not accepted to the next step" do
-      select "Not accepted to the next step", from: "filter[state]"
+      select "Not accepted to the next step", from: "filter[with_any_state]"
       perform_search
       expect(page).to have_content(title3)
       expect(page).not_to have_content(title)
@@ -105,7 +105,7 @@ describe "User filters ideas", type: :system do
     end
 
     it "shows not answered" do
-      select "Not answered", from: "filter[state]"
+      select "Not answered", from: "filter[with_any_state]"
       perform_search
       expect(page).to have_content(title)
       expect(page).not_to have_content(title2)
@@ -144,7 +144,7 @@ describe "User filters ideas", type: :system do
 
     describe "filter selected" do
       before do
-        select area_scope_parent.children.first.name["en"], from: "filter[area_scope_id]"
+        select area_scope_parent.children.first.name["en"], from: "filter[with_any_area_scope]"
         perform_search
       end
 
@@ -169,7 +169,7 @@ describe "User filters ideas", type: :system do
     describe "category selected" do
       before do
         visit current_path
-        select category.name["en"], from: "filter[category_id]"
+        select category.name["en"], from: "filter[with_category]"
         perform_search
       end
 

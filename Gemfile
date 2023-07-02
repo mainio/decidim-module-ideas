@@ -15,33 +15,29 @@ DECIDIM_VERSION = Decidim::Ideas.decidim_version
 gem "decidim", DECIDIM_VERSION
 gem "decidim-ideas", path: "."
 
-gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "release/0.26-stable"
-gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "release/0.26-stable"
+gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "master"
+gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "master"
 
 gem "bootsnap", "~> 1.4"
-gem "puma", ">= 5.5.1"
+gem "puma", ">= 5.6.2"
 
 gem "faker", "~> 2.14"
-
-# Lock Geocoder temporarily to 1.7 due to this issue:
-# https://github.com/decidim/decidim/pull/9470
-gem "geocoder", "~> 1.7.5"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
   gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "develop"
-  gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "release/0.26-stable"
+  gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "main"
 end
 
 group :development do
-  gem "letter_opener_web", "~> 1.3"
+  gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "rubocop-faker"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
-  gem "web-console", "~> 4.0.4"
+  gem "web-console", "~> 4.2"
 end
 
 group :test do

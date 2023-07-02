@@ -253,123 +253,6 @@ import "src/decidim/ideas/info_modals";
     }).trigger("change.decidim.ideas");
   };
 
-  const bindAttachmentModals = () => {
-    const fileMissing = ($file) => $file.get(0).files.length === 0;
-
-    // The attachment fields need to be inside the form when it is submitted but
-    // the reveal is displayed outside of the form. Therefore, we move the
-    // fields to the reveal when it is opened and back to the form when it is
-    // closed.
-    $("#image-modal, #attachment-modal").on("open.zf.reveal", (ev) => {
-      const $reveal = $(ev.target);
-      const $button = $(`button[data-open='${$reveal.attr("id")}']`);
-      const $buttonWrapper = $button.parent();
-      const $fields = $(".attachment-fields", $buttonWrapper);
-      const $file = $("input[type='file']", $fields);
-      const $text = $("input[type='text']", $fields);
-      const $remove = $("input[name$='[remove_file]']", $fields);
-
-      $file.data("original-value", $file.get(0).files);
-      $text.data("original-value", $text.val());
-      $remove.data("original-value", $remove.val()).removeAttr("value");
-
-      $(".reveal__content", $reveal).append($fields);
-    });
-    $("#image-modal, #attachment-modal").on("closed.zf.reveal", (ev) => {
-      const $reveal = $(ev.target);
-      const $button = $(`button[data-open='${$reveal.attr("id")}']`);
-      const $buttonWrapper = $button.parent();
-      const $fields = $(".attachment-fields", $reveal);
-
-      $buttonWrapper.append($fields);
-    });
-
-    $(".add-attachment").on("click", (ev) => {
-      // Sometimes the form is submitted in case the event is not prevented.
-      ev.preventDefault();
-
-      const $reveal = $(ev.target).closest(".reveal");
-      const $file = $("input[type='file']", $reveal);
-      const $text = $("input[type='text']", $reveal);
-      const $remove = $("input[name$='[remove_file]']", $reveal);
-      const $fields = $(".attachment-fields", $reveal);
-      const filePresent = $fields.data("file-present");
-
-      $(".form-error-general", $reveal).removeClass("is-visible");
-
-      let success = true;
-      if (fileMissing($file) && !filePresent) {
-        success = false;
-        $(".form-error-general", $file.closest(".field")).addClass("is-visible");
-      }
-      if ($.trim($text.val()).length < 1) {
-        success = false;
-        $(".form-error-general", $text.closest(".field")).addClass("is-visible");
-      }
-
-      if (success) {
-        const $button = $(`button[data-open='${$reveal.attr("id")}']`);
-        const $buttonWrapper = $button.parent();
-
-        $remove.attr("value", "false");
-        $reveal.foundation("close");
-        $(".attachment-added", $buttonWrapper).removeClass("hide");
-      }
-    });
-
-    $(".attachment-added .remove-attachment").on("click", (ev) => {
-      ev.preventDefault();
-
-      const $container = $(ev.target).closest(".attachment-button");
-      const $file = $("input[type='file']", $container);
-      const $text = $("input[type='text']", $container);
-      const $remove = $("input[name$='[remove_file]']", $container);
-
-      $remove.attr("value", "true");
-      $file.nextAll().remove(); // The current file elements
-      $file.replaceWith($file.val("").clone(true));
-      $text.val("").removeAttr("required");
-      $(".attachment-added", $container).addClass("hide");
-    });
-
-    $(".cancel-attachment").on("click", (ev) => {
-      // Prevent the form submission or validation.
-      ev.preventDefault();
-
-      const $reveal = $(ev.target).closest(".reveal");
-      const $file = $("input[type='file']", $reveal);
-      const $text = $("input[type='text']", $reveal);
-      const $remove = $("input[name$='[remove_file]']", $reveal);
-      const $fields = $(".attachment-fields", $reveal);
-      const filePresent = $fields.data("file-present");
-
-      $(".form-error-general", $reveal).removeClass("is-visible");
-
-      const originalFiles = $file.data("original-value");
-      if (originalFiles.length > 0) {
-        $file.get(0).files = originalFiles;
-      } else {
-        $file.replaceWith($file.val("").clone(true));
-      }
-
-      $text.val($text.data("original-value"));
-      $remove.attr("value", $remove.data("original-value"));
-
-      if (filePresent) {
-        // When there are elements after the file, it means there is a current
-        // file defiled.
-      } else if (fileMissing($file) || $.trim($text.val()).length < 1) {
-        // In case of an error, make sure the fields are cleared.
-        const $button = $(`button[data-open='${$reveal.attr("id")}']`);
-        const $buttonWrapper = $button.parent();
-
-        // $file.replaceWith($file.val("").clone(true));
-        // $text.val("");
-        $(".attachment-added", $buttonWrapper).addClass("hide");
-      }
-    });
-  };
-
   const bindAccidentalExitDisabling = () => {
     $(document).on("click", "a, input, button", (ev) => {
       const $target = $(ev.target);
@@ -408,7 +291,6 @@ import "src/decidim/ideas/info_modals";
     bindFormValidation();
     bindAddressLookup();
     bindSubcategoryInputs();
-    bindAttachmentModals();
     bindAccidentalExitDisabling();
   });
 })(window);
