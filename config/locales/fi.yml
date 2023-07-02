@@ -460,18 +460,15 @@ fi:
           filter_by: Suodata
           unfold: Avaa
         form:
-          attachment_added: Liite lisätty
-          attachment_file_required: Tiedosto on liitettävä
-          attachment_modal_mobile_notice: Lisäysnappi löytyy ikkunan alalaidasta. Jos et näe sitä mobiilinäytöllä, vieritä ruutua alaspäin.
-          attachment_title_required: Tiedostolle on annettava otsikko
           add_attachment: Lisää liite
           add_image: Lisää kuva
           address_lookup_button: Etsi
           attachment_legend: "Lisää idealle liite"
-          cancel: Peruuta
           characters_min: "(vähintään %count% merkkiä vaaditaan)"
           characters_used: "%count%/%total% merkkiä käytetty"
           close_modal: Sulje ikkuna
+          edit_attachment: Change attachment
+          edit_image: Change image
           files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Kuville ja liitteille tulee lisätä nimet.
           files_info_images: Voit lisätä idealle kuvan, joka näkyy idean yhteydessä. Kuvalle tulee lisätä nimet.
           files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
@@ -479,8 +476,6 @@ fi:
           image_legend: "Lisää idealle kuva"
           remove_attachment: Poista liite
           remove_attachment_confirm: Haluatko varmasti poistaa idealta liitteen?
-          remove_image: Poista kuva
-          remove_image_confirm: Haluatko varmasti poistaa idealta kuvan?
           required_fields_text: Pakolliset kentät on merkitty *-merkillä.
           reset_field: Tyhjennä kenttä
           select_a_category: Valitse idealle ensisijainen teema
