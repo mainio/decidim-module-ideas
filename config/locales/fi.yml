@@ -365,7 +365,7 @@ fi:
           all: Kaikki
         filter_origin_values:
           all: Kaikki
-          citizens: Kansalaiset
+          participants: Osallistujat
           user_groups: Ryhmät
         filter_state_values:
           accepted: Hyväksytty jatkoon
