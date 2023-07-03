@@ -75,7 +75,7 @@ fi:
             'false': Ideat
             'true': Muutokset
         search_placeholder:
-          id_string_or_title_cont: '%{collection}: Hae ID-numeron tai otsikon perusteella'
+          id_string_or_title_cont: '%{collection}: Hae ID-numeron tai otsikon perusteella.'
         state_eq:
           label: Tila
           values:
@@ -279,7 +279,7 @@ fi:
             update: Päivitä
           form:
             attachment_legend: "Lisää idealle liite"
-            image_legend: "Valutse idealle kuva"
+            image_legend: "Valitse idealle kuva"
             select_a_category: Valitse idealle ensisijainen teema
             select_a_sub_category: Valitse idealle alateema
           index:
@@ -330,7 +330,7 @@ fi:
             invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
             select_a_idea: Valitse idea
             select_a_scope: Valitse alue
-            success: 'Seuraavien ideoiden alueen päivitys onnistui %{subject_name}: %{proposals}.'
+            success: 'Seuraavien ideoiden alueen päivitys onnistui %{subject_name}: %{ideas}.'
         ideas_imports:
           create:
             invalid: Ideoiden tuominen epäonnistui
