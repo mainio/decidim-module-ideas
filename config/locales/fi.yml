@@ -7,7 +7,7 @@ fi:
         address: Lisää halutessasi idealle kaupunginosa tai tarkempi osoite
         answer: Vastaus
         answered_at: Vastausaika
-        automatic_hashtags: Automaattisesti lisätyt hashtag-tunnisteet
+        automatic_hashtags: Automaattisesti lisättävät aihetunnisteet (hashtag)
         body: Idean kuvaus
         category_id: Valitse idealle teema
         decidim_category_id: Valitse idealle teema
@@ -17,7 +17,7 @@ fi:
         perform_geocoding: Hae karttapiste osoitteen perusteella
         state: Arviointi
         sub_category_id: Valitse idealle alateema
-        suggested_hashtags: Ehdotetut hashtag-tunnisteet
+        suggested_hashtags: Ehdotetut aihetunnisteet (hashtag)
         terms_agreed: Olen lukenut kriteerit
         title: Idean nimi
         user_group_id: Luo idea käyttäjänä
@@ -138,12 +138,12 @@ fi:
               participants: Muutokset ovat näkyvillä ainoastaan niiden laatijoille
             amendments_visibility_help: Jos asetus "Muutokset ovat näkyvillä ainoastaan niiden laatijoille" on määritetty, osallistujien tulee kirjautua sisään nähdäkseen tehdyt muutokset.
             announcement: Ilmoitus
-            automatic_hashtags: Hashtagit, jotka lisätään kaikkiin ehdotuksiin
+            automatic_hashtags: Aihetunnisteet (hashtag), jotka lisätään kaikkiin ehdotuksiin
             comments_blocked: Kommentointi estetty
             creation_enabled: Idean luominen käytössä
             idea_answering_enabled: Ideaan vastaaminen käytössä
             publish_answers_immediately: Julkaise ideoiden vastaukset heti
-            suggested_hashtags: Käyttäjille ehdotettavat hashtagit uusille ehdotuksille
+            suggested_hashtags: Käyttäjille ehdotettavat aihetunnisteet (hashtag) uusille ehdotuksille
     events:
       ideas:
         creation_enabled:
@@ -391,7 +391,7 @@ fi:
       idea_m:
         card_label: "Idea: %{title}"
       last_activity:
-        idea_updated_html: "<span>Idea updated at %{link}</span>"
+        idea_updated_html: "<span>Idea päivitetty osoitteessa %{link}</span>"
         new_idea_at_html: "<span>Uusi idea %{link}</span>"
       models:
         idea:
