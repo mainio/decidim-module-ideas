@@ -365,7 +365,7 @@ en:
           all: All
         filter_origin_values:
           all: All
-          citizens: Citizens
+          participants: Participants
           user_groups: Groups
         filter_state_values:
           accepted: Accepted to the next step

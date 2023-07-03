@@ -364,7 +364,7 @@ sv:
           all: Alla
         filter_origin_values:
           all: Alla
-          citizens: Medborgare
+          participants: Deltagare
           user_groups: Grupper
         filter_state_values:
           accepted: Gick vidare
