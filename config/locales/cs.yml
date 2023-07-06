@@ -1,3 +1,4 @@
+---
 cs:
   activemodel:
     attributes:
@@ -366,7 +367,7 @@ cs:
           all: Vše
         filter_origin_values:
           all: Vše
-          citizens: Občané
+          participants: Participants
           user_groups: Skupiny
         filter_state_values:
           accepted: Přijato k dalšímu kroku
@@ -392,6 +393,7 @@ cs:
       idea_m:
         card_label: "Nápad: %{title}"
       last_activity:
+        idea_updated_html: "<span>Nápad aktualizován na %{link}</span>"
         new_idea_at_html: "<span>Nový nápad v %{link}</span>"
       models:
         idea:
@@ -606,7 +608,7 @@ cs:
           state: Hodnocení
           title: Filtrovat nápady na mapě a v seznamu
           unfold: Rozbalit
-        pcs_html: "<span>%{number}</span> pcs"
+        pcs_html: "<span>%{number}</span> obrázků"
         remove_idea: Odstranit nápad
         show_idea_link: Zobrazit stránku nápadů
       info:
