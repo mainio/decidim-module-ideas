@@ -9,7 +9,7 @@ module Decidim
       implements Decidim::Comments::CommentableInterface
       implements Decidim::Core::CoauthorableInterface
       implements Decidim::Core::CategorizableInterface
-      implements Decidim::Core::ScopableInterface
+      # implements Decidim::Core::ScopableInterface
       implements Decidim::Core::FingerprintInterface
       implements Decidim::Core::AmendableInterface
       implements Decidim::Core::AmendableEntityInterface
