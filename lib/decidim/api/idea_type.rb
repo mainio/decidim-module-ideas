@@ -21,7 +21,7 @@ module Decidim
       field :body, GraphQL::Types::String, description: "This idea's body", null: false
       field :image, Decidim::Core::AttachmentType, "This object's attachments", null: true
       field :attachments, [Decidim::Core::AttachmentType], "This object's attachments", null: true, method: :actual_attachments
-      field :areaScope, Decidim::Core::ScopeApiType, method: :area_scope, null: true do
+      field :area_scope, Decidim::Core::ScopeApiType, null: true do
         description "The object's scope"
       end
       field :address, GraphQL::Types::String, null: true do
@@ -37,17 +37,17 @@ module Decidim
         description "The answer feedback for the status for this idea"
       end
 
-      field :answeredAt, Decidim::Core::DateTimeType, method: :answered_at, null: true do
+      field :answered_at, Decidim::Core::DateTimeType, null: true do
         description "The date and time this idea was answered"
       end
 
-      field :publishedAt, Decidim::Core::DateTimeType, method: :published_at, null: true do
+      field :published_at, Decidim::Core::DateTimeType, null: true do
         description "The date and time this idea was published"
       end
 
       # Modifies Decidim::Core::TraceableInterface because we use different
       # version type in order to add our customizations.
-      field :versionsCount, GraphQL::Types::Int, method: :versions_count, null: false do
+      field :versions_count, GraphQL::Types::Int, null: false do
         description "Total number of versions"
       end
       field :versions, [Decidim::Ideas::IdeaVersionType], null: false do
@@ -60,9 +60,8 @@ module Decidim
         # These are the resources that are linked from the related object to the
         # idea.
         field(
-          :linkingResources,
+          :linking_resources,
           [Decidim::Ideas::ResourceLinkSubject],
-          method: :linking_resources,
           description: "The linked resources for this idea.",
           null: true
         )
