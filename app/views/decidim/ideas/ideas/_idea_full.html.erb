@@ -13,7 +13,7 @@
   <div class="row" data-equalizer>
     <div class="columns mediumlarge-7">
       <div class="resource-image" data-equalizer-watch>
-        <% if idea.image %>
+        <% if idea.image && idea.image.main_url %>
           <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
         <% elsif category_image_path(idea.category) %>
           <%= image_tag category_image_path(idea.category), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
