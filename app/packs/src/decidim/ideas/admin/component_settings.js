@@ -9,13 +9,13 @@ $(() => {
     $.ajax({
       method: "GET",
       url: updateUrl,
-      data: {parent_scope_id: scopeId, setting_name: settingName}
+      data: {parent_scope_id: scopeId, setting_name: settingName}// eslint-disable-line camelcase
     }).done((data) => {
       $(".area-scope-coordinates", $coordinatesElement).replaceWith(data);
     });
   };
 
-  $(`input[name="component[settings][geocoding_enabled]`).on("change", (ev) => {
+  $("input[name='component[settings][geocoding_enabled]']").on("change", (ev) => {
     if ($(ev.target).is(":checked")) {
       $coordinatesElement.removeClass("hide");
     } else {
@@ -25,7 +25,7 @@ $(() => {
 
   $(document).on(
     "change",
-    `input[name="component[settings][area_scope_parent_id]"]`,
+    "input[name='component[settings][area_scope_parent_id]']",
     handleParentAreaScopeChange
   );
 });

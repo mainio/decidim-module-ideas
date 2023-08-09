@@ -5,7 +5,7 @@ export default class IdeaFormMapController extends MapController {
     this.eventHandlers = {};
     this.marker = null;
 
-    const zoom = parseInt(this.config.zoom) || 11;
+    const zoom = parseInt(this.config.zoom, 10) || 11;
 
     this.map.fitWorld();
     this.map.setZoom(zoom);
@@ -22,9 +22,10 @@ export default class IdeaFormMapController extends MapController {
 
   triggerEvent(eventName, payload) {
     const handler = this.eventHandlers[eventName];
-    if(typeof handler === "function"){
-      return handler.apply(this, payload);
+    if (typeof handler === "function") {
+      return Reflect.apply(handler, this, payload);
     }
+    return null
   }
 
   setEventHandler(name, callback) {

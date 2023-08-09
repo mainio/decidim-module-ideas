@@ -31,8 +31,8 @@
         });
       };
       const initializeList = ($list) => {
-        $(".ideas-picker-chooser", $list).each((_j, el) => {
-          const $chooser = $(el);
+        $(".ideas-picker-chooser", $list).each((_j, ell) => {
+          const $chooser = $(ell);
           const $item = $(".ideas-picker-item", $chooser);
 
           if (selectedIdeas.includes($item.data("idea-id"))) {
@@ -106,9 +106,9 @@
             url: pickerPath,
             data: {
               layout: "inline",
-              q: $("input[name='ideas_filter[search_text]']", $form).val(),
+              qq: $("input[name='ideas_filter[search_text]']", $form).val(),
               activity: $("input[name='ideas_filter[activity]']:checked", $form).val(),
-              area_scope: $("select[name='ideas_filter[area_scope_id]']", $form).val(),
+              area_scope: $("select[name='ideas_filter[area_scope_id]']", $form).val(), // eslint-disable-line camelcase
               category: $("select[name='ideas_filter[category_id]']", $form).val()
             }
           }).done((data) => {
@@ -150,8 +150,8 @@
         }
       });
 
-      $(".ideas-picker-item", $selected).each((_j, el) => {
-        const $item = $(el);
+      $(".ideas-picker-item", $selected).each((_j, ell) => {
+        const $item = $(ell);
 
         selectedIdeas.push($item.data("idea-id"));
         initializePickedItem($item);

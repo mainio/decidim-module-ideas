@@ -43,9 +43,9 @@
   const bindInfoModalLinks = () => {
     const modal = new InfoModal();
 
-    exports.$(".info-modal-link")
-      .off("click.decidim-ideas-info-modal")
-      .on("click.decidim-ideas-info-modal", (ev) => {
+    exports.$(".info-modal-link").
+      off("click.decidim-ideas-info-modal").
+      on("click.decidim-ideas-info-modal", (ev) => {
         ev.preventDefault();
 
         const $link = $(ev.target);
