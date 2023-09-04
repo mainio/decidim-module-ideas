@@ -1,1 +1,7 @@
-<%= cell "decidim/ideas/idea_tags", model %>
+<div class="card__tags">
+  <% if answered? && has_badge? %>
+    <span class="label <%= state_classes %>"><%= badge_name%></span>
+  <% end %>
+
+  <%= cell "decidim/tags/tags", model, context: { extra_classes: ["tags--idea"] } %>
+</div>

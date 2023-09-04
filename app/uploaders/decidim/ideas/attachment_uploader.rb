@@ -13,9 +13,10 @@ module Decidim
       set_variants do
         {
           default: { auto_orient: true, strip: true },
-          thumbnail: { resize_to_fill: [860, 340], auto_orient: true, strip: true },
+          thumbnail: { resize_to_fill: [860, 395], auto_orient: true, strip: true },
+          thumbnail_box: { resize_to_fill: [660, 450], auto_orient: true, strip: true },
           big: { resize_to_limit: [nil, 1000], auto_orient: true, strip: true },
-          main: { resize_to_fill: [1480, 740], auto_orient: true, strip: true }
+          main: { resize_to_fill: [1500, 920], auto_orient: true, strip: true }
         }
       end
 

@@ -24,6 +24,21 @@ module Decidim
 
       private
 
+      def card_wrapper
+        cls = card_classes.is_a?(Array) ? card_classes.join(" ") : card_classes
+        wrapper_options = { class: "card #{cls}", aria: { label: t(".card_label", title: title) } }
+        if has_link_to_resource?
+          link_to resource_path, **wrapper_options do
+            yield
+          end
+        else
+          aria_options = { role: "region" }
+          content_tag :div, **aria_options.merge(wrapper_options) do
+            yield
+          end
+        end
+      end
+
       def preview?
         options[:preview]
       end
@@ -101,7 +116,11 @@ module Decidim
         return [] if preview?
         return [:comments_count] if model.draft?
 
-        [:creation_date, :favoriting_count, :comments_count]
+        [:comments_count, :favoriting_count]
+      end
+
+      def comments_count_status
+        render_comments_count
       end
 
       def creation_date_status
@@ -141,7 +160,7 @@ module Decidim
       end
 
       def resource_image_path
-        return model.image.thumbnail_url if has_image?
+        return model.image.attached_uploader(:file).path(variant: resource_image_variant) if has_image?
 
         path = category_image_path(model.category)
         return path if path
@@ -149,12 +168,20 @@ module Decidim
         category_image_path(model.category.parent) if model.category&.parent.present?
       end
 
+      def resource_image_variant
+        :thumbnail
+      end
+
       def category_image_path(cat)
         return unless has_category?
         return unless cat.respond_to?(:category_image)
         return unless cat.category_image
 
-        cat.attached_uploader(:category_image).path(variant: :card)
+        cat.attached_uploader(:category_image).path(variant: category_image_variant)
+      end
+
+      def category_image_variant
+        :card
       end
 
       def icon_category(cat = nil)
