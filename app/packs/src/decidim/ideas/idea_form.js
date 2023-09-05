@@ -80,18 +80,19 @@ import "src/decidim/ideas/info_modals";
    * In later Foundation versions, this is already handled by Foundation core.
    *
    * This validates the form on submit as it does not work with the Foundation
-   * version that currently ships with Decidin.
+   * version that currently ships with Decidim.
+   * @returns {void}
    */
   const bindFormValidation = () => {
     const $form = $("form.new_idea, form.edit_idea");
-    const $submits = $(`[type="submit"]`, $form);
+    const $submits = $("[type=\"submit\"]", $form);
     const $discardLink = $(".discard-draft-link", $form);
 
-    $submits
-      .off("click.decidim.ideas.form")
-      .on("click.decidim.ideas.form", (e) => {
+    $submits.
+      off("click.decidim.ideas.form").
+      on("click.decidim.ideas.form", (ev) => {
         // Tell the backend which submit button was pressed (save or preview)
-        let $btn = $(e.target);
+        let $btn = $(ev.target);
         if (!$btn.is("button")) {
           $btn = $btn.closest("button");
         }
@@ -99,8 +100,8 @@ import "src/decidim/ideas/info_modals";
         $form.append(`<input type="hidden" name="save_type" value="${$btn.attr("name")}" />`);
         $submits.attr("disabled", true);
 
-        if (!e.key || (e.key === ' ' || e.key === 'Enter')) {
-          e.preventDefault();
+        if (!ev.key || (ev.key === " " || ev.key === "Enter")) {
+          ev.preventDefault();
 
           canExit = true;
           $form.submit();
@@ -113,9 +114,9 @@ import "src/decidim/ideas/info_modals";
         }
       });
 
-    $discardLink
-      .off("click.decidim.ideas.form")
-      .on("click.decidim.ideas.form", () => {
+    $discardLink.
+      off("click.decidim.ideas.form").
+      on("click.decidim.ideas.form", () => {
         canExit = true;
       });
   };
@@ -125,7 +126,7 @@ import "src/decidim/ideas/info_modals";
     const $address = $("#idea_address");
     const $latitude = $("#idea_latitude");
     const $longitude = $("#idea_longitude");
-    const authToken = $(`input[name="authenticity_token"]`).val();
+    const authToken = $("input[name=\"authenticity_token\"]").val();
     const coordinatesUrl = $address.data("coordinates-url");
     const addressUrl = $address.data("address-url");
 
@@ -133,7 +134,7 @@ import "src/decidim/ideas/info_modals";
       $.ajax({
         method: "POST",
         url: addressUrl,
-        data: { authenticity_token: authToken, lat: $latitude.val(), lng: $longitude.val() },
+        data: { authenticity_token: authToken, lat: $latitude.val(), lng: $longitude.val() }, // eslint-disable-line camelcase
         dataType: "json"
       }).done((resp) => {
         if (resp.success) {
@@ -146,7 +147,7 @@ import "src/decidim/ideas/info_modals";
       $.ajax({
         method: "POST",
         url: coordinatesUrl,
-        data: { authenticity_token: authToken, address: $address.val() },
+        data: { authenticity_token: authToken, address: $address.val() }, // eslint-disable-line camelcase
         dataType: "json"
       }).done((resp) => {
         if (resp.success) {
@@ -163,14 +164,14 @@ import "src/decidim/ideas/info_modals";
 
     // Prevent the form submit event on keydown event in the address field
     $address.on("keydown.decidim.ideas", (ev) => {
-      if (ev.keyCode == 13) {
+      if (ev.keyCode === 13) {
         ev.preventDefault();
       }
     });
     // Perform lookup only on the keyup event so that we will not perform
     // multiple searches if enter is kept down.
     $address.on("keyup.decidim.ideas", (ev) => {
-      if (ev.keyCode == 13) {
+      if (ev.keyCode === 13) {
         performCoordinatesLookup();
       }
     });

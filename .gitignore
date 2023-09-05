@@ -7,6 +7,9 @@
 /spec/reports/
 /tmp/
 
+# Node
+/node_modules/
+
 # rspec failure tracking
 .rspec-failures
 

@@ -367,7 +367,7 @@ cs:
           all: Vše
         filter_origin_values:
           all: Vše
-          participants: Participants
+          participants: Účastníci
           user_groups: Skupiny
         filter_state_values:
           accepted: Přijato k dalšímu kroku
