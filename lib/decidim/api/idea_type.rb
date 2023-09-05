@@ -68,6 +68,9 @@ module Decidim
       end
 
       def coordinates
+        return unless object.latitude
+        return unless object.longitude
+
         [object.latitude, object.longitude]
       end
 

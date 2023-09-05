@@ -24,6 +24,23 @@ describe Decidim::Ideas::IdeaType, type: :graphql do
     end
   end
 
+  describe "coordinates" do
+    let(:query) { "{ coordinates { latitude longitude } }" }
+    let(:model) { create(:idea, :geocoded, attributes.merge(component: component, users: [author])) }
+
+    it "returns the idea's coordinates" do
+      expect(response["coordinates"]).to eq({ "latitude" => model.latitude, "longitude" => model.longitude })
+    end
+
+    context "when the idea does not have coordinates" do
+      let(:model) { create(:idea, attributes.merge(component: component, users: [author])) }
+
+      it "returns the idea's coordinates" do
+        expect(response["coordinates"]).to be_nil
+      end
+    end
+  end
+
   describe "linkingResources" do
     let(:query) { "{ linkingResources { __typename ...on Project { id } } }" }
 
