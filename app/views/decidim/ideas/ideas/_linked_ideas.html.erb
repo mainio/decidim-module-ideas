@@ -9,16 +9,18 @@
           <%= link_to resource_locator(idea).path, class: "card__link" do %>
             <h5 class="card--list__heading"><%== decidim_html_escape(present(idea).title) %></h5>
           <% end %>
-          <% present(idea) do |idea| %>
-            <div class="author">
-              <span class="author__avatar">
-                <%= image_tag idea.authors.first.avatar_url %>
-              </span>
-              <span class="author__name">
-                <strong><%= idea.authors.first.name %></strong>
-                <%= idea.authors.first.nickname %>
-              </span>
-            </div>
+          <% present(idea) do |presenter| %>
+            <% if presenter.authors.any? %>
+              <div class="author">
+                <span class="author__avatar">
+                  <%= image_tag presenter.authors.first.avatar_url %>
+                </span>
+                <span class="author__name">
+                  <strong><%= idea.authors.first.name %></strong>
+                  <%= presenter.authors.first.nickname %>
+                </span>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
