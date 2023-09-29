@@ -1,14 +1,4 @@
-<div class="collection-sort-controls row small-up-1 medium-up-3 card-grid">
-  <div class="column">
-    <%= order_selector available_orders, i18n_scope: "decidim.ideas.ideas.orders" %>
-  </div>
-
-  <div class="column">
-    <%= render partial: "decidim/shared/results_per_page" %>
-  </div>
-</div>
-
-<div class="row small-up-1 medium-up-3 card-grid">
+<div class="cards-list">
   <%= render @ideas %>
 </div>
 

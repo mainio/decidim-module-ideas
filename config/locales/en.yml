@@ -388,6 +388,8 @@ en:
       destroy_draft:
         error: Destroying the draft failed.
         success: Draft destroyed successfully.
+      idea_l:
+        card_label: "Idea: %{title}"
       idea_m:
         card_label: "Idea: %{title}"
       last_activity:
@@ -447,6 +449,7 @@ en:
           area_scope: Area
           amendment_type: Type
           category: Theme
+          keyword: Hakusana
           my_favorites: Show my favourites
           my_ideas: Show my ideas
           origin: Origin
@@ -493,6 +496,8 @@ en:
           new_idea: New idea
           title: Browse ideas
           see_all_withdrawn: See all withdrawn ideas
+          show_list: Show results as list
+          show_map: Show results on map
           subtitle: Search and discover ideas!
           view_idea: View idea
         map:

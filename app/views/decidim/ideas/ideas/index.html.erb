@@ -1,98 +1,115 @@
 <div class="row columns">
-  <div class="text-center">
-    <h2 class="heading1 page-title"><%= t ".title" %></h2>
+  <div class="page-title">
+    <h2 class="heading1"><%= t ".title" %></h2>
   </div>
 </div>
 
-<div class="row" data-equalizer>
+<div class="row medium-unstack content-intro">
   <div class="columns medium-6 mediumlarge-8">
-    <div class="card bg-primary fg-light" data-equalizer-watch>
-      <div class="card__content">
-        <h3 class="heading1"><%= t ".subtitle" %></h3>
-        <div class="lead">
-          <% if translated_attribute(component_settings.idea_listing_intro).present? %>
-            <%= decidim_sanitize translated_attribute(component_settings.idea_listing_intro) %>
-          <% else %>
-            <p><%= t ".description" %></p>
-          <% end %>
-        </div>
-      </div>
+    <div class="text-large">
+      <% if translated_attribute(component_settings.idea_listing_intro).present? %>
+        <%= decidim_sanitize translated_attribute(component_settings.idea_listing_intro) %>
+      <% else %>
+        <p><%= t ".description" %></p>
+      <% end %>
     </div>
   </div>
   <% if current_settings.creation_enabled &&
         current_component.participatory_space.can_participate?(current_user) &&
         !users_idea_limit_reached? %>
     <div class="columns medium-6 mediumlarge-4">
-      <div class="card border-primary" data-equalizer-watch>
-        <div class="card__content text-center">
-          <% if @draft_idea_link %>
-            <p class="h3"><%= t ".draft_idea_title" %></p>
-            <p><%= t ".draft_idea_description" %></p>
-            <%= link_to t(".draft_idea_continue"), @draft_idea_link, class: "title-action__action button hollow large primary" %>
-          <% else %>
-            <p class="h3"><%= t(".leave_your_idea") %></p>
-            <%= link_to new_idea_path, class: "title-action__action button hollow large primary", data: { "redirect_url" => new_idea_path } do %>
-              <%= t(".new_idea") %>
-              <%= icon "plus", aria_label: t(".new_idea"), role: "img" %>
-            <% end %>
+      <div class="actions-panel bg-secondary">
+        <% if @draft_idea_link %>
+          <p><%= t ".draft_idea_title" %></p>
+          <%= link_to @draft_idea_link, class: "action-link" do %>
+            <span><%= t(".draft_idea_continue") %></span>
+            <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
           <% end %>
-        </div>
+        <% else %>
+          <%= link_to new_idea_path, class: "action-link", data: { "redirect_url" => new_idea_path } do %>
+            <span><%= t(".new_idea") %></span>
+            <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   <% end %>
 </div>
 
-<% if component_settings.geocoding_enabled? %>
-  <%= ideas_map ideas_data_for_map(@geocoded_ideas) do %>
-    <template id="marker-popup">
-      <div class="map-info__content">
-        <h3>${title}</h3>
-        <div id="bodyContent">
-          <p>{{html body}}</p>
-          <div class="map__date-adress">
-            <div class="address card__extra">
-              <div class="address__icon">{{html icon}}</div>
-              <div class="address__details">
-                <span>${address}</span><br>
-              </div>
-            </div>
-          </div>
-          <div class="map-info__button">
-            <a href="${link}" class="button button--sc">
-              <%= t(".view_idea") %>
-            </a>
-          </div>
-        </div>
-      </div>
-    </template>
-    <%= javascript_pack_tag "decidim_ideas_map" %>
-  <% end %>
-<% end %>
-
-<div class="row columns">
-  <%= render partial: "filters_small_view" %>
-  <div class="card card--secondary show-for-mediumlarge">
+<div class="container bg-secondary filters-section">
+  <div class="row columns">
     <div class="idea-filters record-filters">
       <%= render partial: "filters" %>
     </div>
   </div>
 </div>
 
-<div class="row columns">
-  <div class="title-action">
-    <h2 id="ideas-count" class="title-action__title section-heading">
-      <%= render partial: "count" %>
-    </h2>
+<div class="container listing-section">
+  <div class="row columns">
+    <% if component_settings.geocoding_enabled? %>
+      <ul class="tabs" data-tabs id="listing-tabs">
+        <li class="tabs-title is-active"><a data-tabs-target="ideas-listing" href="#ideas-listing" aria-selected="true"><%= t(".show_list") %></a></li>
+        <li class="tabs-title"><a data-tabs-target="ideas-map" href="#ideas-map"><%= t(".show_map") %></a></li>
+      </ul>
+    <% end %>
+
+    <div class="tabs-content" data-tabs-content="listing-tabs">
+      <div class="tabs-panel is-active" id="ideas-listing">
+        <div class="collection-controls">
+          <div class="control">
+            <%= order_selector available_orders, i18n_scope: "decidim.ideas.ideas.orders" %>
+          </div>
+          <% if false %>
+            <div class="control">
+              <%= render partial: "decidim/shared/results_per_page" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div id="ideas-count">
+          <%= render partial: "count" %>
+        </div>
+
+        <div id="ideas">
+          <div class="cards-list">
+            <%= render partial: "ideas" %>
+          </div>
+
+          <div class="text-right">
+            <%= link_to t(".see_all_withdrawn"), ideas_path(filter: { with_availability: "withdrawn", with_any_state: [""] }) %>
+          </div>
+        </div>
+      </div>
+
+      <% if component_settings.geocoding_enabled? %>
+        <div class="tabs-panel" id="ideas-map">
+          <%= ideas_map ideas_data_for_map(@geocoded_ideas) do %>
+            <template id="marker-popup">
+              <div class="map-info__content">
+                <h3>${title}</h3>
+                <div id="bodyContent">
+                  <p>{{html body}}</p>
+                  <div class="map__date-adress">
+                    <div class="address card__extra">
+                      <div class="address__icon">{{html icon}}</div>
+                      <div class="address__details">
+                        <span>${address}</span><br>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="map-info__button">
+                    <a href="${link}" class="button button--sc">
+                      <%= t(".view_idea") %>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </template>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div id="ideas" class="columns" aria-live="polite">
-    <%= render partial: "ideas" %>
-  </div>
-</div>
-<div class="row">
-<div class="text-right">
-  <%= link_to t(".see_all_withdrawn"), ideas_path(filter: { with_availability: "withdrawn", with_any_state: [""] }) %>
-</div>
-</div>
+
 <%= javascript_pack_tag "decidim_ideas_ideas_list" %>

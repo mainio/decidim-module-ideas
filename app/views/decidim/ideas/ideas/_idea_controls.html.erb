@@ -1,24 +1,20 @@
-<div class="resource-control-panel text-center">
+<div class="resource-control-panel margin-top-3">
   <div class="title h3"><%= t ".manage_idea" %></div>
 
-  <% if allowed_to?(:edit, :idea, idea: idea) %>
-    <div class="lead">
-      <p><%= t("decidim.ideas.ideas.preview.idea_edit_before_minutes", count: component_settings.idea_edit_before_minutes) %></p>
-    </div>
-  <% end %>
-
   <div class="resource-controls">
-    <% if allowed_to?(:edit, :idea, idea: idea) && idea.amendable? %>
+    <% if allowed_to?(:edit, :idea, idea: idea) %>
       <div class="resource-control">
-        <%= link_to t(".edit_idea"), edit_idea_path(idea), class: "button primary large hollow" %>
+        <%= link_to t(".edit_idea"), edit_idea_path(idea) %>
       </div>
-    <% elsif idea.emendation? %>
+    <% elsif idea.emendation? && idea.amendable? && amendments_enabled? && current_component.current_settings.amendment_creation_enabled && can_participate_in_private_space? %>
       <div class="resource-control">
-        <%= amend_button_for idea %>
+        <%= action_authorized_link_to :amend, new_amend_path, resource: model, data: { "redirect_url" => new_amend_path }, id: "amend-button" do %>
+          <%= t("button", scope: "decidim.amendments.amendable", model_name: nil) %>
+        <% end %>
       </div>
     <% end %>
     <div class="resource-control">
-      <%= action_authorized_link_to :withdraw, withdraw_idea_path(idea), method: :put, class: "button primary large hollow", data: { confirm: t(".withdraw_confirmation_html") } do %>
+      <%= action_authorized_link_to :withdraw, withdraw_idea_path(idea), method: :put, data: { confirm: t(".withdraw_confirmation_html") } do %>
         <%= t(".withdraw_idea") %>
       <% end %>
     </div>

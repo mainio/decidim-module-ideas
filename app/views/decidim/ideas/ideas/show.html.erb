@@ -27,15 +27,13 @@ extra_admin_link(
   <%= trigger_feedback_modal(@idea, title: t(".feedback_title"), metadata: { context: "idea", action: "publish" }) %>
 <% end %>
 
-<div class="row column view-header">
-  <%= link_to ideas_path, class: "small hollow" do %>
-    <%= icon "chevron-left", class: "icon--small" %>
-    <%= t(".back_to_list") %>
+<div class="row column back-link">
+  <%= link_to ideas_path, class: "action-link" do %>
+    <%= icon "arrow-left", role: "img", "aria-hidden": true %>
+    <span><%= t(".back_to_list") %></span>
   <% end %>
 </div>
 
 <%= render partial: "idea_full", locals: { idea: @idea, show_actions: true } %>
 
 <%= comments_for @idea %>
-
-<%= cell("decidim/flag_modal", @idea) %>

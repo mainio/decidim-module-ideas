@@ -1,101 +1,87 @@
-<% if idea.answered? && idea.published_state? %>
+<div class="row column resource">
   <div class="row">
-    <div class="columns small-centered large-8">
-      <div class="callout announcement <%= idea_reason_callout_class %> cell-announcement text-center">
-        <p class="h2"><%= idea_reason_callout_title %></p>
-        <%= decidim_sanitize(translated_attribute(@idea.answer)) %>
-      </div>
-    </div>
-  </div>
-<% end %>
+    <div class="columns small-12 medium-8">
+      <div class="resource__main static__content">
+        <h1><%= present(idea).title(links: true, html_escape: true) %></h1>
 
-<div class="resource-intro">
-  <div class="row" data-equalizer>
-    <div class="columns mediumlarge-7">
-      <div class="resource-image" data-equalizer-watch>
+        <div class="resource__info">
+          <% if has_visible_area_scope?(idea) %>
+            <div class="resource__info__item"><%= translated_attribute(idea.area_scope.name) %></div>
+          <% end %>
+          <div class="resource__info__item">#<%= idea.id %></div>
+          <% if idea.published? %>
+            <div class="resource__info__item"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
+          <% end %>
+          <% if idea.category.present? %>
+            <div class="resource__info__item">
+              <% if idea.category.parent %>
+                <%= translated_attribute(idea.category.parent.name) %> -
+              <% end %>
+              <%= translated_attribute(idea.category.name) %>
+            </div>
+          <% end %>
+
+          <% if component_settings.geocoding_enabled? && idea.address.present? %>
+            <div class="resource__info__item"><%= idea.address %></div>
+          <% end %>
+        </div>
+
+        <% if idea.respond_to?(:tags) && idea.tags.any? %>
+          <div class="resource__tags">
+            <%= cell("decidim/tags/tags", idea) %>
+          </div>
+        <% end %>
+
         <% if idea.image && idea.image.main_url %>
-          <%= image_tag idea.image.main_url, class:"idea-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+          <%= image_tag idea.image.main_url, class:"resource-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
         <% elsif category_image_path(idea.category) %>
-          <%= image_tag category_image_path(idea.category), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+          <%= image_tag category_image_path(idea.category), class:"resource-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
-          <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"idea-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+          <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"resource-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
       </div>
     </div>
-    <div class="columns mediumlarge-4">
-      <div class="actionbox" data-equalizer-watch>
+
+    <div class="columns small-12 medium-4">
+      <div class="resource__aside resource__actions">
         <%= render partial: "idea_actions", locals: { idea: idea, show_actions: show_actions } %>
-      </div>
-    </div>
-  </div>
-</div>
 
-<% if show_actions && allowed_to?(:withdraw, :idea, idea: idea) %>
-  <div class="row">
-    <div class="columns">
-      <%= render partial: "idea_controls", locals: { idea: idea } %>
-    </div>
-  </div>
-<% end %>
-
-<div class="resource-details">
-  <div class="row">
-    <div class="columns mediumlarge-7">
-      <div class="resource-details-row">
-        <div class="resource-detail">#<%= idea.id %></div>
-        <div class="resource-detail">
-          <% if has_visible_area_scope?(idea) %>
-            <%= translated_attribute(idea.area_scope.name) %>
-          <% end %>
-        </div>
-      </div>
-      <% if component_settings.geocoding_enabled? && idea.address.present? %>
-        <div class="resource-details-row">
-          <div class="resource-detail"><%= idea.address %></div>
-        </div>
-      <% end %>
-    </div>
-    <div class="columns mediumlarge-4 text-right">
-      <% if idea.published? %>
-        <div class="resource-details-row">
-          <div class="resource-detail"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
-        </div>
-      <% end %>
-      <% if idea.category.present? %>
-        <div class="resource-details-row">
-          <div class="resource-detail">
-            <% if idea.category.parent %>
-              <%= translated_attribute(idea.category.parent.name) %> -
-            <% end %>
-            <%= translated_attribute(idea.category.name) %>
+        <% if show_actions && allowed_to?(:withdraw, :idea, idea: idea) %>
+          <div class="row">
+            <div class="columns">
+              <%= render partial: "idea_controls", locals: { idea: idea } %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="resource-title">
-  <div class="row">
-    <div class="columns mediumlarge-7">
-      <h3 class="heading3"><%= present(@idea).title(links: true, html_escape: true) %></h3>
-    </div>
-  </div>
-</div>
 
-<div class="resource-body">
   <div class="row">
-    <div class="columns">
-      <div class="section static__content">
-        <%== cell("decidim/ideas/idea_m", idea, full_badge: true).badge %>
+    <div class="columns small-12 medium-8">
+      <div class="resource__main resource__content static__content">
         <%= render_idea_body(idea) %>
+
+        <% if idea.answered? && idea.published_state? %>
+          <div class="row columns">
+            <div class="banner bg-secondary">
+              <div class="banner__content">
+                  <p class="h2"><%= idea_reason_callout_title %></p>
+                <%= decidim_sanitize(translated_attribute(idea.answer)) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
 
-      <%= attachments_for idea %>
+      <div class="resource__details">
+        <%= attachments_for idea %>
 
-      <%= linked_resources_for idea, :results, "included_ideas" %>
-      <%= linked_resources_for idea, :projects, "included_ideas" %>
-      <%= linked_resources_for idea, :ideas, "copied_from_component" %>
+        <%# = linked_resources_for idea, :results, "included_ideas" %>
+        <%# = linked_resources_for idea, :projects, "included_ideas" %>
+        <%# = linked_resources_for idea, :ideas, "copied_from_component" %>
+      </div>
     </div>
   </div>
 </div>
