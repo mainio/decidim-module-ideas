@@ -389,7 +389,7 @@ sv:
         error: Det gick inte att förstöra utkastet.
         success: Utkast förstördes framgångsrikt.
       idea_l:
-        card_label: "Idé: %{title}"
+        card_label: "Idea: %{title}"
       idea_m:
         card_label: "Idé: %{title}"
       last_activity:
@@ -449,7 +449,7 @@ sv:
           area_scope: Område
           amendment_type: Typ
           category: Tema
-          keyword: Nyckelord
+          keyword: Hakusana
           my_favorites: Visa mina favoriter
           my_ideas: Visa mina idéer
           origin: Ursprung
@@ -496,8 +496,8 @@ sv:
           new_idea: Ny idé
           title: Bläddra bland idéer
           see_all_withdrawn: Se alla tillbakadragna idéer
-          show_list: Visa resultat som lista
-          show_map: Visa resultat på kartan
+          show_list: Show results as list
+          show_map: Show results on map
           subtitle: Sök och utforska idéer!
           view_idea: Visa idé
         map:
