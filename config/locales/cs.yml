@@ -391,7 +391,7 @@ cs:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
       idea_l:
-        card_label: "Idea: %{title}"
+        card_label: "Nápad: %{title}"
       idea_m:
         card_label: "Nápad: %{title}"
       last_activity:
@@ -500,8 +500,8 @@ cs:
           new_idea: Nový nápad
           title: Procházet nápady
           see_all_withdrawn: Zobrazit všechny stažené nápady
-          show_list: Show results as list
-          show_map: Show results on map
+          show_list: Zobrazit výsledky jako seznam
+          show_map: Zobrazit výsledky na mapě
           subtitle: Hledat a objevovat nápady!
           view_idea: Zobrazit nápad
         map:
