@@ -390,6 +390,8 @@ cs:
       destroy_draft:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
+      idea_l:
+        card_label: "Idea: %{title}"
       idea_m:
         card_label: "Nápad: %{title}"
       last_activity:
@@ -451,6 +453,7 @@ cs:
           area_scope: Oblast
           amendment_type: Typ
           category: Téma
+          keyword: Hakusana
           my_favorites: Zobrazit mé oblíbené
           my_ideas: Zobrazit mé nápady
           origin: Původ
@@ -497,6 +500,8 @@ cs:
           new_idea: Nový nápad
           title: Procházet nápady
           see_all_withdrawn: Zobrazit všechny stažené nápady
+          show_list: Show results as list
+          show_map: Show results on map
           subtitle: Hledat a objevovat nápady!
           view_idea: Zobrazit nápad
         map:
