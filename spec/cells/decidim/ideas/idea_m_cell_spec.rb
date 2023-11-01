@@ -40,8 +40,8 @@ module Decidim::Ideas
         published_date = I18n.l(published_at.to_date, format: :decidim_short)
         creation_date = I18n.l(created_at.to_date, format: :decidim_short)
 
-        expect(subject).to have_css(".creation_date_status", text: published_date)
-        expect(subject).not_to have_css(".creation_date_status", text: creation_date)
+        expect(subject).to have_css(".card__info__item", text: published_date)
+        expect(subject).not_to have_css(".card__status", text: creation_date)
       end
 
       context "when it is a idea preview" do
@@ -51,7 +51,7 @@ module Decidim::Ideas
         let(:cell_html) { my_cell.call }
 
         it "renders the card with no status info" do
-          expect(subject).to have_css(".card__header")
+          expect(subject).to have_css(".card__content")
           expect(subject).to have_css(".card__text")
           expect(subject).to have_no_css(".card-data__item")
         end

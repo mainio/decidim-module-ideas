@@ -97,7 +97,8 @@ describe "User edits idea", type: :system do
     describe "remove image" do
       before do
         visit current_path
-        within ".card__header" do
+        scroll_to find_all(".cards-list").last
+        within "#idea_#{idea2.id}" do
           click_link idea2_title
         end
         click_link "Edit idea"
@@ -130,7 +131,7 @@ describe "User edits idea", type: :system do
     describe "remove document" do
       before do
         visit current_path
-        within ".card__header" do
+        within "#idea_#{idea3.id}" do
           click_link idea3_title
         end
         click_link "Edit idea"

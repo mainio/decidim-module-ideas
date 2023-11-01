@@ -36,6 +36,7 @@ describe "map markers", type: :system do
     end
 
     it "shows marker with idea's coordinates" do
+      click_link "Show results on map"
       find_markers
       expect(page).to have_content("#{idea_with_coordinates_title}: #{idea_latitude}, #{idea_longitude}")
     end
@@ -66,6 +67,7 @@ describe "map markers", type: :system do
     end
 
     it "shows marker with area scope's coordinates" do
+      click_link "Show results on map"
       find_markers
       expect(page).to have_content("#{idea_with_area_scope_title}: #{area_scope_latitude}, #{area_scope_longitude}")
     end

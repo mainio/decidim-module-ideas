@@ -57,7 +57,7 @@ describe "User filters ideas", type: :system do
 
     before do
       visit current_path
-      within ".filters__section.text_filter" do
+      within all(".filters__control.area_scope_id_filter").last do
         fill_in "filter[search_text_cont]", with: title
       end
       perform_search
@@ -232,7 +232,7 @@ describe "User filters ideas", type: :system do
   end
 
   def perform_search
-    within all(".filters__section")[-1] do
+    within all(".filters__actions")[-1] do
       find("button[type='submit']").click
     end
   end
