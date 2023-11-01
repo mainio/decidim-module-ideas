@@ -2,13 +2,16 @@ var $ideas = $('#ideas');
 var $map = $('#map');
 var $ideasCount = $('#ideas-count');
 var $orderFilterInput = $('.order_filter');
+var $orderContent =$('.control');
 
 $ideas.html('<%= j(render partial: "ideas").strip.html_safe %>');
 $ideasCount.html('<%= j(render partial: "count").strip.html_safe %>');
 $orderFilterInput.val('<%= order %>');
-
+$orderContent.html('<%= j(render partial: "decidim/shared/orders", locals: { i18n_scope: "decidim.ideas.ideas.orders", orders: orders_list }).html_safe %>');
 var $dropdownMenu = $('.dropdown.menu', $ideas);
 $dropdownMenu.foundation();
+$orderContent.foundation();
+
 
 var mapController = $map.data("map-controller");
 if (mapController) {
