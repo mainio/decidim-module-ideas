@@ -51,4 +51,21 @@ describe Decidim::Ideas::UpdateIdea do
     expect(idea.category.id).to eq(idea_data[:category_id])
     expect(idea.area_scope.id).to eq(idea_data[:area_scope_id])
   end
+
+  context "with idea_limit" do
+    let(:component) { create(:idea_component, :with_idea_limit, participatory_space: participatory_space) }
+
+    it "broadcasts ok" do
+      expect { subject }.to broadcast(:ok)
+    end
+  end
+
+  context "with usergroup" do
+    let(:component) { create(:idea_component, :with_idea_limit, participatory_space: participatory_space) }
+    let!(:user) { create(:user_group, organization: organization) }
+
+    it "broadcasts ok" do
+      expect { subject }.to broadcast(:ok)
+    end
+  end
 end

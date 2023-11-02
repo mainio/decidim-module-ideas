@@ -8,9 +8,10 @@ module Decidim
       #
       # idea     - The idea to withdraw.
       # current_user - The current user.
-      def initialize(idea, current_user)
+      def initialize(idea, current_user, form = nil)
         @idea = idea
         @current_user = current_user
+        @form = form
       end
 
       # Executes the command. Broadcasts these events:
