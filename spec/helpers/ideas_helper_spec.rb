@@ -44,10 +44,10 @@ module Decidim
           end
 
           context "when answered and not published" do
-            let(:idea) { create(:idea, :answered, :unpublished, component: component) }
+            let(:idea) { create(:idea, :accepted_not_published, component: component) }
 
             it "returns state" do
-              expect(subject).to eq("Answered Not published")
+              expect(subject).to eq("Not answered (Accepted to the next step)")
             end
           end
         end
