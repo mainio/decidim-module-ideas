@@ -487,6 +487,14 @@ en:
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
           show_terms_info_text: Show criteria
+        idea_attributes:
+          attributes:
+            address: Location
+            area: Area
+            category: Theme
+            id: Number (ID)
+            published_at: Publish time
+          title: Information
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
           draft_idea_title: You have an idea draft!
@@ -547,6 +555,7 @@ en:
           comments: Comments
           edit_idea: Edit idea
           show_versions: Show version history
+          subtitle: Idea
         ideas:
           empty: There are no ideas yet
           empty_filters: There isn't any idea with this criteria

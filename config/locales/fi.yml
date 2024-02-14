@@ -487,6 +487,14 @@ fi:
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
           show_categories_info_text: Katso, mitä teemat pitävät sisällään
           show_terms_info_text: Tutustu kriteereihin
+        idea_attributes:
+          attributes:
+            address: Sijainti
+            area: Alue
+            category: Teema
+            id: Numero (ID)
+            published_at: Julkaisuaika
+          title: Tiedot
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
           draft_idea_title: Sinulla on keskeneräinen idea!
@@ -547,6 +555,7 @@ fi:
           comments: Kommentit
           edit_idea: Muokkaa ideaa
           show_versions: Näytä versiohistoria
+          subtitle: Idea
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
