@@ -420,8 +420,8 @@ fi:
           title: Viimeistele ideasi
         count:
           ideas_count:
-            one: "%{count} idea"
-            other: "%{count} ideaa"
+            one: "Löytyi %{count} idea"
+            other: "Löytyi %{count} ideaa"
         edit:
           back: Palaa edelliselle sivulle
           send: Tallenna
@@ -507,7 +507,6 @@ fi:
           show_list: Näytä tulokset listana
           show_map: Näytä tulokset kartalla
           subtitle: Etsi ja tutki ideoita!
-          view_idea: Näytä idea
         map:
           dynamic:
             skip_button: Ohita kartta
@@ -556,13 +555,17 @@ fi:
           edit_idea: Muokkaa ideaa
           show_versions: Näytä versiohistoria
           subtitle: Idea
+        idea_map:
+          title: Idea kartalla
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
+        map_template:
+          view_idea: Näytä idea
         show:
           answer: Vastaa
           back_to: Takaisin
-          back_to_list: Näytä muut ideat
+          back_to_list: Näytä kaikki ideat
           changes_at_title: Muutokset kohteessa "%{title}"
           feedback_title: Kiitos idean jättämisestä!
           link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen muutoksesta

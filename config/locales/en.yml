@@ -420,8 +420,8 @@ en:
           title: Complete your idea
         count:
           ideas_count:
-            one: "%{count} idea"
-            other: "%{count} ideas"
+            one: "Found %{count} idea"
+            other: "Found %{count} ideas"
         edit:
           back: Back to previous page
           send: Save
@@ -507,7 +507,6 @@ en:
           show_list: Show results as list
           show_map: Show results on map
           subtitle: Search and discover ideas!
-          view_idea: View idea
         map:
           dynamic:
             skip_button: Skip map
@@ -556,13 +555,17 @@ en:
           edit_idea: Edit idea
           show_versions: Show version history
           subtitle: Idea
+        idea_map:
+          title: Idea on map
         ideas:
           empty: There are no ideas yet
           empty_filters: There isn't any idea with this criteria
+        map_template:
+          view_idea: View idea
         show:
           answer: Answer
           back_to: Back to
-          back_to_list: See other ideas
+          back_to_list: See all ideas
           changes_at_title: Amendment to "%{title}"
           feedback_title: Thank you for submitting an idea!
           link_to_promoted_emendation_help_text: This idea is a promoted emendation

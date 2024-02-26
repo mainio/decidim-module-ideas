@@ -420,8 +420,8 @@ sv:
           title: Komplettera din idé
         count:
           ideas_count:
-            one: "%{count} idé"
-            other: "%{count} idéer"
+            one: "Hittade %{count} idé"
+            other: "Hittade %{count} idéer"
         edit:
           back: Tillbaka till föregående sida
           send: Spara
@@ -507,7 +507,6 @@ sv:
           show_list: Visa resultat som lista
           show_map: Visa resultat på kartan
           subtitle: Sök och utforska idéer!
-          view_idea: Visa idé
         map:
           dynamic:
             skip_button: Hoppa över karta
@@ -556,13 +555,17 @@ sv:
           edit_idea: Redigera idé
           show_versions: Visa versionshistorik
           subtitle: Idén
+        idea_map:
+          title: Idé på kartan
         ideas:
           empty: Det finns inga idéer ännu
           empty_filters: Det finns ingen idé med dessa kriterier
+        map_template:
+          view_idea: Visa idé
         show:
           answer: Svara
           back_to: Tillbaka till
-          back_to_list: Visa andra idéer
+          back_to_list: Visa alla idéer
           changes_at_title: Ändring till %{title}
           feedback_title: Tack för att du skickade en idé!
           link_to_promoted_emendation_help_text: Denna idé är ett annonserat ändringsförslag

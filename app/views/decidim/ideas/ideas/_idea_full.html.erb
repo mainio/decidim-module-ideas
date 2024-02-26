@@ -55,6 +55,8 @@
           </div>
         <% end %>
 
+        <%= render partial: "idea_map", locals: { idea: idea } %>
+
         <div class="resource__details margin-top-3">
           <%= attachments_for idea %>
 

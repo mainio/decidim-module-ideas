@@ -4,12 +4,12 @@
   </div>
 <% end %>
 
-<% if component_settings.geocoding_enabled? && idea.latitude.present? && idea.longitude.present? %>
+<% if component_settings.geocoding_enabled? && idea.address.present? && idea.latitude.present? && idea.longitude.present? %>
   <div class="actions-panel bg-secondary">
-    <%= link_to idea_map_link(idea), class: "action-link", target: "_blank", data: { external_link_spacer: "" } do %>
+    <a href="#idea_map" class="action-link">
       <span class="link-text"><%= t ".show_on_map" %></span>
       <%= icon "map-marker", role: "img", "aria-hidden": true %>
-    <% end %>
+    </a>
   </div>
 <% end %>
 

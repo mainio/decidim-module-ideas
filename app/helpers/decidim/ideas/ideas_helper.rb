@@ -26,12 +26,12 @@ module Decidim
         end
       end
 
-      def ideas_map(geocoded_ideas)
+      def ideas_map(geocoded_ideas, **options)
         map_options = { type: "ideas", markers: geocoded_ideas }
         map_center = component_settings.default_map_center_coordinates
         map_options[:center_coordinates] = map_center.split(",").map(&:to_f) if map_center
 
-        dynamic_map_for(map_options) do
+        dynamic_map_for(map_options.merge(options)) do
           # These snippets need to be added AFTER the other map scripts have
           # been added which is why they cannot be within the block. Otherwise
           # e.g. the markercluser would not be available when the plans map is
@@ -41,7 +41,11 @@ module Decidim
             snippets.add(:foot, snippets.for(:plans_map_scripts))
           end
 
-          yield
+          if block_given?
+            yield
+          else
+            ""
+          end
         end
       end
 

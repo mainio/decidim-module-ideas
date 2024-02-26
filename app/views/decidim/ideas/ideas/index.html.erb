@@ -55,19 +55,24 @@
 
     <div class="tabs-content" data-tabs-content="listing-tabs">
       <div class="tabs-panel is-active" id="ideas-listing">
-        <div class="collection-controls">
-          <div class="control">
-            <%= order_selector available_orders, i18n_scope: "decidim.ideas.ideas.orders" %>
-          </div>
-          <% if false %>
-            <div class="control">
-              <%= render partial: "decidim/shared/results_per_page" %>
+        <div class="collection-info row">
+          <div class="column">
+            <div id="ideas-count" aria-live="polite">
+              <%= render partial: "count" %>
             </div>
-          <% end %>
-        </div>
-
-        <div id="ideas-count">
-          <%= render partial: "count" %>
+          </div>
+          <div class="column">
+            <div class="collection-controls">
+              <div class="control">
+                <%= order_selector available_orders, i18n_scope: "decidim.ideas.ideas.orders" %>
+              </div>
+              <% if false %>
+                <div class="control">
+                  <%= render partial: "decidim/shared/results_per_page" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </div>
 
         <div id="ideas">
@@ -84,27 +89,7 @@
       <% if component_settings.geocoding_enabled? %>
         <div class="tabs-panel" id="ideas-map">
           <%= ideas_map ideas_data_for_map(@geocoded_ideas) do %>
-            <template id="marker-popup">
-              <div class="map-info__content">
-                <h3>${title}</h3>
-                <div id="bodyContent">
-                  <p>{{html body}}</p>
-                  <div class="map__date-adress">
-                    <div class="address card__extra">
-                      <div class="address__icon">{{html icon}}</div>
-                      <div class="address__details">
-                        <span>${address}</span><br>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="map-info__button">
-                    <a href="${link}" class="button button--sc">
-                      <%= t(".view_idea") %>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </template>
+            <%= render partial: "map_template" %>
           <% end %>
         </div>
       <% end %>
