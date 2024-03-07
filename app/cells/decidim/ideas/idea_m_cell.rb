@@ -136,7 +136,7 @@ module Decidim
         return unless cat
 
         content_tag(:span, class: "card__category__icon", "aria-hidden": true) do
-          image_tag(cat.attached_uploader(:category_icon).path, alt: full_category)
+          image_tag(cat.attached_uploader(:category_icon).url, alt: full_category)
         end
       end
 
@@ -160,7 +160,7 @@ module Decidim
       end
 
       def resource_image_path
-        return model.image.attached_uploader(:file).path(variant: resource_image_variant) if has_image?
+        return model.image.attached_uploader(:file).variant_url(resource_image_variant) if has_image?
 
         path = category_image_path(model.category)
         return path if path
@@ -177,7 +177,7 @@ module Decidim
         return unless cat.respond_to?(:category_image)
         return unless cat.category_image
 
-        cat.attached_uploader(:category_image).path(variant: category_image_variant)
+        cat.attached_uploader(:category_image).variant_url(category_image_variant)
       end
 
       def category_image_variant
