@@ -206,7 +206,7 @@ module Decidim
       end
 
       def search_collection
-        Idea.where(component: current_component).not_hidden.with_availability(params[:filter].try(:[], :with_availability))
+        Idea.where(component: current_component).not_hidden.only_amendables.with_availability(params[:filter].try(:[], :with_availability))
       end
 
       def default_filter_params
