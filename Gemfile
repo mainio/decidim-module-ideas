@@ -15,7 +15,7 @@ DECIDIM_VERSION = Decidim::Ideas.decidim_version
 gem "decidim", DECIDIM_VERSION
 gem "decidim-ideas", path: "."
 
-gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "main"
+gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "develop"
 gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "main"
 
 gem "bootsnap", "~> 1.4"
