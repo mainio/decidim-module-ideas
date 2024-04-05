@@ -671,11 +671,12 @@ sv:
       copied_from_component:
         idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Resultat som ingår i denna idé:'
+        project_result: Relaterade projekt
       included_ideas:
-        idea_project: 'Idé visas i dessa röstbara förslag:'
-        idea_result: 'Idé som ingår i dessa resultat:'
-        project_idea: 'Bifogade idéer:'
+        idea_plan: Relaterade gemensam utveckling förslag
+        idea_project: Relaterade röstningsbara förslag
+        idea_result: Relaterade projekt
+        project_idea: Relaterade idéer
     statistics:
       ideas_accepted: Godkända idéer
       ideas_count: Idéer

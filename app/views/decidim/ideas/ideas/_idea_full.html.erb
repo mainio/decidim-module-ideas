@@ -60,9 +60,14 @@
         <div class="resource__details margin-top-3">
           <%= attachments_for idea %>
 
-          <%# = linked_resources_for idea, :results, "included_ideas" %>
-          <%# = linked_resources_for idea, :projects, "included_ideas" %>
-          <%# = linked_resources_for idea, :ideas, "copied_from_component" %>
+          <% if respond_to?(:linked_resources_group_for) %>
+            <%= linked_resources_group_for(idea, {
+              results: "included_ideas",
+              projects: "included_ideas",
+              plans: "included_ideas",
+              ideas: "copied_from_component"
+            }) %>
+          <% end %>
         </div>
       </div>
     </div>

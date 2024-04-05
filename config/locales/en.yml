@@ -671,11 +671,12 @@ en:
       copied_from_component:
         idea_idea: Related ideas
       included_projects:
-        project_result: 'Attached results:'
+        project_result: Related projects
       included_ideas:
-        idea_project: 'Idea appearing in these votable proposals:'
-        idea_result: 'Idea appearing in these results:'
-        project_idea: 'Attached ideas:'
+        idea_plan: Related co-creation proposals
+        idea_project: Related votable proposals
+        idea_result: Related projects
+        project_idea: Related ideas
     statistics:
       ideas_accepted: Accepted ideas
       ideas_count: Ideas

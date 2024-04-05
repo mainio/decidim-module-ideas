@@ -671,11 +671,12 @@ fi:
       copied_from_component:
         idea_idea: Liittyvät ideat
       included_projects:
-        project_result: 'Liitetyt tulokset:'
+        project_result: Liitetyt tulokset
       included_ideas:
-        idea_project: 'Idea esiintyy seuraavissa äänestettävissä ehdotuksissa:'
-        idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
-        project_idea: 'Liitetyt ideat:'
+        idea_plan: Liitetyt yhteiskehittämisvaiheen ehdotukset
+        idea_project: Liitetyt äänestettävät ehdotukset
+        idea_result: Liitetyt hankkeet
+        project_idea: Liitetyt ideat
     statistics:
       ideas_accepted: Jatkoon hyväksyttyä ideaa
       ideas_count: Ideaa
