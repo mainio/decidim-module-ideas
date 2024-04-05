@@ -14,12 +14,14 @@
 <% end %>
 
 <% if show_actions %>
-  <div class="actions-panel bg-secondary">
-    <%= link_to "#comments", class: "action-link" do %>
-      <span class="link-text"><%= t ".show_comments" %></span>
-      <%= icon "comment-square", role: "img", "aria-hidden": true %>
-    <% end %>
-  </div>
+  <% if idea.commentable? %>
+    <div class="actions-panel bg-secondary">
+      <%= link_to "#comments", class: "action-link" do %>
+        <span class="link-text"><%= t ".show_comments" %></span>
+        <%= icon "comment-square", role: "img", "aria-hidden": true %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="actions-panel bg-secondary">
     <button type="button" class="link action-link" data-open="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-controls="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-haspopup="dialog">
