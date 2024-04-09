@@ -159,11 +159,11 @@ module Decidim
       end
 
       def self.area_scope_coordinates_for(component)
-        component.settings.area_scope_coordinates.index_with do |(_scope_id, coords)|
+        component.settings.area_scope_coordinates.to_h do |scope_id, coords|
           latlng = coords.split(",")
-          next if latlng.length < 2
+          next [scope_id.to_s.to_i, nil] if latlng.length < 2
 
-          [latlng[0].to_f, latlng[1].to_f]
+          [scope_id.to_s.to_i, [latlng[0].to_f, latlng[1].to_f]]
         end.compact
       end
 
