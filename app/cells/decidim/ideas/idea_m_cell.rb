@@ -128,7 +128,7 @@ module Decidim
       end
 
       def favoriting_count_status
-        cell("decidim/favorites/favoriting_count", model)
+        cell("decidim/favorites/favorites_count", model)
       end
 
       def category_icon
