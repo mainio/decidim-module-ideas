@@ -18,20 +18,20 @@
         current_component.participatory_space.can_participate?(current_user) &&
         !users_idea_limit_reached? %>
     <div class="columns medium-6 mediumlarge-4">
-      <div class="actions-panel bg-secondary">
+      <section class="layout-aside__section actions__secondary">
         <% if @draft_idea_link %>
           <p><%= t ".draft_idea_title" %></p>
           <%= link_to @draft_idea_link, class: "action-link" do %>
             <span><%= t(".draft_idea_continue") %></span>
-            <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
+            <%= icon("arrow-right-line", role: "img", "aria-hidden": true) %>
           <% end %>
         <% else %>
           <%= link_to new_idea_path, class: "action-link", data: { "redirect_url" => new_idea_path } do %>
             <span><%= t(".new_idea") %></span>
-            <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
+            <%= icon("arrow-right-line", role: "img", "aria-hidden": true) %>
           <% end %>
         <% end %>
-      </div>
+      </section>
     </div>
   <% end %>
 </div>
@@ -97,4 +97,4 @@
   </div>
 </div>
 
-<%= javascript_pack_tag "decidim_ideas_ideas_list" %>
+<%= append_javascript_pack_tag "decidim_ideas_ideas_list" %>

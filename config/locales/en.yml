@@ -390,7 +390,7 @@ en:
         success: Draft destroyed successfully.
       idea_l:
         card_label: "Idea: %{title}"
-      idea_m:
+      idea_g:
         card_label: "Idea: %{title}"
       last_activity:
         idea_updated_html: "<span>Idea updated at %{link}</span>"
@@ -538,7 +538,7 @@ en:
         idea:
           creation_date: 'Creation: %{date}'
           view_idea: View idea
-        idea_actions:
+        idea_aside:
           share: Share idea
           show_comments: Show idea comments
           show_on_map: Show idea on map

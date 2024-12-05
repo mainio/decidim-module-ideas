@@ -5,7 +5,7 @@
       <%= decidim_html_escape(present(idea).title).html_safe %>
 
       <% if allowed_to? :edit, :idea, idea: idea %>
-        <%= icon_link_to "pencil", edit_idea_path(idea), t("actions.edit_idea", scope: "decidim.ideas"), class: "action-icon--edit-idea" %>
+        <%= icon_link_to "pencil-line", edit_idea_path(idea), t("actions.edit_idea", scope: "decidim.ideas"), class: "action-icon--edit-idea" %>
       <% end %>
     </h2>
   </div>
@@ -27,12 +27,12 @@
                 target: :blank
               ) %>
               <% if presented_author.can_be_contacted? && presented_author.nickname != present(current_user).nickname %>
-                <%= icon_link_to "envelope-closed", current_or_new_conversation_path_with(presented_author), t("decidim.contact"), class:"action-icon--new" %>
+                <%= icon_link_to "mail-line", current_or_new_conversation_path_with(presented_author), t("decidim.contact"), class:"action-icon--new" %>
               <% end %>
 
               <% user = presented_author.__getobj__ %>
               <% if user.respond_to?(:id) && allowed_to?(:show_email, :user, user: user) %>
-                <%= icon_link_to "envelope-open", decidim_admin.show_email_officialization_path(user_id: user.id), t(".show_email"), class: "action-icon action-icon--show-email", data: { full_name: user.name, toggle: "show-email-modal" } %>
+                <%= icon_link_to "mail-open-line", decidim_admin.show_email_officialization_path(user_id: user.id), t(".show_email"), class: "action-icon action-icon--show-email", data: { full_name: user.name, toggle: "show-email-modal" } %>
               <% end %>
             </li>
           <% end %>

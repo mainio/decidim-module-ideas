@@ -3,7 +3,6 @@
 module Decidim
   module Ideas
     class IdeasController < Decidim::Ideas::ApplicationController
-      helper Decidim::WidgetUrlsHelper
       helper IdeaWizardHelper
       helper Decidim::Ideas::IdeasFormHelper
 

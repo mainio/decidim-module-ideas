@@ -5,7 +5,7 @@ require "cell/partial"
 module Decidim
   module Ideas
     # This cell renders a idea with its M-size card.
-    class IdeaMCell < Decidim::CardMCell
+    class IdeaGCell < Decidim::CardGCell
       include IdeaCellsHelper
 
       property :area_scope, :answered?
@@ -25,8 +25,7 @@ module Decidim
       private
 
       def card_wrapper
-        cls = card_classes.is_a?(Array) ? card_classes.join(" ") : card_classes
-        wrapper_options = { class: "card #{cls}", aria: { label: t(".card_label", title: title) } }
+        wrapper_options = { class: "card", aria: { label: t(".card_label", title:) } }
         if has_link_to_resource?
           link_to resource_path, **wrapper_options do
             yield

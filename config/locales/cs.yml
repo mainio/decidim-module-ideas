@@ -390,7 +390,7 @@ cs:
       destroy_draft:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
-      idea_m:
+      idea_g:
         card_label: "Nápad: %{title}"
       last_activity:
         idea_updated_html: "<span>Nápad aktualizován na %{link}</span>"
@@ -532,7 +532,7 @@ cs:
         idea:
           creation_date: 'Vytvoření: %{date}'
           view_idea: Zobrazit nápad
-        idea_actions:
+        idea_aside:
           share: Sdílet nápad
           show_comments: Zobrazit komentáře nápadu
           show_on_map: Zobrazit nápad na mapě

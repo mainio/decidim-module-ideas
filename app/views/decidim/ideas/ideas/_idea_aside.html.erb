@@ -1,0 +1,42 @@
+<% if show_actions %>
+  <section class="layout-aside__section actions__secondary">
+    <%= cell("decidim/favorites/favorite_button", idea, button_class: "link text-secondary", disable_tooltip: true) %>
+  </section>
+<% end %>
+
+<% if component_settings.geocoding_enabled? && idea.address.present? && idea.latitude.present? && idea.longitude.present? %>
+  <section class="layout-aside__section actions__secondary">
+    <a href="#idea_map" class="text-secondary">
+      <span class="link-text"><%= t ".show_on_map" %></span>
+      <%= icon "map-pin-line", role: "img", "aria-hidden": true %>
+    </a>
+  </section>
+<% end %>
+
+<% if show_actions %>
+  <% if idea.commentable? %>
+    <section class="layout-aside__section actions__secondary">
+      <%= link_to "#comments", class: "text-secondary" do %>
+        <span class="link-text"><%= t ".show_comments" %></span>
+        <%= icon "question-answer-line", role: "img", "aria-hidden": true %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section class="layout-aside__section actions__secondary">
+    <%= cell "decidim/share_button", nil %>
+  </section>
+
+  <section class="layout-aside__section actions__secondary">
+    <%= cell "decidim/report_button", idea, only_button: true%>
+  </section>
+<% end %>
+
+<% if false %>
+  <section class="layout-aside__section actions__secondary">
+    <button type="button" class="link text-secondary">
+      <%= icon "print", role: "img", "aria-hidden": true %>
+      <span class="link-text"><%= t ".print" %></span>
+    </button>
+  </section>
+<% end %>

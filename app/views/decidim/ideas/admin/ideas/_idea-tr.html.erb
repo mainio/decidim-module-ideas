@@ -51,11 +51,11 @@
 
   <td class="table-list__actions">
     <% if allowed_to? :edit, :idea, idea: idea %>
-      <%= icon_link_to "pencil", edit_idea_path(idea), t("actions.edit_idea", scope: "decidim.ideas"), class: "action-icon--edit-idea" %>
+      <%= icon_link_to "pencil-line", edit_idea_path(idea), t("actions.edit_idea", scope: "decidim.ideas"), class: "action-icon--edit-idea" %>
     <% end %>
 
     <%= icon_with_link_to_idea(idea) %>
 
-   <%= icon_link_to "eye", resource_locator(idea).path, t("actions.preview", scope: "decidim.ideas.admin"), class: "action-icon--preview", target: :blank %>
+   <%= icon_link_to "eye-line", resource_locator(idea).path, t("actions.preview", scope: "decidim.ideas.admin"), class: "action-icon--preview", target: :blank %>
   </td>
 </tr>

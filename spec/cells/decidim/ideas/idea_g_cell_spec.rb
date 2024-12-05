@@ -8,7 +8,7 @@ module Decidim::Ideas
 
     subject { cell_html }
 
-    let(:my_cell) { cell("decidim/ideas/idea_m", idea, context: { show_space: show_space }) }
+    let(:my_cell) { cell("decidim/ideas/idea_g", idea, context: { show_space: show_space }) }
     let(:cell_html) { my_cell.call }
     let(:created_at) { 1.month.ago }
     let(:published_at) { Time.current }
@@ -47,7 +47,7 @@ module Decidim::Ideas
       context "when it is a idea preview" do
         subject { cell_html }
 
-        let(:my_cell) { cell("decidim/ideas/idea_m", model, preview: true) }
+        let(:my_cell) { cell("decidim/ideas/idea_g", model, preview: true) }
         let(:cell_html) { my_cell.call }
 
         it "renders the card with no status info" do

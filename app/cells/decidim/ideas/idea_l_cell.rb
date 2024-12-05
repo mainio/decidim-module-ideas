@@ -5,7 +5,7 @@ require "cell/partial"
 module Decidim
   module Ideas
     # This cell renders an idea with its L-size card.
-    class IdeaLCell < Decidim::Ideas::IdeaMCell
+    class IdeaLCell < Decidim::Ideas::IdeaGCell
       def card_classes
         classes = super
         classes = classes.split unless classes.is_a?(Array)

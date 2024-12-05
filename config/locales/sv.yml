@@ -390,7 +390,7 @@ sv:
         success: Utkast förstördes framgångsrikt.
       idea_l:
         card_label: "Idé: %{title}"
-      idea_m:
+      idea_g:
         card_label: "Idé: %{title}"
       last_activity:
         idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
@@ -538,7 +538,7 @@ sv:
         idea:
           creation_date: 'Skapat: %{date}'
           view_idea: Visa idé
-        idea_actions:
+        idea_aside:
           share: Dela idén
           show_comments: Visa idéens kommentarer
           show_on_map: Visa idén på kartan

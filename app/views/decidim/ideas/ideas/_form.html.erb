@@ -36,7 +36,7 @@
     <%= form.check_box :terms_agreed, required: true %>
     <div class="field-info field-info-with-icon">
       <%= link_to info_path("terms"), class: "info-modal-link" do %>
-        <%= icon "information", aria_hidden: true %>
+        <%= icon "information-line", aria_hidden: true %>
         <%= t(".show_terms_info_text") %>
       <% end %>
     </div>
@@ -86,7 +86,7 @@
     <div class="columns large-6">
       <div class="field-info field-info-with-icon">
         <%= link_to info_path("areas"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
+          <%= icon "information-line", aria_hidden: true %>
           <%= t(".show_areas_info_text") %>
         <% end %>
       </div>
@@ -138,7 +138,7 @@
     <div class="columns large-6">
       <div class="field-info field-info-with-icon">
         <%= link_to info_path("categories"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
+          <%= icon "information-line", aria_hidden: true %>
           <%= t(".show_categories_info_text") %>
         <% end %>
       </div>
@@ -225,7 +225,7 @@
   </div>
 <% end %>
 
-<%= javascript_pack_tag "decidim_ideas_idea_form" %>
+<%= append_javascript_pack_tag "decidim_ideas_idea_form" %>
 
 <%
 js_options = {

@@ -23,7 +23,7 @@
     <div class="columns small-12 medium-4">
       <div class="resource__aside">
         <div class="resource__actions">
-          <%= render partial: "idea_actions", locals: { idea: idea, show_actions: show_actions } %>
+          <%= render partial: "idea_aside", locals: { idea: idea, show_actions: show_actions } %>
         </div>
 
         <% if show_actions && allowed_to?(:withdraw, :idea, idea: idea) %>
