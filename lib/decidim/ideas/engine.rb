@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "kaminari"
-require "social-share-button"
 require "ransack"
 require "cells/rails"
 require "cells-erb"
