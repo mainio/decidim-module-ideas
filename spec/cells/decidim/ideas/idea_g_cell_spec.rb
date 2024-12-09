@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim::Ideas
-  describe IdeaMCell, type: :cell do
+  describe IdeaGCell, type: :cell do
     controller Decidim::Ideas::IdeasController
 
     subject { cell_html }

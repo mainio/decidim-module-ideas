@@ -102,7 +102,7 @@
       <div class="field" id="address_input">
         <div class="input-group">
           <span class="input-group-label">
-            <%= icon "map-marker", aria_hidden: true %>
+            <%= icon "map-pin-line", aria_hidden: true %>
           </span>
           <%= form.geocoding_field :address, label: false, class: "input-group-field", data: {
             "coordinates-url": geocoding_path,
@@ -149,7 +149,7 @@
     <% @form.top_categories.each do |category| %>
       <% next if category.subcategories.blank? %>
 
-      <div class="subcategories hide" data-parent="<%= category.id %>">
+      <div class="subcategories hidden" data-parent="<%= category.id %>">
         <%= form.plain_label :sub_category_id %>
 
         <div class="row">

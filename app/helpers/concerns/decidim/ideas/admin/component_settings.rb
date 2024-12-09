@@ -28,7 +28,7 @@ module Decidim
                 end
               when :idea_area_scope_coordinates
                 component_id = @component.new_record? ? "new" : @component.id
-                visibility_class = @component.settings.geocoding_enabled ? "" : "hide"
+                visibility_class = @component.settings.geocoding_enabled ? "" : "hidden"
                 value = area_scopes_coordinates(@component)
                 label = t(name, scope: i18n_scope)
                 coordinates_element = render(

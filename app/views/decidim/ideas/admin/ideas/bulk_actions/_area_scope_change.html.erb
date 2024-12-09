@@ -1,16 +1,12 @@
-<div id="js-scope-change-ideas-actions" class="hide js-bulk-action-form">
+<div id="js-scope-change-ideas-actions" class="hidden js-bulk-action-form">
   <%= form_tag(update_area_scope_ideas_path, method: :post, remote: true, id: "js-form-scope-change-ideas", class: "flex--cc flex-gap--1") do %>
-    <div class="checkboxes hide">
+    <div class="checkboxes hidden">
       <% ideas.each do |idea| %>
         <%= check_box_tag "idea_ids[]", idea.id, false, class: "js-check-all-idea js-idea-id-#{idea.id}" %>
       <% end %>
     </div>
 
-    <%= scopes_picker_tag(
-          :area_scope_id,
-          current_component.settings.area_scope_parent_id,
-          field: t("models.idea.fields.area_scope", scope: "decidim.ideas")
-        ) %>
+    <%= scopes_select_tag(:area_scope_id, options: { selected: current_component.settings.area_scope_parent_id }) %>
 
     <%= submit_tag(
           t("decidim.ideas.admin.ideas.index.update_scope_button"),

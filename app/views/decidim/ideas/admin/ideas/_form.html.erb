@@ -72,7 +72,7 @@
         <% @form.top_categories.each do |category| %>
           <% next if category.subcategories.blank? %>
 
-          <div class="subcategories hide" data-parent="<%= category.id %>">
+          <div class="subcategories hidden" data-parent="<%= category.id %>">
             <div class="row column">
               <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
             </div>

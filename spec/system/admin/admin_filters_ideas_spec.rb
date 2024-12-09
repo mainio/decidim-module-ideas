@@ -33,9 +33,7 @@ describe "Admin filters ideas", type: :system do
     let!(:idea5) { create(:idea, :withdrawn, title: idea5_title, component: component) }
 
     before do
-      within ".fcell.filter" do
-        find(".dropdown.button").hover
-      end
+      click_on "Filter"
       find("a", text: "State").hover
     end
 
@@ -73,8 +71,9 @@ describe "Admin filters ideas", type: :system do
 
     before do
       visit current_path
-      within ".fcell.filter" do
-        find(".dropdown.button").hover
+      click_on "Filter"
+
+      within ".card-section" do
         find("a", text: "Area").hover
       end
     end
@@ -93,10 +92,8 @@ describe "Admin filters ideas", type: :system do
 
     before do
       visit current_path
-      within ".fcell.filter" do
-        find(".dropdown.button").hover
-        find("a", text: "Category").hover
-      end
+      click_on "Filter"
+      find("a", text: "Category").hover
     end
 
     it "filters by category" do

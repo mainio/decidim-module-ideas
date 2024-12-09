@@ -111,12 +111,12 @@ module Decidim
         def icon_with_link_to_idea(idea)
           icon, tooltip = if allowed_to?(:create, :idea_answer, idea: idea) && !idea.emendation?
                             [
-                              "comment-square",
+                              "question-answer-line",
                               t(:answer_idea, scope: "decidim.ideas.actions")
                             ]
                           else
                             [
-                              "info",
+                              "information-line",
                               t(:show, scope: "decidim.ideas.actions")
                             ]
                           end

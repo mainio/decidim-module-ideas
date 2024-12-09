@@ -17,9 +17,9 @@ $(() => {
 
   $("input[name='component[settings][geocoding_enabled]']").on("change", (ev) => {
     if ($(ev.target).is(":checked")) {
-      $coordinatesElement.removeClass("hide");
+      $coordinatesElement.removeClass("hidden");
     } else {
-      $coordinatesElement.addClass("hide");
+      $coordinatesElement.addClass("hidden");
     }
   });
 

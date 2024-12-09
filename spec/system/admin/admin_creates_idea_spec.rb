@@ -54,7 +54,7 @@ describe "Admin creates idea", type: :system do
 
     before do
       visit current_path
-      find(".icon--pencil").click
+      find(".action-icon--edit-idea").click
     end
 
     it "updates the idea" do

@@ -1,6 +1,6 @@
-<div id="js-recategorize-ideas-actions" class="hide js-bulk-action-form">
+<div id="js-recategorize-ideas-actions" class="hidden js-bulk-action-form">
   <%= form_tag(update_category_ideas_path, method: :post, remote: true, id: "js-form-recategorize-ideas", class: "flex--cc flex-gap--1") do %>
-    <div class="checkboxes hide">
+    <div class="checkboxes hidden">
       <% ideas.each do |idea| %>
         <%= check_box_tag "idea_ids[]", idea.id, false, class: "js-check-all-idea js-idea-id-#{idea.id}" %>
       <% end %>

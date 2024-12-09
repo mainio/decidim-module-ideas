@@ -91,10 +91,14 @@ describe "User browses ideas", type: :system do
 
     it "creates report" do
       click_link idea.title
-      click_button "Report idea"
+      click_button "Report"
       choose "report[reason]", option: reason
       fill_in "report[details]", with: report_body
-      click_button "Report"
+
+      within "#flagModal-content" do
+        click_button "Report"
+      end
+
       expect(page).to have_content("The report has been created successfully and it will be reviewed by an admin")
       expect(Decidim::Report.last.details).to eq(report_body)
       expect(Decidim::Report.last.reason).to eq(reason)
@@ -115,7 +119,7 @@ describe "User browses ideas", type: :system do
     it "follows link" do
       click_link idea2.title
       fill_in "add-comment-Idea-#{idea2.id}", with: add_comment
-      click_button "Send"
+      click_button "Publish comment"
       click_link idea3_title
       expect(page).to have_content(idea3_body)
       expect(page).to have_content(idea3.category.name["en"])

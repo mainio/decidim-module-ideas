@@ -64,12 +64,12 @@ describe "Admin creates idea", type: :system do
     end
 
     it "unreports" do
-      find(".icon--action-undo").click
+      find(".action-icon--unreport").click
       expect(page).to have_content("Resource successfully unreported")
     end
 
     it "hides" do
-      find(".icon--eye").click
+      find(".action-icon--hide").click
       expect(page).to have_content("Resource successfully hidden")
       expect(Decidim::Ideas::Idea.find(idea.id).hidden?).to be(true)
     end

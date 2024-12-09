@@ -64,7 +64,7 @@ module Decidim
       end
 
       def category
-        translated_attribute(model.category.name) if has_category?
+        decidim_sanitize translated_attribute(model.category.name) if has_category?
       end
 
       def full_category

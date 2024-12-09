@@ -39,7 +39,7 @@ describe "Admin manages idea component", type: :system do
     let(:coordinates) { "60.1699,24.9384" }
 
     before do
-      find(".icon--cog", match: :first).click
+      find(".action-icon--configure", match: :first).click
     end
 
     it "updates component's settings" do
@@ -60,8 +60,8 @@ describe "Admin manages idea component", type: :system do
   end
 
   describe "delete" do
-    it "delets component" do
-      find(".icon--circle-x").click
+    it "deletes component" do
+      find(".action-icon--remove").click
       expect(page).to have_content("Component deleted successfully")
     end
   end
