@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/mainio/decidim-module-plans.git
-  revision: c561ec3143786bb9e6a9484c17efdb38b0ccb70a
+  revision: e9419b7fab6f24755cb856550f9082629fd44fd8
   specs:
     decidim-plans (0.28.0)
       decidim-core (~> 0.28.0)
@@ -359,7 +359,7 @@ GEM
       nokogiri (>= 1.13.2, < 1.17.0)
       rubyzip (~> 2.3.0)
     docile (1.4.1)
-    doorkeeper (5.8.0)
+    doorkeeper (5.8.1)
       railties (>= 5)
     doorkeeper-i18n (4.0.1)
     erb_lint (0.4.0)
@@ -383,7 +383,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
-    faraday (2.12.1)
+    faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger

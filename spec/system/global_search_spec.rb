@@ -16,9 +16,12 @@ describe "global search", type: :system do
   end
 
   it "finds idea" do
-    fill_in :term, with: idea.title
-    click_button "Search"
-    expect(page).to have_content("1 RESULTS FOR THE SEARCH")
+    within ".main-bar__search" do
+      fill_in :term, with: idea.title
+    end
+
+    find("input#input-search").native.send_keys :enter
+    expect(page).to have_content("1 Results for the search")
     expect(page).to have_content(idea_title)
     expect(page).not_to have_content(idea2_title)
   end

@@ -87,7 +87,7 @@
       </div>
 
       <% if component_settings.geocoding_enabled? %>
-        <div class="tabs-panel" id="ideas-map">
+        <div class="tabs-panel map-container" id="ideas-map">
           <%= ideas_map ideas_data_for_map(@geocoded_ideas) do %>
             <%= render partial: "map_template" %>
           <% end %>

@@ -18,7 +18,7 @@ describe Decidim::Ideas::HighlightedIdeasForComponentCell, type: :cell do
   let!(:hidden_idea) { create(:idea, :hidden, component: component) }
 
   it "renders only the visible ideas" do
-    expect(subject).to have_css(".card.card--idea", count: 2)
+    expect(subject).to have_css(".card__content", count: 2)
     expect(subject).to have_content(translated(idea1.title))
     expect(subject).to have_content(translated(idea2.title))
     expect(subject).not_to have_content(translated(unpublished_idea.title))
@@ -30,7 +30,7 @@ describe Decidim::Ideas::HighlightedIdeasForComponentCell, type: :cell do
     let!(:rest_of_ideas) { create_list(:idea, 10, component: component) }
 
     it "shows the configured amount of ideas" do
-      expect(subject).to have_css(".card.card--idea", count: 4)
+      expect(subject).to have_css(".card__content", count: 4)
     end
 
     context "when the configuration is changed to a custom amount" do
@@ -41,7 +41,7 @@ describe Decidim::Ideas::HighlightedIdeasForComponentCell, type: :cell do
       end
 
       it "shows the configured amount of ideas" do
-        expect(subject).to have_css(".card.card--idea", count: amount)
+        expect(subject).to have_css(".card__content", count: amount)
       end
     end
   end

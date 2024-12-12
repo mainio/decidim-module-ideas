@@ -106,8 +106,8 @@ describe "User edits idea", type: :system do
 
       it "remove image" do
         click_button "Change image"
-        within ".reveal.upload-modal" do
-          click_button "× Remove"
+        within ".upload-modal" do
+          click_button "Remove"
           click_button "Save"
         end
         expect { click_button "Save" }.to change(idea2.attachments, :count).by(-1)
@@ -139,8 +139,8 @@ describe "User edits idea", type: :system do
 
       it "removes attached pdf" do
         click_button "Change attachment"
-        within ".reveal.upload-modal" do
-          click_button "× Remove"
+        within ".upload-modal" do
+          click_button "Remove"
           click_button "Save"
         end
         expect { click_button "Save" }.to change(idea3.attachments, :count).by(-1)

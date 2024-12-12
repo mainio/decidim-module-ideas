@@ -662,6 +662,7 @@ en:
         ideas_count: Ideas
     participatory_spaces:
       highlighted_ideas:
+        last: Last ideas
         see_all: See all (%{count})
     plans:
       section_types:

@@ -20,7 +20,7 @@ module Decidim
         unless snippets.any?(:idea_picker_inline)
           snippets.add(
             :idea_picker_inline,
-            javascript_pack_tag("decidim_ideas_idea_picker_inline")
+            append_javascript_pack_tag("decidim_ideas_idea_picker_inline")
           )
           snippets.add(
             :idea_picker_inline,

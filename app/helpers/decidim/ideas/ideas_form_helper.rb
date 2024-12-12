@@ -22,7 +22,7 @@ module Decidim
           # e.g. the markercluser would not be available when the ideas map is
           # loaded.
           unless snippets.any?(:ideas_map_scripts)
-            snippets.add(:ideas_map_scripts, javascript_pack_tag("decidim_ideas_map"))
+            snippets.add(:ideas_map_scripts, append_javascript_pack_tag("decidim_ideas_map"))
             snippets.add(:foot, snippets.for(:ideas_map_scripts))
           end
 

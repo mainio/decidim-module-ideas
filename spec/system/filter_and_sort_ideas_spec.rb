@@ -57,7 +57,7 @@ describe "User filters ideas", type: :system do
 
     before do
       visit current_path
-      within all(".filters__control.area_scope_id_filter").last do
+      within all(".filters__control.area_scope_id_filter").first do
         fill_in "filter[search_text_cont]", with: title
       end
       perform_search
@@ -195,11 +195,11 @@ describe "User filters ideas", type: :system do
       before do
         visit current_path
         within ".order-by" do
-          expect(page).to have_selector("ul[data-dropdown-menu$=dropdown-menu]", text: "Recent")
+          expect(page).to have_selector("a[data-order='recent']", text: "Recent")
           page.find("a", text: "Recent").click
           click_link(selected_option, match: :first)
         end
-        within ".order-by__dropdown .dropdown.menu li.is-dropdown-submenu-parent a" do
+        within ".order-by" do
           expect(page).to have_content(selected_option)
         end
         expect(page).to have_content("Browse ideas", wait: 1)

@@ -59,12 +59,22 @@ module Decidim
         decidim_html_escape(present(model).title)
       end
 
+      def show_space?
+        (context[:show_space].presence || options[:show_space].presence) && resource.respond_to?(:participatory_space) && resource.participatory_space.present?
+      end
+
+      def participatory_space
+        return unless show_space?
+
+        @participatory_space ||= resource.participatory_space
+      end
+
       def body
         decidim_sanitize(present(model).body)
       end
 
       def category
-        decidim_sanitize translated_attribute(model.category.name) if has_category?
+        decidim_sanitize(translated_attribute(model.category.name)) if has_category?
       end
 
       def full_category

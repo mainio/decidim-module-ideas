@@ -5,6 +5,12 @@
     </div>
   <% end %>
 
+  <% if show_space? %>
+    <div class="card__info__item">
+      <%= decidim_html_escape(translated_attribute(participatory_space.title)) %>
+    </div>
+  <% end %>
+
   <div class="card__info__item">
     #<%= model.id %>
   </div>

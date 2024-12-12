@@ -24,7 +24,7 @@ describe Decidim::Ideas::IdeaCell, type: :cell do
     let(:model) { idea }
 
     it "renders the card" do
-      expect(subject).to have_css(".card--idea")
+      expect(subject).to have_css(".card__content")
     end
   end
 end

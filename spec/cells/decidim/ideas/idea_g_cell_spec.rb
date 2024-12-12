@@ -8,7 +8,7 @@ module Decidim::Ideas
 
     subject { cell_html }
 
-    let(:my_cell) { cell("decidim/ideas/idea_g", idea, context: { show_space: show_space }) }
+    let(:my_cell) { cell("decidim/ideas/idea_g", idea, context: { show_space: }) }
     let(:cell_html) { my_cell.call }
     let(:created_at) { 1.month.ago }
     let(:published_at) { Time.current }
@@ -33,7 +33,8 @@ module Decidim::Ideas
       let(:show_space) { false }
 
       it "renders the card" do
-        expect(subject).to have_css(".card--idea")
+        puts subject
+        expect(subject).to have_css(".card__content")
       end
 
       it "renders the published_at date" do

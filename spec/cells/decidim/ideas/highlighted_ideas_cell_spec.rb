@@ -20,7 +20,7 @@ describe Decidim::Ideas::HighlightedIdeasCell, type: :cell do
   let!(:external_idea) { create(:idea, component: another_component) }
 
   it "renders the ideas from components under the same space" do
-    expect(subject).to have_css(".card.card--idea", count: 2)
+    expect(subject).to have_css(".card__content", count: 2)
     expect(subject).to have_content(translated(idea1.title))
     expect(subject).to have_content(translated(idea2.title))
     expect(subject).not_to have_content(translated(external_idea.title))
