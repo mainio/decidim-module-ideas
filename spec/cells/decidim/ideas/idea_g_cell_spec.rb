@@ -33,7 +33,6 @@ module Decidim::Ideas
       let(:show_space) { false }
 
       it "renders the card" do
-        puts subject
         expect(subject).to have_css(".card__content")
       end
 

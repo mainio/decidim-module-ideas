@@ -13,7 +13,6 @@ describe "User edits idea", type: :system do
     create(:idea_component,
            :with_creation_enabled,
            :with_card_image_allowed,
-           :with_attachments_allowed, # Doesnt do anything?
            :with_geocoding_enabled,
            manifest: manifest,
            participatory_space: participatory_process)

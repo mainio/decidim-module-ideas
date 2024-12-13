@@ -63,7 +63,7 @@ describe Decidim::Ideas::IdeaPresenter do
 
         it "adds the links to the hashtags" do
           expect(subject).to eq(
-            %(Idea title with <a target="_blank" class="hashtag-mention" rel="noopener" href="/search?term=%23decidim">#decidim</a> hashtag)
+            %(Idea title with <a target=\"_blank\" class=\"text-secondary underline\" rel=\"noopener\" data-external-link=\"false\" href=\"/search?term=%23decidim\">#decidim</a> hashtag)
           )
         end
       end

@@ -264,10 +264,10 @@ shared_examples "a idea form" do |options|
         expect(subject).not_to be_valid
 
         if options[:i18n]
-          expect(subject.errors.full_messages).to match_array(["Idea en can't be blank", "Attachment Needs to be reattached"])
+          expect(subject.errors.full_messages).to match_array(["Idea en cannot be blank", "Attachment Needs to be reattached"])
           expect(subject.errors.attribute_names).to match_array([:title_en, :attachment])
         else
-          expect(subject.errors.full_messages).to match_array(["Idea title can't be blank", "Attachment Needs to be reattached"])
+          expect(subject.errors.full_messages).to match_array(["Idea title cannot be blank", "Attachment Needs to be reattached"])
           expect(subject.errors.attribute_names).to match_array([:title, :attachment])
         end
       end
