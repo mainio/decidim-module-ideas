@@ -27,7 +27,13 @@ module Decidim::Ideas
       allow(controller).to receive(:current_user).and_return(user)
     end
 
-    it_behaves_like "has space in m-cell"
+    context "when rendering with show_space flag" do
+      let(:show_space) { true }
+
+      it "renders the space where the model belongs to" do
+        expect(subject).to have_content(translated_attribute(model.component.participatory_space.title))
+      end
+    end
 
     context "when rendering" do
       let(:show_space) { false }
