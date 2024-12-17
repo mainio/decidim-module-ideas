@@ -63,10 +63,10 @@ module Decidim
         (context[:show_space].presence || options[:show_space].presence) && resource.respond_to?(:participatory_space) && resource.participatory_space.present?
       end
 
-      def participatory_space
+      def participatory_space_title
         return unless show_space?
 
-        @participatory_space ||= resource.participatory_space
+        @participatory_space ||= decidim_html_escape(translated_attribute(resource.participatory_space.title))
       end
 
       def body

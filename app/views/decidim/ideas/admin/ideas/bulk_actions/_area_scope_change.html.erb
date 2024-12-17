@@ -1,6 +1,6 @@
-<div id="js-scope-change-ideas-actions" class="hidden js-bulk-action-form">
-  <%= form_tag(update_area_scope_ideas_path, method: :post, remote: true, id: "js-form-scope-change-ideas", class: "flex--cc flex-gap--1") do %>
-    <div class="checkboxes hidden">
+<div id="js-scope-change-ideas-actions" class="hide js-bulk-action-form">
+  <%= form_tag(update_area_scope_ideas_path, method: :post, remote: true, id: "js-form-scope-change-ideas", class: "form form-defaults flex items-center gap-x-2") do %>
+    <div class="checkboxes hide">
       <% ideas.each do |idea| %>
         <%= check_box_tag "idea_ids[]", idea.id, false, class: "js-check-all-idea js-idea-id-#{idea.id}" %>
       <% end %>
@@ -11,10 +11,10 @@
     <%= submit_tag(
           t("decidim.ideas.admin.ideas.index.update_scope_button"),
           id: "js-submit-scope-change-ideas",
-          class: "button small button--simple float-left"
+          class: "button button__sm button__secondary small button--simple float-left"
         ) %>
 
-    <button id="js-cancel-scope-change-ideas" class="button tiny clear compact js-cancel-bulk-action" type="button">
+    <button id="js-cancel-scope-change-ideas" class="button button__sm button__secondary clear compact js-cancel-bulk-action" type="button">
       <%= t("decidim.ideas.admin.ideas.index.cancel") %>
     </button>
   <% end %>

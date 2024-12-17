@@ -1,108 +1,144 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
-      <%= link_to "#{t ".ideas"} > ", ideas_path %>
-      <%= decidim_html_escape(present(idea).title).html_safe %>
-
-      <% if allowed_to? :edit, :idea, idea: idea %>
-        <%= icon_link_to "pencil-line", edit_idea_path(idea), t("actions.edit_idea", scope: "decidim.ideas"), class: "action-icon--edit-idea" %>
-      <% end %>
-    </h2>
-  </div>
-
-  <div class="card-section">
-    <div class="row column">
-      <strong><%= t ".link" %>:</strong>  <%= link_to resource_locator(idea).url, resource_locator(idea).path %>
+<% add_decidim_page_title(translated_attribute(idea.title)) %>
+<div class="component__show">
+  <div class="card">
+    <div class="component__show_header">
+      <h2 class="component__show_header-title">
+        <%= decidim_html_escape(present(idea).title).html_safe %>
+      </h2>
     </div>
 
-    <div class="row column">
-      <strong><%= t ".authors" %>:</strong>
-        <ul id="idea-authors-list">
+    <div class="component__show_nav">
+      <div class="component__show_nav-author">
+        <div class="component__show_nav-circle">
+          <%= icon "award-line" %>
+        </div>
+        <div>
           <% coauthor_presenters_for(idea).each do |presented_author| %>
-            <li>
+            <li class="component__show_nav-author-title">
               <%= link_to_if(
-                presented_author.profile_path.present?,
-                presented_author.name,
-                presented_author.profile_path,
-                target: :blank
-              ) %>
+                    presented_author.profile_path.present?,
+                    presented_author.name,
+                    presented_author.profile_path,
+                    target: :blank
+                  ) %>
               <% if presented_author.can_be_contacted? && presented_author.nickname != present(current_user).nickname %>
-                <%= icon_link_to "mail-line", current_or_new_conversation_path_with(presented_author), t("decidim.contact"), class:"action-icon--new" %>
-              <% end %>
-
-              <% user = presented_author.__getobj__ %>
-              <% if user.respond_to?(:id) && allowed_to?(:show_email, :user, user: user) %>
-                <%= icon_link_to "mail-open-line", decidim_admin.show_email_officialization_path(user_id: user.id), t(".show_email"), class: "action-icon action-icon--show-email", data: { full_name: user.name, toggle: "show-email-modal" } %>
+                <%= link_to_current_or_new_conversation_with(presented_author) %>
               <% end %>
             </li>
           <% end %>
-        </ul>
-    </div>
-
-    <div class="row column">
-      <strong><%= t ".body" %>:</strong> <%= simple_format(present(idea).body(strip_tags: true)) %>
-    </div>
-
-    <% if idea.area_scope %>
-      <div class="row column">
-        <strong><%= t ".area_scope" %>:</strong> <%= translated_attribute(idea.area_scope.name) %>
-      </div>
-    <% end %>
-
-    <% if idea.category %>
-      <div class="row column">
-        <strong><%= t ".category" %>:</strong>
-        <% if idea.category.parent %>
-          <%= translated_attribute(idea.category.parent.name) %> -
-        <% end %>
-        <%= translated_attribute(idea.category.name) %>
-      </div>
-    <% end %>
-
-    <div class="row column">
-      <strong><%= t ".created_at" %>:</strong> <%= l idea.created_at, format: :decidim_short %>
-    </div>
-
-    <div class="row column">
-      <strong><%= t ".amendments_count" %>:</strong> <%= idea.amendments.count %>
-    </div>
-
-    <div class="row column">
-      <strong><%= t ".comments_count" %>:</strong> <%= idea.comments.count %>
-      <ul id="idea-comments-alignment-count">
-        <li><strong><%= t ".comments_positive_count" %>:</strong> <%= idea.comments.positive.count %></li>
-        <li><strong><%= t ".comments_neutral_count" %>:</strong> <%= idea.comments.neutral.count %></li>
-        <li><strong><%= t ".comments_negative_count" %>:</strong> <%= idea.comments.negative.count %></li>
-      </ul>
-    </div>
-
-    <% if idea.documents.any? %>
-      <div class="row column">
-        <strong><%= t ".documents" %>:</strong>
-          <ul id="documents">
-            <% idea.documents.each do |document| %>
-              <li>
-                <%= link_to translated_attribute(document.title), document.url %>
-                <small><%= document.file_type %> <%= number_to_human_size(document.file_size) %></small>
-              </li>
-            <% end %>
-          </ul>
-      </div>
-    <% end %>
-
-    <% if idea.photos.any? %>
-      <div class="row column">
-        <strong><%= t(".photos") %>:</strong>
-        <div id="photos" class="gallery row">
-          <% idea.photos.each do |photo| %>
-            <%= link_to photo.big_url, target: "_blank", rel: "noopener" do %>
-              <%= image_tag photo.thumbnail_url, class:"thumbnail", alt: strip_tags(translated_attribute(photo.title)) %>
-            <% end %>
-          <% end %>
+          <span class="component__show_nav-author-date">
+            <%= l idea.created_at, format: :decidim_short %>
+          </span>
         </div>
       </div>
-    <% end %>
+      <div class="ml-auto">
+        <%= link_to resource_locator(idea).url, class: "button button__sm button__transparent-secondary", target: :blank, data: { "external-link": false } do %>
+          <%= icon "eye-line", class: "fill-current" %>
+          <%= t ".link" %>
+        <% end %>
+      </div>
+    </div>
 
+    <div class="component__show_grid">
+      <div class="component__show_grid-item">
+        <div class="card-section">
+          <div class="row column">
+            <span class="component__show-title"><%= t ".body" %></span>
+            <p class="component__show-text">
+              <%= simple_format(present(idea).body(strip_tags: true)) %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="component__show_grid-item">
+        <% if idea.area_scope %>
+          <div class="card-section">
+            <div class="row column">
+              <span class="component__show-title"><%= t("models.idea.fields.area_scope", scope: "decidim.ideas") %></span>
+              <div class="flex items-center gap-x-2 mt-2">
+                <%= icon "price-tag-3-line", class: "fill-gray" %>
+                <p class="component__show-icon-text">
+                  <%= translated_attribute(idea.area_scope.name) %>
+                </p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="component__show_grid-item">
+        <% if idea.category.present? %>
+          <div class="card-section">
+            <div class="row column">
+              <span class="component__show-title"><%= t("models.idea.fields.category", scope: "decidim.ideas") %></span>
+              <div class="flex items-center gap-x-2 mt-2">
+                <%= icon "price-tag-3-line", class: "fill-gray" %>
+                <p class="component__show-icon-text">
+                  <%= translated_attribute(idea.category.name) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-section">
+        <div class="row column" data-amendments>
+          <span class="component__show-title"><%= t ".amendments_count" %></span>
+          <div class="flex items-center gap-x-2 mt-2" data-count>
+            <%= icon "Decidim::Amendment", class: "fill-gray" %>
+            <p class="component__show-icon-text">
+              <%= idea.amendments.count %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="row column" data-supports>
+          <span class="component__show-title"><%= t ".votes_count" %></span>
+          <div class="flex items-center gap-x-2 mt-2">
+            <%= icon "service-line", class: "fill-gray" %>
+            <p class="component__show-icon-text" data-count>
+              <%= idea.idea_votes_count %>
+            </p>
+            <div class="flex items-center gap-x-2 border-l border-gray pl-2">
+              <%= icon "bar-chart-2-line", class: "fill-gray" %>
+              <p class="component__show-icon-text" data-ranking>
+                <%= i18n_votes_ranking_for(idea) %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if idea.documents.any? %>
+        <div class="row column">
+          <strong><%= t ".documents" %>:</strong>
+            <ul id="documents">
+              <% idea.documents.each do |document| %>
+                <li>
+                  <%= link_to translated_attribute(document.title), document.url %>
+                  <small><%= document.file_type %> <%= number_to_human_size(document.file_size) %></small>
+                </li>
+              <% end %>
+            </ul>
+        </div>
+      <% end %>
+
+      <% if idea.photos.any? %>
+        <div class="row column">
+          <strong><%= t(".photos") %>:</strong>
+          <div id="photos" class="gallery row">
+            <% idea.photos.each do |photo| %>
+              <%= link_to photo.big_url, target: "_blank", rel: "noopener" do %>
+                <%= image_tag photo.thumbnail_url, class:"thumbnail", alt: strip_tags(translated_attribute(photo.title)) %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

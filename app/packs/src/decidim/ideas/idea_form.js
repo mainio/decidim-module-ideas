@@ -237,7 +237,7 @@ import "src/decidim/ideas/info_modals";
     const subcategorySelects = {};
     $sections.each((_i, el) => {
       const $sub = $(el);
-      $sub.removeClass("hidden");
+      $sub.removeClass("hide");
       subcategorySelects[$sub.data("parent")] = $sub;
     });
 

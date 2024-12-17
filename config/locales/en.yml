@@ -321,6 +321,7 @@ en:
             show_email: Show email address
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
+            votes_count: Comments count
           update_category:
             invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
             select_a_category: Please select a theme

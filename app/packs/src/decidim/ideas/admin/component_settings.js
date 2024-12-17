@@ -17,15 +17,15 @@ $(() => {
 
   $("input[name='component[settings][geocoding_enabled]']").on("change", (ev) => {
     if ($(ev.target).is(":checked")) {
-      $coordinatesElement.removeClass("hidden");
+      $coordinatesElement.removeClass("hide");
     } else {
-      $coordinatesElement.addClass("hidden");
+      $coordinatesElement.addClass("hide");
     }
   });
 
   $(document).on(
     "change",
-    "input[name='component[settings][area_scope_parent_id]']",
+    "select[name='component[settings][area_scope_parent_id]']",
     handleParentAreaScopeChange
   );
 });

@@ -10,7 +10,7 @@
     const subcategorySelects = {};
     $sections.each((_i, el) => {
       const $sub = $(el);
-      $sub.removeClass("hidden");
+      $sub.removeClass("hide");
       subcategorySelects[$sub.data("parent")] = $sub;
     });
 
@@ -28,9 +28,9 @@
 
     $geocodingToggle.on("change.decidim.ideas", () => {
       if ($geocodingToggle.is(":checked")) {
-        $(".geocoding-field").addClass("hidden");
+        $(".geocoding-field").addClass("hide");
       } else {
-        $(".geocoding-field").removeClass("hidden");
+        $(".geocoding-field").removeClass("hide");
       }
     }).trigger("change.decidim.ideas");
   };

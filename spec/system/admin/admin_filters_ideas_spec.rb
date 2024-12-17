@@ -73,7 +73,7 @@ describe "Admin filters ideas", type: :system do
       visit current_path
       click_on "Filter"
 
-      within ".card-section" do
+      within ".menu.submenu" do
         find("a", text: "Area").hover
       end
     end

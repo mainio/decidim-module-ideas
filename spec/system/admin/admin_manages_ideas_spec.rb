@@ -44,11 +44,9 @@ describe "Admin creates idea", type: :system do
       find(".js-idea-id-#{idea.id}").set(true)
       click_button "Actions"
       click_button "Change scope"
-      within "[data-picker-name='area_scope_id']" do
-        click_link "Global"
-      end
-      click_link scope.name["en"]
-      click_link "Select"
+
+      select scope.name["en"], from: "area_scope_id"
+
       find("#js-submit-scope-change-ideas").click
       expect(page).to have_content("Ideas successfully updated to the area")
       expect(Decidim::Ideas::Idea.find(idea.id).area_scope.id).to eq(scope.id)

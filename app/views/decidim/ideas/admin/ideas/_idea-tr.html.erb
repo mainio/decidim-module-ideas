@@ -18,12 +18,13 @@
   </td>
   <td>
     <% if idea.category %>
+      <%= icon "price-tag-3-line", class: "fill-gray w-4 h-4" %>
       <%= translated_attribute idea.category.name %>
     <% end %>
   </td>
 
   <td>
-    <strong class="<%= idea_state_css_class idea.state %>">
+    <strong class="label <%= idea_state_css_class idea.state %>">
       <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if idea.emendation? %>
       <%= idea_complete_state idea %>
     </strong>

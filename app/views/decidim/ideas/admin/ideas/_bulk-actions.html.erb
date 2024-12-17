@@ -1,18 +1,16 @@
-<div class="flex--cc flex-gap--1">
+<div class="flex align-middle gap-x-4 ml-auto" id="js-other-actions-wrapper">
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/dropdown" %>
 
-  <div id="js-other-actions-wrapper">
-    <% if allowed_to? :export, :ideas %>
-      <%= export_dropdown %>
-    <% end %>
+  <% if allowed_to? :export, :ideas %>
+    <%= export_dropdown %>
+  <% end %>
 
-    <% if allowed_to? :create, :idea %>
-      <%= link_to t("actions.new", scope: "decidim.ideas"), new_idea_path, class: "button tiny button--simple" %>
-    <% end %>
-  </div>
+  <% if allowed_to? :create, :idea %>
+    <%= link_to t("actions.new", scope: "decidim.ideas"), new_idea_path, class: "button button__sm button__secondary" %>
+  <% end %>
+</div>
 
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/recategorize" %>
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/area_scope_change" %>
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/merge" %>
   <%= render partial: "decidim/ideas/admin/ideas/bulk_actions/publish_answers" %>
-</div>

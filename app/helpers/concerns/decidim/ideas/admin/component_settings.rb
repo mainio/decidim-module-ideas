@@ -17,7 +17,7 @@ module Decidim
               case attribute.type
               when :idea_area_scope
                 content_tag :div, class: "#{name}_container" do
-                  scopes_picker_field(
+                  scopes_select_field(
                     form,
                     name,
                     root: nil,
@@ -28,7 +28,7 @@ module Decidim
                 end
               when :idea_area_scope_coordinates
                 component_id = @component.new_record? ? "new" : @component.id
-                visibility_class = @component.settings.geocoding_enabled ? "" : "hidden"
+                visibility_class = @component.settings.geocoding_enabled ? "" : "hide"
                 value = area_scopes_coordinates(@component)
                 label = t(name, scope: i18n_scope)
                 coordinates_element = render(

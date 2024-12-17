@@ -33,32 +33,32 @@ $(document).ready(function () {
 
   let showBulkActionsButton = function() {
     if (selectedIdeasCount() > 0) {
-      $("#js-bulk-actions-button").removeClass("hidden");
+      $("#js-bulk-actions-button").removeClass("hide");
     }
   }
 
   window.hideBulkActionsButton = function(force = false) {
     if (selectedIdeasCount() === 0 || force === true) {
-      $("#js-bulk-actions-button").addClass("hidden");
+      $("#js-bulk-actions-button").addClass("hide");
       $("#js-bulk-actions-dropdown").removeClass("is-open");
     }
   }
 
   window.showOtherActionsButtons = function() {
-    $("#js-other-actions-wrapper").removeClass("hidden");
+    $("#js-other-actions-wrapper").removeClass("hide");
   }
 
   window.hideOtherActionsButtons = function() {
-    $("#js-other-actions-wrapper").addClass("hidden");
+    $("#js-other-actions-wrapper").addClass("hide");
   }
 
   window.hideBulkActionForms = function() {
-    $(".js-bulk-action-form").addClass("hidden");
+    $(".js-bulk-action-form").addClass("hide");
   }
 
   if ($(".js-bulk-action-form").length) {
     window.hideBulkActionForms();
-    $("#js-bulk-actions-button").addClass("hidden");
+    $("#js-bulk-actions-button").addClass("hide");
 
     $("#js-bulk-actions-dropdown ul li button").click(function(ev) {
       ev.preventDefault();
@@ -69,7 +69,7 @@ $(document).ready(function () {
           $(".layout-content > .callout-wrapper").html("");
         })
 
-        $(`#js-${action}-actions`).removeClass("hidden");
+        $(`#js-${action}-actions`).removeClass("hide");
         window.hideBulkActionsButton(true);
         window.hideOtherActionsButtons();
       }

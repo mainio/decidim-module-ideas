@@ -11,7 +11,11 @@ module Decidim
 
         def coauthor_presenters_for(idea)
           idea.authors.map do |identity|
-            present(identity)
+            if identity.is_a?(Decidim::Organization)
+              Decidim::Ideas::OfficialAuthorPresenter.new
+            else
+              present(identity)
+            end
           end
         end
 
