@@ -1,119 +1,117 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title"><%= title %></h2>
-  </div>
-
-  <div class="card-section">
-    <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-      <div class="field">
-        <%= user_group_select_field form, :user_group_id %>
-      </div>
-    <% end %>
-
-    <div class="row column hashtags__container">
-      <%= form.text_field :title, class: "js-hashtags", hashtaggable: true, value: form_presenter.title(extras: false).strip %>
-    </div>
-
-    <div class="row column hashtags__container">
-      <%= text_editor_for_idea_body(form) %>
-    </div>
-
-    <% if @form.component_automatic_hashtags.any? %>
-      <div class="field">
-        <%= form.label :automatic_hashtags %>
-        <div class="checkboxes hashtags">
-          <% @form.component_automatic_hashtags.each do |hashtag| %>
-            <label>
-              <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
-            </label>
-          <% end %>
+<div class="form__wrapper">
+  <div class="card pt-4">
+    <div class="card-section">
+      <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
+        <div class="row column hashtags__container">
+          <%= user_group_select_field form, :user_group_id %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
 
-    <% if @form.component_suggested_hashtags.any? %>
-      <div class="field">
-        <%= form.label :suggested_hashtags %>
-        <div class="checkboxes hashtags">
-          <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
-            option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
-          end %>
-        </div>
-      </div>
-    <% end %>
-
-    <% if @form.areas_enabled? %>
-      <div class="field">
-        <%= area_scopes_picker_field form, :area_scope_id %>
-      </div>
-    <% end %>
-
-    <% if component_settings.geocoding_enabled? %>
-      <div class="row column">
-        <%= form.text_field :address %>
-      </div>
-      <div class="row column">
-        <%= form.check_box :perform_geocoding %>
-      </div>
-      <div class="row column geocoding-field">
-        <%= form.number_field :latitude %>
-      </div>
-      <div class="row column geocoding-field">
-        <%= form.number_field :longitude %>
-      </div>
-    <% end %>
-
-    <% if @form.top_categories&.any? %>
-      <div class="row column">
-        <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, prompt: t(".select_a_category") %>
+      <div class="row column hashtags__container pb-4">
+        <%= form.text_field :title, class: "js-hashtags", hashtaggable: true, value: form_presenter.title(extras: false).strip %>
       </div>
 
-      <div id="idea-subcategory">
-        <% @form.top_categories.each do |category| %>
-          <% next if category.subcategories.blank? %>
+      <div class="row column hashtags__container">
+        <%= text_editor_for_idea_body(form) %>
+      </div>
 
-          <div class="subcategories hide" data-parent="<%= category.id %>">
-            <div class="row column">
-              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
-            </div>
+      <% if @form.component_automatic_hashtags.any? %>
+        <div class="field">
+          <%= form.label :automatic_hashtags %>
+          <div class="checkboxes hashtags">
+            <% @form.component_automatic_hashtags.each do |hashtag| %>
+              <label>
+                <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
+              </label>
+            <% end %>
           </div>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
 
-    <% if component_settings.image_allowed? %>
-      <div class="row column">
-        <fieldset>
-          <legend><%= t(".image_legend") %></legend>
-          <%= form.fields_for :image, @form.image do |nested_form| %>
-            <div class="row column">
-              <%= nested_form.text_field :title %>
-            </div>
+      <% if @form.component_suggested_hashtags.any? %>
+        <div class="field">
+          <%= form.label :suggested_hashtags %>
+          <div class="checkboxes hashtags">
+            <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
+              option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
+            end %>
+          </div>
+        </div>
+      <% end %>
 
-            <div class="row column">
-              <%= nested_form.upload :file, optional: true %>
+      <% if @form.areas_enabled? %>
+        <div class="row column hashtags__container">
+          <%= area_scopes_picker_field form, :area_scope_id %>
+        </div>
+      <% end %>
+
+      <% if component_settings.geocoding_enabled? %>
+        <div class="row column">
+          <%= form.text_field :address %>
+        </div>
+        <div class="row column">
+          <%= form.check_box :perform_geocoding %>
+        </div>
+        <div class="row column geocoding-field">
+          <%= form.number_field :latitude %>
+        </div>
+        <div class="row column geocoding-field">
+          <%= form.number_field :longitude %>
+        </div>
+      <% end %>
+
+      <% if @form.top_categories&.any? %>
+        <div class="row column">
+          <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, prompt: t(".select_a_category") %>
+        </div>
+
+        <div id="idea-subcategory">
+          <% @form.top_categories.each do |category| %>
+            <% next if category.subcategories.blank? %>
+
+            <div class="subcategories hide" data-parent="<%= category.id %>">
+              <div class="row column">
+                <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, prompt: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
+              </div>
             </div>
           <% end %>
-        </fieldset>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
 
-    <% if component_settings.attachments_allowed? %>
-      <div class="row column">
-        <fieldset>
-          <legend><%= t(".attachment_legend") %></legend>
-          <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
-            <div class="row column">
-              <%= nested_form.text_field :title %>
-            </div>
+      <% if component_settings.image_allowed? %>
+        <div class="row column">
+          <fieldset>
+            <legend><%= t(".image_legend") %></legend>
+            <%= form.fields_for :image, @form.image do |nested_form| %>
+              <div class="row column">
+                <%= nested_form.text_field :title %>
+              </div>
 
-            <div class="row column">
-              <%= nested_form.upload :file, optional: true %>
-            </div>
-          <% end %>
-        </fieldset>
-      </div>
-    <% end %>
+              <div class="row column">
+                <%= nested_form.upload :file, button_class: "button button__sm button__transparent-secondary", optional: true %>
+              </div>
+            <% end %>
+          </fieldset>
+        </div>
+      <% end %>
+
+      <% if component_settings.attachments_allowed? %>
+        <div class="row column">
+          <fieldset>
+            <legend><%= t(".attachment_legend") %></legend>
+            <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
+              <div class="row column">
+                <%= nested_form.text_field :title %>
+              </div>
+
+              <div class="row column">
+                <%= nested_form.upload :file, button_class: "button button__sm button__transparent-secondary", optional: true %>
+              </div>
+            <% end %>
+          </fieldset>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 
