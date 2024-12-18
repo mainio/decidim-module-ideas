@@ -12,9 +12,7 @@ module Decidim
           attached_to: @attached_to, # Keep first
           title: { I18n.locale.to_s => form_image["title"] },
           file: form_image["file"],
-          weight: 0,
-          content_type: content_type_for(form_image),
-          file_size: form_image.bytesize
+          weight: 0
         )
       end
 

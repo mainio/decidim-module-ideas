@@ -188,18 +188,6 @@
       help_i18n_scope: "decidim.forms.file_help.image",
       extension_allowlist: Decidim::OrganizationSettings.for(current_organization).upload_allowed_file_extensions_image %>
   </div>
-
-  <div class="reveal" id="image-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".image_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
-  </div>
 <% end %>
 
 <% if component_settings.attachments_allowed? %>
@@ -210,18 +198,6 @@
       button_label: t(".attachment_legend"),
       button_edit_label: t(".edit_attachment"),
       help_i18n_scope: "decidim.forms.file_help.file" %>
-  </div>
-
-  <div class="reveal" id="attachment-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".attachment_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
   </div>
 <% end %>
 
