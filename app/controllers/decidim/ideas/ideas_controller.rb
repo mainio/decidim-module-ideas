@@ -275,12 +275,7 @@ module Decidim
       end
 
       def edit_form
-        form_image_model = form(ImageAttachmentForm).from_model(@idea.image)
-        form_attachment_model = form(AttachmentForm).from_model(@idea.actual_attachments.first)
         @form = form_idea_model
-        @form.image = form_image_model
-        @form.attachment = form_attachment_model
-        @form
       end
 
       def idea_creation_params

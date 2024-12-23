@@ -182,6 +182,7 @@
   <div class="field attachment-button">
     <%= form.attachment :images,
       multiple: false,
+      titled: true,
       label: t(".add_image"),
       button_label: t(".image_legend"),
       button_edit_label: t(".edit_image"),
@@ -194,6 +195,7 @@
   <div class="field attachment-button">
     <%= form.attachment :actual_attachments,
       multiple: false,
+      titled: true,
       label: t(".add_attachment"),
       button_label: t(".attachment_legend"),
       button_edit_label: t(".edit_attachment"),
@@ -217,6 +219,32 @@ js_options = {
     DecidimIdeas.configure(<%== js_options.to_json %>);
     DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_character_counter"));
     DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_character_counter"));
+
+    // A hack to change the upload modal behavior as otherwise the single file
+    // upload would have incorrect input names which would cause an exception.
+    var attachmentButtons = document.querySelectorAll("button[data-upload]");
+    attachmentButtons.forEach(function(button) {
+      var modal = document.querySelector(`#${button.dataset.dialogOpen}`)
+      var files = document.querySelector(`[data-active-uploads=${button.dataset.dialogOpen}]`)
+      var options = JSON.parse(button.dataset.upload);
+      var attrName = `idea[${options.addAttribute}]`;
+
+      var saveButton = modal.querySelector("button[data-dropzone-save]");
+      saveButton.addEventListener("click", function() {
+        setTimeout(function() {
+          var idx = 0;
+          files.querySelectorAll(`input[type="hidden"][name="${attrName}"]`).forEach(function(input) {
+            if (input.value && input.value.match(/^[0-9]+$/)) {
+              input.setAttribute("name", `${attrName}[${idx}][id]`);
+            } else {
+              input.setAttribute("name", `${attrName}[${idx}][file]`);
+            }
+
+            idx += 1;
+          })
+        }, 0);
+      });
+    });
   });
   </script>
 <% end %>

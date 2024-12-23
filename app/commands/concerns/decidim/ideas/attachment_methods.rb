@@ -27,7 +27,7 @@ module Decidim
       def attachment_removed?
         return false unless attachment_allowed?
 
-        @form.actual_attachments.blank?
+        @form.remove_actual_attachments
       end
 
       def attachment_present?
