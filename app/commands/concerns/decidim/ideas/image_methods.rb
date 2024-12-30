@@ -4,19 +4,15 @@ module Decidim
   module Ideas
     # A module with all the image attachment common methods
     module ImageMethods
-      include Decidim::AttachmentMethods
-
       private
 
       def build_image
-        form_image = @form.add_images.compact_blank
-
+        form_image = @form.add_images.compact_blank.first
         @image = Decidim::Ideas::Attachment.new(
           attached_to: @attached_to, # Keep first
-          title: { I18n.locale.to_s => form_image.first },
-          file: signed_id_for(form_image.last),
-          weight: 0,
-          content_type: content_type_for(form_image.last)
+          title: { I18n.locale.to_s => form_image["title"] },
+          file: form_image["file"],
+          weight: 0
         )
       end
 

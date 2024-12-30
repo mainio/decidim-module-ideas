@@ -82,14 +82,14 @@
         <div class="row column">
           <fieldset>
             <legend><%= t(".image_legend") %></legend>
-            <%= form.fields_for :add_images, @form.attachment do |nested_form| %>
-              <div class="row column">
-                <%= nested_form.text_field :title %>
-              </div>
+            <%= form.fields_for :images, @form.images do |nested_form| %>
+                <div class="row column">
+                  <%= nested_form.text_field :title %>
+                </div>
 
-              <div class="row column">
-                <%= nested_form.upload :file, button_class: "button button__sm button__transparent-secondary", optional: true %>
-              </div>
+                <div class="row column">
+                  <%= nested_form.upload :file, button_class: "button button__sm button__transparent-secondary", optional: true %>
+                </div>
             <% end %>
           </fieldset>
         </div>
@@ -99,7 +99,7 @@
         <div class="row column">
           <fieldset>
             <legend><%= t(".attachment_legend") %></legend>
-            <%= form.fields_for :attachment, @form.attachment do |nested_form| %>
+            <%= form.fields_for :actual_attachments, @form.actual_attachments do |nested_form| %>
               <div class="row column">
                 <%= nested_form.text_field :title %>
               </div>
