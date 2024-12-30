@@ -94,24 +94,6 @@
         </div>
       </div>
 
-      <div class="card-section">
-        <div class="row column" data-supports>
-          <span class="component__show-title"><%= t ".votes_count" %></span>
-          <div class="flex items-center gap-x-2 mt-2">
-            <%= icon "service-line", class: "fill-gray" %>
-            <p class="component__show-icon-text" data-count>
-              <%= idea.idea_votes_count %>
-            </p>
-            <div class="flex items-center gap-x-2 border-l border-gray pl-2">
-              <%= icon "bar-chart-2-line", class: "fill-gray" %>
-              <p class="component__show-icon-text" data-ranking>
-                <%= i18n_votes_ranking_for(idea) %>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <% if idea.documents.any? %>
         <div class="row column">
           <strong><%= t ".documents" %>:</strong>

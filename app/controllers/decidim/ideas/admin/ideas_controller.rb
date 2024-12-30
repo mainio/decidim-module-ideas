@@ -19,7 +19,9 @@ module Decidim
 
         def new
           enforce_permission_to :create, :idea
-          @form = form(Admin::IdeaForm)
+          @form = form(Admin::IdeaForm).from_params(
+            attachment: form(Decidim::AttachmentForm).from_params({})
+          )
         end
 
         def create
