@@ -28,8 +28,8 @@ module Decidim
       # by a range of dates.
       def query
         ideas = Decidim::Ideas::Idea.where(component: @components)
-        ideas = ideas.where("created_at >= ?", @start_at) if @start_at.present?
-        ideas = ideas.where("created_at <= ?", @end_at) if @end_at.present?
+        ideas = ideas.where(created_at: @start_at..) if @start_at.present?
+        ideas = ideas.where(created_at: ..@end_at) if @end_at.present?
         ideas
       end
     end

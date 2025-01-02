@@ -6,7 +6,7 @@ describe Decidim::Ideas::UpdateIdea do
   subject { command.call }
 
   let(:command) { described_class.new(form, user, idea) }
-  let!(:idea) { create(:idea, component: component, users: [user]) }
+  let!(:idea) { create(:idea, component:, users: [user]) }
   let(:form) { Decidim::Ideas::IdeaForm.new(idea_data) }
   let(:idea_data) do
     {
@@ -22,11 +22,11 @@ describe Decidim::Ideas::UpdateIdea do
     }
   end
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
-  let(:category) { create(:category, participatory_space: participatory_space) }
-  let(:area_scope) { create(:scope, organization: organization) }
-  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:idea_component, participatory_space:) }
+  let(:category) { create(:category, participatory_space:) }
+  let(:area_scope) { create(:scope, organization:) }
+  let(:user) { create(:user, :confirmed, :admin, organization:) }
 
   before do
     allow(form).to receive(:current_organization).and_return(organization)
@@ -53,7 +53,7 @@ describe Decidim::Ideas::UpdateIdea do
   end
 
   context "with idea_limit" do
-    let(:component) { create(:idea_component, :with_idea_limit, participatory_space: participatory_space) }
+    let(:component) { create(:idea_component, :with_idea_limit, participatory_space:) }
 
     it "broadcasts ok" do
       expect { subject }.to broadcast(:ok)
@@ -61,8 +61,8 @@ describe Decidim::Ideas::UpdateIdea do
   end
 
   context "with usergroup" do
-    let(:component) { create(:idea_component, :with_idea_limit, participatory_space: participatory_space) }
-    let!(:user) { create(:user_group, organization: organization) }
+    let(:component) { create(:idea_component, :with_idea_limit, participatory_space:) }
+    let!(:user) { create(:user_group, organization:) }
 
     it "broadcasts ok" do
       expect { subject }.to broadcast(:ok)

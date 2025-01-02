@@ -37,12 +37,12 @@ module Decidim
         )
 
         prompt_params = {
-          url: url,
+          url:,
           text: t("attached_ideas_helper.attach_idea", scope: "decidim.ideas")
         }
 
         data_picker(form, field, picker_options, prompt_params) do |item|
-          { url: url, text: item.title }
+          { url:, text: item.title }
         end
       end
 
@@ -72,9 +72,9 @@ module Decidim
         template += render(
           partial: "decidim/widgets/data_picker.html",
           locals: {
-            picker_options: picker_options,
-            prompt_params: prompt_params,
-            items: items
+            picker_options:,
+            prompt_params:,
+            items:
           }
         )
         template += form.send(:error_and_help_text, field_attribute, options)

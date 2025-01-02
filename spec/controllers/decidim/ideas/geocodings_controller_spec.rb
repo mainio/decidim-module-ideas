@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe Decidim::Ideas::GeocodingsController, type: :controller do
+describe Decidim::Ideas::GeocodingsController do
   routes { Decidim::Ideas::Engine.routes }
 
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component, :with_creation_enabled) }
   let(:geocoder) { double }
@@ -18,7 +18,7 @@ describe Decidim::Ideas::GeocodingsController, type: :controller do
     request.env["decidim.current_component"] = component
     sign_in user
 
-    allow(Decidim::Map).to receive(:geocoding).with(organization: organization).and_return(geocoder)
+    allow(Decidim::Map).to receive(:geocoding).with(organization:).and_return(geocoder)
     if geocoder
       allow(geocoder).to receive(:coordinates).and_return(geocoder_coordinates)
       allow(geocoder).to receive(:address).and_return(geocoder_address)
@@ -27,7 +27,7 @@ describe Decidim::Ideas::GeocodingsController, type: :controller do
 
   describe "POST create" do
     context "when expecting a result" do
-      subject { JSON.parse(response.body) }
+      subject { response.parsed_body }
 
       it "returns the correct coordinates" do
         get :create, params: { address: "Foobar" }
@@ -46,7 +46,7 @@ describe Decidim::Ideas::GeocodingsController, type: :controller do
     end
 
     context "when geocoder is not defined" do
-      subject { JSON.parse(response.body) }
+      subject { response.parsed_body }
 
       let(:geocoder) { nil }
 
@@ -59,7 +59,7 @@ describe Decidim::Ideas::GeocodingsController, type: :controller do
 
   describe "POST reverse" do
     context "when expecting a result" do
-      subject { JSON.parse(response.body) }
+      subject { response.parsed_body }
 
       it "returns the correct coordinates" do
         get :reverse, params: { lat: 1.123, lng: 2.345 }
@@ -78,7 +78,7 @@ describe Decidim::Ideas::GeocodingsController, type: :controller do
     end
 
     context "when geocoder is not defined" do
-      subject { JSON.parse(response.body) }
+      subject { response.parsed_body }
 
       let(:geocoder) { nil }
 

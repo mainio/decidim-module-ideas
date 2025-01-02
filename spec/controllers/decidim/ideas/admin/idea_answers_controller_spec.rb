@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe Decidim::Ideas::Admin::IdeaAnswersController, type: :controller do
+describe Decidim::Ideas::Admin::IdeaAnswersController do
   routes { Decidim::Ideas::AdminEngine.routes }
 
   let(:user) { create(:user, :confirmed, :admin, organization: participatory_space.organization) }
   let(:participatory_space) { create(:participatory_process, organization: create(:organization, tos_version: Time.current)) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
-  let(:idea) { create(:idea, component: component) }
+  let(:component) { create(:idea_component, participatory_space:) }
+  let(:idea) { create(:idea, component:) }
 
   before do
     request.env["decidim.current_organization"] = participatory_space.organization
@@ -30,7 +30,7 @@ describe Decidim::Ideas::Admin::IdeaAnswersController, type: :controller do
     let(:answer_params) { { internal_state: "accepted", answer: { en: "Good idea!" } } }
 
     it "redirects to the ideas path" do
-      post :update, params: params
+      post(:update, params:)
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to("/processes/#{participatory_space.slug}/f/#{component.id}/ideas")
     end
@@ -39,7 +39,7 @@ describe Decidim::Ideas::Admin::IdeaAnswersController, type: :controller do
       let(:answer_params) { { internal_state: "rejected", answer: { en: "" } } }
 
       it "renders the edit view" do
-        post :update, params: params
+        post(:update, params:)
         expect(response).to have_http_status(:ok)
         expect(response).to render_template("decidim/ideas/admin/ideas/show")
       end

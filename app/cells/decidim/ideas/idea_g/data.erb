@@ -5,6 +5,12 @@
     </div>
   <% end %>
 
+  <% if show_space? %>
+    <div class="card__info__item">
+      <%= participatory_space_title %>
+    </div>
+  <% end %>
+
   <div class="card__info__item">
     #<%= model.id %>
   </div>

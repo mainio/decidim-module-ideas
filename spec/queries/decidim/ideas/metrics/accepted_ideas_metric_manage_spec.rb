@@ -4,12 +4,12 @@ require "spec_helper"
 
 describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:idea_component, :published, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:idea_component, :published, participatory_space:) }
   let(:day) { Time.zone.yesterday }
-  let(:category) { create(:category, participatory_space: participatory_space) }
-  let!(:accepted_ideas) { create_list(:idea, 3, :accepted, created_at: day, component: component, category: category) }
-  let!(:not_accepted_ideas) { create_list(:idea, 3, created_at: day, component: component, category: category) }
+  let(:category) { create(:category, participatory_space:) }
+  let!(:accepted_ideas) { create_list(:idea, 3, :accepted, created_at: day, component:, category:) }
+  let!(:not_accepted_ideas) { create_list(:idea, 3, created_at: day, component:, category:) }
 
   include_context "when managing metrics"
 
@@ -35,7 +35,7 @@ describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
 
     it "updates metric records" do
       # raise "#{category.id} -- #{accepted_ideas.first.category.id} -- #{accepted_ideas.second.category.id} -- #{not_accepted_ideas.first.category.id}"
-      create(:metric, metric_type: "accepted_ideas", day: day, cumulative: 1, quantity: 1, organization: organization, category: category, participatory_space: participatory_space)
+      create(:metric, metric_type: "accepted_ideas", day:, cumulative: 1, quantity: 1, organization:, category:, participatory_space:)
       registry = generate_metric_registry
 
       expect(Decidim::Metric.count).to eq(1)

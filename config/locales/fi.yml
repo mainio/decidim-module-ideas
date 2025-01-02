@@ -390,7 +390,7 @@ fi:
         success: Luonnoksen poisto onnistui.
       idea_l:
         card_label: "Idea: %{title}"
-      idea_m:
+      idea_g:
         card_label: "Idea: %{title}"
       last_activity:
         idea_updated_html: "<span>Idea päivitetty osoitteessa %{link}</span>"
@@ -420,8 +420,8 @@ fi:
           title: Viimeistele ideasi
         count:
           ideas_count:
-            one: "%{count} idea"
-            other: "%{count} ideaa"
+            one: "Löytyi %{count} idea"
+            other: "Löytyi %{count} ideaa"
         edit:
           back: Palaa edelliselle sivulle
           send: Tallenna
@@ -487,6 +487,14 @@ fi:
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
           show_categories_info_text: Katso, mitä teemat pitävät sisällään
           show_terms_info_text: Tutustu kriteereihin
+        idea_attributes:
+          attributes:
+            address: Sijainti
+            area: Alue
+            category: Teema
+            id: Numero (ID)
+            published_at: Julkaisuaika
+          title: Tiedot
         index:
           description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
           draft_idea_title: Sinulla on keskeneräinen idea!
@@ -499,7 +507,6 @@ fi:
           show_list: Näytä tulokset listana
           show_map: Näytä tulokset kartalla
           subtitle: Etsi ja tutki ideoita!
-          view_idea: Näytä idea
         map:
           dynamic:
             skip_button: Ohita kartta
@@ -531,7 +538,7 @@ fi:
         idea:
           creation_date: 'Julkaisuaika: %{date}'
           view_idea: Näytä idea
-        idea_actions:
+        idea_aside:
           share: Jaa idea
           show_comments: Katso idean kommentit
           show_on_map: Katso idea kartalla
@@ -547,9 +554,14 @@ fi:
           comments: Kommentit
           edit_idea: Muokkaa ideaa
           show_versions: Näytä versiohistoria
+          subtitle: Idea
+        idea_map:
+          title: Idea kartalla
         ideas:
           empty: Ei vielä ideoita
           empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
+        map_template:
+          view_idea: Näytä idea
         show:
           answer: Vastaa
           back_to: Takaisin
@@ -659,11 +671,12 @@ fi:
       copied_from_component:
         idea_idea: Liittyvät ideat
       included_projects:
-        project_result: 'Liitetyt tulokset:'
+        project_result: Liitetyt tulokset
       included_ideas:
-        idea_project: 'Idea esiintyy seuraavissa äänestettävissä ehdotuksissa:'
-        idea_result: 'Idea esiintyy seuraavissa tuloksissa:'
-        project_idea: 'Liitetyt ideat:'
+        idea_plan: Liitetyt yhteiskehittämisvaiheen ehdotukset
+        idea_project: Liitetyt äänestettävät ehdotukset
+        idea_result: Liitetyt hankkeet
+        project_idea: Liitetyt ideat
     statistics:
       ideas_accepted: Jatkoon hyväksyttyä ideaa
       ideas_count: Ideaa

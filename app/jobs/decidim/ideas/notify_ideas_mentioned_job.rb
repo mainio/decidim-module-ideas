@@ -14,7 +14,7 @@ module Decidim
             event: "decidim.events.ideas.idea_mentioned",
             event_class: Decidim::Ideas::IdeaMentionedEvent,
             resource: comment.root_commentable,
-            affected_users: affected_users,
+            affected_users:,
             extra: {
               comment_id: comment.id,
               mentioned_idea_id: idea_id

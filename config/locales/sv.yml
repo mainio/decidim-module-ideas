@@ -390,7 +390,7 @@ sv:
         success: Utkast förstördes framgångsrikt.
       idea_l:
         card_label: "Idé: %{title}"
-      idea_m:
+      idea_g:
         card_label: "Idé: %{title}"
       last_activity:
         idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
@@ -420,8 +420,8 @@ sv:
           title: Komplettera din idé
         count:
           ideas_count:
-            one: "%{count} idé"
-            other: "%{count} idéer"
+            one: "Hittade %{count} idé"
+            other: "Hittade %{count} idéer"
         edit:
           back: Tillbaka till föregående sida
           send: Spara
@@ -487,6 +487,14 @@ sv:
           show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
           show_categories_info_text: Kontrollera vad teman består av
           show_terms_info_text: Visa kriterier
+        idea_attributes:
+          attributes:
+            address: Plats
+            area: Område
+            category: Tema
+            id: Nummer (ID)
+            published_at: Publiceringstiden
+          title: Information
         index:
           description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
           draft_idea_title: Du har ett idéutkast!
@@ -499,7 +507,6 @@ sv:
           show_list: Visa resultat som lista
           show_map: Visa resultat på kartan
           subtitle: Sök och utforska idéer!
-          view_idea: Visa idé
         map:
           dynamic:
             skip_button: Hoppa över karta
@@ -531,7 +538,7 @@ sv:
         idea:
           creation_date: 'Skapat: %{date}'
           view_idea: Visa idé
-        idea_actions:
+        idea_aside:
           share: Dela idén
           show_comments: Visa idéens kommentarer
           show_on_map: Visa idén på kartan
@@ -547,9 +554,14 @@ sv:
           comments: Kommentarer
           edit_idea: Redigera idé
           show_versions: Visa versionshistorik
+          subtitle: Idén
+        idea_map:
+          title: Idé på kartan
         ideas:
           empty: Det finns inga idéer ännu
           empty_filters: Det finns ingen idé med dessa kriterier
+        map_template:
+          view_idea: Visa idé
         show:
           answer: Svara
           back_to: Tillbaka till
@@ -659,11 +671,12 @@ sv:
       copied_from_component:
         idea_idea: Relaterade idéer
       included_projects:
-        project_result: 'Resultat som ingår i denna idé:'
+        project_result: Relaterade projekt
       included_ideas:
-        idea_project: 'Idé visas i dessa röstbara förslag:'
-        idea_result: 'Idé som ingår i dessa resultat:'
-        project_idea: 'Bifogade idéer:'
+        idea_plan: Relaterade gemensam utveckling förslag
+        idea_project: Relaterade röstningsbara förslag
+        idea_result: Relaterade projekt
+        project_idea: Relaterade idéer
     statistics:
       ideas_accepted: Godkända idéer
       ideas_count: Idéer

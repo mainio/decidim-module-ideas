@@ -80,8 +80,8 @@ module Decidim
       def filtered_ideas_query
         params = {
           component: idea_components,
-          current_user: current_user,
-          search_text: search_text,
+          current_user:,
+          search_text:,
           activity: search_activity,
           area_scope_id: search_area,
           category_id: search_category,

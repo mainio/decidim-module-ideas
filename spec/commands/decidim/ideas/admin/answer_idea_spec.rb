@@ -7,7 +7,7 @@ describe Decidim::Ideas::Admin::AnswerIdea do
 
   let(:command) { described_class.new(form, idea) }
   let(:form) { Decidim::Ideas::Admin::IdeaAnswerForm.new(answer: { en: "Good idea." }, internal_state: "accepted") }
-  let(:idea) { create(:idea, component: component) }
+  let(:idea) { create(:idea, component:) }
   let(:component) { create(:idea_component) }
   let(:user) { create(:user, :confirmed, :admin) }
 

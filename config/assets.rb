@@ -24,3 +24,4 @@ Decidim::Webpacker.register_entrypoints(
 
 # Register the main application's stylesheet include statement
 # Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/ideas/ideas")
+Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/ideas/ideas/_map")

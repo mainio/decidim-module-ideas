@@ -321,6 +321,7 @@ en:
             show_email: Show email address
             ideas: Ideas
             ranking: "%{ranking} of %{total}"
+            votes_count: Comments count
           update_category:
             invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
             select_a_category: Please select a theme
@@ -390,7 +391,7 @@ en:
         success: Draft destroyed successfully.
       idea_l:
         card_label: "Idea: %{title}"
-      idea_m:
+      idea_g:
         card_label: "Idea: %{title}"
       last_activity:
         idea_updated_html: "<span>Idea updated at %{link}</span>"
@@ -420,8 +421,8 @@ en:
           title: Complete your idea
         count:
           ideas_count:
-            one: "%{count} idea"
-            other: "%{count} ideas"
+            one: "Found %{count} idea"
+            other: "Found %{count} ideas"
         edit:
           back: Back to previous page
           send: Save
@@ -487,6 +488,14 @@ en:
           show_areas_info_text: Check which neighborhood belong to different major districts
           show_categories_info_text: Check what the themes consist of
           show_terms_info_text: Show criteria
+        idea_attributes:
+          attributes:
+            address: Location
+            area: Area
+            category: Theme
+            id: Number (ID)
+            published_at: Publish time
+          title: Information
         index:
           description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
           draft_idea_title: You have an idea draft!
@@ -499,7 +508,6 @@ en:
           show_list: Show results as list
           show_map: Show results on map
           subtitle: Search and discover ideas!
-          view_idea: View idea
         map:
           dynamic:
             skip_button: Skip map
@@ -531,7 +539,7 @@ en:
         idea:
           creation_date: 'Creation: %{date}'
           view_idea: View idea
-        idea_actions:
+        idea_aside:
           share: Share idea
           show_comments: Show idea comments
           show_on_map: Show idea on map
@@ -547,9 +555,14 @@ en:
           comments: Comments
           edit_idea: Edit idea
           show_versions: Show version history
+          subtitle: Idea
+        idea_map:
+          title: Idea on map
         ideas:
           empty: There are no ideas yet
           empty_filters: There isn't any idea with this criteria
+        map_template:
+          view_idea: View idea
         show:
           answer: Answer
           back_to: Back to
@@ -650,6 +663,7 @@ en:
         ideas_count: Ideas
     participatory_spaces:
       highlighted_ideas:
+        last: Last ideas
         see_all: See all (%{count})
     plans:
       section_types:
@@ -659,11 +673,12 @@ en:
       copied_from_component:
         idea_idea: Related ideas
       included_projects:
-        project_result: 'Attached results:'
+        project_result: Related projects
       included_ideas:
-        idea_project: 'Idea appearing in these votable proposals:'
-        idea_result: 'Idea appearing in these results:'
-        project_idea: 'Attached ideas:'
+        idea_plan: Related co-creation proposals
+        idea_project: Related votable proposals
+        idea_result: Related projects
+        project_idea: Related ideas
     statistics:
       ideas_accepted: Accepted ideas
       ideas_count: Ideas

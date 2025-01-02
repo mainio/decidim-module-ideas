@@ -133,7 +133,7 @@ module Decidim
 
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
-                title: title,
+                title:,
                 file: amendable.image.file,
                 weight: 0
               )
@@ -149,7 +149,7 @@ module Decidim
 
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
-                title: title,
+                title:,
                 file: amendable.actual_attachments.first.file,
                 weight: 1
               )
@@ -164,7 +164,7 @@ module Decidim
       def create_amendment!
         @amendment = Decidim::Amendment.create!(
           amender: current_user,
-          amendable: amendable,
+          amendable:,
           emendation: @emendation,
           state: "draft"
         )

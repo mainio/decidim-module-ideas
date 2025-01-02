@@ -17,7 +17,7 @@ module Decidim
               case attribute.type
               when :idea_area_scope
                 content_tag :div, class: "#{name}_container" do
-                  scopes_picker_field(
+                  scopes_select_field(
                     form,
                     name,
                     root: nil,
@@ -35,7 +35,7 @@ module Decidim
                   partial: "decidim/ideas/admin/shared/area_scope_coordinates",
                   locals: {
                     input_name_prefix: "#{form.object_name}[#{name}]",
-                    value: value,
+                    value:,
                     parent: area_scopes_parent(@component)
                   }
                 )
@@ -58,7 +58,7 @@ module Decidim
                           ""
                         else
                           @ideas_settings_js_included = true
-                          javascript_pack_tag("decidim_ideas_admin_component_settings")
+                          append_javascript_pack_tag("decidim_ideas_admin_component_settings")
                         end
 
                       label + coordinates_element + settings_js

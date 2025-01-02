@@ -21,11 +21,13 @@ module Decidim
         attribute :sub_category_id, Integer
         attribute :area_scope_id, Integer
         attribute :suggested_hashtags, Array[String]
-        attribute :image, Decidim::Ideas::ImageAttachmentForm
-        attribute :attachment, Decidim::Ideas::AttachmentForm
 
+        # The attachment attribute is needed for the form builder.
+        attribute :attachment, Decidim::AttachmentForm
         attachments_attribute :images
         attachments_attribute :actual_attachments
+        attribute :remove_images, Boolean, default: false
+        attribute :remove_actual_attachments, Boolean, default: false
 
         validates :title, presence: true, idea_length: {
           minimum: 5,
@@ -43,11 +45,13 @@ module Decidim
 
         validate :idea_length
         validate :area_scope_belongs_to_parent_scope
-        validate :notify_missing_attachment_if_errored
 
         delegate :categories, to: :current_component
 
         def map_model(model)
+          self.images = [model.image].compact
+          self.actual_attachments = model.actual_attachments
+
           self.suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
 
           self.user_group_id = model.user_groups.first&.id
@@ -170,17 +174,8 @@ module Decidim
           @area_parent_scope ||= current_organization.scopes.find_by(id: parent_scope_id)
         end
 
-        # This method will add an error to the `attachment` field only if there's
-        # any error in any other field. This is needed because when the form has
-        # an error, the attachment is lost, so we need a way to inform the user of
-        # this problem.
-        def notify_missing_attachment_if_errored
-          errors.add(:image, :needs_to_be_reattached) if errors.any? && image.present? && image.file.present?
-          errors.add(:attachment, :needs_to_be_reattached) if errors.any? && attachment.present? && attachment.file.present?
-        end
-
         def ordered_hashtag_list(string)
-          string.to_s.split.reject(&:blank?).uniq.sort_by(&:parameterize)
+          string.to_s.split.compact_blank.uniq.sort_by(&:parameterize)
         end
       end
     end

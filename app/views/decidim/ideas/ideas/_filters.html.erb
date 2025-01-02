@@ -2,13 +2,11 @@
   <p class="show-for-sr"><%= t(".title") %></p>
 
   <div class="row medium-unstack">
-    <% if display_answer_filter? %>
-      <div class="columns">
-        <div class="filters__control area_scope_id_filter">
-          <%= form.select(:with_any_state, filter_ideas_state_values, { label: t(".state"), include_blank: t(".all_states") }, "aria-label": t(".state"), data: { disable_dynamic_change: true }) %>
-        </div>
+    <div class="columns">
+      <div class="filters__control area_scope_id_filter">
+        <%= form.search_field :search_text_cont, label: t(".keyword"), placeholder: t(".keyword"), title: t(".keyword"), "aria-label": t(".search"), data: { disable_dynamic_change: true } %>
       </div>
-    <% end %>
+    </div>
     <% if display_scope_filter? %>
       <div class="columns">
         <div class="filters__control area_scope_id_filter">
@@ -23,12 +21,13 @@
         </div>
       </div>
     <% end %>
-
-    <div class="columns">
-      <div class="filters__control area_scope_id_filter">
-        <%= form.search_field :search_text_cont, label: t(".keyword"), placeholder: t(".keyword"), title: t(".keyword"), "aria-label": t(".search"), data: { disable_dynamic_change: true } %>
+    <% if display_answer_filter? %>
+      <div class="columns">
+        <div class="filters__control area_scope_id_filter">
+          <%= form.select(:with_any_state, filter_ideas_state_values, { label: t(".state"), include_blank: t(".all_states") }, "aria-label": t(".state"), data: { disable_dynamic_change: true }) %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 
   <% if current_user %>
@@ -40,9 +39,9 @@
 
   <div class="row columns">
     <div class="filters__actions">
-      <button type="submit" class="button button--icon" aria-label="<%= t(".search") %>" aria-controls="projects-count projects" data-close>
+      <button type="submit" class="button button--icon" aria-label="<%= t(".search") %>" aria-controls="ideas-count ideas" data-close>
         <%= t(".search") %>
-        <%= icon("magnifying-glass", role: "img", "aria-hidden": true) %>
+        <%= icon("search-line", role: "img", "aria-hidden": true) %>
       </button>
       <button type="reset" class="button clear text-lg"><%= t ".reset" %></button>
     </div>

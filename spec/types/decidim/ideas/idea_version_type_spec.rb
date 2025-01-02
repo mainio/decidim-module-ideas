@@ -11,8 +11,8 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
            :with_creation_enabled,
            participatory_space: participatory_process)
   end
-  let!(:participatory_process) { create :participatory_process, :with_steps, organization: current_organization }
-  let(:author) { create :user, :confirmed, organization: current_organization }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization: current_organization) }
+  let(:author) { create(:user, :confirmed, organization: current_organization) }
   let(:original_attributes) do
     {
       title: generate(:title).dup
@@ -24,7 +24,7 @@ describe Decidim::Ideas::IdeaVersionType, type: :graphql do
     }
   end
   let(:idea) do
-    create(:idea, original_attributes.merge(component: component, users: [author])).tap do |idea|
+    create(:idea, original_attributes.merge(component:, users: [author])).tap do |idea|
       trail_state = PaperTrail.config.enabled
       PaperTrail.config.enabled = true
       PaperTrail.request(whodunnit: author.to_gid) do

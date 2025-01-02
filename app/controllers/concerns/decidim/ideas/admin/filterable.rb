@@ -61,7 +61,7 @@ module Decidim
           end
 
           def translated_area_scope_id_eq(id)
-            scope = area_scopes.find_by(id: id)
+            scope = area_scopes.find_by(id:)
             return unless scope
 
             translated_attribute(scope.name)

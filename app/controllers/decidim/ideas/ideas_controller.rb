@@ -3,12 +3,12 @@
 module Decidim
   module Ideas
     class IdeasController < Decidim::Ideas::ApplicationController
-      helper Decidim::WidgetUrlsHelper
       helper IdeaWizardHelper
       helper Decidim::Ideas::IdeasFormHelper
 
       include Decidim::ApplicationHelper
       include FormFactory
+      include Flaggable
       include FilterResource
       include Decidim::Ideas::Orderable
       include Paginable
@@ -35,6 +35,10 @@ module Decidim
         end
       end
 
+      def complete; end
+
+      def compare; end
+
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
 
@@ -58,6 +62,10 @@ module Decidim
           @idea ||= Idea.new(component: current_component)
           @form = form_idea_model
         end
+      end
+
+      def edit
+        enforce_permission_to :edit, :idea, idea: @idea
       end
 
       def create
@@ -147,10 +155,6 @@ module Decidim
         end
       end
 
-      def edit
-        enforce_permission_to :edit, :idea, idea: @idea
-      end
-
       def update
         enforce_permission_to :edit, :idea, idea: @idea
 
@@ -206,7 +210,7 @@ module Decidim
       end
 
       def search_collection
-        Idea.where(component: current_component).not_hidden.with_availability(params[:filter].try(:[], :with_availability))
+        Idea.where(component: current_component).not_hidden.only_amendables.with_availability(params[:filter].try(:[], :with_availability))
       end
 
       def default_filter_params
@@ -275,12 +279,7 @@ module Decidim
       end
 
       def edit_form
-        form_image_model = form(ImageAttachmentForm).from_model(@idea.image)
-        form_attachment_model = form(AttachmentForm).from_model(@idea.actual_attachments.first)
         @form = form_idea_model
-        @form.image = form_image_model
-        @form.attachment = form_attachment_model
-        @form
       end
 
       def idea_creation_params

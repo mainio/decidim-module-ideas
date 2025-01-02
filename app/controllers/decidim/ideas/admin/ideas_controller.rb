@@ -20,10 +20,13 @@ module Decidim
         def new
           enforce_permission_to :create, :idea
           @form = form(Admin::IdeaForm).from_params(
-            attachment: form(AttachmentForm).from_params({})
+            attachment: form(Decidim::AttachmentForm).from_params({})
           )
-          @form.image = form(Decidim::Ideas::ImageAttachmentForm).from_params({})
-          @form.attachment = form(Decidim::Ideas::AttachmentForm).from_params({})
+        end
+
+        def edit
+          enforce_permission_to(:edit, :idea, idea:)
+          @form = form(Admin::IdeaForm).from_model(idea)
         end
 
         def create
@@ -121,15 +124,8 @@ module Decidim
           end
         end
 
-        def edit
-          enforce_permission_to :edit, :idea, idea: idea
-          @form = form(Admin::IdeaForm).from_model(idea)
-          @form.image = form(ImageAttachmentForm).from_model(idea.image)
-          @form.attachment = form(AttachmentForm).from_model(idea.actual_attachments.first)
-        end
-
         def update
-          enforce_permission_to :edit, :idea, idea: idea
+          enforce_permission_to(:edit, :idea, idea:)
 
           @form = form(Admin::IdeaForm).from_params(params)
           Admin::UpdateIdea.call(@form, current_user, @idea) do

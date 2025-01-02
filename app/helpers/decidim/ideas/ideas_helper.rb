@@ -26,22 +26,26 @@ module Decidim
         end
       end
 
-      def ideas_map(geocoded_ideas)
+      def ideas_map(geocoded_ideas, **options)
         map_options = { type: "ideas", markers: geocoded_ideas }
         map_center = component_settings.default_map_center_coordinates
         map_options[:center_coordinates] = map_center.split(",").map(&:to_f) if map_center
 
-        dynamic_map_for(map_options) do
+        dynamic_map_for(map_options.merge(options)) do
           # These snippets need to be added AFTER the other map scripts have
           # been added which is why they cannot be within the block. Otherwise
-          # e.g. the markercluser would not be available when the plans map is
+          # e.g. the markercluster would not be available when the ideas map is
           # loaded.
-          unless snippets.any?(:plans_map_scripts)
-            snippets.add(:plans_map_scripts, javascript_pack_tag("decidim_ideas_map"))
-            snippets.add(:foot, snippets.for(:plans_map_scripts))
+          unless snippets.any?(:ideas_map_scripts)
+            snippets.add(:ideas_map_scripts, append_javascript_pack_tag("decidim_ideas_map"))
+            snippets.add(:foot, snippets.for(:ideas_map_scripts))
           end
 
-          yield
+          if block_given?
+            yield
+          else
+            ""
+          end
         end
       end
 
@@ -63,7 +67,7 @@ module Decidim
 
         return category_image_path(category.parent) if (category.category_image.blank? || !category.category_image.attached?) && category.parent
 
-        category.attached_uploader(:category_image).path
+        category.attached_uploader(:category_image).url
       end
 
       def idea_reason_callout_args
@@ -86,7 +90,7 @@ module Decidim
         @map_utility_static.link(
           latitude: resource.latitude,
           longitude: resource.longitude,
-          options: options
+          options:
         )
       end
       # rubocop:enable Rails/HelperInstanceVariable

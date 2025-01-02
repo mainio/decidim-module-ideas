@@ -36,7 +36,7 @@
     <%= form.check_box :terms_agreed, required: true %>
     <div class="field-info field-info-with-icon">
       <%= link_to info_path("terms"), class: "info-modal-link" do %>
-        <%= icon "information", aria_hidden: true %>
+        <%= icon "information-line", aria_hidden: true %>
         <%= t(".show_terms_info_text") %>
       <% end %>
     </div>
@@ -86,7 +86,7 @@
     <div class="columns large-6">
       <div class="field-info field-info-with-icon">
         <%= link_to info_path("areas"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
+          <%= icon "information-line", aria_hidden: true %>
           <%= t(".show_areas_info_text") %>
         <% end %>
       </div>
@@ -102,7 +102,7 @@
       <div class="field" id="address_input">
         <div class="input-group">
           <span class="input-group-label">
-            <%= icon "map-marker", aria_hidden: true %>
+            <%= icon "map-pin-line", aria_hidden: true %>
           </span>
           <%= form.geocoding_field :address, label: false, class: "input-group-field", data: {
             "coordinates-url": geocoding_path,
@@ -138,7 +138,7 @@
     <div class="columns large-6">
       <div class="field-info field-info-with-icon">
         <%= link_to info_path("categories"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
+          <%= icon "information-line", aria_hidden: true %>
           <%= t(".show_categories_info_text") %>
         <% end %>
       </div>
@@ -182,23 +182,12 @@
   <div class="field attachment-button">
     <%= form.attachment :images,
       multiple: false,
+      titled: true,
       label: t(".add_image"),
       button_label: t(".image_legend"),
       button_edit_label: t(".edit_image"),
       help_i18n_scope: "decidim.forms.file_help.image",
       extension_allowlist: Decidim::OrganizationSettings.for(current_organization).upload_allowed_file_extensions_image %>
-  </div>
-
-  <div class="reveal" id="image-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".image_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
   </div>
 <% end %>
 
@@ -206,26 +195,15 @@
   <div class="field attachment-button">
     <%= form.attachment :actual_attachments,
       multiple: false,
+      titled: true,
       label: t(".add_attachment"),
       button_label: t(".attachment_legend"),
       button_edit_label: t(".edit_attachment"),
       help_i18n_scope: "decidim.forms.file_help.file" %>
   </div>
-
-  <div class="reveal" id="attachment-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".attachment_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
-  </div>
 <% end %>
 
-<%= javascript_pack_tag "decidim_ideas_idea_form" %>
+<%= append_javascript_pack_tag "decidim_ideas_idea_form" %>
 
 <%
 js_options = {
@@ -241,6 +219,32 @@ js_options = {
     DecidimIdeas.configure(<%== js_options.to_json %>);
     DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_character_counter"));
     DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_character_counter"));
+
+    // A hack to change the upload modal behavior as otherwise the single file
+    // upload would have incorrect input names which would cause an exception.
+    var attachmentButtons = document.querySelectorAll("button[data-upload]");
+    attachmentButtons.forEach(function(button) {
+      var modal = document.querySelector(`#${button.dataset.dialogOpen}`)
+      var files = document.querySelector(`[data-active-uploads=${button.dataset.dialogOpen}]`)
+      var options = JSON.parse(button.dataset.upload);
+      var attrName = `idea[${options.addAttribute}]`;
+
+      var saveButton = modal.querySelector("button[data-dropzone-save]");
+      saveButton.addEventListener("click", function() {
+        setTimeout(function() {
+          var idx = 0;
+          files.querySelectorAll(`input[type="hidden"][name="${attrName}"]`).forEach(function(input) {
+            if (input.value && input.value.match(/^[0-9]+$/)) {
+              input.setAttribute("name", `${attrName}[${idx}][id]`);
+            } else {
+              input.setAttribute("name", `${attrName}[${idx}][file]`);
+            }
+
+            idx += 1;
+          })
+        }, 0);
+      });
+    });
   });
   </script>
 <% end %>

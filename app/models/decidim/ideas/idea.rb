@@ -137,7 +137,7 @@ module Decidim
       end
 
       def self.retrieve_ideas_for(component)
-        Decidim::Ideas::Idea.where(component: component)
+        Decidim::Ideas::Idea.where(component:)
                             .joins(:coauthorships)
                             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
                             .not_hidden
@@ -158,18 +158,23 @@ module Decidim
         )
       end
 
+      def self.area_scope_coordinates_for(component)
+        component.settings.area_scope_coordinates.to_h do |scope_id, coords|
+          latlng = coords.split(",")
+          next [scope_id.to_s.to_i, nil] if latlng.length < 2
+
+          [scope_id.to_s.to_i, [latlng[0].to_f, latlng[1].to_f]]
+        end.compact
+      end
+
       def self.with_geocoded_area_scopes_for(component)
         # Fetch all the configured area scope coodinates and create a select
         # statement for each scope with its latitude and longitude in order to
         # combine this information with the base query.
-        scope_selects = component.settings.area_scope_coordinates.map do |scope_id, coords|
-          latlng = coords.split(",")
-          next if latlng.length < 2
+        scope_selects = area_scope_coordinates_for(component).map do |scope_id, coords|
+          "SELECT #{scope_id} AS scope_id, #{coords[0]} AS latitude, #{coords[1]} AS longitude"
+        end
 
-          lat = latlng[0].to_f
-          lng = latlng[1].to_f
-          "SELECT #{scope_id} AS scope_id, #{lat} AS latitude, #{lng} AS longitude"
-        end.compact
         # The empty select ensures there is always at least one row for the
         # scope locations so that it will not break even when it is not
         # configured correctly.
@@ -329,6 +334,25 @@ module Decidim
 
         limit = updated_at + component.settings.idea_edit_before_minutes.minutes
         Time.current < limit
+      end
+
+      # Replicates the same data for a single idea as returned for a collection
+      # through the `#geocoded_data_for` method.
+      def geocoded_data
+        locale = I18n.locale.to_s
+        default_locale = I18n.default_locale.to_s
+
+        scope_coordinates = self.class.area_scope_coordinates_for(component)
+        idea_scope_coordinates = scope_coordinates[area_scope.id] || []
+
+        [
+          id,
+          title,
+          body,
+          address || area_scope.title[locale] || area_scope.title[default_locale],
+          latitude || idea_scope_coordinates[0],
+          longitude || idea_scope_coordinates[1]
+        ]
       end
 
       # Create i18n ransackers for :title and :body.

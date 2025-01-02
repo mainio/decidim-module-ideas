@@ -1,30 +1,8 @@
 <div class="row column resource">
   <div class="row">
     <div class="columns small-12 medium-8">
-      <div class="resource__main static__content">
+      <div class="resource__main static__content margin-bottom-0">
         <h1><%= present(idea).title(links: true, html_escape: true) %></h1>
-
-        <div class="resource__info">
-          <% if has_visible_area_scope?(idea) %>
-            <div class="resource__info__item"><%= translated_attribute(idea.area_scope.name) %></div>
-          <% end %>
-          <div class="resource__info__item">#<%= idea.id %></div>
-          <% if idea.published? %>
-            <div class="resource__info__item"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
-          <% end %>
-          <% if idea.category.present? %>
-            <div class="resource__info__item">
-              <% if idea.category.parent %>
-                <%= translated_attribute(idea.category.parent.name) %> -
-              <% end %>
-              <%= translated_attribute(idea.category.name) %>
-            </div>
-          <% end %>
-
-          <% if component_settings.geocoding_enabled? && idea.address.present? %>
-            <div class="resource__info__item"><%= idea.address %></div>
-          <% end %>
-        </div>
 
         <% if idea.respond_to?(:tags) && idea.tags.any? %>
           <div class="resource__tags">
@@ -33,26 +11,28 @@
         <% end %>
 
         <% if idea.image && idea.image.main_url %>
-          <%= image_tag idea.image.main_url, class:"resource-image", alt: strip_tags(translated_attribute(idea.image.title)) %>
+          <%= image_tag idea.image.main_url, class:"resource__image", alt: strip_tags(translated_attribute(idea.image.title)) %>
         <% elsif category_image_path(idea.category) %>
-          <%= image_tag category_image_path(idea.category), class:"resource-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+          <%= image_tag category_image_path(idea.category), class:"resource__image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
-          <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"resource-image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+          <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"resource__image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
       </div>
     </div>
 
     <div class="columns small-12 medium-4">
-      <div class="resource__aside resource__actions">
-        <%= render partial: "idea_actions", locals: { idea: idea, show_actions: show_actions } %>
+      <div class="resource__aside">
+        <div class="resource__actions">
+          <%= render partial: "idea_aside", locals: { idea: idea, show_actions: show_actions } %>
+        </div>
 
         <% if show_actions && allowed_to?(:withdraw, :idea, idea: idea) %>
-          <div class="row">
-            <div class="columns">
-              <%= render partial: "idea_controls", locals: { idea: idea } %>
-            </div>
+          <div class="margin-bottom-3">
+            <%= render partial: "idea_controls", locals: { idea: idea } %>
           </div>
         <% end %>
+
+        <%= render partial: "idea_attributes", locals: { idea: idea } %>
       </div>
     </div>
   </div>
@@ -61,6 +41,7 @@
   <div class="row">
     <div class="columns small-12 medium-8">
       <div class="resource__main resource__content static__content">
+        <h2><%= t(".subtitle") %></h2>
         <%= render_idea_body(idea) %>
 
         <% if idea.answered? && idea.published_state? %>
@@ -73,14 +54,21 @@
             </div>
           </div>
         <% end %>
-      </div>
 
-      <div class="resource__details">
-        <%= attachments_for idea %>
+        <%= render partial: "idea_map", locals: { idea: idea } %>
 
-        <%# = linked_resources_for idea, :results, "included_ideas" %>
-        <%# = linked_resources_for idea, :projects, "included_ideas" %>
-        <%# = linked_resources_for idea, :ideas, "copied_from_component" %>
+        <div class="resource__details margin-top-3">
+          <%= attachments_for idea %>
+
+          <% if respond_to?(:linked_resources_group_for) %>
+            <%= linked_resources_group_for(idea, {
+              results: "included_ideas",
+              projects: "included_ideas",
+              plans: "included_ideas",
+              ideas: "copied_from_component"
+            }) %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

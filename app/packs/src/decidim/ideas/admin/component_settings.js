@@ -25,7 +25,7 @@ $(() => {
 
   $(document).on(
     "change",
-    "input[name='component[settings][area_scope_parent_id]']",
+    "select[name='component[settings][area_scope_parent_id]']",
     handleParentAreaScopeChange
   );
 });

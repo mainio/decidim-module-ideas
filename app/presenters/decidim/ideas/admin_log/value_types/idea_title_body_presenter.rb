@@ -8,7 +8,7 @@ module Decidim
           def present
             return unless value
 
-            renderer = Decidim::ContentRenderers::HashtagRenderer.new(value)
+            renderer = Decidim::ContentRenderers::HashtagRenderer.new(h.decidim_escape_translated(value))
             renderer.render(links: false).html_safe
           end
         end

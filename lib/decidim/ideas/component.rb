@@ -183,11 +183,11 @@ Decidim.register_component(:ideas) do |component|
       name: Decidim::Components::Namer.new(participatory_space.organization.available_locales, :ideas).i18n_name,
       manifest_name: :ideas,
       published_at: Time.current,
-      participatory_space: participatory_space,
+      participatory_space:,
       settings: {
         area_scope_parent_id: area_parent.id
       },
-      step_settings: step_settings
+      step_settings:
     }
 
     component = Decidim.traceability.perform_action!(
@@ -213,15 +213,15 @@ Decidim.register_component(:ideas) do |component|
                                           end
 
       params = {
-        component: component,
+        component:,
         category: participatory_space.categories.sample,
         area_scope: Faker::Boolean.boolean(true_ratio: 0.5) ? nil : areas.sample,
         title: Faker::Lorem.sentence(word_count: 2),
         body: Faker::Lorem.paragraphs(number: 2).join("\n"),
-        state: state,
-        answer: answer,
+        state:,
+        answer:,
         answered_at: state.present? ? Time.current : nil,
-        state_published_at: state_published_at,
+        state_published_at:,
         published_at: Time.current
       }
 
@@ -240,7 +240,7 @@ Decidim.register_component(:ideas) do |component|
       if n.positive?
         Decidim::User.where(decidim_organization_id: participatory_space.decidim_organization_id).all.sample(n).each do |author|
           user_group = [true, false].sample ? Decidim::UserGroups::ManageableUserGroups.for(author).verified.sample : nil
-          idea.add_coauthor(author, user_group: user_group)
+          idea.add_coauthor(author, user_group:)
         end
       end
 
@@ -248,11 +248,11 @@ Decidim.register_component(:ideas) do |component|
         email = "amendment-author-#{participatory_space.underscored_name}-#{participatory_space.id}-#{n}-amend#{n}@example.org"
         name = "#{Faker::Name.name} #{participatory_space.id} #{n} amend#{n}"
 
-        author = Decidim::User.find_or_initialize_by(email: email)
+        author = Decidim::User.find_or_initialize_by(email:)
         author.update!(
           password: "decidim123456789",
           password_confirmation: "decidim123456789",
-          name: name,
+          name:,
           nickname: Faker::Twitter.unique.screen_name,
           organization: component.organization,
           tos_agreement: "1",
@@ -279,7 +279,7 @@ Decidim.register_component(:ideas) do |component|
         )
 
         params = {
-          component: component,
+          component:,
           category: participatory_space.categories.sample,
           area_scope: Faker::Boolean.boolean(true_ratio: 0.5) ? nil : areas.sample,
           title: "#{idea.title} #{Faker::Lorem.sentence(word_count: 1)}",
@@ -305,7 +305,7 @@ Decidim.register_component(:ideas) do |component|
         Decidim::Amendment.create!(
           amender: author,
           amendable: idea,
-          emendation: emendation,
+          emendation:,
           state: "evaluating"
         )
       end
@@ -314,11 +314,11 @@ Decidim.register_component(:ideas) do |component|
         email = "vote-author-#{participatory_space.underscored_name}-#{participatory_space.id}-#{n}-#{m}@example.org"
         name = "#{Faker::Name.name} #{participatory_space.id} #{n} #{m}"
 
-        author = Decidim::User.find_or_initialize_by(email: email)
+        author = Decidim::User.find_or_initialize_by(email:)
         author.update!(
           password: "decidim123456789",
           password_confirmation: "decidim123456789",
-          name: name,
+          name:,
           nickname: Faker::Twitter.unique.screen_name,
           organization: component.organization,
           tos_agreement: "1",

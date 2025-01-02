@@ -60,8 +60,8 @@ module Decidim
 
         def publish_event(event, event_class)
           Decidim::EventsManager.publish(
-            event: event,
-            event_class: event_class,
+            event:,
+            event_class:,
             resource: idea,
             affected_users: idea.notifiable_identities,
             followers: idea.followers - idea.notifiable_identities

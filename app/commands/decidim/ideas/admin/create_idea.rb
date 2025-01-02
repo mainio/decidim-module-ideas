@@ -5,10 +5,11 @@ module Decidim
     module Admin
       # A command with all the business logic when a user creates a new idea.
       class CreateIdea < Decidim::Command
-        include ::Decidim::AttachmentMethods
+        include ::Decidim::Ideas::AttachmentMethods
+        include ::Decidim::Ideas::ImageMethods
+
         include GalleryMethods
         include HashtagsMethods
-        include ImageMethods
 
         # Public: Initializes the command.
         #
@@ -57,7 +58,7 @@ module Decidim
 
         def create_idea
           @idea = Decidim::Ideas::IdeaBuilder.create(
-            attributes: attributes,
+            attributes:,
             author: @current_user,
             user_group_author: user_group,
             action_user: form.current_user
@@ -66,7 +67,7 @@ module Decidim
         end
 
         def user_group
-          @user_group ||= Decidim::UserGroup.find_by(organization: organization, id: form.user_group_id)
+          @user_group ||= Decidim::UserGroup.find_by(organization:, id: form.user_group_id)
         end
 
         def organization

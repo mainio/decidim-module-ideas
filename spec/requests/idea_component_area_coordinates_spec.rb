@@ -2,16 +2,16 @@
 
 require "spec_helper"
 
-RSpec.describe "Idea component area coordinates", type: :request do
+RSpec.describe "IdeaComponentAreaCoordinates" do
   include Decidim::WardenTestHelpers
 
   subject { response.body }
 
-  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
-  let(:parent_scope) { create(:scope, organization: organization) }
-  let!(:scopes) { create_list(:scope, 10, parent: parent_scope, organization: organization) }
+  let(:parent_scope) { create(:scope, organization:) }
+  let!(:scopes) { create_list(:scope, 10, parent: parent_scope, organization:) }
 
   let(:decidim_admin) { Decidim::Admin::Engine.routes.url_helpers }
   let(:request_path) { decidim_admin.area_coordinates_ideas_component_setting_path(component) }
@@ -34,10 +34,10 @@ RSpec.describe "Idea component area coordinates", type: :request do
   end
 
   context "with a regular user" do
-    let(:user) { create(:user, :confirmed, organization: organization) }
+    let(:user) { create(:user, :confirmed, organization:) }
 
     it "redirects" do
-      expect(response.status).to be(302)
+      expect(response).to have_http_status(:found)
     end
   end
 

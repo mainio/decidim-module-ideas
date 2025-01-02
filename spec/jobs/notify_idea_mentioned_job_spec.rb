@@ -6,8 +6,8 @@ module Decidim
   module Ideas
     describe NotifyIdeasMentionedJob do
       let(:organization) { create(:organization) }
-      let(:participatory_process) { create :participatory_process, organization: organization }
-      let(:author) { create(:user, :confirmed, organization: organization) }
+      let(:participatory_process) { create(:participatory_process, organization:) }
+      let(:author) { create(:user, :confirmed, organization:) }
       let(:component) { create(:component, participatory_space: participatory_process) }
       let(:idea_component) { create(:idea_component, participatory_space: participatory_process) }
       let(:idea) { create(:idea, :accepted, :published, component: idea_component, users: [author]) }

@@ -38,7 +38,7 @@ module Decidim
           components = Decidim::Component.where(participatory_space: spaces).published
           @query = Decidim::Ideas::Idea.where(component: components).joins(:component)
                                        .left_outer_joins(:category)
-          @query = @query.where("decidim_ideas_ideas.published_at <= ?", end_time).except_withdrawn.not_hidden
+          @query = @query.where(decidim_ideas_ideas: { published_at: ..end_time }).except_withdrawn.not_hidden
           @query = @query.group("decidim_categorizations.decidim_category_id",
                                 :participatory_space_type,
                                 :participatory_space_id)
@@ -46,7 +46,7 @@ module Decidim
         end
 
         def quantity
-          @quantity ||= query.where("decidim_ideas_ideas.published_at >= ?", start_time).count
+          @quantity ||= query.where(decidim_ideas_ideas: { published_at: start_time.. }).count
         end
       end
     end
