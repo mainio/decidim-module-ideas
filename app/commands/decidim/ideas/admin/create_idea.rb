@@ -5,10 +5,11 @@ module Decidim
     module Admin
       # A command with all the business logic when a user creates a new idea.
       class CreateIdea < Decidim::Command
-        include ::Decidim::AttachmentMethods
+        include ::Decidim::Ideas::AttachmentMethods
+        include ::Decidim::Ideas::ImageMethods
+
         include GalleryMethods
         include HashtagsMethods
-        include ImageMethods
 
         # Public: Initializes the command.
         #
