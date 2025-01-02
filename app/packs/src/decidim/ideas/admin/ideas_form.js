@@ -36,17 +36,17 @@
   };
 
   const uploadModalCorrection = () => {
-    var attachmentButtons = document.querySelectorAll("button[data-upload]");
+    let attachmentButtons = document.querySelectorAll("button[data-upload]");
     attachmentButtons.forEach(function(button) {
-      var modal = document.querySelector(`#${button.dataset.dialogOpen}`)
-      var files = document.querySelector(`[data-active-uploads=${button.dataset.dialogOpen}]`)
-      var options = JSON.parse(button.dataset.upload);
-      var attrName = `idea[${options.addAttribute}]`;
+      let modal = document.querySelector(`#${button.dataset.dialogOpen}`)
+      let files = document.querySelector(`[data-active-uploads=${button.dataset.dialogOpen}]`)
+      let options = JSON.parse(button.dataset.upload);
+      let attrName = `idea[${options.addAttribute}]`;
 
-      var saveButton = modal.querySelector("button[data-dropzone-save]");
+      let saveButton = modal.querySelector("button[data-dropzone-save]");
       saveButton.addEventListener("click", function() {
         setTimeout(function() {
-          var idx = 0;
+          let idx = 0;
           files.querySelectorAll(`input[type="hidden"][name="${attrName}"]`).forEach(function(input) {
             if (input.value && input.value.match(/^[0-9]+$/)) {
               input.setAttribute("name", `${attrName}[${idx}][id]`);
