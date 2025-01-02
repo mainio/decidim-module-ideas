@@ -122,10 +122,6 @@ module Decidim
         def edit
           enforce_permission_to :edit, :idea, idea: idea
           @form = form(Admin::IdeaForm).from_model(idea)
-
-          @form.add_images = form(Decidim::AttachmentForm).from_model(
-            idea.image
-          )
         end
 
         def update

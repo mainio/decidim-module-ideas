@@ -49,6 +49,9 @@ module Decidim
         delegate :categories, to: :current_component
 
         def map_model(model)
+          self.images = [model.image].compact
+          self.actual_attachments = model.actual_attachments
+
           self.suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
 
           self.user_group_id = model.user_groups.first&.id
