@@ -28,9 +28,9 @@ module Decidim
 
         def retrieve_ideas_followers(from_start: false)
           @ideas_followers ||= Decidim::Follow.where(followable: retrieve_ideas).joins(:user)
-                                              .where("decidim_follows.created_at <= ?", end_time)
+                                              .where(decidim_follows: { created_at: ..end_time })
 
-          return @ideas_followers.where("decidim_follows.created_at >= ?", start_time) if from_start
+          return @ideas_followers.where(decidim_follows: { created_at: start_time.. }) if from_start
 
           @ideas_followers
         end

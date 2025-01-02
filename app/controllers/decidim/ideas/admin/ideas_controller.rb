@@ -24,6 +24,11 @@ module Decidim
           )
         end
 
+        def edit
+          enforce_permission_to(:edit, :idea, idea:)
+          @form = form(Admin::IdeaForm).from_model(idea)
+        end
+
         def create
           enforce_permission_to :create, :idea
           @form = form(Admin::IdeaForm).from_params(params)
@@ -119,13 +124,8 @@ module Decidim
           end
         end
 
-        def edit
-          enforce_permission_to :edit, :idea, idea: idea
-          @form = form(Admin::IdeaForm).from_model(idea)
-        end
-
         def update
-          enforce_permission_to :edit, :idea, idea: idea
+          enforce_permission_to(:edit, :idea, idea:)
 
           @form = form(Admin::IdeaForm).from_params(params)
           Admin::UpdateIdea.call(@form, current_user, @idea) do

@@ -13,16 +13,16 @@ module Decidim::Ideas
     let(:created_at) { 1.month.ago }
     let(:published_at) { Time.current }
     let(:component) { create(:idea_component, :with_attachments_allowed, :with_card_image_allowed) }
-    let!(:idea) { create(:idea, component: component, created_at: created_at, published_at: published_at) }
+    let!(:idea) { create(:idea, component:, created_at:, published_at:) }
     let(:model) { idea }
-    let(:user) { create :user, organization: idea.participatory_space.organization }
+    let(:user) { create(:user, organization: idea.participatory_space.organization) }
     let!(:emendation) { create(:idea) }
-    let!(:amendment) { create :amendment, amendable: idea, emendation: emendation }
+    let!(:amendment) { create(:amendment, amendable: idea, emendation:) }
     let!(:category) { create(:category, participatory_space: component.participatory_space) }
     let!(:scope) { create(:scope, organization: component.participatory_space.organization) }
 
     before do
-      idea.update(category: category)
+      idea.update(category:)
       idea.update(area_scope: scope)
       allow(controller).to receive(:current_user).and_return(user)
     end
@@ -47,7 +47,7 @@ module Decidim::Ideas
         creation_date = I18n.l(created_at.to_date, format: :decidim_short)
 
         expect(subject).to have_css(".card__info__item", text: published_date)
-        expect(subject).not_to have_css(".card__status", text: creation_date)
+        expect(subject).to have_no_css(".card__status", text: creation_date)
       end
 
       context "when it is a idea preview" do

@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe Decidim::Admin::IdeasComponentSettingsController, type: :controller do
+describe Decidim::Admin::IdeasComponentSettingsController do
   routes { Decidim::Admin::Engine.routes }
 
-  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
-  let(:parent_scope) { create(:scope, organization: organization) }
+  let(:parent_scope) { create(:scope, organization:) }
 
   before do
     request.env["decidim.current_organization"] = organization

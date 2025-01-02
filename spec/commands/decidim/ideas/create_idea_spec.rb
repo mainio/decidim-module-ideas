@@ -21,12 +21,12 @@ describe Decidim::Ideas::CreateIdea do
     }
   end
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:idea_limit) { 0 }
-  let(:component) { create(:idea_component, :with_idea_limit, idea_limit: idea_limit, participatory_space: participatory_space) }
-  let(:category) { create(:category, participatory_space: participatory_space) }
-  let(:area_scope) { create(:scope, organization: organization) }
-  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+  let(:component) { create(:idea_component, :with_idea_limit, idea_limit:, participatory_space:) }
+  let(:category) { create(:category, participatory_space:) }
+  let(:area_scope) { create(:scope, organization:) }
+  let(:user) { create(:user, :confirmed, :admin, organization:) }
 
   before do
     allow(form).to receive(:current_organization).and_return(organization)
@@ -53,7 +53,7 @@ describe Decidim::Ideas::CreateIdea do
   end
 
   context "with idea limit" do
-    let!(:idea) { create(:idea, :accepted, component: component, users: [user]) }
+    let!(:idea) { create(:idea, :accepted, component:, users: [user]) }
 
     context "when limitation reached" do
       let(:idea_limit) { 1 }
@@ -66,7 +66,7 @@ describe Decidim::Ideas::CreateIdea do
 
       context "when the idea was withdrawn" do
         let(:idea_limit) { 2 }
-        let!(:idea) { create(:idea, :withdrawn, component: component, users: [user]) }
+        let!(:idea) { create(:idea, :withdrawn, component:, users: [user]) }
 
         it "broadcasts ok" do
           expect { subject }.to broadcast(:ok)
@@ -85,8 +85,8 @@ describe Decidim::Ideas::CreateIdea do
 
   context "with user group" do
     let(:idea_limit) { 1 }
-    let!(:user) { create(:user_group, organization: organization) }
-    let!(:idea) { create(:idea, :accepted, component: component, users: [user]) }
+    let!(:user) { create(:user_group, organization:) }
+    let!(:idea) { create(:idea, :accepted, component:, users: [user]) }
 
     it "broadcasts invalid" do
       expect { subject }.to broadcast(:invalid)

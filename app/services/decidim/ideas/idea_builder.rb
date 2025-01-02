@@ -76,15 +76,15 @@ module Decidim
         idea = if author.nil?
                  create_with_authors(
                    attributes: origin_attributes,
-                   original_idea: original_idea,
-                   action_user: action_user
+                   original_idea:,
+                   action_user:
                  )
                else
                  create(
                    attributes: origin_attributes,
-                   author: author,
-                   user_group_author: user_group_author,
-                   action_user: action_user
+                   author:,
+                   user_group_author:,
+                   action_user:
                  )
                end
 

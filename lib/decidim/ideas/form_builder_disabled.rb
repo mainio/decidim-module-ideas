@@ -24,18 +24,18 @@ module Decidim
         super(attribute, tag_value, options)
       end
 
-      def button(value = nil, options = {}, &block)
+      def button(value = nil, options = {}, &)
         options[:disabled] = true
 
-        super(value, options, &block)
+        super(value, options, &)
       end
 
       private
 
-      def field(attribute, options, html_options = nil, &block)
+      def field(attribute, options, html_options = nil, &)
         options[:disabled] = true unless html_options.is_a?(Hash) && html_options[:disabled] == true
 
-        super(attribute, options, html_options, &block)
+        super(attribute, options, html_options, &)
       end
     end
   end

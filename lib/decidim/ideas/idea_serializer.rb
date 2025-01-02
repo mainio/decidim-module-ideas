@@ -50,7 +50,7 @@ module Decidim
           attachments: idea.attachments.count,
           followers: idea.followers.count,
           published_at: idea.published_at,
-          url: url,
+          url:,
           is_amend: idea.emendation?,
           original_idea: {
             title: idea&.amendable&.title,

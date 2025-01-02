@@ -118,7 +118,7 @@ module Decidim
       def badge_classes
         return super unless options[:full_badge]
 
-        state_classes.concat(["label", "idea-status"]).join(" ")
+        state_classes.push("label", "idea-status").join(" ")
       end
 
       def statuses

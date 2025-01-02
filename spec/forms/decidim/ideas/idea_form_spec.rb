@@ -7,7 +7,7 @@ module Decidim
     describe IdeaForm do
       let(:params) do
         super.merge(
-          user_group_id: user_group_id
+          user_group_id:
         )
       end
 

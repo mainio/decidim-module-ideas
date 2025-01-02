@@ -29,16 +29,16 @@ module Decidim
           {
             t("ideas.filters.type", scope: "decidim.ideas") => {
               link_to(t("ideas", scope: "decidim.ideas.application_helper.filter_type_values"), q: ransak_params_for_query(is_emendation_true: "0"),
-                                                                                                per_page: per_page) => nil,
+                                                                                                per_page:) => nil,
               link_to(t("amendments", scope: "decidim.ideas.application_helper.filter_type_values"), q: ransak_params_for_query(is_emendation_true: "1"),
-                                                                                                     per_page: per_page) => nil
+                                                                                                     per_page:) => nil
             },
             t("models.idea.fields.state", scope: "decidim.ideas") =>
               Decidim::Ideas::Idea::POSSIBLE_STATES.each_with_object({}) do |state, hash|
                 if state == "not_answered"
-                  hash[link_to((humanize_idea_state state), q: ransak_params_for_query(state_null: 1), per_page: per_page)] = nil
+                  hash[link_to((humanize_idea_state state), q: ransak_params_for_query(state_null: 1), per_page:)] = nil
                 else
-                  hash[link_to((humanize_idea_state state), q: ransak_params_for_query(state_eq: state), per_page: per_page)] = nil
+                  hash[link_to((humanize_idea_state state), q: ransak_params_for_query(state_eq: state), per_page:)] = nil
                 end
               end,
             t("models.idea.fields.category", scope: "decidim.ideas") => admin_filter_categories_tree(categories.first_class),
@@ -68,7 +68,7 @@ module Decidim
                      else
                        t("ideas", scope: "decidim.ideas.application_helper.filter_type_values")
                      end
-              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:is_emendation_true), per_page: per_page), t("decidim.admin.actions.cancel"),
+              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:is_emendation_true), per_page:), t("decidim.admin.actions.cancel"),
                                   class: "action-icon--remove")
               tag.html_safe
             end
@@ -77,7 +77,7 @@ module Decidim
             html << content_tag(:span, class: "label secondary") do
               tag = "#{t("models.idea.fields.state", scope: "decidim.ideas")}: "
               tag += humanize_idea_state "not_answered"
-              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:state_null), per_page: per_page), t("decidim.admin.actions.cancel"),
+              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:state_null), per_page:), t("decidim.admin.actions.cancel"),
                                   class: "action-icon--remove")
               tag.html_safe
             end
@@ -86,7 +86,7 @@ module Decidim
             html << content_tag(:span, class: "label secondary") do
               tag = "#{t("models.idea.fields.state", scope: "decidim.ideas")}: "
               tag += humanize_idea_state params[:q][:state_eq]
-              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:state_eq), per_page: per_page), t("decidim.admin.actions.cancel"),
+              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:state_eq), per_page:), t("decidim.admin.actions.cancel"),
                                   class: "action-icon--remove")
               tag.html_safe
             end
@@ -95,7 +95,7 @@ module Decidim
             html << content_tag(:span, class: "label secondary") do
               tag = "#{t("models.idea.fields.category", scope: "decidim.ideas")}: "
               tag += translated_attribute categories.find(params[:q][:category_id_eq]).name
-              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:category_id_eq), per_page: per_page), t("decidim.admin.actions.cancel"),
+              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:category_id_eq), per_page:), t("decidim.admin.actions.cancel"),
                                   class: "action-icon--remove")
               tag.html_safe
             end
@@ -104,7 +104,7 @@ module Decidim
             html << content_tag(:span, class: "label secondary") do
               tag = "#{t("models.idea.fields.scope", scope: "decidim.ideas")}: "
               tag += translated_attribute Decidim::Scope.where(decidim_organization_id: current_component.organization.id).find(params[:q][:scope_id_eq]).name
-              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:scope_id_eq), per_page: per_page), t("decidim.admin.actions.cancel"),
+              tag += icon_link_to("circle-x", url_for(q: ransak_params_for_query_without(:scope_id_eq), per_page:), t("decidim.admin.actions.cancel"),
                                   class: "action-icon--remove")
               tag.html_safe
             end
@@ -113,7 +113,7 @@ module Decidim
         end
 
         def icon_with_link_to_idea(idea)
-          icon, tooltip = if allowed_to?(:create, :idea_answer, idea: idea) && !idea.emendation?
+          icon, tooltip = if allowed_to?(:create, :idea_answer, idea:) && !idea.emendation?
                             [
                               "question-answer-line",
                               t(:answer_idea, scope: "decidim.ideas.actions")

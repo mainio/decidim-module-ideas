@@ -7,13 +7,13 @@ describe Decidim::Ideas::Idea do
   subject { idea }
 
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:component) { build :idea_component, organization: organization }
-  let(:idea) { create(:idea, component: component) }
+  let(:component) { build(:idea_component, organization:) }
+  let(:idea) { create(:idea, component:) }
 
   describe "newsletter participants" do
     subject { described_class.newsletter_participant_ids(idea.component) }
 
-    let!(:component_out_of_newsletter) { create(:idea_component, organization: organization) }
+    let!(:component_out_of_newsletter) { create(:idea_component, organization:) }
     let!(:resource_out_of_newsletter) { create(:idea, component: component_out_of_newsletter) }
     let!(:resource_in_newsletter) { create(:idea, component: idea.component) }
     let(:author_ids) { idea.notifiable_identities.pluck(:id) + resource_in_newsletter.notifiable_identities.pluck(:id) }
@@ -58,22 +58,22 @@ describe Decidim::Ideas::Idea do
 
     context "when the idea is not official" do
       it "returns the followers and the author" do
-        expect(subject.users_to_notify_on_comment_created).to match_array(followers.concat([idea.creator.author]))
+        expect(subject.users_to_notify_on_comment_created).to match_array(followers.push(idea.creator.author))
       end
     end
 
     describe "#editable_by?" do
-      let(:author) { create(:user, :confirmed, organization: organization) }
+      let(:author) { create(:user, :confirmed, organization:) }
 
       context "when user is author" do
-        let(:idea) { create :idea, component: component, users: [author], updated_at: Time.current }
+        let(:idea) { create(:idea, component:, users: [author], updated_at: Time.current) }
 
         it { is_expected.to be_editable_by(author) }
 
         context "when the idea has been linked to another one" do
-          let(:idea) { create :idea, component: component, users: [author], updated_at: Time.current }
+          let(:idea) { create(:idea, component:, users: [author], updated_at: Time.current) }
           let(:original_idea) do
-            original_component = create(:idea_component, organization: organization, participatory_space: component.participatory_space)
+            original_component = create(:idea_component, organization:, participatory_space: component.participatory_space)
             create(:idea, component: original_component)
           end
 
@@ -86,26 +86,26 @@ describe Decidim::Ideas::Idea do
       end
 
       context "when idea is from user group and user is admin" do
-        let(:user_group) { create :user_group, :verified, users: [author], organization: author.organization }
-        let(:idea) { create :idea, component: component, updated_at: Time.current, users: [author], user_groups: [user_group] }
+        let(:user_group) { create(:user_group, :verified, users: [author], organization: author.organization) }
+        let(:idea) { create(:idea, component:, updated_at: Time.current, users: [author], user_groups: [user_group]) }
 
         it { is_expected.to be_editable_by(author) }
       end
 
       context "when user is not the author" do
-        let(:idea) { create :idea, component: component, updated_at: Time.current }
+        let(:idea) { create(:idea, component:, updated_at: Time.current) }
 
         it { is_expected.not_to be_editable_by(author) }
       end
 
       context "when idea is answered" do
-        let(:idea) { build :idea, :with_answer, component: component, updated_at: Time.current, users: [author] }
+        let(:idea) { build(:idea, :with_answer, component:, updated_at: Time.current, users: [author]) }
 
         it { is_expected.not_to be_editable_by(author) }
       end
 
       context "when idea editing time has run out" do
-        let(:idea) { build :idea, updated_at: 1.year.ago, component: component, users: [author] }
+        let(:idea) { build(:idea, updated_at: 1.year.ago, component:, users: [author]) }
 
         it { is_expected.not_to be_editable_by(author) }
       end
@@ -113,51 +113,51 @@ describe Decidim::Ideas::Idea do
 
     describe "#withdrawn?" do
       context "when idea is withdrawn" do
-        let(:idea) { build :idea, :withdrawn }
+        let(:idea) { build(:idea, :withdrawn) }
 
         it { is_expected.to be_withdrawn }
       end
 
       context "when idea is not withdrawn" do
-        let(:idea) { build :idea }
+        let(:idea) { build(:idea) }
 
         it { is_expected.not_to be_withdrawn }
       end
     end
 
     describe "#withdrawable_by" do
-      let(:author) { create(:user, :confirmed, organization: organization) }
+      let(:author) { create(:user, :confirmed, organization:) }
 
       context "when user is author" do
-        let(:idea) { create :idea, component: component, users: [author], created_at: Time.current }
+        let(:idea) { create(:idea, component:, users: [author], created_at: Time.current) }
 
         it { is_expected.to be_withdrawable_by(author) }
       end
 
       context "when user is admin" do
-        let(:admin) { build(:user, :admin, organization: organization) }
-        let(:idea) { build :idea, component: component, users: [author], created_at: Time.current }
+        let(:admin) { build(:user, :admin, organization:) }
+        let(:idea) { build(:idea, component:, users: [author], created_at: Time.current) }
 
         it { is_expected.not_to be_withdrawable_by(admin) }
       end
 
       context "when user is not the author" do
-        let(:someone_else) { build(:user, organization: organization) }
-        let(:idea) { build :idea, component: component, users: [author], created_at: Time.current }
+        let(:someone_else) { build(:user, organization:) }
+        let(:idea) { build(:idea, component:, users: [author], created_at: Time.current) }
 
         it { is_expected.not_to be_withdrawable_by(someone_else) }
       end
 
       context "when idea is already withdrawn" do
-        let(:idea) { build :idea, :withdrawn, component: component, users: [author], created_at: Time.current }
+        let(:idea) { build(:idea, :withdrawn, component:, users: [author], created_at: Time.current) }
 
         it { is_expected.not_to be_withdrawable_by(author) }
       end
 
       context "when the idea has been linked to another one" do
-        let(:idea) { create :idea, component: component, users: [author], created_at: Time.current }
+        let(:idea) { create(:idea, component:, users: [author], created_at: Time.current) }
         let(:original_idea) do
-          original_component = create(:idea_component, organization: organization, participatory_space: component.participatory_space)
+          original_component = create(:idea_component, organization:, participatory_space: component.participatory_space)
           create(:idea, component: original_component)
         end
 
@@ -170,7 +170,7 @@ describe Decidim::Ideas::Idea do
     end
 
     context "when answer is not published" do
-      let(:idea) { create(:idea, :accepted_not_published, component: component) }
+      let(:idea) { create(:idea, :accepted_not_published, component:) }
 
       it "has accepted as the internal state" do
         expect(idea.internal_state).to eq("accepted")

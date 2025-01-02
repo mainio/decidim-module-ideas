@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-describe Decidim::Ideas::InfoController, type: :controller do
+describe Decidim::Ideas::InfoController do
   routes { Decidim::Ideas::Engine.routes }
 
   let(:organization) { component.organization }
-  let(:component) { create(:idea_component, settings: settings) }
+  let(:component) { create(:idea_component, settings:) }
   let(:settings) { {} }
 
   before do
@@ -17,10 +17,10 @@ describe Decidim::Ideas::InfoController, type: :controller do
 
   describe "GET show" do
     shared_examples "section content as JSON" do
-      subject { JSON.parse(response.body) }
+      subject { response.parsed_body }
 
       it "returns the correct text" do
-        get :show, format: :json, params: { section: section }
+        get :show, format: :json, params: { section: }
         expect(response).to have_http_status(:ok)
         expect(response.headers["X-Robots-Tag"]).to eq("none")
         expect(subject).to eq(
@@ -59,7 +59,7 @@ describe Decidim::Ideas::InfoController, type: :controller do
 
       it "shows a 404" do
         expect do
-          get :show, format: :json, params: { section: section }
+          get :show, format: :json, params: { section: }
         end.to raise_error(ActionController::RoutingError)
       end
     end

@@ -83,7 +83,7 @@ module Decidim
 
       def idea_params
         params = {
-          component: component,
+          component:,
           title: Faker::Lorem.sentence(word_count: 2),
           body: Faker::Lorem.paragraphs(number: 2).join("\n"),
           category: component.participatory_space.categories.sample

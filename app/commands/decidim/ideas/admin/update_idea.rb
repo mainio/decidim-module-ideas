@@ -74,7 +74,7 @@ module Decidim
         end
 
         def user_group
-          @user_group ||= Decidim::UserGroup.find_by(organization: organization, id: form.user_group_id)
+          @user_group ||= Decidim::UserGroup.find_by(organization:, id: form.user_group_id)
         end
 
         def organization
@@ -82,7 +82,7 @@ module Decidim
         end
 
         def update_idea_author
-          idea.add_coauthor(@current_user, user_group: user_group)
+          idea.add_coauthor(@current_user, user_group:)
           idea.save!
           idea
         end

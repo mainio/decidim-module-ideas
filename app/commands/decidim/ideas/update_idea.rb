@@ -71,7 +71,7 @@ module Decidim
         PaperTrail.request(enabled: false) do
           @idea.update(attributes)
           @idea.coauthorships.clear
-          @idea.add_coauthor(current_user, user_group: user_group)
+          @idea.add_coauthor(current_user, user_group:)
         end
       end
 
@@ -83,7 +83,7 @@ module Decidim
           visibility: "public-only"
         )
         @idea.coauthorships.clear
-        @idea.add_coauthor(current_user, user_group: user_group)
+        @idea.add_coauthor(current_user, user_group:)
       end
 
       def attributes
@@ -111,7 +111,7 @@ module Decidim
       end
 
       def user_group
-        @user_group ||= Decidim::UserGroup.find_by(organization: organization, id: form.user_group_id)
+        @user_group ||= Decidim::UserGroup.find_by(organization:, id: form.user_group_id)
       end
 
       def organization

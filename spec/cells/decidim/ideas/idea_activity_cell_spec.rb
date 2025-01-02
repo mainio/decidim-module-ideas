@@ -13,7 +13,7 @@ describe Decidim::Ideas::IdeaActivityCell, type: :cell do
   let(:action_log) do
     create(
       :action_log,
-      action: action,
+      action:,
       resource: idea,
       organization: idea.organization,
       component: idea.component,

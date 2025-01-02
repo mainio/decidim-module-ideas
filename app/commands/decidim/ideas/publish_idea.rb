@@ -61,13 +61,13 @@ module Decidim
           visibility: "public-only"
         ) do
           @idea.update(
-            title: title,
-            body: body,
-            address: address,
-            latitude: latitude,
-            longitude: longitude,
-            area_scope_id: area_scope_id,
-            category: category,
+            title:,
+            body:,
+            address:,
+            latitude:,
+            longitude:,
+            area_scope_id:,
+            category:,
             published_at: Time.current
           )
         end

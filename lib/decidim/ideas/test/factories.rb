@@ -7,7 +7,7 @@ FactoryBot.define do
   factory :idea_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :ideas).i18n_name }
     manifest_name { :ideas }
-    participatory_space { create(:participatory_process, :with_steps, organization: organization) }
+    participatory_space { create(:participatory_process, :with_steps, organization:) }
 
     trait :with_idea_limit do
       transient do
@@ -16,7 +16,7 @@ FactoryBot.define do
 
       settings do
         {
-          idea_limit: idea_limit
+          idea_limit:
         }
       end
     end
@@ -28,7 +28,7 @@ FactoryBot.define do
 
       settings do
         {
-          idea_length: idea_length
+          idea_length:
         }
       end
     end
@@ -64,7 +64,7 @@ FactoryBot.define do
 
       settings do
         {
-          threshold_per_idea: threshold_per_idea
+          threshold_per_idea:
         }
       end
     end
@@ -110,8 +110,8 @@ FactoryBot.define do
       step_settings do
         {
           participatory_space.active_step.id => {
-            automatic_hashtags: automatic_hashtags,
-            suggested_hashtags: suggested_hashtags,
+            automatic_hashtags:,
+            suggested_hashtags:,
             creation_enabled: true
           }
         }
@@ -132,7 +132,7 @@ FactoryBot.define do
   factory :area_scope_parent, class: "Decidim::Scope" do
     name { Decidim::Faker::Localized.literal(generate(:scope_name)) }
     code { generate(:scope_code) }
-    scope_type { create(:scope_type, organization: organization) }
+    scope_type { create(:scope_type, organization:) }
     organization { parent ? parent.organization : build(:organization) }
 
     after :create do |area_scope|
@@ -168,7 +168,7 @@ FactoryBot.define do
         users = evaluator.users || [create(:user, :confirmed, organization: idea.component.participatory_space.organization)]
         users.each_with_index do |user, idx|
           user_group = evaluator.user_groups[idx]
-          idea.coauthorships.build(author: user, user_group: user_group)
+          idea.coauthorships.build(author: user, user_group:)
         end
 
         idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank? && idea.category != false

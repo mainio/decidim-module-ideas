@@ -22,7 +22,7 @@ module Decidim
         end
 
         def body
-          { idea_ids: idea_ids }
+          { idea_ids: }
         end
 
         def body=(data)

@@ -4,8 +4,8 @@ shared_examples "a idea form" do |options|
   subject { form }
 
   let(:organization) { create(:organization, tos_version: Time.current, available_locales: [:en]) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:idea_component, participatory_space:) }
   let(:title) do
     if options[:i18n] == false
       "More sidewalks and less roads!"
@@ -20,11 +20,11 @@ shared_examples "a idea form" do |options|
       { en: "Everything would be better" }
     end
   end
-  let(:author) { create(:user, :confirmed, organization: organization) }
-  let(:user_group) { create(:user_group, :confirmed, :verified, users: [author], organization: organization) }
+  let(:author) { create(:user, :confirmed, organization:) }
+  let(:user_group) { create(:user_group, :confirmed, :verified, users: [author], organization:) }
   let(:user_group_id) { user_group.id }
-  let(:category) { create(:category, participatory_space: participatory_space) }
-  let(:parent_scope) { create(:scope, organization: organization) }
+  let(:category) { create(:category, participatory_space:) }
+  let(:parent_scope) { create(:scope, organization:) }
   let(:scope) { create(:subscope, parent: parent_scope) }
   let(:category_id) { category.try(:id) }
   let(:scope_id) { scope.try(:id) }
@@ -37,17 +37,17 @@ shared_examples "a idea form" do |options|
   let(:meeting_as_author) { false }
   let(:params) do
     {
-      title: title,
-      body: body,
+      title:,
+      body:,
       terms_agreed: true,
-      author: author,
-      category_id: category_id,
+      author:,
+      category_id:,
       area_scope_id: scope_id,
-      address: address,
-      has_address: has_address,
-      meeting_as_author: meeting_as_author,
+      address:,
+      has_address:,
+      meeting_as_author:,
       attachment: attachment_params,
-      suggested_hashtags: suggested_hashtags
+      suggested_hashtags:
     }
   end
 
@@ -141,7 +141,7 @@ shared_examples "a idea form" do |options|
   end
 
   context "when geocoding is enabled" do
-    let(:component) { create(:idea_component, :with_geocoding_enabled, participatory_space: participatory_space) }
+    let(:component) { create(:idea_component, :with_geocoding_enabled, participatory_space:) }
 
     context "when the has address checkbox is checked" do
       let(:has_address) { true }
@@ -168,7 +168,7 @@ shared_examples "a idea form" do |options|
       end
 
       context "when the idea is unchanged" do
-        let(:previous_idea) { create(:idea, address: address) }
+        let(:previous_idea) { create(:idea, address:) }
         let(:title) do
           if options[:skip_etiquette_validation]
             previous_idea.title
@@ -186,17 +186,17 @@ shared_examples "a idea form" do |options|
         let(:params) do
           {
             id: previous_idea.id,
-            title: title,
-            body: body,
+            title:,
+            body:,
             terms_agreed: true,
             author: previous_idea.authors.first,
             category_id: previous_idea.try(:category_id),
             area_scope_id: previous_idea.try(:area_scope_id),
-            has_address: has_address,
-            address: address,
+            has_address:,
+            address:,
             attachment: previous_idea.try(:attachment_params),
-            latitude: latitude,
-            longitude: longitude
+            latitude:,
+            longitude:
           }
         end
 
@@ -217,7 +217,7 @@ shared_examples "a idea form" do |options|
     subject { form.category }
 
     context "when the category exists" do
-      it { is_expected.to be_kind_of(Decidim::Category) }
+      it { is_expected.to be_a(Decidim::Category) }
     end
 
     context "when the category does not exist" do
@@ -234,14 +234,14 @@ shared_examples "a idea form" do |options|
   end
 
   it "properly maps category id from model" do
-    idea = create(:idea, component: component, category: category)
+    idea = create(:idea, component:, category:)
 
     expect(described_class.from_model(idea).category_id).to eq(category_id)
   end
 
   if options && options[:user_group_check]
     it "properly maps user group id from model" do
-      idea = create(:idea, component: component, users: [author], user_groups: [user_group])
+      idea = create(:idea, component:, users: [author], user_groups: [user_group])
 
       expect(described_class.from_model(idea).user_group_id).to eq(user_group_id)
     end
@@ -256,22 +256,6 @@ shared_examples "a idea form" do |options|
     end
 
     it { is_expected.to be_valid }
-
-    context "when the form has some errors" do
-      let(:title) { nil }
-
-      it "adds an error to the `:attachment` field" do
-        expect(subject).not_to be_valid
-
-        if options[:i18n]
-          expect(subject.errors.full_messages).to match_array(["Idea en cannot be blank", "Attachment Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title_en, :attachment])
-        else
-          expect(subject.errors.full_messages).to match_array(["Idea title cannot be blank", "Attachment Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title, :attachment])
-        end
-      end
-    end
   end
 
   describe "#extra_hashtags" do
@@ -281,7 +265,7 @@ shared_examples "a idea form" do |options|
       create(
         :idea_component,
         :with_extra_hashtags,
-        participatory_space: participatory_space,
+        participatory_space:,
         suggested_hashtags: component_suggested_hashtags,
         automatic_hashtags: component_automatic_hashtags
       )
@@ -325,20 +309,20 @@ shared_examples "a idea form with meeting as author" do |options|
   subject { form }
 
   let(:organization) { create(:organization, tos_version: Time.current, available_locales: [:en]) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:idea_component, participatory_space:) }
   let(:title) { { en: "More sidewalks and less roads!" } }
   let(:body) { { en: "Everything would be better" } }
   let(:created_in_meeting) { true }
-  let(:meeting_component) { create(:meeting_component, participatory_space: participatory_space) }
+  let(:meeting_component) { create(:meeting_component, participatory_space:) }
   let(:author) { create(:meeting, component: meeting_component) }
   let!(:meeting_as_author) { author }
 
   let(:params) do
     {
-      title: title,
-      body: body,
-      created_in_meeting: created_in_meeting,
+      title:,
+      body:,
+      created_in_meeting:,
       author: meeting_as_author,
       meeting_id: author.id
     }

@@ -29,7 +29,7 @@ module Decidim
           partial: "decidim/ideas/admin/shared/area_scope_coordinates",
           locals: {
             input_name_prefix: "component[settings][#{setting_name}]",
-            value: value,
+            value:,
             parent: scope_parent
           }
         )

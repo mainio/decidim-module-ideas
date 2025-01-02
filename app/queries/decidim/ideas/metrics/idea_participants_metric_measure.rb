@@ -37,10 +37,10 @@ module Decidim
                                              ]
                                            }
                                          )
-                                         .where("decidim_ideas_ideas.published_at <= ?", end_time)
+                                         .where(decidim_ideas_ideas: { published_at: ..end_time })
                                          .except_withdrawn
 
-          return @ideas.where("decidim_ideas_ideas.published_at >= ?", start_time) if from_start
+          return @ideas.where(decidim_ideas_ideas: { published_at: start_time.. }) if from_start
 
           @ideas
         end

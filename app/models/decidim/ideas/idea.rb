@@ -137,7 +137,7 @@ module Decidim
       end
 
       def self.retrieve_ideas_for(component)
-        Decidim::Ideas::Idea.where(component: component)
+        Decidim::Ideas::Idea.where(component:)
                             .joins(:coauthorships)
                             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
                             .not_hidden

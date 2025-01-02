@@ -7,15 +7,15 @@ module Decidim
     describe IdeaSerializer do
       subject { described_class.new(idea) }
 
-      let(:idea) { create(:idea, component: component) }
+      let(:idea) { create(:idea, component:) }
       let!(:category) { create(:category, participatory_space: component.participatory_space) }
       let!(:area_scope) { create(:scope, organization: component.participatory_space.organization) }
       let(:participatory_process) { component.participatory_space }
       let(:component) { create(:idea_component) }
 
       before do
-        idea.update(category: category)
-        idea.update(area_scope: area_scope)
+        idea.update(category:)
+        idea.update(area_scope:)
       end
 
       describe "#serialize" do
@@ -105,7 +105,7 @@ module Decidim
         end
 
         context "when the idea has coordinates" do
-          let(:idea) { create(:idea, :geocoded, component: component) }
+          let(:idea) { create(:idea, :geocoded, component:) }
 
           it "serializes the coordinates" do
             expect(serialized[:coordinates]).to include(

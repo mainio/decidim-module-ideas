@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim
   module Ideas
-    describe IdeasController, type: :controller do
+    describe IdeasController do
       routes { Decidim::Ideas::Engine.routes }
 
       let(:user) { create(:user, :confirmed, organization: component.organization) }
@@ -27,8 +27,8 @@ module Decidim
           let(:component) { create(:idea_component, :with_geocoding_enabled) }
 
           it "sets two different collections" do
-            _geocoded_ideas = create_list :idea, 10, component: component, latitude: 1.1, longitude: 2.2
-            _non_geocoded_ideas = create_list :idea, 2, component: component, latitude: nil, longitude: nil
+            _geocoded_ideas = create_list(:idea, 10, component:, latitude: 1.1, longitude: 2.2)
+            _non_geocoded_ideas = create_list(:idea, 2, component:, latitude: nil, longitude: nil)
 
             get :index
             expect(response).to have_http_status(:ok)
@@ -46,17 +46,17 @@ module Decidim
 
         context "when NO draft ideas exist" do
           it "renders the empty form" do
-            get :new, params: params
+            get(:new, params:)
             expect(response).to have_http_status(:ok)
             expect(subject).to render_template(:new)
           end
         end
 
         context "when draft ideas exist from other users" do
-          let!(:others_draft) { create(:idea, :draft, component: component) }
+          let!(:others_draft) { create(:idea, :draft, component:) }
 
           it "renders the empty form" do
-            get :new, params: params
+            get(:new, params:)
             expect(response).to have_http_status(:ok)
             expect(subject).to render_template(:new)
           end
@@ -70,7 +70,7 @@ module Decidim
           let(:component) { create(:idea_component) }
 
           it "raises an error" do
-            post :create, params: params
+            post(:create, params:)
 
             expect(flash[:alert]).not_to be_empty
           end
@@ -88,7 +88,7 @@ module Decidim
           end
 
           it "creates a idea" do
-            post :create, params: params
+            post(:create, params:)
 
             expect(response).to have_http_status(:found)
           end
@@ -97,7 +97,7 @@ module Decidim
 
       describe "PATCH update" do
         let(:component) { create(:idea_component, :with_creation_enabled, :with_attachments_allowed) }
-        let(:idea) { create(:idea, component: component, users: [user]) }
+        let(:idea) { create(:idea, component:, users: [user]) }
         let(:idea_params) do
           {
             title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -115,7 +115,7 @@ module Decidim
         before { sign_in user }
 
         it "updates the idea" do
-          patch :update, params: params
+          patch(:update, params:)
 
           expect(response).to have_http_status(:found)
         end
@@ -127,7 +127,7 @@ module Decidim
         before { sign_in user }
 
         context "when an authorized user is withdrawing a idea" do
-          let(:idea) { create(:idea, component: component, users: [user]) }
+          let(:idea) { create(:idea, component:, users: [user]) }
 
           it "withdraws the idea" do
             put :withdraw, params: params.merge(id: idea.id)
@@ -141,7 +141,7 @@ module Decidim
 
         describe "when current user is NOT the author of the idea" do
           let(:current_user) { create(:user, :confirmed, organization: component.organization) }
-          let(:idea) { create(:idea, component: component, users: [current_user]) }
+          let(:idea) { create(:idea, component:, users: [current_user]) }
 
           context "and the idea has no supports" do
             it "is not able to withdraw the idea" do
@@ -160,9 +160,9 @@ module Decidim
 
       describe "GET show" do
         let!(:component) { create(:idea_component, :with_amendments_enabled) }
-        let!(:amendable) { create(:idea, component: component) }
-        let!(:emendation) { create(:idea, component: component) }
-        let!(:amendment) { create(:amendment, amendable: amendable, emendation: emendation) }
+        let!(:amendable) { create(:idea, component:) }
+        let!(:emendation) { create(:idea, component:) }
+        let!(:amendment) { create(:amendment, amendable:, emendation:) }
         let(:active_step_id) { component.participatory_space.active_step.id }
 
         context "when the idea is an amendable" do

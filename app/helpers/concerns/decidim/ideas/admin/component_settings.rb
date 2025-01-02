@@ -35,7 +35,7 @@ module Decidim
                   partial: "decidim/ideas/admin/shared/area_scope_coordinates",
                   locals: {
                     input_name_prefix: "#{form.object_name}[#{name}]",
-                    value: value,
+                    value:,
                     parent: area_scopes_parent(@component)
                   }
                 )

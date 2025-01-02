@@ -3,7 +3,7 @@
 module Decidim
   module Ideas
     # A custom version record for the paper trail versions
-    class IdeaVersion < ::ActiveRecord::Base
+    class IdeaVersion < ApplicationRecord
       include PaperTrail::VersionConcern
 
       def related_changes

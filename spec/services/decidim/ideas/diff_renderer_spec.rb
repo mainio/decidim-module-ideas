@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::Ideas::DiffRenderer, versioning: true do
-  let!(:idea) { create(:idea, area_scope_parent: area_scope_parent, component: component) }
+  let!(:idea) { create(:idea, area_scope_parent:, component:) }
   let!(:old_values) { idea.attributes }
   let!(:old_category) { idea.category }
   let!(:old_area_scope) { idea.area_scope }
@@ -22,8 +22,8 @@ describe Decidim::Ideas::DiffRenderer, versioning: true do
       address: "Veneentekijäntie 4",
       latitude: 1.234,
       longitude: 2.345,
-      category: category,
-      area_scope: area_scope
+      category:,
+      area_scope:
     )
   end
 

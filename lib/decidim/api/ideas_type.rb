@@ -15,7 +15,7 @@ module Decidim
       end
 
       def idea(id:)
-        IdeasTypeHelper.base_scope(object).find_by(id: id)
+        IdeasTypeHelper.base_scope(object).find_by(id:)
       end
     end
 
@@ -24,7 +24,7 @@ module Decidim
 
       def self.base_scope(component)
         Idea
-          .where(component: component)
+          .where(component:)
           .published
           .not_hidden
           .only_amendables

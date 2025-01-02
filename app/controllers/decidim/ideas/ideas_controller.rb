@@ -35,6 +35,10 @@ module Decidim
         end
       end
 
+      def complete; end
+
+      def compare; end
+
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
 
@@ -58,6 +62,10 @@ module Decidim
           @idea ||= Idea.new(component: current_component)
           @form = form_idea_model
         end
+      end
+
+      def edit
+        enforce_permission_to :edit, :idea, idea: @idea
       end
 
       def create
@@ -145,10 +153,6 @@ module Decidim
             render :edit_draft
           end
         end
-      end
-
-      def edit
-        enforce_permission_to :edit, :idea, idea: @idea
       end
 
       def update

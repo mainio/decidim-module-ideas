@@ -2,41 +2,41 @@
 
 require "spec_helper"
 
-describe "User filters ideas", type: :system do
+describe "UserFiltersIdeas" do
   include_context "with a component"
 
-  let(:organization) { create :organization, *organization_traits, available_locales: [:en] }
-  let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
+  let(:organization) { create(:organization, *organization_traits, available_locales: [:en]) }
+  let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let(:manifest_name) { "ideas" }
   let(:manifest) { Decidim.find_component_manifest(manifest_name) }
-  let!(:user) { create :user, :confirmed, organization: organization }
+  let!(:user) { create(:user, :confirmed, organization:) }
   let!(:component) do
     create(:idea_component,
            :with_creation_enabled,
            :with_card_image_allowed,
            :with_attachments_allowed,
            :with_geocoding_enabled,
-           manifest: manifest,
+           manifest:,
            participatory_space: participatory_process)
   end
   let(:organization_traits) { [] }
-  let(:area_scope_parent) { create(:area_scope_parent, organization: organization) }
-  let!(:category) { create :category, participatory_space: participatory_process }
+  let(:area_scope_parent) { create(:area_scope_parent, organization:) }
+  let!(:category) { create(:category, participatory_space: participatory_process) }
 
-  let(:idea_title) { ::Faker::Lorem.paragraph }
-  let(:idea_body) { ::Faker::Lorem.paragraph }
+  let(:idea_title) { Faker::Lorem.paragraph }
+  let(:idea_body) { Faker::Lorem.paragraph }
 
   let(:title) { "First idea's title is here" }
-  let(:title2) { "Foo bar some text here is" }
-  let(:title3) { "Force is strong with this one" }
+  let(:second_title) { "Foo bar some text here is" }
+  let(:third_title) { "Force is strong with this one" }
 
   shared_examples "has clear filters button" do
     it "clears filters" do
-      click_button "Clear filters"
+      click_on "Clear filters"
       perform_search
       expect(page).to have_content(idea.title)
-      expect(page).to have_content(idea2.title)
-      expect(page).to have_content(idea3.title)
+      expect(page).to have_content(second_idea.title)
+      expect(page).to have_content(third_idea.title)
     end
   end
 
@@ -51,9 +51,9 @@ describe "User filters ideas", type: :system do
   end
 
   describe "search" do
-    let!(:idea) { create(:idea, component: component, title: title) }
-    let!(:idea2) { create(:idea, component: component, title: title2) }
-    let!(:idea3) { create(:idea, :rejected, component: component, title: title3) }
+    let!(:idea) { create(:idea, component:, title:) }
+    let!(:second_idea) { create(:idea, component:, title: second_title) }
+    let!(:third_idea) { create(:idea, :rejected, component:, title: third_title) }
 
     before do
       visit current_path
@@ -65,17 +65,17 @@ describe "User filters ideas", type: :system do
 
     it "can search" do
       expect(page).to have_content(title)
-      expect(page).not_to have_content(title2)
-      expect(page).not_to have_content(title3)
+      expect(page).to have_no_content(second_title)
+      expect(page).to have_no_content(third_title)
     end
 
     it_behaves_like "has clear filters button"
   end
 
   describe "evaluation" do
-    let!(:idea) { create(:idea, :evaluating, component: component, title: title) }
-    let!(:idea2) { create(:idea, :accepted, component: component, title: title2) }
-    let!(:idea3) { create(:idea, :rejected, component: component, title: title3) }
+    let!(:idea) { create(:idea, :evaluating, component:, title:) }
+    let!(:second_idea) { create(:idea, :accepted, component:, title: second_title) }
+    let!(:third_idea) { create(:idea, :rejected, component:, title: third_title) }
 
     before do
       visit current_path
@@ -90,26 +90,26 @@ describe "User filters ideas", type: :system do
       it_behaves_like "has clear filters button"
 
       it "shows accepted to next step" do
-        expect(page).to have_content(title2)
-        expect(page).not_to have_content(title)
-        expect(page).not_to have_content(title3)
+        expect(page).to have_content(second_title)
+        expect(page).to have_no_content(title)
+        expect(page).to have_no_content(third_title)
       end
     end
 
     it "shows not accepted to the next step" do
       select "Not accepted to the next step", from: "filter[with_any_state]"
       perform_search
-      expect(page).to have_content(title3)
-      expect(page).not_to have_content(title)
-      expect(page).not_to have_content(title2)
+      expect(page).to have_content(third_title)
+      expect(page).to have_no_content(title)
+      expect(page).to have_no_content(second_title)
     end
 
     it "shows not answered" do
       select "Not answered", from: "filter[with_any_state]"
       perform_search
       expect(page).to have_content(title)
-      expect(page).not_to have_content(title2)
-      expect(page).not_to have_content(title3)
+      expect(page).to have_no_content(second_title)
+      expect(page).to have_no_content(third_title)
     end
 
     context "when answers are disabled" do
@@ -123,22 +123,22 @@ describe "User filters ideas", type: :system do
       end
 
       it "doesnt show evaluation filters" do
-        expect(page).not_to have_content("EVALUATION")
+        expect(page).to have_no_content("EVALUATION")
       end
     end
   end
 
   describe "area" do
-    let!(:idea) { create(:idea, component: component, title: title) }
-    let!(:idea2) { create(:idea, component: component, title: title2) }
-    let!(:idea3) { create(:idea, component: component, title: title3) }
+    let!(:idea) { create(:idea, component:, title:) }
+    let!(:second_idea) { create(:idea, component:, title: second_title) }
+    let!(:third_idea) { create(:idea, component:, title: third_title) }
 
     before do
       component[:settings]["global"]["area_scope_parent_id"] = area_scope_parent.id
       component.save!
       Decidim::Ideas::Idea.update(idea.id, area_scope: area_scope_parent.children.first)
-      Decidim::Ideas::Idea.update(idea2.id, area_scope: area_scope_parent.children.second)
-      Decidim::Ideas::Idea.update(idea3.id, area_scope: area_scope_parent.children.third)
+      Decidim::Ideas::Idea.update(second_idea.id, area_scope: area_scope_parent.children.second)
+      Decidim::Ideas::Idea.update(third_idea.id, area_scope: area_scope_parent.children.third)
       visit current_path
     end
 
@@ -152,19 +152,19 @@ describe "User filters ideas", type: :system do
 
       it "shows ideas in the selected area" do
         expect(page).to have_content(idea.title)
-        expect(page).not_to have_content(idea2.title)
-        expect(page).not_to have_content(idea3.title)
+        expect(page).to have_no_content(second_idea.title)
+        expect(page).to have_no_content(third_idea.title)
       end
     end
   end
 
   describe "category" do
-    let!(:idea) { create(:idea, category: category, component: component, title: title) }
-    let!(:idea2) { create(:idea, category: category2, component: component, title: title2) }
-    let!(:idea3) { create(:idea, category: category3, component: component, title: title3) }
+    let!(:idea) { create(:idea, category:, component:, title:) }
+    let!(:second_idea) { create(:idea, category: second_category, component:, title: second_title) }
+    let!(:third_idea) { create(:idea, category: third_category, component:, title: third_title) }
     let(:category) { create(:category, participatory_space: component.participatory_space) }
-    let(:category2) { create(:category, participatory_space: component.participatory_space) }
-    let(:category3) { create(:category, participatory_space: component.participatory_space) }
+    let(:second_category) { create(:category, participatory_space: component.participatory_space) }
+    let(:third_category) { create(:category, participatory_space: component.participatory_space) }
 
     describe "category selected" do
       before do
@@ -177,27 +177,27 @@ describe "User filters ideas", type: :system do
 
       it "shows ideas in the selected theme" do
         expect(page).to have_content(idea.title)
-        expect(page).not_to have_content(idea2.title)
-        expect(page).not_to have_content(idea3.title)
+        expect(page).to have_no_content(second_idea.title)
+        expect(page).to have_no_content(third_idea.title)
       end
     end
   end
 
   describe "order" do
     context "when there are ideas with comments" do
-      let!(:idea) { create(:idea, component: component, title: title) }
-      let!(:idea2) { create(:idea, component: component, title: title2) }
-      let!(:idea3) { create(:idea, :rejected, component: component, title: title3) }
-      let!(:comment) { create(:comment, commentable: idea2) }
-      let!(:comment2) { create(:comment, commentable: idea2) }
-      let!(:comment3) { create(:comment, commentable: idea3) }
+      let!(:idea) { create(:idea, component:, title:) }
+      let!(:second_idea) { create(:idea, component:, title: second_title) }
+      let!(:third_idea) { create(:idea, :rejected, component:, title: third_title) }
+      let!(:comment) { create(:comment, commentable: second_idea) }
+      let!(:second_comment) { create(:comment, commentable: second_idea) }
+      let!(:third_comment) { create(:comment, commentable: third_idea) }
 
       before do
         visit current_path
         within ".order-by" do
-          expect(page).to have_selector("a[data-order='recent']", text: "Recent")
+          expect(page).to have_css("a[data-order='recent']", text: "Recent")
           page.find("a", text: "Recent").click
-          click_link(selected_option, match: :first)
+          click_on(selected_option, match: :first)
         end
         within ".order-by" do
           expect(page).to have_content(selected_option)
@@ -209,7 +209,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Recent" }
 
         it "shows newest first" do
-          expect(page).to have_content(/#{title3}.*#{title2}.*#{title}/m)
+          expect(page).to have_content(/#{third_title}.*#{second_title}.*#{title}/m)
         end
       end
 
@@ -217,7 +217,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Oldest" }
 
         it "shows oldest first" do
-          expect(page).to have_content(/#{title}.*#{title2}.*#{title3}/m)
+          expect(page).to have_content(/#{title}.*#{second_title}.*#{third_title}/m)
         end
       end
 
@@ -225,7 +225,7 @@ describe "User filters ideas", type: :system do
         let(:selected_option) { "Most commented" }
 
         it "shows most commented first" do
-          expect(page).to have_content(/#{title2}.*#{title3}.*#{title}/m)
+          expect(page).to have_content(/#{second_title}.*#{third_title}.*#{title}/m)
         end
       end
     end
@@ -233,7 +233,7 @@ describe "User filters ideas", type: :system do
 
   def perform_search
     within all(".filters__actions")[-1] do
-      find("button[type='submit']").click
+      find("*[type=submit]").click
     end
   end
 end

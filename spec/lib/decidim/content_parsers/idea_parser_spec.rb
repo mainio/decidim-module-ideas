@@ -6,7 +6,7 @@ module Decidim
   module ContentParsers
     describe IdeaParser do
       let(:organization) { create(:organization, tos_version: Time.current) }
-      let(:component) { create(:idea_component, organization: organization) }
+      let(:component) { create(:idea_component, organization:) }
       let(:context) { { current_organization: organization } }
       let!(:parser) { described_class.new(content, context) }
 
@@ -63,7 +63,7 @@ module Decidim
         end
 
         context "when content links to an organization different from current" do
-          let(:idea) { create(:idea, component: component) }
+          let(:idea) { create(:idea, component:) }
           let(:external_idea) { create(:idea, component: create(:idea_component, organization: create(:organization, tos_version: Time.current))) }
           let(:content) do
             url = idea_url(external_idea)
@@ -77,7 +77,7 @@ module Decidim
         end
 
         context "when content has one link" do
-          let(:idea) { create(:idea, component: component) }
+          let(:idea) { create(:idea, component:) }
           let(:content) do
             url = idea_url(idea)
             "This content references idea #{url}."
@@ -108,27 +108,27 @@ module Decidim
         end
 
         context "when content has many links" do
-          let(:idea1) { create(:idea, component: component) }
-          let(:idea2) { create(:idea, component: component) }
-          let(:idea3) { create(:idea, component: component) }
+          let(:first_idea) { create(:idea, component:) }
+          let(:second_idea) { create(:idea, component:) }
+          let(:third_idea) { create(:idea, component:) }
           let(:content) do
-            url1 = idea_url(idea1)
-            url2 = idea_url(idea2)
-            url3 = idea_url(idea3)
+            url1 = idea_url(first_idea)
+            url2 = idea_url(second_idea)
+            url3 = idea_url(third_idea)
             "This content references the following ideas: #{url1}, #{url2} and #{url3}. Great?I like them!"
           end
 
-          it { is_expected.to eq("This content references the following ideas: #{idea1.to_global_id}, #{idea2.to_global_id} and #{idea3.to_global_id}. Great?I like them!") }
+          it { is_expected.to eq("This content references the following ideas: #{first_idea.to_global_id}, #{second_idea.to_global_id} and #{third_idea.to_global_id}. Great?I like them!") }
 
           it "has metadata with all linked ideas" do
             subject
             expect(parser.metadata).to be_a(Decidim::ContentParsers::IdeaParser::Metadata)
-            expect(parser.metadata.linked_ideas).to eq([idea1.id, idea2.id, idea3.id])
+            expect(parser.metadata.linked_ideas).to eq([first_idea.id, second_idea.id, third_idea.id])
           end
         end
 
         context "when content has a link that is not in a ideas component" do
-          let(:idea) { create(:idea, component: component) }
+          let(:idea) { create(:idea, component:) }
           let(:content) do
             url = idea_url(idea).sub(%r{/ideas/}, "/something-else/")
             "This content references a non-idea with same ID as a idea #{url}."
@@ -161,7 +161,7 @@ module Decidim
         end
 
         context "when idea in content does not exist" do
-          let(:idea) { create(:idea, component: component) }
+          let(:idea) { create(:idea, component:) }
           let(:url) { idea_url(idea) }
           let(:content) do
             idea.destroy
@@ -178,7 +178,7 @@ module Decidim
         end
 
         context "when idea is linked via ID" do
-          let(:idea) { create(:idea, component: component) }
+          let(:idea) { create(:idea, component:) }
           let(:content) { "This content references idea ~#{idea.id}." }
 
           it { is_expected.to eq("This content references idea #{idea.to_global_id}.") }

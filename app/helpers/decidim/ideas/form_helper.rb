@@ -14,7 +14,7 @@ module Decidim
       # &block - The block to execute as content of the form.
       #
       # Returns a String.
-      def decidim_form_for(record, options = {}, &block)
+      def decidim_form_for(record, options = {}, &)
         options[:data] ||= {}
         options[:data].update(
           abide: true,
@@ -40,7 +40,7 @@ module Decidim
 
         output = ""
         output += base_error_messages(record).to_s
-        output += form_for(record, options, &block).to_s
+        output += form_for(record, options, &).to_s
 
         output.html_safe
       end

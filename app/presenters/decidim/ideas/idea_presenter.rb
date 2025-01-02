@@ -34,11 +34,11 @@ module Decidim
         text = decidim_html_escape(text) if html_escape
 
         renderer = Decidim::ContentRenderers::HashtagRenderer.new(text)
-        renderer.render(links: links, extras: extras).html_safe
+        renderer.render(links:, extras:).html_safe
       end
 
       def id_and_title(links: false, extras: true, html_escape: false)
-        "##{idea.id} - #{title(links: links, extras: extras, html_escape: html_escape)}"
+        "##{idea.id} - #{title(links:, extras:, html_escape:)}"
       end
 
       def body(links: false, extras: true, strip_tags: false)
@@ -50,7 +50,7 @@ module Decidim
         end
 
         renderer = Decidim::ContentRenderers::HashtagRenderer.new(text)
-        text = renderer.render(links: links, extras: extras).html_safe
+        text = renderer.render(links:, extras:).html_safe
 
         text = Decidim::ContentRenderers::LinkRenderer.new(text).render if links
         text

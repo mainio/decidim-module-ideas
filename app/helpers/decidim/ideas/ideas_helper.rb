@@ -90,7 +90,7 @@ module Decidim
         @map_utility_static.link(
           latitude: resource.latitude,
           longitude: resource.longitude,
-          options: options
+          options:
         )
       end
       # rubocop:enable Rails/HelperInstanceVariable
