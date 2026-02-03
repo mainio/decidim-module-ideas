@@ -12,8 +12,8 @@
 
         <% if idea.image && idea.image.main_url %>
           <%= image_tag idea.image.main_url, class:"resource__image", alt: strip_tags(translated_attribute(idea.image.title)) %>
-        <% elsif category_image_path(idea.category) %>
-          <%= image_tag category_image_path(idea.category), class:"resource__image", alt: strip_tags(present(idea).title(html_escape: true)) %>
+        <% elsif cat_img = category_image_path(idea.category) %>
+          <%= image_tag cat_img, class:"resource__image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% else %>
           <%= image_tag asset_pack_path("media/images/idea-default.jpg"), class:"resource__image", alt: strip_tags(present(idea).title(html_escape: true)) %>
         <% end %>
