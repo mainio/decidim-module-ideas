@@ -1,0 +1,37 @@
+<div class="attributes">
+  <h2 class="resource__aside__title"><%= t(".title") %></h2>
+
+  <div class="attributes__item">
+    <h3 class="attributes__item__name"><%= t(".attributes.id") %></h3>
+    <div class="attributes__item__value"><%= idea.id %></div>
+  </div>
+  <% if has_visible_area_scope?(idea) %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.area") %></h3>
+      <div class="attributes__item__value"><%= translated_attribute(idea.area_scope.name) %></div>
+    </div>
+  <% end %>
+  <% if idea.category.present? %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.category") %></h3>
+      <div class="attributes__item__value">
+        <% if idea.category.parent %>
+          <%= translated_attribute(idea.category.parent.name) %> -
+        <% end %>
+        <%= translated_attribute(idea.category.name) %>
+      </div>
+    </div>
+  <% end %>
+  <% if idea.published? %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.published_at") %></h3>
+      <div class="attributes__item__value"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
+    </div>
+  <% end %>
+  <% if component_settings.geocoding_enabled? && idea.address.present? %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.address") %></h3>
+      <div class="attributes__item__value"><%= idea.address %></div>
+    </div>
+  <% end %>
+</div>

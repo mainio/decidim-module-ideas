@@ -4,22 +4,24 @@
   </div>
 <% end %>
 
-<% if component_settings.geocoding_enabled? && idea.latitude.present? && idea.longitude.present? %>
+<% if component_settings.geocoding_enabled? && idea.address.present? && idea.latitude.present? && idea.longitude.present? %>
   <div class="actions-panel bg-secondary">
-    <%= link_to idea_map_link(idea), class: "action-link", target: "_blank", data: { external_link_spacer: "" } do %>
+    <a href="#idea_map" class="action-link">
       <span class="link-text"><%= t ".show_on_map" %></span>
       <%= icon "map-marker", role: "img", "aria-hidden": true %>
-    <% end %>
+    </a>
   </div>
 <% end %>
 
 <% if show_actions %>
-  <div class="actions-panel bg-secondary">
-    <%= link_to "#comments", class: "action-link" do %>
-      <span class="link-text"><%= t ".show_comments" %></span>
-      <%= icon "comment-square", role: "img", "aria-hidden": true %>
-    <% end %>
-  </div>
+  <% if idea.commentable? %>
+    <div class="actions-panel bg-secondary">
+      <%= link_to "#comments", class: "action-link" do %>
+        <span class="link-text"><%= t ".show_comments" %></span>
+        <%= icon "comment-square", role: "img", "aria-hidden": true %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="actions-panel bg-secondary">
     <button type="button" class="link action-link" data-open="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-controls="<%= current_user.present? ? "flagModal" : "loginModal" %>" aria-haspopup="dialog">

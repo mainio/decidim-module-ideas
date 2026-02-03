@@ -27,7 +27,7 @@ module Decidim
 
       def area_scopes_coordinates(component = current_component)
         area_scopes_default_coordinates(component).merge(
-          component.settings.area_scope_coordinates
+          component.settings.area_scope_coordinates.transform_keys(&:to_s)
         )
       end
 
