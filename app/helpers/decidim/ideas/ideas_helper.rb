@@ -63,9 +63,9 @@ module Decidim
 
       def category_image_path(category)
         return unless category
-        return unless category.respond_to?(:category_image_url)
+        return unless category.respond_to?(:category_image_url_for)
 
-        category.category_image_url(:default)
+        category.category_image_url_for(@idea, :default)
       end
 
       def idea_reason_callout_args
