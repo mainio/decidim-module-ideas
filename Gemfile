@@ -16,19 +16,27 @@ gem "decidim", DECIDIM_VERSION
 gem "decidim-ideas", path: "."
 
 gem "decidim-favorites", github: "mainio/decidim-module-favorites"
-gem "decidim-feedback", github: "mainio/decidim-module-feedback"
+gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "release/0.28-stable"
 
 gem "bootsnap", "~> 1.4"
+
+# This is a temporary fix for: https://github.com/rails/rails/issues/54263
+# Without this downgrade Activesupport will give error for missing Logger
+gem "concurrent-ruby", "1.3.4"
+
 gem "puma", ">= 5.6.2"
 
 gem "faker", "~> 3.2.2"
+
+# This locks nokogiri to a version < 1.17 so it doesn't cause issues
+gem "nokogiri", "1.16.8"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
   gem "decidim-plans", github: "mainio/decidim-module-plans"
-  gem "decidim-tags", github: "mainio/decidim-module-tags"
+  gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "release/0.28-stable"
 
   # rubocop & rubocop-rspec are set to the following versions because of a change where FactoryBot/CreateList
   # must be a boolean instead of contextual. These version locks can be removed when this problem is handled
@@ -36,6 +44,10 @@ group :development, :test do
   gem "rubocop", "~>1.28"
   gem "rubocop-faker"
   gem "rubocop-rspec", "2.20"
+
+  # Fix issue with simplecov-cobertura
+  # See: https://github.com/jessebs/simplecov-cobertura/pull/44
+  gem "rexml", "3.4.1"
 end
 
 group :development do
