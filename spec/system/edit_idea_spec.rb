@@ -104,13 +104,15 @@ describe "UserEditsIdea" do
       end
 
       it "remove image" do
+        attachment_count = second_idea.attachments.count
         click_on "Change image"
         within ".upload-modal" do
           click_on "Remove"
           click_on "Save"
         end
-        expect { click_on "Save" }.to change(second_idea.attachments, :count).by(-1)
+        click_on "Save"
         expect(page).to have_content("Idea successfully updated")
+        expect(second_idea.attachments.count).to eq(attachment_count - 1)
       end
     end
   end
@@ -137,13 +139,15 @@ describe "UserEditsIdea" do
       end
 
       it "removes attached pdf" do
+        attachment_count = third_idea.attachments.count
         click_on "Change attachment"
         within ".upload-modal" do
           click_on "Remove"
           click_on "Save"
         end
-        expect { click_on "Save" }.to change(third_idea.attachments, :count).by(-1)
+        click_on "Save"
         expect(page).to have_content("Idea successfully updated")
+        expect(third_idea.attachments.count).to eq(attachment_count - 1)
       end
     end
   end

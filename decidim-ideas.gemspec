@@ -29,8 +29,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "decidim-core", Decidim::Ideas.decidim_version
   spec.add_dependency "decidim-favorites", Decidim::Ideas.decidim_version
   spec.add_dependency "decidim-feedback", Decidim::Ideas.decidim_version
-
-  spec.add_dependency "decidim-dev", Decidim::Ideas.decidim_version
-  spec.add_dependency "decidim-plans", Decidim::Ideas.decidim_version
-  spec.add_dependency "decidim-tags", Decidim::Ideas.decidim_version
 end
