@@ -53,7 +53,7 @@ module Decidim
         Decidim::Api::MutationType.include(Decidim::Ideas::MutationExtensions)
       end
 
-      initializer "decidim_ideas.mentions_listener" do
+      config.to_prepare do
         Decidim::Comments::CommentCreation.subscribe do |data|
           ideas = data.dig(:metadatas, :idea).try(:linked_ideas)
           Decidim::Ideas::NotifyIdeasMentionedJob.perform_later(data[:comment_id], ideas) if ideas

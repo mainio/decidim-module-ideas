@@ -40,7 +40,7 @@ module Decidim
             end
 
             on(:invalid) do
-              flash.now[:alert] = I18n.t("ideas.create.invalid", scope: "decidim.ideas.admin")
+              flash[:alert] = I18n.t("ideas.create.invalid", scope: "decidim.ideas.admin")
               render action: "new"
             end
           end
@@ -51,22 +51,22 @@ module Decidim
 
           Admin::UpdateIdeaCategory.call(params[:category][:id], idea_ids) do
             on(:invalid_category) do
-              flash.now[:error] = I18n.t(
+              flash[:error] = I18n.t(
                 "ideas.update_category.select_a_category",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:invalid_idea_ids) do
-              flash.now[:alert] = I18n.t(
+              flash[:alert] = I18n.t(
                 "ideas.update_category.select_an_idea",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:update_ideas_category) do
-              flash.now[:notice] = update_ideas_bulk_response_successful(@response, :category)
-              flash.now[:alert] = update_ideas_bulk_response_errored(@response, :category)
+              flash[:notice] = update_ideas_bulk_response_successful(@response, :category)
+              flash[:alert] = update_ideas_bulk_response_errored(@response, :category)
             end
             respond_to do |format|
               format.js
@@ -79,14 +79,14 @@ module Decidim
 
           Decidim::Ideas::Admin::PublishAnswers.call(current_component, current_user, idea_ids) do
             on(:invalid) do
-              flash.now[:alert] = t(
+              flash[:alert] = t(
                 "ideas.publish_answers.select_an_idea",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:ok) do
-              flash.now[:notice] = I18n.t("ideas.publish_answers.success", scope: "decidim")
+              flash[:notice] = I18n.t("ideas.publish_answers.success", scope: "decidim")
             end
           end
 
@@ -100,22 +100,22 @@ module Decidim
 
           Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
             on(:invalid_scope) do
-              flash.now[:error] = t(
+              flash[:error] = t(
                 "ideas.update_scope.select_a_scope",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:invalid_idea_ids) do
-              flash.now[:alert] = t(
+              flash[:alert] = t(
                 "ideas.update_scope.select_an_idea",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:update_ideas_scope) do
-              flash.now[:notice] = update_ideas_bulk_response_successful(@response, :scope)
-              flash.now[:alert] = update_ideas_bulk_response_errored(@response, :scope)
+              flash[:notice] = update_ideas_bulk_response_successful(@response, :scope)
+              flash[:alert] = update_ideas_bulk_response_errored(@response, :scope)
             end
 
             respond_to do |format|
@@ -135,7 +135,7 @@ module Decidim
             end
 
             on(:invalid) do
-              flash.now[:alert] = t("ideas.update.error", scope: "decidim")
+              flash[:alert] = t("ideas.update.error", scope: "decidim")
               render :edit
             end
           end

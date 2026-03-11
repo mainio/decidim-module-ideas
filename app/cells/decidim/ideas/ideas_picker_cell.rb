@@ -98,11 +98,11 @@ module Decidim
 
       def ideas
         @ideas ||= Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
-                     &.only_amendables
-                     &.published
-                     &.not_hidden
-                     &.accepted
-                     &.order(id: :asc)
+                          &.only_amendables
+                          &.published
+                          &.not_hidden
+                          &.accepted
+                          &.order(id: :asc)
       end
 
       def ideas_collection_name

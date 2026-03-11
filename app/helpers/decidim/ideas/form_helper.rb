@@ -17,7 +17,7 @@ module Decidim
       def decidim_form_for(record, options = {}, &)
         options[:data] ||= {}
         options[:data].update(
-          abide: true,
+          :abide => true,
           "live-validate" => false,
           "validate-on-blur" => false,
           "validate-on" => "formSubmit"
@@ -34,7 +34,7 @@ module Decidim
         if record.is_a?(ActiveRecord::Base)
           object = record.is_a?(Array) ? record.last : record
           format = options[:format]
-          apply_form_for_options!(record, object, options) if object
+          apply_form_for_options!(record, options) if object
           options[:format] = format if format
         end
 
