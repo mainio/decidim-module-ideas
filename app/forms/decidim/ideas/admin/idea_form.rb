@@ -20,7 +20,7 @@ module Decidim
         attribute :category_id, Integer
         attribute :sub_category_id, Integer
         attribute :area_scope_id, Integer
-        attribute :suggested_hashtags, Array[String]
+        attribute :suggested_hashtags, [String]
 
         # The attachment attribute is needed for the form builder.
         attribute :attachment, Decidim::AttachmentForm
@@ -78,7 +78,7 @@ module Decidim
           orig_body = super
           return orig_body if orig_body.blank?
 
-          orig_body.gsub(/\r/, "")
+          orig_body.gsub("\r", "")
         end
 
         # Finds the Category from the category_id.

@@ -50,7 +50,7 @@ module Decidim
         end
 
         def admin_edition_is_available?
-          return unless idea
+          return false unless idea
 
           true
         end

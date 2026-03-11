@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
 
-  spec.required_ruby_version = ">= 3.1"
+  spec.required_ruby_version = ">= 3.2"
 
   spec.summary = "Provides a module for ideation phase to Decidim."
   spec.description = "This module provides an easier user experience to collect ideas in participatory processes."
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "decidim-favorites", Decidim::Ideas.decidim_version
   spec.add_dependency "decidim-feedback", Decidim::Ideas.decidim_version
 
-  spec.add_development_dependency "decidim-dev", Decidim::Ideas.decidim_version
-  spec.add_development_dependency "decidim-plans", Decidim::Ideas.decidim_version
-  spec.add_development_dependency "decidim-tags", Decidim::Ideas.decidim_version
+  spec.add_dependency "decidim-dev", Decidim::Ideas.decidim_version
+  spec.add_dependency "decidim-plans", Decidim::Ideas.decidim_version
+  spec.add_dependency "decidim-tags", Decidim::Ideas.decidim_version
 end

@@ -89,7 +89,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.create.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.create.error", scope: "decidim")
 
             render :new
           end
@@ -107,7 +107,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.publish.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.publish.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -133,7 +133,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.update_draft.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.update_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -149,7 +149,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.destroy_draft.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.destroy_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -166,7 +166,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.update.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.update.error", scope: "decidim")
             render :edit
           end
         end

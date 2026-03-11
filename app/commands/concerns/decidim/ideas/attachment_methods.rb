@@ -40,7 +40,7 @@ module Decidim
         return false unless attachment_present?
 
         form_attachment = @form.add_actual_attachments.first
-        return unless form_attachment
+        return false unless form_attachment
 
         form_attachment["file"].present?
       end
