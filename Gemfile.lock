@@ -41,11 +41,8 @@ PATH
   specs:
     decidim-ideas (0.29.0)
       decidim-core (~> 0.29.0)
-      decidim-dev (~> 0.29.0)
       decidim-favorites (~> 0.29.0)
       decidim-feedback (~> 0.29.0)
-      decidim-plans (~> 0.29.0)
-      decidim-tags (~> 0.29.0)
 
 GEM
   remote: https://rubygems.org/
@@ -755,7 +752,7 @@ GEM
       rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.49.0)
+    rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     rubocop-capybara (2.21.0)

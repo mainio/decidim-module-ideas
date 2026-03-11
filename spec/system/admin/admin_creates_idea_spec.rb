@@ -35,7 +35,6 @@ describe "AdminCreatesIdea" do
 
   describe "create idea" do
     it "creates an idea" do
-      take_screenshot
       click_on "New idea"
       fill_in :idea_title, with: idea_title
       fill_in :idea_body, with: idea_body
