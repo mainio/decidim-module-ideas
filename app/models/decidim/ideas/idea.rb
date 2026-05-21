@@ -473,6 +473,18 @@ module Decidim
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+      def self.ransackable_attributes(_auth_object = nil)
+      %w[id title body search_text state state_published state_published_at
+        answered_at published_at created_at updated_at area_scope_id
+        decidim_category_id decidim_component_id coauthorships_count
+        commentable_comments_count id_string is_emendation reference
+      ]
+    end
+
+    def self.ransackable_associations(_auth_object = nil)
+      %w[component category area_scope coauthorships attachments]
+    end
+
       private
 
       def copied_from_other_component?
