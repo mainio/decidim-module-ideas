@@ -51,6 +51,7 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :areas_info_text, type: :text, translated: true, editor: true
     settings.attribute :categories_info_intro, type: :string, translated: true
     settings.attribute :categories_info_text, type: :text, translated: true, editor: true
+    settings.attribute :taxonomy_filters, type: :taxonomy_filters
   end
 
   component.settings(:step) do |settings|
