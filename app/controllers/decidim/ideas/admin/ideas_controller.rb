@@ -46,34 +46,6 @@ module Decidim
           end
         end
 
-        def update_category
-          enforce_permission_to :update, :idea_category
-
-          Admin::UpdateIdeaCategory.call(params[:category][:id], idea_ids) do
-            on(:invalid_category) do
-              flash[:error] = I18n.t(
-                "ideas.update_category.select_a_category",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash[:alert] = I18n.t(
-                "ideas.update_category.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_category) do
-              flash[:notice] = update_ideas_bulk_response_successful(@response, :category)
-              flash[:alert] = update_ideas_bulk_response_errored(@response, :category)
-            end
-            respond_to do |format|
-              format.js
-            end
-          end
-        end
-
         def publish_answers
           enforce_permission_to :publish_answers, :ideas
 
@@ -92,35 +64,6 @@ module Decidim
 
           respond_to do |format|
             format.js
-          end
-        end
-
-        def update_area_scope
-          enforce_permission_to :update, :idea_scope
-
-          Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
-            on(:invalid_scope) do
-              flash[:error] = t(
-                "ideas.update_scope.select_a_scope",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash[:alert] = t(
-                "ideas.update_scope.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_scope) do
-              flash[:notice] = update_ideas_bulk_response_successful(@response, :scope)
-              flash[:alert] = update_ideas_bulk_response_errored(@response, :scope)
-            end
-
-            respond_to do |format|
-              format.js
-            end
           end
         end
 
