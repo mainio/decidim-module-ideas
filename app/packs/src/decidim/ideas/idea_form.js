@@ -229,29 +229,45 @@ import "src/decidim/ideas/info_modals";
     }
   };
 
-  const bindSubcategoryInputs = () => {
-    const $subcategories = $("#idea-subcategory");
-    const $sections = $(".subcategories", $subcategories);
-    $subcategories.html("");
-
-    const subcategorySelects = {};
-    $sections.each((_i, el) => {
-      const $sub = $(el);
-      $sub.removeClass("hide");
-      subcategorySelects[$sub.data("parent")] = $sub;
+  const hideAllSubTaxonomies = (select) => {
+    const $filterGroup = $(select).closest("[data-filter-group]");
+    $filterGroup.find("[data-parent-taxonomy]").each((_i, div) => {
+      $(div).addClass("hidden");
+      $(div).find("select").val("");
     });
+  };
 
-    $("#idea_category_id").on("change.decidim.ideas", (ev) => {
-      const $cat = $(ev.target);
-      const parentId = $cat.val();
+  const showSubTaxonomy = (select) => {
+    const selectedValue = $(select).val();
+    if (!selectedValue) return;
 
-      $subcategories.html("");
+    const $subDiv = $(`#sub_taxonomy_${selectedValue}`);
+    if ($subDiv.length) {
+      $subDiv.removeClass("hidden");
+    }
+  };
 
-      const $sub = subcategorySelects[parentId];
-      if ($sub) {
-        $subcategories.append($sub);
-      }
-    }).trigger("change.decidim.ideas");
+  const bindSubcategoryInputs = () => {
+    $("[data-taxonomy-filter]").each((_i, select) => {
+      // pre-populate parent if a child is selected in this filter group
+      const $filterGroup = $(select).closest("[data-filter-group]");
+      const $subDivs = $filterGroup.find("[data-parent-taxonomy]");
+      
+      $subDivs.each((_j, div) => {
+        const parentId = $(div).data("parent-taxonomy");
+        const childVal = $(div).find("select").val();
+        if (childVal) {
+          // set the parent select to the parent taxonomy id
+          $(select).val(parentId);
+          $(div).removeClass("hidden");
+        }
+      });
+
+      $(select).on("change.decidim.ideas", (ev) => {
+        hideAllSubTaxonomies(ev.target);
+        showSubTaxonomy(ev.target);
+      });
+    });
   };
 
   const bindAccidentalExitDisabling = () => {

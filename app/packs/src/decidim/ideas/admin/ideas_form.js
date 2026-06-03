@@ -1,38 +1,42 @@
 ((exports) => {
   const $ = exports.$; // eslint-disable-line
 
-  const bindSubcategoryInputs = () => {
-    const $geocodingToggle = $("#idea_perform_geocoding");
-    const $subcategories = $("#idea-subcategory");
-    const $sections = $(".subcategories", $subcategories);
-    $subcategories.html("");
+  const bindTaxonomySelectors = () => {
+    $("[data-taxonomy-filter]").each((_i, select) => {
+      // pre-populate parent if a child is already selected (edit mode)
+      const $filterGroup = $(select).closest("[data-filter-group]");
+      $filterGroup.find("[data-parent-taxonomy]").each((_j, div) => {
+        const parentId = $(div).data("parent-taxonomy");
+        const childVal = $(div).find("select").val();
+        if (childVal) {
+          $(select).val(parentId);
+          $(div).removeClass("hidden");
+        }
+      });
 
-    const subcategorySelects = {};
-    $sections.each((_i, el) => {
-      const $sub = $(el);
-      $sub.removeClass("hide");
-      subcategorySelects[$sub.data("parent")] = $sub;
+      $(select).on("change.decidim.ideas", (ev) => {
+        hideAllSubTaxonomies(ev.target);
+        showSubTaxonomy(ev.target);
+      });
     });
+  };
 
-    $("#idea_category_id").on("change.decidim.ideas", (ev) => {
-      const $cat = $(ev.target);
-      const parentId = $cat.val();
+  const hideAllSubTaxonomies = (select) => {
+    const $filterGroup = $(select).closest("[data-filter-group]");
+    $filterGroup.find("[data-parent-taxonomy]").each((_i, div) => {
+      $(div).addClass("hidden");
+      $(div).find("select").val("");
+    });
+  };
 
-      $subcategories.html("");
+  const showSubTaxonomy = (select) => {
+    const selectedValue = $(select).val();
+    if (!selectedValue) return;
 
-      const $sub = subcategorySelects[parentId];
-      if ($sub) {
-        $subcategories.append($sub);
-      }
-    }).trigger("change.decidim.ideas");
-
-    $geocodingToggle.on("change.decidim.ideas", () => {
-      if ($geocodingToggle.is(":checked")) {
-        $(".geocoding-field").addClass("hide");
-      } else {
-        $(".geocoding-field").removeClass("hide");
-      }
-    }).trigger("change.decidim.ideas");
+    const $subDiv = $(`#sub_taxonomy_${selectedValue}`);
+    if ($subDiv.length) {
+      $subDiv.removeClass("hidden");
+    }
   };
 
   const uploadModalCorrection = () => {
@@ -62,7 +66,7 @@
   };
 
   $(() => {
-    bindSubcategoryInputs();
+    bindTaxonomySelectors();
     uploadModalCorrection();
   });
 })(window);

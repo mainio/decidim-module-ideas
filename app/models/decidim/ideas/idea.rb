@@ -410,10 +410,6 @@ module Decidim
         IdeaSearch.new(self, params, options)
       end
 
-      def self.ransackable_scopes(_auth_object = nil)
-        [:with_availability, :with_any_state, :with_any_area_scope, :with_category]
-      end
-
       def self.export_serializer
         Decidim::Ideas::IdeaSerializer
       end
@@ -470,16 +466,20 @@ module Decidim
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+      def self.ransackable_scopes(_auth_object = nil)
+        [:with_any_state, :with_any_taxonomies]
+      end
+
       def self.ransackable_attributes(_auth_object = nil)
-      %w[id title body search_text state state_published state_published_at
-        answered_at published_at created_at updated_at area_scope_id
-        decidim_category_id decidim_component_id coauthorships_count
-        commentable_comments_count id_string is_emendation reference
-      ]
-    end
+        %w[id title body search_text state state_published state_published_at
+          answered_at published_at created_at updated_at
+           decidim_component_id coauthorships_count
+          commentable_comments_count id_string is_emendation reference
+        ]
+      end
 
     def self.ransackable_associations(_auth_object = nil)
-      %w[component category area_scope coauthorships attachments]
+      %w[component taxonomies coauthorships attachments]
     end
 
       private

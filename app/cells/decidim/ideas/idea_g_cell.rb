@@ -4,7 +4,7 @@ require "cell/partial"
 
 module Decidim
   module Ideas
-    # This cell renders a idea with its M-size card.
+    # This cell renders a idea with its G-size card.
     class IdeaGCell < Decidim::CardGCell
       include IdeaCellsHelper
 
@@ -73,30 +73,32 @@ module Decidim
         decidim_sanitize(present(model).body)
       end
 
-      def category
-        decidim_sanitize(translated_attribute(model.category.name)) if has_category?
+      def taxonomies
+        @taxonomies ||= model.taxonomies
       end
 
-      def full_category
-        return unless has_category?
-
-        parts = []
-        parts << translated_attribute(model.category.parent.name) if model.category.parent
-        parts << category
-
-        parts.join(" - ")
+      def full_taxonimies
+        taxonomies.map do |t|
+          parts = []
+          parts << translated_attribute(t.parent.name) if t.parent
+          parts << decidim_sanitize(translated_attribute(t.name))
+          { taxonomy: t, full_taxonomy: parts.join(" - ") }
+        end
       end
 
-      def category_class
-        "card__category--#{model.category.id}" if has_category?
+      # Returns an array of CSS class strings, one per taxonomy.
+      def taxonomy_classes
+        return [] unless has_taxonomies?
+
+        taxonomies.map { |t| "card__category--#{t.id}" }
       end
 
       def has_state?
         model.published?
       end
 
-      def has_category?
-        model.category.present?
+      def has_taxonomies?
+        taxonomies.any?
       end
 
       def has_badge?
@@ -140,20 +142,38 @@ module Decidim
         cell("decidim/favorites/favorites_count", model)
       end
 
-      def category_icon
-        cat = icon_category
-        return unless cat
+      # Returns an array of hashes with id and name for each taxonomy.
+      def taxonomy_labels
+        return [] unless has_taxonomies?
 
-        content_tag(:span, class: "card__category__icon", "aria-hidden": true) do
-          image_tag(cat.attached_uploader(:category_icon).url, alt: full_category)
+        taxonomies.map { |t| { id: t.id, name: translated_attribute(t.name) } }
+      end
+
+      def taxonomy_icons
+        return [] unless has_taxonomies?
+
+        taxonomies.filter_map do |t|
+          next unless t.respond_to?(:taxonomy_icon) && t.taxonomy_icon&.attached?
+
+          {
+            taxonomy: t,
+            icon: content_tag(:span, class: "card__category__icon", "aria-hidden": true) do
+              image_tag(t.attached_uploader(:taxonomy_icon).url, alt: translated_attribute(t.name))
+            end
+          }
         end
       end
 
-      def category_style
-        cat = color_category
-        return unless cat
+      # Returns an array of style hashes for taxonomies that have a color defined.
+      # Each hash contains :taxonomy (the taxonomy object) and :style (the inline CSS string).
+      def taxonomy_styles
+        return [] unless has_taxonomies?
 
-        "background-color:#{cat.color};"
+        taxonomies.filter_map do |t|
+          next unless t.respond_to?(:color) && t.color.present?
+
+          { taxonomy: t, style: "background-color:#{t.color};" }
+        end
       end
 
       def progress_bar_progress
@@ -171,48 +191,22 @@ module Decidim
       def resource_image_path
         return model.image.attached_uploader(:file).variant_url(resource_image_variant) if has_image?
 
-        path = category_image_path(model.category)
-        return path if path
-
-        category_image_path(model.category.parent) if model.category&.parent.present?
+        taxonomy_image_path
       end
 
       def resource_image_variant
         :thumbnail
       end
 
-      def category_image_path(cat)
-        return unless has_category?
-        return unless cat.respond_to?(:category_image)
-        return unless cat.category_image
+      def taxonomy_image_path
+        taxonomy = taxonomies.find { |t| t.respond_to?(:taxonomy_image) && t.taxonomy_image&.attached? }
+        return unless taxonomy
 
-        cat.attached_uploader(:category_image).variant_url(category_image_variant)
+        taxonomy.attached_uploader(:taxonomy_image).variant_url(taxonomy_image_variant)
       end
 
-      def category_image_variant
+      def taxonomy_image_variant
         :card
-      end
-
-      def icon_category(cat = nil)
-        return unless has_category?
-
-        cat ||= model.category
-        return unless cat.respond_to?(:category_icon)
-        return cat if cat.category_icon && cat.category_icon.attached?
-        return unless cat.parent
-
-        icon_category(cat.parent)
-      end
-
-      def color_category(cat = nil)
-        return unless has_category?
-
-        cat ||= model.category
-        return unless cat.respond_to?(:color)
-        return cat if cat.color
-        return unless cat.parent
-
-        color_category(cat.parent)
       end
     end
   end

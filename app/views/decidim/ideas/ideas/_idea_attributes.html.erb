@@ -5,20 +5,13 @@
     <h3 class="attributes__item__name"><%= t(".attributes.id") %></h3>
     <div class="attributes__item__value"><%= idea.id %></div>
   </div>
-  <% if has_visible_area_scope?(idea) %>
+
+  <% leaf_taxonomies = idea.taxonomies.reject { |t| idea.taxonomies.any? { |other| other.parent_id == t.id } } %>
+  <% leaf_taxonomies.each do |taxonomy| %>
     <div class="attributes__item">
-      <h3 class="attributes__item__name"><%= t(".attributes.area") %></h3>
-      <div class="attributes__item__value"><%= translated_attribute(idea.area_scope.name) %></div>
-    </div>
-  <% end %>
-  <% if idea.category.present? %>
-    <div class="attributes__item">
-      <h3 class="attributes__item__name"><%= t(".attributes.category") %></h3>
+      <h3 class="attributes__item__name"><%= translated_attribute(taxonomy.parent&.name) %></h3>
       <div class="attributes__item__value">
-        <% if idea.category.parent %>
-          <%= translated_attribute(idea.category.parent.name) %> -
-        <% end %>
-        <%= translated_attribute(idea.category.name) %>
+        <%= translated_attribute(taxonomy.name) %>
       </div>
     </div>
   <% end %>

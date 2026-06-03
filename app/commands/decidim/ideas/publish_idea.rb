@@ -45,14 +45,6 @@ module Decidim
         address = reset(:address)
         latitude = reset(:latitude)
         longitude = reset(:longitude)
-        area_scope_id = reset(:area_scope_id)
-        category = @idea.category
-
-        if @idea.categorization
-          PaperTrail.request(enabled: false) do
-            @idea.categorization.destroy!
-          end
-        end
 
         Decidim.traceability.perform_action!(
           "publish",
@@ -66,8 +58,6 @@ module Decidim
             address:,
             latitude:,
             longitude:,
-            area_scope_id:,
-            category:,
             published_at: Time.current
           )
         end

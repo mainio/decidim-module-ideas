@@ -13,9 +13,11 @@
     <%= creation_date_status %>
   </div>
 
-  <% if has_category? %>
-    <div class="card__info__item">
-      <%= category %>
-    </div>
+ <% if has_taxonomies? %>
+    <% taxonomy_labels.each do |taxonomy| %>
+      <div class="card__info__item">
+        <%= taxonomy[:name] %>
+      </div>
+    <% end %>
   <% end %>
 </div>

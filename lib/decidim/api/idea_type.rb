@@ -8,8 +8,7 @@ module Decidim
 
       implements Decidim::Comments::CommentableInterface
       implements Decidim::Core::CoauthorableInterface
-      implements Decidim::Core::CategorizableInterface
-      # implements Decidim::Core::ScopableInterface
+      implements Decidim::Core::TaxonomizableInterface
       implements Decidim::Core::FingerprintInterface
       implements Decidim::Core::AmendableInterface
       implements Decidim::Core::AmendableEntityInterface
@@ -21,9 +20,6 @@ module Decidim
       field :body, GraphQL::Types::String, description: "This idea's body", null: false
       field :image, Decidim::Core::AttachmentType, "This object's attachments", null: true
       field :attachments, [Decidim::Core::AttachmentType], "This object's attachments", null: true, method: :actual_attachments
-      field :area_scope, Decidim::Core::ScopeApiType, null: true do
-        description "The object's scope"
-      end
       field :address, GraphQL::Types::String, null: true do
         description "The physical address (location) of this idea"
       end

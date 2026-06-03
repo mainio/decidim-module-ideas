@@ -12,17 +12,19 @@ module Decidim
       #
       # Returns boolean.
       def has_visible_area_scope?(resource)
-        parent_scope = area_scopes_parent(resource.component)
-        return false unless parent_scope
+        filter = area_scopes_parent(resource.component)
+        return false unless filter
+        return false if resource.taxonomies.empty?
 
-        resource.area_scope.present? && parent_scope != resource.area_scope
+        filter_taxonomy_ids = filter.taxonomies.values.flat_map { |node| collect_taxonomy_ids(node) }
+        (resource.taxonomies.map(&:id) & filter_taxonomy_ids).any?
       end
 
       def area_scopes_parent(component = current_component)
-        parent_id = component.settings.area_scope_parent_id
-        return unless parent_id
+        filter_id = component.settings.area_taxonomy_filter_id
+        return unless filter_id
 
-        @area_scopes_parent ||= Decidim::Scope.find_by(id: parent_id)
+        @area_scopes_parent ||= Decidim::TaxonomyFilter.find_by(id: filter_id)
       end
 
       def area_scopes_coordinates(component = current_component)
@@ -31,14 +33,14 @@ module Decidim
         )
       end
 
-      def area_scopes_default_coordinates(component = current_component, parent = nil)
-        parent ||= area_scopes_parent(component)
-        return {} unless parent
+      def area_scopes_default_coordinates(component = current_component, taxonomies = nil)
+        taxonomies ||= area_scopes_parent(component)&.taxonomies
+        return {} unless taxonomies
 
         final = {}
-        scope_children(parent).each do |scope|
-          final[scope.id.to_s] = ""
-          final.merge!(area_scopes_default_coordinates(component, scope)) if scope.children
+        taxonomies.each do |_id, node|
+          final[node[:taxonomy].id.to_s] = ""
+          final.merge!(area_scopes_default_coordinates(component, node[:children])) if node[:children].any?
         end
         final
       end
@@ -51,9 +53,10 @@ module Decidim
       #
       # Returns nothing.
       def area_scopes_picker_field(form, name, root: false, options: {}, html_options: {})
-        root = area_scopes_parent if root == false
+        filter = root == false ? area_scopes_parent : root
+        return unless filter
 
-        form.select(name, area_scopes_options(root), options, html_options)
+        form.select(name, area_scopes_options(filter.taxonomies), options, html_options)
       end
 
       # Renders a scopes select field in a form, not linked to a specific model.
@@ -64,13 +67,13 @@ module Decidim
       #
       # Returns nothing.
       def area_scopes_picker_tag(name, value, options: {}, html_options: {})
-        root = area_scopes_parent
-        # field = options[:field] || name
+        filter = area_scopes_parent
+        return unless filter
 
         select_tag(
           name,
           options_for_select(
-            area_scopes_options(root),
+            area_scopes_options(filter.taxonomies),
             value
           ),
           options,
@@ -86,7 +89,7 @@ module Decidim
       #
       # Returns nothing.
       def area_scopes_picker_filter(form, name, options: {}, html_options: {})
-        area_scopes_picker_field(form, name, options, html_options)
+        area_scopes_picker_field(form, name, options: options, html_options: html_options)
       end
 
       private
@@ -95,15 +98,21 @@ module Decidim
         scope.children.order(Arel.sql("code, name->>'#{current_locale}'"))
       end
 
-      def area_scopes_options(parent, name_prefix = "")
+      def area_scopes_options(taxonomies, name_prefix = "")
         options = []
-        scope_children(parent).each do |scope|
-          options.push(["#{name_prefix}#{translated_attribute(scope.name)}", scope.id])
+        taxonomies.each do |_id, node|
+          taxonomy = node[:taxonomy]
+          options.push(["#{name_prefix}#{translated_attribute(taxonomy.name)}", taxonomy.id])
 
-          sub_prefix = "#{name_prefix}#{translated_attribute(scope.name)} / "
-          options.push(*area_scopes_options(scope, sub_prefix))
+          sub_prefix = "#{name_prefix}#{translated_attribute(taxonomy.name)} / "
+          options.push(*area_scopes_options(node[:children], sub_prefix)) if node[:children].any?
         end
         options
+      end
+
+      def collect_taxonomy_ids(node)
+        ids = [node[:taxonomy].id]
+        ids + node[:children].values.flat_map { |child_node| collect_taxonomy_ids(child_node) }
       end
     end
   end

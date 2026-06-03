@@ -11,7 +11,7 @@ module Decidim
 
       def area_coordinates
         enforce_permission_to :create, :component
-        raise ActionController::RoutingError, "Not found" unless scope_parent
+        raise ActionController::RoutingError, "Not found" unless taxonomy_filter_parent
 
         setting_name = params[:setting_name]
         manifest = Decidim.find_component_manifest("ideas")
@@ -30,7 +30,7 @@ module Decidim
           locals: {
             input_name_prefix: "component[settings][#{setting_name}]",
             value:,
-            parent: scope_parent
+            parent: taxonomy_filter_parent
           }
         )
       end
@@ -55,10 +55,10 @@ module Decidim
         end
       end
 
-      def scope_parent
-        @scope_parent ||= begin
-          scope = Decidim::Scope.find_by(id: params[:parent_scope_id])
-          scope if scope && scope.organization == current_organization
+      def taxonomy_filter_parent
+        @taxonomy_filter_parent ||= begin
+          filter = Decidim::TaxonomyFilter.find_by(id: params[:taxonomy_filter_id])
+          filter if filter && filter.organization == current_organization
         end
       end
     end

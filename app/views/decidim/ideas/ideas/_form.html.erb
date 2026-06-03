@@ -74,26 +74,6 @@
   </div>
 <% end %>
 
-<% if component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id) %>
-  <%= form.plain_label :area_scope_id %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= area_scopes_picker_field form, :area_scope_id, root: false, options: { label: false } %>
-      </div>
-    </div>
-    <div class="columns large-6">
-      <div class="field-info field-info-with-icon">
-        <%= link_to info_path("areas"), class: "info-modal-link" do %>
-          <%= icon "information-line", aria_hidden: true %>
-          <%= t(".show_areas_info_text") %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
-
 <% if component_settings.geocoding_enabled? %>
   <%= form.plain_label :address, show_required: false %>
 
@@ -126,42 +106,42 @@
   <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil %>
 <% end %>
 
-<% if @form.top_categories&.any? %>
-  <%= form.plain_label :category_id %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, label: false, prompt: t(".select_a_category") %>
+<% if @form.taxonomy_filters&.any? %>
+  <% @form.taxonomy_filters.each do |filter| %>
+    <div data-filter-group="<%= filter.id %>">
+      <div class="row column">
+        <label><%= translated_attribute(filter.name) %></label>
+        <%= select_tag(
+          "idea[taxonomies][]",
+          options_for_select(
+            grouped_filter_taxonomies(filter).map { |id, node| [translated_attribute(node[:taxonomy].name), id] },
+            @form.taxonomies
+          ),
+          prompt: t(".select_a_taxonomy"),
+          id: "taxonomy_filter_#{filter.id}",
+          data: { taxonomy_filter: filter.id }
+        ) %>
       </div>
-    </div>
-    <div class="columns large-6">
-      <div class="field-info field-info-with-icon">
-        <%= link_to info_path("categories"), class: "info-modal-link" do %>
-          <%= icon "information-line", aria_hidden: true %>
-          <%= t(".show_categories_info_text") %>
-        <% end %>
-      </div>
-    </div>
-  </div>
 
-  <div id="idea-subcategory">
-    <% @form.top_categories.each do |category| %>
-      <% next if category.subcategories.blank? %>
-
-      <div class="subcategories hide" data-parent="<%= category.id %>">
-        <%= form.plain_label :sub_category_id %>
-
-        <div class="row">
-          <div class="columns large-6">
-            <div class="field">
-              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, label: false, include_blank: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
-            </div>
-          </div>
+      <% grouped_filter_taxonomies(filter).each do |id, node| %>
+        <% next if node[:children].blank? %>
+        <div class="row column hidden ml-4 pl-2" id="sub_taxonomy_<%= id %>" data-parent-taxonomy="<%= id %>">
+          <label class="text-sm text-gray-600">
+            <%= t(".select_a_sub_taxonomy_for", taxonomy: translated_attribute(node[:taxonomy].name)) %>
+          </label>
+          <%= select_tag(
+            "idea[taxonomies][]",
+            options_for_select(
+              node[:children].map { |child_id, child_node| [translated_attribute(child_node[:taxonomy].name), child_id] },
+              @form.taxonomies
+            ),
+            prompt: t(".select_a_sub_taxonomy"),
+            id: "sub_taxonomy_select_#{id}"
+          ) %>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
 
 <% if component_settings.image_allowed? || component_settings.attachments_allowed? %>

@@ -24,7 +24,7 @@ module Decidim
 
       def filtered?
         search_activity.present? || search_area.present? ||
-          search_category.present? || search_text.present?
+          search_taxonomy.present? || search_text.present?
       end
 
       def picker_path
@@ -43,12 +43,11 @@ module Decidim
         params[:activity]
       end
 
-      def search_area
-        params[:area_scope]
-      end
-
-      def search_category
-        params[:category]
+      def search_taxonomies(params)
+        params.keys
+              .select { |k| k.to_s.start_with?("with_taxonomy_filter_") }
+              .filter_map { |k| params[k].presence }
+              .flatten
       end
 
       def more_ideas?
@@ -83,8 +82,7 @@ module Decidim
           current_user:,
           search_text:,
           activity: search_activity,
-          area_scope_id: search_area,
-          category_id: search_category,
+          taxonomy_ids: search_taxonomies,
           state: "accepted"
         }
 

@@ -16,8 +16,6 @@ module Decidim
 
         original_locales = I18n.available_locales
         if locale
-          # If the given locale is not in the Faker's available locales, those
-          # translations will not be loaded
           I18n.available_locales << locale
           I18n.reload!
         end
@@ -31,16 +29,15 @@ module Decidim
 
           authors_amount = amount if authors_amount > amount
 
-          # Create a dummy authors if they are not provided
           @authors = Array.new(authors_amount) do |_i|
             author = Decidim::User.find_or_initialize_by(
-              email: Faker::Internet.email
+              email: ::Faker::Internet.email
             )
             author.update!(
               password: "decidim123456789",
               password_confirmation: "decidim123456789",
-              name: Faker::Name.name,
-              nickname: Faker::Twitter.unique.screen_name,
+              name: ::Faker::Name.name,
+              nickname: ::Faker::X.unique.screen_name,
               organization: component.organization,
               tos_agreement: "1",
               confirmed_at: Time.current
@@ -49,22 +46,16 @@ module Decidim
           end
         end
 
-        # if component.settings.area_scope_parent_id
-        #   parent_scope = Decidim::Scope.find(
-        #     component.settings.area_scope_parent_id
-        #   )
-        # end
-
         amount.times do
-          # coordinates = dummy_coordinates
-
           idea = Idea.new(idea_params.merge(
                             published_at: Time.current
                           ))
           idea.add_coauthor(authors.sample)
           idea.save!
 
-          if Faker::Boolean.boolean
+          assign_random_taxonomies(idea)
+
+          if ::Faker::Boolean.boolean
             # Add versions to the idea
             rand(1..3).times do
               idea.update!(idea_params)
@@ -84,11 +75,10 @@ module Decidim
       def idea_params
         params = {
           component:,
-          title: Faker::Lorem.sentence(word_count: 2),
-          body: Faker::Lorem.paragraphs(number: 2).join("\n"),
-          category: component.participatory_space.categories.sample
+          title: ::Faker::Lorem.sentence(word_count: 2),
+          body: ::Faker::Lorem.paragraphs(number: 2).join("\n")
         }
-        params[:area_scope] = parent_scope.children.sample if parent_scope
+
         if component.settings.geocoding_enabled
           coordinates = dummy_coordinates
           params.merge!(
@@ -101,19 +91,30 @@ module Decidim
         params
       end
 
-      def parent_scope
-        if component.settings.area_scope_parent_id
-          @parent_scope ||= Decidim::Scope.find(
-            component.settings.area_scope_parent_id
-          )
+      def assign_random_taxonomies(idea)
+        taxonomy_filters.each do |filter|
+          assign_random_taxonomy_from_filter(idea, filter)
+        end
+      end
+
+      def assign_random_taxonomy_from_filter(idea, filter)
+        taxonomy_ids = filter.taxonomies.keys
+        return if taxonomy_ids.empty?
+
+        taxonomy_id = taxonomy_ids.sample
+        idea.taxonomizations.find_or_create_by(taxonomy_id: taxonomy_id)
+      end
+
+      def taxonomy_filters
+        @taxonomy_filters ||= begin
+          filter_ids = component.settings.taxonomy_filters.map(&:to_i)
+          Decidim::TaxonomyFilter.where(id: filter_ids)
         end
       end
 
       def dummy_address
         fake_with_locale do
-          # With some locales Faker::Address.street_address returns addresses
-          # where there is no space between the street name and building number
-          "#{Faker::Address.street_name} #{Faker::Address.building_number}"
+          "#{::Faker::Address.street_name} #{::Faker::Address.building_number}"
         end
       end
 
@@ -121,13 +122,13 @@ module Decidim
         if bbox
           [rand(bbox[0][0]...bbox[1][0]), rand(bbox[0][1]...bbox[1][1])]
         else
-          [Faker::Address.latitude, Faker::Address.longitude]
+          [::Faker::Address.latitude, ::Faker::Address.longitude]
         end
       end
 
       def fake_with_locale
         if locale
-          Faker::Address.with_locale(locale) { yield }
+          ::Faker::Address.with_locale(locale) { yield }
         else
           yield
         end

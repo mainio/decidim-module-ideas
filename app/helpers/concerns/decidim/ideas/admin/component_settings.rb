@@ -15,14 +15,19 @@ module Decidim
             # rubocop:disable Rails/HelperInstanceVariable
             def settings_attribute_input(form, attribute, name, i18n_scope, options = {})
               case attribute.type
-              when :idea_area_scope
+              when :idea_area_taxonomy_filter
                 content_tag :div, class: "#{name}_container" do
-                  scopes_select_field(
-                    form,
+                  filter_ids = @component.settings.taxonomy_filters.map(&:to_i)
+                  filter_options = Decidim::TaxonomyFilter
+                                    .where(id: filter_ids)
+                                    .map { |f| [translated_attribute(f.name), f.id] }
+
+                  form.select(
                     name,
-                    root: nil,
-                    options: {
-                      checkboxes_on_top: true
+                    filter_options,
+                    {
+                      include_blank: true,
+                      label: t(name, scope: i18n_scope)
                     }
                   )
                 end

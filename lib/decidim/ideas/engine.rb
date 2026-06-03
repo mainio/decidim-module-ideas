@@ -218,14 +218,6 @@ module Decidim
           Decidim::Admin::FilterableHelper.include Decidim::Ideas::Admin::FilterableHelperOverride
         end
       end
-
-      initializer "decidim_ideas.register_scope_migration" do
-        config.after_initialize do
-          if defined?(Decidim::Maintenance::ImportModels::Scope)
-            Decidim::Maintenance::ImportModels::Scope.add_resource_model("Decidim::Ideas::Idea")
-          end
-        end
-      end
     end
   end
 end

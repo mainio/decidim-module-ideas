@@ -90,7 +90,7 @@ module Decidim
         {
           title: title_with_hashtags,
           body: body_with_hashtags,
-          category: form.category,
+          taxonomizations: form.taxonomizations,
           area_scope: form.area_scope,
           address: form.address,
           latitude: form.latitude,

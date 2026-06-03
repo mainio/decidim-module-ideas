@@ -28,7 +28,7 @@ module Decidim
           .published
           .not_hidden
           .only_amendables
-          .includes(:category, :component, :area_scope)
+          .includes(:taxonomies, :component)
       end
     end
   end

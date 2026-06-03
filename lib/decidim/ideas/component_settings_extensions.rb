@@ -2,7 +2,7 @@
 
 # Extend the SettingsManifest types
 types = Decidim::SettingsManifest::Attribute::TYPES.merge(
-  idea_area_scope: { klass: Integer, default: nil },
+  idea_area_taxonomy_filter: { klass: Integer, default: nil },
   idea_area_scope_coordinates: { klass: Hash, default: {} }
 )
 Decidim::SettingsManifest::Attribute.send(:remove_const, :TYPES)

@@ -18,7 +18,6 @@ module Decidim
         {
           title: :string,
           body: :string,
-          area_scope_id: :scope,
           address: :string,
           latitude: :string,
           longitude: :string,
@@ -28,8 +27,6 @@ module Decidim
 
       # Parses the values before parsing the changeset.
       def parse_changeset(attribute, values, type, diff)
-        return parse_scope_changeset(attribute, values, type, diff) if type == :scope
-
         values = parse_values(attribute, values)
 
         diff.update(
@@ -72,34 +69,7 @@ module Decidim
       end
 
       def related_changes_diff
-        {}.tap do |final|
-          if (values = version.related_changes["decidim_category_id"])
-            old_cat = Decidim::Category.find_by(id: values[0])
-            new_cat = Decidim::Category.find_by(id: values[1])
-            final[:category_id] = {
-              type: :category,
-              label: I18n.t(:decidim_category_id, scope: i18n_scope),
-              old_value: translated_attribute(old_cat&.name),
-              new_value: translated_attribute(new_cat&.name)
-            }
-          end
-        end
-      end
-
-      def parse_scope_changeset(attribute, values, type, diff)
-        return unless diff
-
-        old_scope = Decidim::Scope.find_by(id: values[0])
-        new_scope = Decidim::Scope.find_by(id: values[1])
-
-        diff.update(
-          attribute => {
-            type:,
-            label: I18n.t(attribute, scope: i18n_scope),
-            old_value: old_scope ? translated_attribute(old_scope.name) : "",
-            new_value: new_scope ? translated_attribute(new_scope.name) : ""
-          }
-        )
+        {}
       end
     end
   end

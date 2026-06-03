@@ -3,8 +3,9 @@
     <div class="ideas-picker-item-title"><%= presenter_for(idea).id_and_title(html_escape: true) %></div>
     <div class="ideas-picker-item-info">
       <ul class="no-bullet">
-        <li><%= presenter_for(idea).area_scope_name %></li>
-        <li><%= presenter_for(idea).category_name %></li>
+        <% presenter_for(idea).taxonomy_names.each do |name| %>
+          <li><%= name %></li>
+        <% end %>
         <li><%= presenter_for(idea).published_date %></li>
         <li>
           <%= link_to(idea_link_for(idea), target: "_blank", class: "ideas-picker-item-link") do %>

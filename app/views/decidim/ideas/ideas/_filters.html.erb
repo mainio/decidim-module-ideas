@@ -7,19 +7,24 @@
         <%= form.search_field :search_text_cont, label: t(".keyword"), placeholder: t(".keyword"), title: t(".keyword"), "aria-label": t(".search"), data: { disable_dynamic_change: true } %>
       </div>
     </div>
-    <% if display_scope_filter? %>
-      <div class="columns">
-        <div class="filters__control area_scope_id_filter">
-          <%= area_scopes_picker_field(form, :with_any_area_scope, root: false, options: { label: t(".area_scope"), include_blank: t(".all_area_scopes") }, html_options: { "aria-label": t(".area_scope"), data: { disable_dynamic_change: true } }) %>
+    <% if display_taxonomy_filters? %>
+      <% filter_ideas_taxonomy_values.each do |filter, values| %>
+        <div class="columns">
+          <div class="filters__control taxonomy_filter">
+            <label for="filter_taxonomy_<%= filter.id %>">
+              <%= translated_attribute(filter.name) %>
+            </label>
+            <%= select_tag(
+              "filter[with_any_taxonomies][]",
+              options_for_select(values, params.dig(:filter, :with_any_taxonomies)),
+              id: "filter_taxonomy_#{filter.id}",
+              include_blank: t(".all_taxonomies"),
+              "aria-label": translated_attribute(filter.name),
+              data: { disable_dynamic_change: true }
+            ) %>
+          </div>
         </div>
-      </div>
-    <% end %>
-    <% if display_category_filter? %>
-      <div class="columns">
-        <div class="filters__control area_scope_id_filter">
-          <%= form.select(:with_category, filter_ideas_categories_values, { label: t(".category"), include_blank: t(".all_categories") }, "aria-label": t(".category"), data: { disable_dynamic_change: true }) %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
     <% if display_answer_filter? %>
       <div class="columns">

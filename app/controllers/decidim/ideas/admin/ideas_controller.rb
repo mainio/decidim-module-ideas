@@ -71,6 +71,8 @@ module Decidim
           enforce_permission_to(:edit, :idea, idea:)
 
           @form = form(Admin::IdeaForm).from_params(params)
+          puts "***********************************************************************************"
+          puts "=== IDEA PARAMS: #{params[:idea]&.to_unsafe_h} ==="
           Admin::UpdateIdea.call(@form, current_user, @idea) do
             on(:ok) do |_idea|
               flash[:notice] = t("ideas.update.success", scope: "decidim")
@@ -91,7 +93,7 @@ module Decidim
                               .only_amendables
                               .published
                               .not_hidden
-                              .includes(:amendable, :category, :component, :area_scope)
+                              .includes(:amendable, :taxonomies, :component)
         end
 
         def ideas
@@ -106,50 +108,8 @@ module Decidim
           @idea_ids ||= params[:idea_ids]
         end
 
-        def update_ideas_bulk_response_successful(response, subject)
-          return if response[:successful].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_area_scope.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
-        def update_ideas_bulk_response_errored(response, subject)
-          return if response[:errored].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_scope.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
         def idea_form_builder
-          Decidim::Ideas::Admin::FormBuilder
+          Decidim::Ideas::FormBuilder
         end
 
         def form_presenter

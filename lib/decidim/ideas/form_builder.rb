@@ -25,19 +25,6 @@ module Decidim
         label(attribute, text, options)
       end
 
-      # We only want to display the top-level categories.
-      def categories_for_select(scope)
-        sorted_main_categories = scope.includes(:subcategories).sort_by do |category|
-          [category.weight, translated_attribute(category.name, category.participatory_space.organization)]
-        end
-
-        sorted_main_categories.flat_map do |category|
-          parent = [[translated_attribute(category.name, category.participatory_space.organization), category.id]]
-
-          parent
-        end
-      end
-
       private
 
       # Private: Builds a Hash of options to be injected at the HTML output as
