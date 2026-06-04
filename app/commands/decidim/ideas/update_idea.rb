@@ -92,6 +92,7 @@ module Decidim
           body: body_with_hashtags,
           taxonomizations: form.taxonomizations,
           area_scope: form.area_scope,
+          category: form.category,
           address: form.address,
           latitude: form.latitude,
           longitude: form.longitude

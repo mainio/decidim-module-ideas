@@ -111,6 +111,17 @@ FactoryBot.define do
     end
   end
 
+  factory :area_scope_parent, class: "Decidim::Scope" do
+    name { Decidim::Faker::Localized.literal(generate(:scope_name)) }
+    code { generate(:scope_code) }
+    scope_type { create(:scope_type, organization:) }
+    organization { parent ? parent.organization : build(:organization) }
+
+    after :create do |area_scope|
+      create_list(:subscope, 5, parent: area_scope)
+    end
+  end
+
   factory :idea_taxonomy_filter, class: "Decidim::TaxonomyFilter" do
     transient do
       organization { create(:organization) }
@@ -133,6 +144,7 @@ FactoryBot.define do
       user_groups { [] }
       skip_injection { false }
       taxonomies { [] }
+      area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
     end
 
     title do
@@ -156,7 +168,10 @@ FactoryBot.define do
           user_group = evaluator.user_groups[idx]
           idea.coauthorships.build(author: user, user_group:)
         end
+
+        idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank? && idea.category != false
       end
+      idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank? && idea.area_scope != false
     end
 
     after(:create) do |idea, evaluator|
