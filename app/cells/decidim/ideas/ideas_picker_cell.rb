@@ -8,7 +8,7 @@ module Decidim
     class IdeasPickerCell < Decidim::ViewModel
       include Decidim::ComponentPathHelper
 
-      delegate :current_user, to: :controller
+      delegate :current_user, :current_organization, to: :controller
 
       MAX_IDEAS = 1000
 
@@ -23,8 +23,8 @@ module Decidim
       alias component model
 
       def filtered?
-        search_activity.present? || search_area.present? ||
-          search_taxonomy.present? || search_text.present?
+        search_activity.present? || search_taxonomies(params).present? ||
+          search_text.present?
       end
 
       def picker_path
@@ -77,17 +77,21 @@ module Decidim
       end
 
       def filtered_ideas_query
-        params = {
-          component: idea_components,
-          current_user:,
+        search_params = {
           search_text:,
           activity: search_activity,
-          taxonomy_ids: search_taxonomies,
+          taxonomy_ids: search_taxonomies(params),
           state: "accepted"
         }
 
-        search = Decidim::Ideas::IdeaSearch.new(params)
-        search.results.only_amendables.published.not_hidden.order(id: :asc)
+        options = {
+          component: idea_components.first,
+          organization: current_organization,
+          current_user:
+        }
+
+        search = Decidim::Ideas::IdeaSearch.new(Decidim::Ideas::Idea.all, search_params, options)
+        search.result.only_amendables.published.not_hidden.order(id: :asc)
       end
 
       def idea_components
