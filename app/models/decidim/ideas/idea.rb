@@ -482,9 +482,9 @@ module Decidim
         ]
       end
 
-    def self.ransackable_associations(_auth_object = nil)
-      %w[component taxonomies coauthorships attachments]
-    end
+      def self.ransackable_associations(_auth_object = nil)
+        %w[component taxonomies coauthorships attachments]
+      end
 
       private
 

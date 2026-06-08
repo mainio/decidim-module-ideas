@@ -71,8 +71,6 @@ module Decidim
           enforce_permission_to(:edit, :idea, idea:)
 
           @form = form(Admin::IdeaForm).from_params(params)
-          puts "***********************************************************************************"
-          puts "=== IDEA PARAMS: #{params[:idea]&.to_unsafe_h} ==="
           Admin::UpdateIdea.call(@form, current_user, @idea) do
             on(:ok) do |_idea|
               flash[:notice] = t("ideas.update.success", scope: "decidim")

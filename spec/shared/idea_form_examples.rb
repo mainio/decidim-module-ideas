@@ -23,11 +23,8 @@ shared_examples "a idea form" do |options|
   let(:author) { create(:user, :confirmed, organization:) }
   let(:user_group) { create(:user_group, :confirmed, :verified, users: [author], organization:) }
   let(:user_group_id) { user_group.id }
-  let(:category) { create(:category, participatory_space:) }
-  let(:parent_scope) { create(:scope, organization:) }
-  let(:scope) { create(:subscope, parent: parent_scope) }
-  let(:category_id) { category.try(:id) }
-  let(:scope_id) { scope.try(:id) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+  let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
   let(:latitude) { 40.1234 }
   let(:longitude) { 2.1234 }
   let(:has_address) { false }
@@ -41,8 +38,6 @@ shared_examples "a idea form" do |options|
       body:,
       terms_agreed: true,
       author:,
-      category_id:,
-      area_scope_id: scope_id,
       address:,
       has_address:,
       meeting_as_author:,
@@ -122,24 +117,6 @@ shared_examples "a idea form" do |options|
     it { is_expected.to be_invalid }
   end
 
-  context "when no category_id" do
-    let(:category_id) { nil }
-
-    it { is_expected.to be_valid }
-  end
-
-  context "when no scope_id" do
-    let(:scope_id) { nil }
-
-    it { is_expected.to be_valid }
-  end
-
-  context "with invalid category_id" do
-    let(:category_id) { 987 }
-
-    it { is_expected.to be_invalid }
-  end
-
   context "when geocoding is enabled" do
     let(:component) { create(:idea_component, :with_geocoding_enabled, participatory_space:) }
 
@@ -168,7 +145,7 @@ shared_examples "a idea form" do |options|
       end
 
       context "when the idea is unchanged" do
-        let(:previous_idea) { create(:idea, address:) }
+        let(:previous_idea) { create(:idea, component:, category: false, area_scope: false) }
         let(:title) do
           if options[:skip_etiquette_validation]
             previous_idea.title
@@ -190,18 +167,12 @@ shared_examples "a idea form" do |options|
             body:,
             terms_agreed: true,
             author: previous_idea.authors.first,
-            category_id: previous_idea.try(:category_id),
-            area_scope_id: previous_idea.try(:area_scope_id),
             has_address:,
             address:,
             attachment: previous_idea.try(:attachment_params),
             latitude:,
             longitude:
           }
-        end
-
-        before do
-          previous_idea.update(area_scope: scope)
         end
 
         it "is valid" do
@@ -213,35 +184,9 @@ shared_examples "a idea form" do |options|
     end
   end
 
-  describe "category" do
-    subject { form.category }
-
-    context "when the category exists" do
-      it { is_expected.to be_a(Decidim::Category) }
-    end
-
-    context "when the category does not exist" do
-      let(:category_id) { 7654 }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when the category is from another process" do
-      let(:category_id) { create(:category).id }
-
-      it { is_expected.to be_nil }
-    end
-  end
-
-  it "properly maps category id from model" do
-    idea = create(:idea, component:, category:)
-
-    expect(described_class.from_model(idea).category_id).to eq(category_id)
-  end
-
   if options && options[:user_group_check]
     it "properly maps user group id from model" do
-      idea = create(:idea, component:, users: [author], user_groups: [user_group])
+      idea = create(:idea, component:, users: [author], user_groups: [user_group], category: false, area_scope: false)
 
       expect(described_class.from_model(idea).user_group_id).to eq(user_group_id)
     end

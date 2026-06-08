@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe "UserCreatesIdea" do
   include_context "with a component"
+  include_context "with idea taxonomy filter"
 
   let(:organization) { create(:organization, *organization_traits, available_locales: [:en]) }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
@@ -20,10 +21,6 @@ describe "UserCreatesIdea" do
            participatory_space: participatory_process)
   end
   let(:organization_traits) { [] }
-  let(:scope) { create(:scope, organization:) }
-  let!(:subscope) { create(:scope, parent: scope) }
-  let!(:category) { create(:category, participatory_space: participatory_process) }
-
   let(:idea_title) { Faker::Lorem.paragraph }
   let(:idea_body) { Faker::Lorem.paragraph }
 
@@ -40,13 +37,13 @@ describe "UserCreatesIdea" do
     end
   end
 
-  describe "idea creation without scope and category" do
+  describe "idea creation without taxonomy" do
     before do
       login_as user, scope: :user
       visit_component
     end
 
-    it "creates new idea without scope and category" do
+    it "creates new idea without taxonomy" do
       click_on "New idea"
       fill_in :idea_title, with: idea_title
       find_by_id("idea_terms_agreed").set(true)
@@ -59,10 +56,14 @@ describe "UserCreatesIdea" do
 
   context "when idea limit per participant is full" do
     let!(:component) do
-      create(:idea_component, :with_creation_enabled, :with_idea_limit, manifest:, participatory_space: participatory_process)
-    end
+        create(:idea_component,
+              :with_creation_enabled,
+              manifest:,
+              participatory_space: participatory_process,
+              settings: { idea_limit: 1 })
+      end
     let(:idea_limit) { 1 }
-    let!(:idea) { create(:idea, users: [user], component:) }
+    let!(:idea) { create(:idea, users: [user], component:, category: false, area_scope: false) }
 
     before do
       login_as user, scope: :user
@@ -74,10 +75,8 @@ describe "UserCreatesIdea" do
     end
   end
 
-  context "when ideas component has parent scope" do
+  context "when ideas component has taxonomy filters" do
     before do
-      component[:settings]["global"]["area_scope_parent_id"] = scope.id
-      component.save!
       login_as user, scope: :user
       visit_component
     end
@@ -88,8 +87,7 @@ describe "UserCreatesIdea" do
         fill_in :idea_title, with: idea_title
         find_by_id("idea_terms_agreed").set(true)
         fill_in :idea_body, with: idea_body
-        select subscope.name["en"], from: :idea_area_scope_id
-        select category.name["en"], from: :idea_category_id
+        select translated(taxonomy.name), from: "taxonomy_filter_#{taxonomy_filter.id}"
       end
 
       describe "draft exists" do
@@ -131,7 +129,7 @@ describe "UserCreatesIdea" do
         end
       end
 
-      it "creates a new idea with a category and scope" do
+      it "creates a new idea with a taxonomy" do
         click_on "Continue"
         click_on "Publish"
         expect(page).to have_content("Idea successfully published")
@@ -151,20 +149,11 @@ describe "UserCreatesIdea" do
   context "when component has info texts" do
     let(:terms_intro) { { "en" => Faker::Lorem.sentence } }
     let(:terms_text) { { "en" => Faker::Lorem.paragraph } }
-    let(:areas_info_intro) { { "en" => Faker::Lorem.sentence } }
-    let(:areas_info_text) { { "en" => Faker::Lorem.paragraph } }
-    let(:categories_info_intro) { { "en" => Faker::Lorem.sentence } }
-    let(:categories_info_text) { { "en" => Faker::Lorem.paragraph } }
 
     before do
-      component[:settings]["global"]["area_scope_parent_id"] = scope.id
       settings = component.settings
       settings.terms_intro = terms_intro
       settings.terms_text = terms_text
-      settings.areas_info_intro = areas_info_intro
-      settings.areas_info_text = areas_info_text
-      settings.categories_info_intro = categories_info_intro
-      settings.categories_info_text = categories_info_text
       component.settings = settings
       component.save!
       login_as user, scope: :user
@@ -176,18 +165,6 @@ describe "UserCreatesIdea" do
       click_on "Show criteria"
       expect(page).to have_content(terms_intro["en"])
       expect(page).to have_content(terms_text["en"])
-    end
-
-    it "shows area info" do
-      click_on "Check which neighborhood belong to different major districts"
-      expect(page).to have_content(areas_info_intro["en"])
-      expect(page).to have_content(areas_info_text["en"])
-    end
-
-    it "shows category info" do
-      click_on "Check what the themes consist of"
-      expect(page).to have_content(categories_info_intro["en"])
-      expect(page).to have_content(categories_info_text["en"])
     end
   end
 end

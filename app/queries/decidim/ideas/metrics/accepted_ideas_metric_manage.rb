@@ -20,7 +20,7 @@ module Decidim
           @query = Decidim::Ideas::Idea.where(component: components).joins(:component)
                                        .left_outer_joins(:taxonomizations)
           @query = @query.where(decidim_ideas_ideas: { created_at: ..end_time }).accepted
-          @query = @query.group("decidim_taxonomizations.decidim_taxonomy_id", :participatory_space_type, :participatory_space_id)
+          @query = @query.group("decidim_taxonomizations.taxonomy_id", :participatory_space_type, :participatory_space_id)
           @query
         end
 

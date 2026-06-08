@@ -7,11 +7,16 @@ module Decidim
       private
 
       def build_image
-        form_image = @form.add_images.compact_blank.first
+        images = @form.add_images.compact_blank
+        signed_id = images[0]
+        title = images[1].to_s
+        blob = ActiveStorage::Blob.find_signed(signed_id)
+
         @image = Decidim::Ideas::Attachment.new(
-          attached_to: @attached_to, # Keep first
-          title: { I18n.locale.to_s => form_image["title"] },
-          file: form_image["file"],
+          attached_to: @attached_to,
+          title: { I18n.locale.to_s => title },
+          file: blob,
+          content_type: blob.content_type,
           weight: 0
         )
       end

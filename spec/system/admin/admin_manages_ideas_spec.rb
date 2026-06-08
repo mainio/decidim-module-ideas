@@ -27,32 +27,6 @@ describe "AdminCreatesIdea" do
     visit_component_admin
   end
 
-  describe "change idea theme" do
-    it "changes idea's category" do
-      find(".js-idea-id-#{idea.id}").set(true)
-      click_on "Actions"
-      click_on "Change theme"
-      select second_category.name["en"], from: :category_id
-      click_on "Update"
-      expect(page).to have_content("Ideas successfully updated to the theme")
-      expect(Decidim::Ideas::Idea.find(idea.id).category.id).to eq(second_category.id)
-    end
-  end
-
-  describe "change scope" do
-    it "changes idea's area scope" do
-      find(".js-idea-id-#{idea.id}").set(true)
-      click_on "Actions"
-      click_on "Change scope"
-
-      select scope.name["en"], from: "area_scope_id"
-
-      find_by_id("js-submit-scope-change-ideas").click
-      expect(page).to have_content("Ideas successfully updated to the area")
-      expect(Decidim::Ideas::Idea.find(idea.id).area_scope.id).to eq(scope.id)
-    end
-  end
-
   describe "moderations" do
     let(:moderation) { create(:moderation, reportable: idea, report_count: 1) }
     let!(:report) { create(:report, moderation:) }

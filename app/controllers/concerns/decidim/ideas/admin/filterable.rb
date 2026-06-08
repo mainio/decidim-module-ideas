@@ -38,6 +38,14 @@ module Decidim
           def idea_states
             Idea::POSSIBLE_STATES.without("not_answered")
           end
+
+          def state_eq_values
+            Idea::POSSIBLE_STATES.without("not_answered")
+          end
+
+          def translated_state_eq(state)
+            t("decidim.ideas.application_helper.filter_state_values.#{state}")
+          end
         end
       end
     end

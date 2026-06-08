@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe "AdminManagesIdeaComponent" do
   include_context "when managing a component"
+  include_context "with idea taxonomy filter"
 
   let(:organization) { create(:organization, tos_version: Time.current) }
   let!(:component) do
@@ -13,13 +14,11 @@ describe "AdminManagesIdeaComponent" do
            :with_attachments_allowed,
            :with_geocoding_enabled,
            manifest:,
+           published_at: nil,
            participatory_space: participatory_process)
   end
   let(:manifest) { Decidim.find_component_manifest(manifest_name) }
   let(:manifest_name) { "ideas" }
-  let(:scope) { create(:scope, organization:) }
-  let!(:subscope) { create(:scope, parent: scope) }
-  let!(:category) { create(:category, participatory_space: participatory_process) }
   let(:user) { create(:user, :admin, :confirmed, organization:) }
 
   def components_path(component)
@@ -36,7 +35,6 @@ describe "AdminManagesIdeaComponent" do
   describe "configure" do
     let(:max_title_length) { rand(15..100) }
     let(:max_body_length) { rand(500..1500) }
-    let(:coordinates) { "60.1699,24.9384" }
 
     before do
       find(".action-icon--configure", match: :first).click
@@ -45,21 +43,20 @@ describe "AdminManagesIdeaComponent" do
     it "updates component's settings" do
       fill_in :component_settings_idea_title_length, with: max_title_length
       fill_in :component_settings_idea_length, with: max_body_length
-      select scope.name["en"], from: "component_settings_area_scope_parent_id"
-
-      fill_in "component[settings][area_scope_coordinates]_#{subscope.id}", with: coordinates
+      select taxonomy_filter.internal_name["en"], from: :component_settings_area_taxonomy_filter_id
       click_on "Update"
       expect(page).to have_content("The component was updated successfully")
       expect(Decidim::Component.find(component.id)[:settings]["global"]["idea_title_length"]).to eq(max_title_length)
       expect(Decidim::Component.find(component.id)[:settings]["global"]["idea_length"]).to eq(max_body_length)
-      expect(Decidim::Component.find(component.id).settings.area_scope_coordinates).to eq(subscope.id.to_s.to_sym => coordinates)
+      expect(Decidim::Component.find(component.id).settings.area_taxonomy_filter_id).to eq(taxonomy_filter.id)
     end
   end
 
   describe "delete" do
     it "deletes component" do
-      find(".action-icon--remove").click
-      expect(page).to have_content("Component deleted successfully")
+      find(".action-icon--delete").click
+      find("[data-confirm-ok]").click
+      expect(page).to have_content("Component successfully deleted")
     end
   end
 end

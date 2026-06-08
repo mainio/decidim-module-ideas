@@ -88,7 +88,7 @@ module Decidim
 
         idea.link_resources(original_idea, "copied_from_component") unless skip_link
         copy_attachments(original_idea, idea)
-        copy_taxonomies(origin_idea, idea)
+        copy_taxonomies(original_idea, idea)
 
         idea
       end
@@ -119,9 +119,9 @@ module Decidim
 
       def copy_taxonomies(original_idea, idea)
         original_idea.taxonomies.each do |taxonomy|
-          idea.taxonomizations.find_or_create_by(taxonomy:)
-        end
+          result = idea.taxonomizations.find_or_create_by(taxonomy:)
       end
+    end
 
       module_function :copy_taxonomies
     end

@@ -178,6 +178,9 @@ FactoryBot.define do
       evaluator.taxonomies.each do |taxonomy|
         idea.taxonomizations.find_or_create_by(taxonomy: taxonomy)
       end
+      # Reload the idea to ensure the taxonomies association is not cached
+      # as empty before the after(:create) callback runs.
+      idea.reload if evaluator.taxonomies.any?
     end
 
     trait :published do

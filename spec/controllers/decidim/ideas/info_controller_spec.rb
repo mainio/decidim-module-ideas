@@ -38,22 +38,6 @@ describe Decidim::Ideas::InfoController do
       it_behaves_like "section content as JSON"
     end
 
-    context "with the areas section" do
-      let(:section) { "areas" }
-      let(:section_key) { "areas_info" }
-      let(:settings) { { areas_info_intro: { en: "Intro" }, areas_info_text: { en: "Text" } } }
-
-      it_behaves_like "section content as JSON"
-    end
-
-    context "with the categories section" do
-      let(:section) { "categories" }
-      let(:section_key) { "categories_info" }
-      let(:settings) { { categories_info_intro: { en: "Intro" }, categories_info_text: { en: "Text" } } }
-
-      it_behaves_like "section content as JSON"
-    end
-
     context "with an unknown section" do
       let(:section) { "foobar" }
 

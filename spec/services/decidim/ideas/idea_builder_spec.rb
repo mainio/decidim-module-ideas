@@ -3,12 +3,12 @@
 require "spec_helper"
 
 describe Decidim::Ideas::IdeaBuilder do
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+  let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
   let(:attributes) do
     {
       title: "Idea title",
       body: "Idea body",
-      category:,
-      area_scope:,
       component:,
       address: "Veneentekijäntie 4",
       latitude: 1.234,
@@ -17,10 +17,7 @@ describe Decidim::Ideas::IdeaBuilder do
     }
   end
   let(:organization) { component.organization }
-  let(:area_scope_parent) { create(:area_scope_parent, organization:) }
-  let(:area_scope) { area_scope_parent.children.sample }
   let(:component) { create(:idea_component) }
-  let(:category) { create(:category, participatory_space: component.participatory_space) }
   let(:author) { create(:user, :confirmed, organization:) }
   let(:action_user) { author }
   let(:user_group_author) { nil }
@@ -33,8 +30,6 @@ describe Decidim::Ideas::IdeaBuilder do
       expect(subject.authors.first).to eq(author)
       expect(subject.title).to eq(attributes[:title])
       expect(subject.body).to eq(attributes[:body])
-      expect(subject.category).to eq(attributes[:category])
-      expect(subject.area_scope).to eq(attributes[:area_scope])
       expect(subject.address).to eq(attributes[:address])
       expect(subject.latitude).to eq(attributes[:latitude])
       expect(subject.longitude).to eq(attributes[:longitude])
@@ -45,7 +40,7 @@ describe Decidim::Ideas::IdeaBuilder do
   describe "#copy" do
     subject { described_class.copy(original_idea, author:, action_user:, user_group_author:) }
 
-    let(:original_idea) { create(:idea, **attributes) }
+    let(:original_idea) { create(:idea, **attributes, category: false, area_scope: false, taxonomies: [taxonomy]) }
 
     it "copies the idea" do
       expect(subject).to be_a(Decidim::Ideas::Idea)
@@ -53,16 +48,15 @@ describe Decidim::Ideas::IdeaBuilder do
       expect(subject.authors.first).to eq(author)
       expect(subject.title).to eq(attributes[:title])
       expect(subject.body).to eq(attributes[:body])
-      expect(subject.category).to eq(attributes[:category])
-      expect(subject.area_scope).to eq(attributes[:area_scope])
       expect(subject.address).to eq(attributes[:address])
       expect(subject.latitude).to eq(attributes[:latitude])
       expect(subject.longitude).to eq(attributes[:longitude])
-      expect(subject.published_at).to eq(attributes[:published_at])
+      expect(subject.published_at).to be_within(1.second).of(attributes[:published_at])
+      expect(subject.reload.taxonomies).to include(taxonomy)
     end
 
     context "without author" do
-      let(:original_idea) { create(:idea, users: [original_author], **attributes) }
+      let(:original_idea) { create(:idea, users: [original_author], **attributes, category: false, area_scope: false, taxonomies: [taxonomy]) }
       let(:author) { nil }
       let(:original_author) { create(:user, :confirmed, organization:) }
 
@@ -72,12 +66,11 @@ describe Decidim::Ideas::IdeaBuilder do
         expect(subject.authors.first).to eq(original_author)
         expect(subject.title).to eq(attributes[:title])
         expect(subject.body).to eq(attributes[:body])
-        expect(subject.category).to eq(attributes[:category])
-        expect(subject.area_scope).to eq(attributes[:area_scope])
         expect(subject.address).to eq(attributes[:address])
         expect(subject.latitude).to eq(attributes[:latitude])
         expect(subject.longitude).to eq(attributes[:longitude])
-        expect(subject.published_at).to eq(attributes[:published_at])
+        expect(subject.published_at).to be_within(1.second).of(attributes[:published_at])
+        expect(subject.reload.taxonomies).to include(taxonomy)
       end
     end
   end

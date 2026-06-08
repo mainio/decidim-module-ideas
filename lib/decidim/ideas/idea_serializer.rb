@@ -77,7 +77,7 @@ module Decidim
         area_taxonomy = idea.taxonomies.find { |t| area_taxonomy_ids.include?(t.id) }
         return blank_coordinates unless area_taxonomy
 
-        scope_coordinates = component.settings.area_scope_coordinates[area_taxonomy.id.to_s]
+        scope_coordinates = component.settings.area_scope_coordinates[:"#{area_taxonomy.id}"]
         return blank_coordinates if scope_coordinates.blank?
 
         latlng = scope_coordinates.split(",")

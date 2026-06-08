@@ -7,6 +7,8 @@ describe Decidim::Ideas::CreateIdea do
 
   let(:command) { described_class.new(form, user) }
   let(:form) { Decidim::Ideas::IdeaForm.new(idea_data) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+  let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
   let(:idea_data) do
     {
       title: "A new testing idea",
@@ -16,16 +18,13 @@ describe Decidim::Ideas::CreateIdea do
       latitude: 1.123,
       longitude: 2.345,
       perform_geocoding: false,
-      category_id: category.id,
-      area_scope_id: area_scope.id
+      taxonomy_ids: [taxonomy.id]
     }
   end
   let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:idea_limit) { 0 }
   let(:component) { create(:idea_component, :with_idea_limit, idea_limit:, participatory_space:) }
-  let(:category) { create(:category, participatory_space:) }
-  let(:area_scope) { create(:scope, organization:) }
   let(:user) { create(:user, :confirmed, :admin, organization:) }
 
   before do
@@ -33,6 +32,11 @@ describe Decidim::Ideas::CreateIdea do
     allow(form).to receive(:current_component).and_return(component)
     allow(form).to receive(:component).and_return(component)
     allow(form).to receive(:current_user).and_return(user)
+    allow(form).to receive(:taxonomizations).and_return(
+      [Decidim::Taxonomization.new(taxonomy: taxonomy)]
+    )
+    allow(form).to receive(:area_scope).and_return(nil)
+    allow(form).to receive(:category).and_return(nil)
   end
 
   it "broadcasts ok" do
@@ -48,12 +52,11 @@ describe Decidim::Ideas::CreateIdea do
     expect(idea.address).to eq(idea_data[:address])
     expect(idea.latitude).to eq(idea_data[:latitude])
     expect(idea.longitude).to eq(idea_data[:longitude])
-    expect(idea.category.id).to eq(idea_data[:category_id])
-    expect(idea.area_scope.id).to eq(idea_data[:area_scope_id])
+    expect(idea.taxonomies).to include(taxonomy)
   end
 
   context "with idea limit" do
-    let!(:idea) { create(:idea, :accepted, component:, users: [user]) }
+    let!(:idea) { create(:idea, :accepted, component:, users: [user], category: false, area_scope: false) }
 
     context "when limitation reached" do
       let(:idea_limit) { 1 }
@@ -66,7 +69,7 @@ describe Decidim::Ideas::CreateIdea do
 
       context "when the idea was withdrawn" do
         let(:idea_limit) { 2 }
-        let!(:idea) { create(:idea, :withdrawn, component:, users: [user]) }
+        let!(:idea) { create(:idea, :withdrawn, component:, users: [user], category: false, area_scope: false) }
 
         it "broadcasts ok" do
           expect { subject }.to broadcast(:ok)
@@ -86,7 +89,7 @@ describe Decidim::Ideas::CreateIdea do
   context "with user group" do
     let(:idea_limit) { 1 }
     let!(:user) { create(:user_group, organization:) }
-    let!(:idea) { create(:idea, :accepted, component:, users: [user]) }
+    let!(:idea) { create(:idea, :accepted, component:, users: [user], category: false, area_scope: false) }
 
     it "broadcasts invalid" do
       expect { subject }.to broadcast(:invalid)
