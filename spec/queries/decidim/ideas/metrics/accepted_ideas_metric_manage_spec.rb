@@ -42,7 +42,7 @@ describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
 
     it "updates metric records" do
       create(:metric, metric_type: "accepted_ideas", day:, cumulative: 1, quantity: 1,
-             organization:, decidim_taxonomy_id: taxonomy.id, participatory_space:)
+                      organization:, decidim_taxonomy_id: taxonomy.id, participatory_space:)
       registry = generate_metric_registry
 
       expect(Decidim::Metric.count).to eq(1)

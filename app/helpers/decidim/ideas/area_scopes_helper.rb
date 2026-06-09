@@ -17,7 +17,7 @@ module Decidim
         return false if resource.taxonomies.empty?
 
         filter_taxonomy_ids = filter.taxonomies.values.flat_map { |node| collect_taxonomy_ids(node) }
-        (resource.taxonomies.map(&:id) & filter_taxonomy_ids).any?
+        resource.taxonomies.map(&:id).intersect?(filter_taxonomy_ids)
       end
 
       def area_scopes_parent(component = current_component)

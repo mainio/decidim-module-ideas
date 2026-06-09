@@ -8,7 +8,7 @@ module Decidim
       def file_field(object_name, method, options = {})
         options[:disabled] = true unless user_signed_in?
 
-        super(object_name, method, options)
+        super
       end
 
       def idea_form_map(map_html_options = {})

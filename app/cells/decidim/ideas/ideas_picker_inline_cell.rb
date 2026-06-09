@@ -95,8 +95,8 @@ module Decidim
           .includes(filter_items: :taxonomy_item)
           .map do |filter|
             values = filter.filter_items
-                          .sort_by { |item| translated_attribute(item.taxonomy_item.name) }
-                          .map { |item| [translated_attribute(item.taxonomy_item.name), item.taxonomy_item.id] }
+                           .sort_by { |item| translated_attribute(item.taxonomy_item.name) }
+                           .map { |item| [translated_attribute(item.taxonomy_item.name), item.taxonomy_item.id] }
             [filter, values]
           end
       end

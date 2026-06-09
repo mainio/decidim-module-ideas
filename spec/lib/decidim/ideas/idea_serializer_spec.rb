@@ -95,17 +95,14 @@ module Decidim
         end
 
         context "when the idea has coordinates" do
-          let(:idea) do
-            create(:idea, component:, category: false, area_scope: false).tap do |i|
-              i.update_columns(latitude: 1.234, longitude: 2.345)
-            end
-          end
+          let(:geocoding_component) { create(:idea_component, :with_geocoding_enabled, participatory_space: participatory_process) }
+          let(:idea) { create(:idea, :geocoded, component: geocoding_component, category: false, area_scope: false) }
 
           it "serializes the coordinates" do
             expect(serialized[:coordinates]).to include(
               available: true,
-              latitude: 1.234,
-              longitude: 2.345
+              latitude: idea.latitude,
+              longitude: idea.longitude
             )
           end
         end

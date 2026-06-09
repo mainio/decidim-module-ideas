@@ -24,8 +24,8 @@ describe Decidim::Ideas::InfoController do
         expect(response).to have_http_status(:ok)
         expect(response.headers["X-Robots-Tag"]).to eq("none")
         expect(subject).to eq(
-          "intro" => settings["#{section_key}_intro".to_sym].values.first,
-          "text" => settings["#{section_key}_text".to_sym].values.first
+          "intro" => settings[:"#{section_key}_intro"].values.first,
+          "text" => settings[:"#{section_key}_text"].values.first
         )
       end
     end

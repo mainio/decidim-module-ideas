@@ -99,16 +99,24 @@ module Decidim
       end
 
       def ideas
-        @ideas ||= Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
-                          &.only_amendables
-                          &.published
-                          &.not_hidden
-                          &.accepted
-                          &.order(id: :asc)
+        @ideas ||= ideas_scope
       end
 
       def ideas_collection_name
         Decidim::Ideas::Idea.model_name.human(count: 2)
+      end
+
+      private
+
+      def ideas_scope
+        scope = Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
+        return unless scope
+
+        scope.only_amendables
+             .published
+             .not_hidden
+             .accepted
+             .order(id: :asc)
       end
     end
   end

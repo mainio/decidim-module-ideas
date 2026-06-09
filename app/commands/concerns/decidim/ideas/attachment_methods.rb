@@ -12,7 +12,8 @@ module Decidim
         attachments = @form.add_actual_attachments.compact_blank
         # Array is [signed_id, title, signed_id, title, ...]
         attachments.each_slice(2).with_index do |(signed_id, title), ind|
-          next unless signed_id.present?
+          next if signed_id.blank?
+
           blob = ActiveStorage::Blob.find_signed(signed_id)
           next unless blob
 

@@ -11,7 +11,7 @@ module Decidim
       field :ideas, Decidim::Ideas::IdeaType.connection_type, resolver: Decidim::Ideas::IdeasSearchResolver, description: "List all ideas", null: true
 
       field :idea, Decidim::Ideas::IdeaType, description: "Finds one idea", null: true do
-        argument :id, GraphQL::Types::ID, required: true
+        argument :id, GraphQL::Types::ID, description: "ID of the idea", required: true
       end
 
       def idea(id:)
@@ -21,6 +21,7 @@ module Decidim
 
     module IdeasTypeHelper
       include Decidim::Core::NeedsApiFilterAndOrder
+      description "Ideas type helper"
 
       def self.base_scope(component)
         Idea

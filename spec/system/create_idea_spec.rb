@@ -56,12 +56,12 @@ describe "UserCreatesIdea" do
 
   context "when idea limit per participant is full" do
     let!(:component) do
-        create(:idea_component,
-              :with_creation_enabled,
-              manifest:,
-              participatory_space: participatory_process,
-              settings: { idea_limit: 1 })
-      end
+      create(:idea_component,
+             :with_creation_enabled,
+             manifest:,
+             participatory_space: participatory_process,
+             settings: { idea_limit: 1 })
+    end
     let(:idea_limit) { 1 }
     let!(:idea) { create(:idea, users: [user], component:, category: false, area_scope: false) }
 

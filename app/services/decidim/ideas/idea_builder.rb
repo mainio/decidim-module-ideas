@@ -119,9 +119,9 @@ module Decidim
 
       def copy_taxonomies(original_idea, idea)
         original_idea.taxonomies.each do |taxonomy|
-          result = idea.taxonomizations.find_or_create_by(taxonomy:)
+          idea.taxonomizations.find_or_create_by(taxonomy:)
+        end
       end
-    end
 
       module_function :copy_taxonomies
     end

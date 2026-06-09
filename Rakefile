@@ -62,30 +62,32 @@ task migrate_area_coordinates: :environment do
 
     # Migrate area_scope_parent_id to area_taxonomy_filter_id
     if old_parent_id.present?
-      scope = Decidim::Scope.find_by(id: old_parent_id) if defined?(Decidim::Scope)
+      scope = defined?(Decidim::Scope) ? Decidim::Scope.find_by(id: old_parent_id) : nil
 
-      if scope
-        # The parent scope became a taxonomy — find it by name
-        taxonomy = Decidim::Taxonomy
-                      .where(decidim_organization_id: organization.id)
-                      .find { |t| t.name == scope.name }
-
-        if taxonomy
-          # Find the filter whose root_taxonomy is this taxonomy or its parent
-          filter = Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.id) ||
-                    Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.parent_id)
-
-          if filter
-            settings["area_taxonomy_filter_id"] = filter.id
-            puts "  Mapped area_scope_parent_id #{old_parent_id} => area_taxonomy_filter_id #{filter.id}"
-          else
-            puts "  WARNING: No TaxonomyFilter found for scope #{old_parent_id} (#{scope.name})"
-          end
-        else
-          puts "  WARNING: No taxonomy match for scope #{old_parent_id} (#{scope.name})"
-        end
-      else
+      unless scope
         puts "  WARNING: Scope #{old_parent_id} not found, cannot auto-migrate area_taxonomy_filter_id"
+        settings.delete("area_scope_parent_id")
+        next
+      end
+
+      taxonomy = Decidim::Taxonomy
+                 .where(decidim_organization_id: organization.id)
+                 .find { |t| t.name == scope.name }
+
+      unless taxonomy
+        puts "  WARNING: No taxonomy match for scope #{old_parent_id} (#{scope.name})"
+        settings.delete("area_scope_parent_id")
+        next
+      end
+
+      filter = Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.id) ||
+               Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.parent_id)
+
+      if filter
+        settings["area_taxonomy_filter_id"] = filter.id
+        puts "  Mapped area_scope_parent_id #{old_parent_id} => area_taxonomy_filter_id #{filter.id}"
+      else
+        puts "  WARNING: No TaxonomyFilter found for scope #{old_parent_id} (#{scope.name})"
       end
 
       settings.delete("area_scope_parent_id")
@@ -101,8 +103,8 @@ task migrate_area_coordinates: :environment do
 
         if scope
           taxonomy = Decidim::Taxonomy
-                        .where(decidim_organization_id: organization.id)
-                        .find { |t| t.name == scope.name }
+                     .where(decidim_organization_id: organization.id)
+                     .find { |t| t.name == scope.name }
 
           if taxonomy
             new_coordinates[taxonomy.id.to_s] = coords

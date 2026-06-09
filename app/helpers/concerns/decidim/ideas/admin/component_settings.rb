@@ -19,8 +19,8 @@ module Decidim
                 content_tag :div, class: "#{name}_container" do
                   filter_ids = @component.settings.taxonomy_filters.map(&:to_i)
                   filter_options = Decidim::TaxonomyFilter
-                                    .where(id: filter_ids)
-                                    .map { |f| [translated_attribute(f.name), f.id] }
+                                   .where(id: filter_ids)
+                                   .map { |f| [translated_attribute(f.name), f.id] }
 
                   form.select(
                     name,

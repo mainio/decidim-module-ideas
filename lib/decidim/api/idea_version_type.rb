@@ -6,9 +6,8 @@ module Decidim
       graphql_name "IdeaVersion"
       description "An idea version type"
 
-      field :id, GraphQL::Types::ID, null: false
-      field :number, GraphQL::Types::Int, null: false do
-        description "The version number in the order of all versions for this object"
+      field :changeset, GraphQL::Types::JSON, null: false do
+        description "Object with the changes in this version"
       end
       field :created_at, Decidim::Core::DateTimeType, null: false do
         description "The date and time this version was created"
@@ -16,8 +15,9 @@ module Decidim
       field :editor, Decidim::Core::AuthorInterface, null: true do
         description "The editor/author of this version"
       end
-      field :changeset, GraphQL::Types::JSON, null: false do
-        description "Object with the changes in this version"
+      field :id, GraphQL::Types::ID, description: "ID of the idea", null: false
+      field :number, GraphQL::Types::Int, null: false do
+        description "The version number in the order of all versions for this object"
       end
 
       def number

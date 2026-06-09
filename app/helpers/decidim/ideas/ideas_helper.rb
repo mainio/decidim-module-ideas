@@ -56,13 +56,14 @@ module Decidim
       def display_taxonomy_filters?
         @display_taxonomy_filters ||= filter_ideas_taxonomy_values.any?
       end
-      
-      def taxonomies
-        @taxonomies ||= @idea.taxonomies
-      end
+
+      # def taxonomies
+      #   @taxonomies ||= @idea.taxonomies
+      # end
 
       def taxonomy_image_path
         return unless taxonomies.any?
+
         taxonomy = taxonomies.find { |t| t.respond_to?(:taxonomy_image) && t.taxonomy_image&.attached? }
         return unless taxonomy
 
@@ -127,7 +128,7 @@ module Decidim
           .where(id: filter_ids)
           .includes(filter_items: :taxonomy_item)
           .map do |filter|
-            root_id = filter.root_taxonomy_id
+            filter.root_taxonomy_id
             items = filter.filter_items.map(&:taxonomy_item)
 
             # Group items by their parent_id

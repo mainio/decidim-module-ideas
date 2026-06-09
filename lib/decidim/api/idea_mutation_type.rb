@@ -6,13 +6,13 @@ module Decidim
       graphql_name "IdeaMutation"
       description "An idea which includes its available mutations"
 
-      field :id, GraphQL::Types::ID, null: false
+      field :id, GraphQL::Types::ID, description: "ID of the idea", null: false
 
       field :answer, Decidim::Ideas::IdeaType, null: true do
         description "Answer an idea"
 
-        argument :state, GraphQL::Types::String, description: "The answer status in which the idea is in. Can be one of 'accepted', 'rejected' or 'evaluating'", required: true
         argument :answer_content, GraphQL::Types::JSON, description: "The answer feedback for the status for this idea", required: false
+        argument :state, GraphQL::Types::String, description: "The answer status in which the idea is in. Can be one of 'accepted', 'rejected' or 'evaluating'", required: true
       end
 
       def answer(state:, answer_content: nil)
@@ -96,8 +96,10 @@ module Decidim
         }
       end
 
+      # rubocop:disable GraphQL/ObjectDescription
       class ::Decidim::Ideas::ActionForbidden < StandardError
       end
+      # rubocop:enable GraphQL/ObjectDescription
     end
   end
 end

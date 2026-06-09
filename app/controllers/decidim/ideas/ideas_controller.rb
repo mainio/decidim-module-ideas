@@ -204,10 +204,11 @@ module Decidim
       end
 
       def users_idea_limit_reached?
-        return false unless current_component&.settings&.idea_limit&.positive?
+        idea_limit = current_component&.settings&.idea_limit
+        return false unless idea_limit&.positive?
 
         users_idea_count = Idea.from_author(current_user).where(component: current_component).except_withdrawn
-        current_component.settings.idea_limit <= users_idea_count.count
+        idea_limit <= users_idea_count.count
       end
 
       def search_collection

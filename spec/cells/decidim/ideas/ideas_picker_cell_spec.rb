@@ -33,7 +33,7 @@ describe Decidim::Ideas::IdeasPickerCell, type: :cell do
   it "does not render ideas from other components" do
     expect(subject).to have_no_content(translated(external_idea.title))
   end
-  
+
   context "when filtering by text" do
     let(:my_cell) { cell("decidim/ideas/ideas_picker", component) }
 

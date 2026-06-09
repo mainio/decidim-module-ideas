@@ -475,15 +475,14 @@ module Decidim
       end
 
       def self.ransackable_attributes(_auth_object = nil)
-        %w[id title body search_text state state_published state_published_at
-          answered_at published_at created_at updated_at
+        %w(id title body search_text state state_published state_published_at
+           answered_at published_at created_at updated_at
            decidim_component_id coauthorships_count
-          commentable_comments_count id_string is_emendation reference
-        ]
+           commentable_comments_count id_string is_emendation reference)
       end
 
       def self.ransackable_associations(_auth_object = nil)
-        %w[component taxonomies coauthorships attachments]
+        %w(component taxonomies coauthorships attachments)
       end
 
       private
