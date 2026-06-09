@@ -76,8 +76,7 @@ module Decidim
             area_scopes_options(filter.taxonomies),
             value
           ),
-          options,
-          html_options
+          options.merge(html_options)
         )
       end
 
