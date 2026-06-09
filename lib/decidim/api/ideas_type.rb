@@ -19,9 +19,8 @@ module Decidim
       end
     end
 
-    module IdeasTypeHelper
+    module IdeasTypeHelper # rubocop:disable GraphQL/ObjectDescription
       include Decidim::Core::NeedsApiFilterAndOrder
-      description "Ideas type helper"
 
       def self.base_scope(component)
         Idea
