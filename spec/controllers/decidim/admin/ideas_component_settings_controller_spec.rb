@@ -8,7 +8,7 @@ describe Decidim::Admin::IdeasComponentSettingsController do
   let(:user) { create(:user, :confirmed, :admin, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
-  let(:parent_scope) { create(:scope, organization:) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
 
   before do
     request.env["decidim.current_organization"] = organization
@@ -17,15 +17,15 @@ describe Decidim::Admin::IdeasComponentSettingsController do
 
   describe "GET area_coordinates" do
     it "returns the correct coordinates" do
-      get :area_coordinates, params: { id: component.id, parent_scope_id: parent_scope.id, setting_name: "area_scope_coordinates" }
+      get :area_coordinates, params: { id: component.id, taxonomy_filter_id: taxonomy_filter.id, setting_name: "area_scope_coordinates" }
       expect(response).to have_http_status(:ok)
       expect(response).to render_template("decidim/ideas/admin/shared/_area_scope_coordinates")
     end
 
-    context "when the parent scope is not defined" do
+    context "when the taxonomy filter is not defined" do
       it "shows a 404" do
         expect do
-          get :area_coordinates, params: { id: component.id, parent_scope_id: 0, setting_name: "area_scope_coordinates" }
+          get :area_coordinates, params: { id: component.id, taxonomy_filter_id: 0, setting_name: "area_scope_coordinates" }
         end.to raise_error(ActionController::RoutingError)
       end
     end
@@ -33,7 +33,7 @@ describe Decidim::Admin::IdeasComponentSettingsController do
     context "when the settings name is not found" do
       it "shows a 404" do
         expect do
-          get :area_coordinates, params: { id: component.id, parent_scope_id: parent_scope.id, setting_name: "foobar" }
+          get :area_coordinates, params: { id: component.id, taxonomy_filter_id: taxonomy_filter.id, setting_name: "foobar" }
         end.to raise_error(ActionController::RoutingError)
       end
     end
@@ -41,7 +41,7 @@ describe Decidim::Admin::IdeasComponentSettingsController do
     context "when the settings type is not the expected one" do
       it "shows a 404" do
         expect do
-          get :area_coordinates, params: { id: component.id, parent_scope_id: parent_scope.id, setting_name: "area_scope_parent_id" }
+          get :area_coordinates, params: { id: component.id, taxonomy_filter_id: taxonomy_filter.id, setting_name: "area_scope_parent_id" }
         end.to raise_error(ActionController::RoutingError)
       end
     end

@@ -24,18 +24,7 @@ module Decidim
             url: Decidim::ResourceLocatorPresenter.new(idea.participatory_space).url
           },
           component: { id: component.id },
-          area_scope: {
-            id: idea.area_scope.try(:id),
-            name: idea.area_scope.try(:name) || empty_translatable
-          },
-          category: {
-            id: topcategory.try(:id),
-            name: topcategory.try(:name) || empty_translatable
-          },
-          subcategory: {
-            id: subcategory.try(:id),
-            name: subcategory.try(:name) || empty_translatable
-          },
+          taxonomies:,
           title: present(idea).title,
           body: present(idea).body,
           address: idea.address,
@@ -62,23 +51,10 @@ module Decidim
       private
 
       attr_reader :idea
+      alias resource idea
 
       def component
         idea.component
-      end
-
-      def topcategory
-        return if idea.category.blank?
-        return idea.category if idea.category.parent_id.blank?
-
-        @topcategory ||= idea.category.parent
-      end
-
-      def subcategory
-        return if idea.category.blank?
-        return if idea.category.parent_id.blank?
-
-        @subcategory ||= idea.category
       end
 
       def has_coordinates?
@@ -86,22 +62,48 @@ module Decidim
       end
 
       def coordinates
-        return area_scope_coordinates unless has_coordinates?
+        return area_taxonomy_coordinates unless has_coordinates?
 
         @coordinates ||= { latitude: idea.latitude, longitude: idea.longitude }
       end
 
-      def area_scope_coordinates
-        return @area_scope_coordinates if @area_scope_coordinates
-        return blank_coordinates if idea.area_scope.blank?
+      def area_taxonomy_coordinates
+        @area_taxonomy_coordinates ||= compute_area_taxonomy_coordinates
+      end
 
-        scope_coordinates = component.settings.area_scope_coordinates[idea.area_scope.id.to_s.to_sym]
+      def compute_area_taxonomy_coordinates
+        return blank_coordinates unless area_taxonomy_filter_id
+
+        area_taxonomy = idea.taxonomies.find { |t| area_taxonomy_ids.include?(t.id) }
+        return blank_coordinates unless area_taxonomy
+
+        scope_coordinates = component.settings.area_scope_coordinates[:"#{area_taxonomy.id}"]
         return blank_coordinates if scope_coordinates.blank?
 
         latlng = scope_coordinates.split(",")
         return blank_coordinates if latlng.length < 2
 
-        @area_scope_coordinates ||= { latitude: latlng[0].to_f, longitude: latlng[1].to_f }
+        { latitude: latlng[0].to_f, longitude: latlng[1].to_f }
+      end
+
+      def area_taxonomy_filter_id
+        @area_taxonomy_filter_id ||= component.settings.area_taxonomy_filter_id
+      end
+
+      def area_taxonomy_ids
+        @area_taxonomy_ids ||= begin
+          filter = Decidim::TaxonomyFilter.find_by(id: area_taxonomy_filter_id)
+          if filter
+            filter.taxonomies.values.flat_map { |node| collect_taxonomy_ids(node) }
+          else
+            []
+          end
+        end
+      end
+
+      def collect_taxonomy_ids(node)
+        ids = [node[:taxonomy].id]
+        ids + node[:children].values.flat_map { |child_node| collect_taxonomy_ids(child_node) }
       end
 
       def blank_coordinates

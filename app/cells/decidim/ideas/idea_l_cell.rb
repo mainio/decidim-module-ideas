@@ -18,7 +18,7 @@ module Decidim
         :thumbnail_box
       end
 
-      def category_image_variant
+      def taxonomy_image_variant
         :card_box
       end
     end

@@ -133,34 +133,24 @@ describe Decidim::Ideas::IdeaPresenter do
     end
   end
 
-  describe "#area_scope_name" do
-    subject { presenter.area_scope_name }
+  describe "#taxonomy_names" do
+    subject { described_class.new(idea.reload).taxonomy_names }
 
-    it "displays the area scope name" do
-      expect(subject).to eq(translated(idea.area_scope.name))
-    end
+    context "when the idea has taxonomies" do
+      let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+      let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
+      let(:idea) { create(:idea, component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
 
-    context "when the idea does not have an area scope" do
-      let(:idea) { create(:idea, area_scope: false, component:) }
-
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns the taxonomy names" do
+        expect(subject).to eq([translated(taxonomy.name)])
       end
     end
-  end
 
-  describe "#category_name" do
-    subject { presenter.category_name }
+    context "when the idea has no taxonomies" do
+      let(:idea) { create(:idea, component:, category: false, area_scope: false) }
 
-    it "displays the area scope name" do
-      expect(subject).to eq(translated(idea.category.name))
-    end
-
-    context "when the idea does not have a category" do
-      let(:idea) { create(:idea, category: false, component:) }
-
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns an empty array" do
+        expect(subject).to be_empty
       end
     end
   end

@@ -53,21 +53,21 @@ module Decidim
         @display_answer_filter ||= component_settings.idea_answering_enabled && current_settings.idea_answering_enabled
       end
 
-      def display_scope_filter?
-        @display_scope_filter ||= component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id)
+      def display_taxonomy_filters?
+        @display_taxonomy_filters ||= filter_ideas_taxonomy_values.any?
       end
 
-      def display_category_filter?
-        @display_category_filter ||= current_component.categories.any?
-      end
+      # def taxonomies
+      #   @taxonomies ||= @idea.taxonomies
+      # end
 
-      def category_image_path(category)
-        return unless category
-        return unless category.respond_to?(:category_image)
+      def taxonomy_image_path
+        return unless taxonomies.any?
 
-        return category_image_path(category.parent) if (category.category_image.blank? || !category.category_image.attached?) && category.parent
+        taxonomy = taxonomies.find { |t| t.respond_to?(:taxonomy_image) && t.taxonomy_image&.attached? }
+        return unless taxonomy
 
-        category.attached_uploader(:category_image).url
+        taxonomy.attached_uploader(:taxonomy_image).variant_url(taxonomy_image_variant)
       end
 
       def idea_reason_callout_args
@@ -121,28 +121,33 @@ module Decidim
       end
       # rubocop:enable Rails/HelperInstanceVariable
 
-      def filter_ideas_categories_values
-        organization = current_participatory_space.organization
+      def filter_ideas_taxonomy_values
+        filter_ids = current_component.settings.taxonomy_filters.map(&:to_i)
 
-        sorted_main_categories = current_participatory_space.categories.first_class.includes(:subcategories).sort_by do |category|
-          [category.weight, translated_attribute(category.name, organization)]
-        end
+        Decidim::TaxonomyFilter
+          .where(id: filter_ids)
+          .includes(filter_items: :taxonomy_item)
+          .map do |filter|
+            filter.root_taxonomy_id
+            items = filter.filter_items.map(&:taxonomy_item)
 
-        categories_values = []
-        sorted_main_categories.each do |category|
-          category_name = translated_attribute(category.name, organization)
-          categories_values << [category_name, category.id]
+            # Group items by their parent_id
+            grouped = items.group_by(&:parent_id)
 
-          # sorted_descendant_categories = category.descendants.includes(:subcategories).sort_by do |subcategory|
-          #   [subcategory.weight, translated_attribute(subcategory.name, organization)]
-          # end
+            values = []
+            grouped.each do |parent_id, children|
+              # Fetch parent taxonomy
+              parent = Decidim::Taxonomy.find_by(id: parent_id)
+              next unless parent
 
-          # name_prefix = "#{category_name} / "
-          # sorted_descendant_categories.each do |subcategory|
-          #   categories_values << ["#{name_prefix}#{translated_attribute(subcategory.name, organization)}", subcategory.id]
-          # end
-        end
-        categories_values
+              values << [translated_attribute(parent.name), parent.id]
+              children.sort_by { |t| translated_attribute(t.name) }.each do |child|
+                values << ["— #{translated_attribute(child.name)}", child.id]
+              end
+            end
+
+            [filter, values]
+          end
       end
 
       def filter_ideas_state_values

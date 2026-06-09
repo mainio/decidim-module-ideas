@@ -9,11 +9,19 @@ module Decidim
       private
 
       def build_attachment
-        @form.add_actual_attachments.compact_blank.each_with_index do |form_attachment, ind|
+        attachments = @form.add_actual_attachments.compact_blank
+        # Array is [signed_id, title, signed_id, title, ...]
+        attachments.each_slice(2).with_index do |(signed_id, title), ind|
+          next if signed_id.blank?
+
+          blob = ActiveStorage::Blob.find_signed(signed_id)
+          next unless blob
+
           @attachment = Decidim::Ideas::Attachment.new(
-            attached_to: @attached_to, # Keep first
-            title: { I18n.locale.to_s => form_attachment["title"] },
-            file: form_attachment["file"],
+            attached_to: @attached_to,
+            title: { I18n.locale.to_s => title.to_s },
+            file: blob,
+            content_type: blob.content_type,
             weight: 1 + ind
           )
         end
@@ -39,10 +47,11 @@ module Decidim
       def attachment_file_uploaded?
         return false unless attachment_present?
 
-        form_attachment = @form.add_actual_attachments.first
-        return false unless form_attachment
-
-        form_attachment["file"].present?
+        attachments = @form.add_actual_attachments.compact_blank
+        signed_id = attachments.first
+        signed_id.present? && ActiveStorage::Blob.find_signed(signed_id).present?
+      rescue ActiveSupport::MessageVerifier::InvalidSignature
+        false
       end
 
       def attachment_allowed?

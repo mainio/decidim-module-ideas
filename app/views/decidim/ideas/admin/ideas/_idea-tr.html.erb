@@ -1,28 +1,23 @@
 <tr data-id="<%= idea.id %>" <%= "data-published-state=false" if idea.answered? && !idea.published_state? %>>
   <td>
-    <%= check_box_tag "idea_ids_s[]", idea.id, false, class: "js-check-all-idea js-idea-list-check  js-idea-id-#{idea.id}" %><br>
+    <%= check_box_tag "idea_ids_s[]", idea.id, false, class: "js-check-all-idea js-idea-list-check js-idea-id-#{idea.id}" %><br>
   </td>
   <td>
     <%= idea.id %><br>
   </td>
   <td>
     <%= link_to(
-     decidim_html_escape(present(idea).title).html_safe,
-     idea_path(idea)
+      decidim_html_escape(present(idea).title).html_safe,
+      idea_path(idea)
     ) %><br>
   </td>
   <td>
-    <% if idea.area_scope %>
-      <%= translated_attribute idea.area_scope.name %>
-    <% end %>
-  </td>
-  <td>
-    <% if idea.category %>
+    <% idea.taxonomies.each_with_index do |taxonomy, index| %>
       <%= icon "price-tag-3-line", class: "fill-gray w-4 h-4" %>
-      <%= translated_attribute idea.category.name %>
+      <%= translated_attribute taxonomy.name %>
+      <%= tag.br if index < idea.taxonomies.size - 1 %>
     <% end %>
   </td>
-
   <td>
     <strong class="label <%= idea_state_css_class idea.state %>">
       <%= t("decidim/amendment", scope: "activerecord.models", count: 1) if idea.emendation? %>
@@ -57,6 +52,6 @@
 
     <%= icon_with_link_to_idea(idea) %>
 
-   <%= icon_link_to "eye-line", resource_locator(idea).path, t("actions.preview", scope: "decidim.ideas.admin"), class: "action-icon--preview", target: :blank %>
+    <%= icon_link_to "eye-line", resource_locator(idea).path, t("actions.preview", scope: "decidim.ideas.admin"), class: "action-icon--preview", target: :blank %>
   </td>
 </tr>

@@ -14,6 +14,7 @@ module Decidim
       include Paginable
       include Decidim::Ideas::AttachedIdeasHelper
 
+      helper Decidim::Ideas::Admin::FilterableHelper
       helper_method :idea_form_builder, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
 
       before_action :authenticate_user!, only: [:create, :complete]
@@ -24,7 +25,7 @@ module Decidim
 
       def index
         base_query = search.result.published
-        @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
+        @ideas = base_query.includes(:taxonomies, :amendable, :component)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
         @ideas = paginate(@ideas)
@@ -203,10 +204,11 @@ module Decidim
       end
 
       def users_idea_limit_reached?
-        return false unless current_component&.settings&.idea_limit&.positive?
+        idea_limit = current_component&.settings&.idea_limit
+        return false unless idea_limit&.positive?
 
         users_idea_count = Idea.from_author(current_user).where(component: current_component).except_withdrawn
-        current_component.settings.idea_limit <= users_idea_count.count
+        idea_limit <= users_idea_count.count
       end
 
       def search_collection
@@ -218,8 +220,7 @@ module Decidim
           search_text_cont: "",
           with_any_origin: default_filter_origin_params,
           activity: "all",
-          with_any_area_scope: "",
-          with_category: "",
+          with_any_taxonomies: nil,
           with_any_state: %w(),
           type: "ideas"
         }

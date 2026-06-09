@@ -1,19 +1,21 @@
 <% add_decidim_page_title(t(".title")) %>
-<div class="callout-wrapper"></div>
 <div class="card">
-  <div class="item_show__header">
+  <div class="item_show__header item_show__header--with-action-options">
     <h1 class="item_show__header-title">
       <div>
         <%= t(".title") %>
-        <span id="js-selected-ideas-count" class="component-counter component-counter--inline" title="<%= t("decidim.ideas.admin.ideas.index.selected") %>"></span>
+        <span id="js-selected-ideas-count" class="component-counter" title="<%= t("decidim.ideas.admin.ideas.index.selected") %>"></span>
       </div>
       <div class="flex items-center gap-x-4">
         <%= render partial: "bulk-actions" %>
+        <%= render partial: "decidim/admin/components/resource_action" %>
       </div>
-    </h2>
+    </h1>
   </div>
-  <%= admin_filter_selector %>
-  <div class="table-scroll mt-16">
+
+  <%= admin_filter_selector(filter_prefix_key) %>
+
+  <div class="table-scroll mt-8">
     <table class="table-list">
       <thead>
         <tr>
@@ -21,16 +23,13 @@
             <%= check_box_tag "ideas_bulk", "all", false, class: "js-check-all" %>
           </th>
           <th>
-            <%= sort_link(query, :id, t("models.idea.fields.id", scope: "decidim.ideas"), default_order: :desc ) %>
+            <%= sort_link(query, :id, t("models.idea.fields.id", scope: "decidim.ideas"), default_order: :desc) %>
+          </th>
+          <th class="!text-left">
+            <%= sort_link(query, :title, t("models.idea.fields.title", scope: "decidim.ideas")) %>
           </th>
           <th>
-            <%= sort_link(query, :title, t("models.idea.fields.title", scope: "decidim.ideas") ) %>
-          </th>
-          <th>
-            <%= sort_link(query, :area_scope_name, t("models.idea.fields.area_scope", scope: "decidim.ideas") ) %>
-          </th>
-          <th>
-            <%= sort_link(query, :category_name, t("models.idea.fields.category", scope: "decidim.ideas") ) %>
+            <%= t("models.idea.fields.taxonomies", scope: "decidim.ideas") %>
           </th>
           <th>
             <%= sort_link(query, :state, [:state, :is_emendation], t("models.idea.fields.state", scope: "decidim.ideas") ) %>
@@ -38,7 +37,7 @@
 
           <% unless current_settings.publish_answers_immediately? %>
             <th>
-              <%= sort_link(query, :state_published, t("models.idea.fields.published_answer", scope: "decidim.ideas") ) %>
+              <%= sort_link(query, :state_published, t("models.idea.fields.published_answer", scope: "decidim.ideas")) %>
             </th>
           <% end %>
 
@@ -57,7 +56,7 @@
       </thead>
       <tbody>
         <% ideas.each do |idea| %>
-          <%= render partial: "idea-tr", locals: { idea: idea } %>
+          <%= render partial: "idea-tr", locals: { idea: } %>
         <% end %>
       </tbody>
     </table>

@@ -3,10 +3,10 @@ fi:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Valitse idealle alue
         address: Lisää halutessasi idealle kaupunginosa tai tarkempi osoite
         answer: Vastaus
         answered_at: Vastausaika
+        area_scope_id: Valitse idealle alue
         automatic_hashtags: Automaattisesti lisättävät aihetunnisteet (hashtag)
         body: Idean kuvaus
         category_id: Valitse idealle teema
@@ -24,18 +24,19 @@ fi:
       idea_answer:
         answer: Vastaus
         internal_state: Arviointi
+      idea_attachment:
+        file: Liitteen tiedosto
+        title: Liitteen otsikko
+      idea_image_attachment:
+        file: Kuvan tiedosto
+        title: Kuvan otsikko
       ideas_copy:
-        copy_ideas: Ymmärrän, että tämä tuo kaikki ideat valitusta komponentista tähän komponenttiin ja tätä toimintoa ei voi peruuttaa.
+        copy_ideas: Ymmärrän, että tämä tuo kaikki ideat valitusta komponentista tähän
+          komponenttiin ja tätä toimintoa ei voi peruuttaa.
         origin_component_id: Komponentti, josta ideat kopioidaan
       ideas_import:
         import_ideas: Tuo ideoita
         keep_authors: Säilytä alkuperäiset ideoiden laatijat
-      idea_attachment:
-        title: Liitteen otsikko
-        file: Liitteen tiedosto
-      idea_image_attachment:
-        title: Kuvan otsikko
-        file: Kuvan tiedosto
     errors:
       models:
         idea:
@@ -69,13 +70,34 @@ fi:
       filters:
         area_scope_id_eq:
           label: Alue
+        ideas:
+          state_eq:
+            label: State
+            values:
+              accepted: Accepted to the next step
+              evaluating: Evaluating
+              rejected: Not accepted to the next step
+              withdrawn: Withdrawn
+          state_null:
+            label: Status
+            values:
+              'true': Not answered
+          taxonomies_part_of_contains:
+            label: Taxonomy
+          valuator_role_ids_has:
+            label: Assigned to valuator
+          with_any_state:
+            label: Answered
+            values:
+              state_not_published: Not answered
+              state_published: Answered
         is_emendation_true:
           label: Tyyppi
           values:
             'false': Ideat
             'true': Muutokset
         search_placeholder:
-          id_string_or_title_cont: '%{collection}: Hae ID-numeron tai otsikon perusteella.'
+          id_string_or_title_cont: "%{collection}: Hae ID-numeron tai otsikon perusteella."
         state_eq:
           label: Tila
           values:
@@ -99,21 +121,24 @@ fi:
             amendments_enabled: Muutokset käytössä
             amendments_enabled_help: Jos käytössä, määritä asetukset kullekin vaiheelle.
             amendments_wizard_help_text: Muutoksen luonnin ohjeteksti
-            area_scope_parent_id: Alueiden ylätason teema
+            announcement: Ilmoitus
             area_scope_coordinates: Alueiden teemojen koordinaatit (pituusaste,leveysaste)
+            area_scope_parent_id: Alueiden ylätason teema
+            area_taxonomy_filter_id: Area filter taxonomy
             areas_info_intro: Alueiden tietoikkunan intro
             areas_info_text: Alueiden tietoikkunan teksti
-            announcement: Ilmoitus
             attachments_allowed: Salli liitteet
             can_accumulate_supports_beyond_threshold: Voi kerätä kannatuksia yli kynnysarvon
             categories_info_intro: Teemojen tietoikkunan intro
             categories_info_text: Teemojen tietoikkunan teksti
             comments_enabled: Kommentit käytössä
             comments_max_length: Kommentin maksimipituus
-            default_map_center_coordinates: Kartan keskipisteen oletuskoordinaatit (pituusaste,leveysaste)
+            default_map_center_coordinates: Kartan keskipisteen oletuskoordinaatit
+              (pituusaste,leveysaste)
             geocoding_enabled: Geokoodaus käytössä
             idea_answering_enabled: Ideoihin vastaaminen käytössä
-            idea_edit_before_minutes: Tekijät voivat muokata ideoita tämän ajan sisällä (minuuttia)
+            idea_edit_before_minutes: Tekijät voivat muokata ideoita tämän ajan sisällä
+              (minuuttia)
             idea_length: Idean runkotekstin merkkien enimmäismäärä
             idea_limit: Ideoiden enimmäismäärä käyttäjää kohden
             idea_listing_intro: Ideoiden listaussivun intro
@@ -121,99 +146,150 @@ fi:
             image_allowed: Salli kuva
             materials_text: Materiaalien ohjeteksti
             new_idea_help_text: Uuden idean ohjeteksti
-            resources_permissions_enabled: Toiminnallisuutta koskevat oikeudet voidaan asettaa jokaiselle idealle
+            no_taxonomy_filters_found: No taxonomy filters found.
+            resources_permissions_enabled: Toiminnallisuutta koskevat oikeudet voidaan
+              asettaa jokaiselle idealle
+            taxonomy_filters: Select filters for the component
+            taxonomy_filters_add: Add filter
             terms_intro: Reunaehtojen intro
             terms_text: Reunaehtojen teksti
             threshold_per_idea: Ideoiden kannatusten määrän kynnysarvo
           step:
             amendment_creation_enabled: Muutosten luonti käytössä
-            amendment_creation_enabled_help: Osallistujat voivat ehdottaa muutoksia ideoille.
+            amendment_creation_enabled_help: Osallistujat voivat ehdottaa muutoksia
+              ideoille.
             amendment_promotion_enabled: Muutosten siirto uusiksi ehdotuksiksi käytössä
-            amendment_promotion_enabled_help: Muutosten laatijat voivat siirtää hylättyjä muutoksia uusiksi ehdotuksiksi.
+            amendment_promotion_enabled_help: Muutosten laatijat voivat siirtää hylättyjä
+              muutoksia uusiksi ehdotuksiksi.
             amendment_reaction_enabled: Reaktiot käytössä muutoksille
-            amendment_reaction_enabled_help: Ideoiden laatijat voivat hyväksyä tai hylätä osallistujan muutoksia.
+            amendment_reaction_enabled_help: Ideoiden laatijat voivat hyväksyä tai
+              hylätä osallistujan muutoksia.
             amendments_visibility: Muutosten näkyvyys
             amendments_visibility_choices:
               all: Muutokset ovat näkyvillä kaikille
               participants: Muutokset ovat näkyvillä ainoastaan niiden laatijoille
-            amendments_visibility_help: Jos asetus "Muutokset ovat näkyvillä ainoastaan niiden laatijoille" on määritetty, osallistujien tulee kirjautua sisään nähdäkseen tehdyt muutokset.
+            amendments_visibility_help: Jos asetus "Muutokset ovat näkyvillä ainoastaan
+              niiden laatijoille" on määritetty, osallistujien tulee kirjautua sisään
+              nähdäkseen tehdyt muutokset.
             announcement: Ilmoitus
-            automatic_hashtags: Aihetunnisteet (hashtag), jotka lisätään kaikkiin ehdotuksiin
+            automatic_hashtags: Aihetunnisteet (hashtag), jotka lisätään kaikkiin
+              ehdotuksiin
             comments_blocked: Kommentointi estetty
             creation_enabled: Idean luominen käytössä
             idea_answering_enabled: Ideaan vastaaminen käytössä
             publish_answers_immediately: Julkaise ideoiden vastaukset heti
-            suggested_hashtags: Käyttäjille ehdotettavat aihetunnisteet (hashtag) uusille ehdotuksille
+            suggested_hashtags: Käyttäjille ehdotettavat aihetunnisteet (hashtag)
+              uusille ehdotuksille
     events:
       ideas:
         creation_enabled:
-          email_intro: 'Voit nyt luoda uusia ideoita kohteessa %{participatory_space_title}! Aloita osallistuminen tällä sivulla:'
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta %{participatory_space_title}. Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
+          email_intro: 'Voit nyt luoda uusia ideoita kohteessa %{participatory_space_title}!
+            Aloita osallistuminen tällä sivulla:'
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta
+            %{participatory_space_title}. Voit lopettaa ilmoitusten vastaanottamisen
+            edellä esitetyn linkin kautta.
           email_subject: Ideoita on nyt mahdollista laatia kohteessa %{participatory_space_title}
-          notification_title: Voit nyt esittää <a href="%{resource_path}">uusia ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Voit nyt esittää <a href="%{resource_path}">uusia ideoita</a>
+            kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" hyväksyttiin jatkoon. Voit lukea vastauksen täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
+            email_intro: 'Ideasi "%{resource_title}" hyväksyttiin jatkoon. Voit lukea
+              vastauksen täältä:'
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean
+              "%{resource_title}".
             email_subject: Ideasi hyväksyttiin jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> hyväksyttiin jatkoon.
+            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a>
+              hyväksyttiin jatkoon.
           follower:
-            email_intro: 'Idea "%{resource_title}" hyväksyttiin jatkoon. Voit lukea vastauksen täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
+            email_intro: 'Idea "%{resource_title}" hyväksyttiin jatkoon. Voit lukea
+              vastauksen täältä:'
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}".
+              Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
             email_subject: Seuraamasi idea hyväksyttiin jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> hyväksyttiin jatkoon.
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a>
+              hyväksyttiin jatkoon.
         idea_evaluating:
           affected_user:
-            email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
+            email_intro: 'Ideaasi "%{resource_title}" arvioidaan. Voit tarkastella
+              vastausta täältä:'
             email_outro: Saat tämän ilmoituksen, koska olet luonut idean "%{resource_title}".
             email_subject: Ideaasi arvioidaan
-            notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a> arvioidaan.
+            notification_title: Ideaasi <a href="%{resource_path}">%{resource_title}</a>
+              arvioidaan.
           follower:
-            email_intro: 'Ideaa "%{resource_title}" arvioidaan. Voit tarkastella vastausta täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
+            email_intro: 'Ideaa "%{resource_title}" arvioidaan. Voit tarkastella vastausta
+              täältä:'
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}".
+              Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
             email_subject: Seuraamaasi ideaa arvioidaan
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on arvioitavana.
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a>
+              on arvioitavana.
         idea_mentioned:
-          email_intro: Ideasi "%{mentioned_idea_title}" on mainittu <a href="%{resource_url}">tämän osallistumistilan</a> kommentissa.
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
+          email_intro: Ideasi "%{mentioned_idea_title}" on mainittu <a href="%{resource_url}">tämän
+            osallistumistilan</a> kommentissa.
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean
+            "%{resource_title}".
           email_subject: Ideasi "%{mentioned_idea_title}" on mainittu
-          notification_title: Ideasi %{mentioned_idea_title} on mainittu <a href="%{resource_path}">tässä tilassa</a> kommentissa.
+          notification_title: Ideasi %{mentioned_idea_title} on mainittu <a href="%{resource_path}">tässä
+            tilassa</a> kommentissa.
         idea_published:
-          email_intro: '%{author_name} %{author_nickname}, jota seuraat, on julkaissut uuden ehdotuksen "%{resource_title}". Tutustu ehdotukseen ja osallistu:'
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat %{author_nickname}. Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
+          email_intro: '%{author_name} %{author_nickname}, jota seuraat, on julkaissut
+            uuden ehdotuksen "%{resource_title}". Tutustu ehdotukseen ja osallistu:'
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat %{author_nickname}.
+            Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
           email_subject: Uusi idea "%{resource_title}", jonka on luonut %{author_nickname}
-          notification_title: <a href="%{resource_path}">%{resource_title}</a> idea julkaistiin tekijän <a href="%{author_path}">%{author_name} %{author_nickname}</a> toimesta.
+          notification_title: <a href="%{resource_path}">%{resource_title}</a> idea
+            julkaistiin tekijän <a href="%{author_path}">%{author_name} %{author_nickname}</a>
+            toimesta.
         idea_published_for_space:
-          email_intro: Idea "%{resource_title}", jota seuraat, on lisätty kohteeseen "%{participatory_space_title}".
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta "%{participatory_space_title}". Voit lopettaa seuraamisen edellä esitetyn linkin kautta.
+          email_intro: Idea "%{resource_title}", jota seuraat, on lisätty kohteeseen
+            "%{participatory_space_title}".
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta
+            "%{participatory_space_title}". Voit lopettaa seuraamisen edellä esitetyn
+            linkin kautta.
           email_subject: Uusi idea "%{resource_title}" lisätty kohteeseen %{participatory_space_title}
-          notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> on lisätty kohteeseen %{participatory_space_title}
+          notification_title: Idea <a href="%{resource_path}">%{resource_title}</a>
+            on lisätty kohteeseen %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Ideasi "%{resource_title}" ei päässyt jatkoon. Voit lukea vastauksen täältä:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean "%{resource_title}".
+            email_intro: 'Ideasi "%{resource_title}" ei päässyt jatkoon. Voit lukea
+              vastauksen täältä:'
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet luonut idean
+              "%{resource_title}".
             email_subject: Ideasi ei päässyt jatkoon
-            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a> ei päässyt jatkoon.
+            notification_title: Ideasi <a href="%{resource_path}">%{resource_title}</a>
+              ei päässyt jatkoon.
           follower:
-            email_intro: 'Idea "%{resource_title}" ei päässyt jatokon. Voit lukea vastauksen tällä sivulla:'
-            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}". Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
+            email_intro: 'Idea "%{resource_title}" ei päässyt jatokon. Voit lukea
+              vastauksen tällä sivulla:'
+            email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat "%{resource_title}".
+              Voit lopettaa sen seuraamisen edellä esitetyn linkin kautta.
             email_subject: Seuraamasi idea ei päässyt jatkoon
-            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a> ei päässyt jatkoon.
-        idea_update_category:
-          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi "%{resource_title}" teeman, tarkista se tältä sivulta:'
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
-          email_subject: Idean %{resource_title} teema on päivitetty
-          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> teeman.
+            notification_title: Idea <a href="%{resource_path}">%{resource_title}</a>
+              ei päässyt jatkoon.
         idea_update_area_scope:
-          email_intro: 'Hallintakäyttäjä on päivittänyt ideasi "%{resource_title}" alueen, tarkista se tältä sivulta:'
+          email_intro: 'Hallintakäyttäjä on päivittänyt ideasi "%{resource_title}"
+            alueen, tarkista se tältä sivulta:'
           email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
           email_subject: Idean %{resource_title} alue on päivitetty
-          notification_title: Hallintakäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a> alueen.
+          notification_title: Hallintakäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a>
+            alueen.
+        idea_update_category:
+          email_intro: 'Hallinnointikäyttäjä on päivittänyt ideasi "%{resource_title}"
+            teeman, tarkista se tältä sivulta:'
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska olet idean tekijä.
+          email_subject: Idean %{resource_title} teema on päivitetty
+          notification_title: Hallinnointikäyttäjä on päivittänyt idean <a href="%{resource_path}">%{resource_title}</a>
+            teeman.
         voting_enabled:
-          email_intro: 'Voit kannattaa ideoita kohteessa %{participatory_space_title}! Osallistu tällä sivulla:'
-          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta %{participatory_space_title}. Voit lopettaa ilmoitusten vastaanottamisen edellä esitetyn linkin kautta.
+          email_intro: 'Voit kannattaa ideoita kohteessa %{participatory_space_title}!
+            Osallistu tällä sivulla:'
+          email_outro: Tämä ilmoitus on lähetetty sinulle, koska seuraat kohdetta
+            %{participatory_space_title}. Voit lopettaa ilmoitusten vastaanottamisen
+            edellä esitetyn linkin kautta.
           email_subject: Ideoiden kannattaminen on alkanut kohteessa %{participatory_space_title}
-          notification_title: Voit nyt <a href="%{resource_path}">kannattaa ideoita</a> kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Voit nyt <a href="%{resource_path}">kannattaa ideoita</a>
+            kohteessa <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
         idea: Ideat
@@ -221,19 +297,25 @@ fi:
       badges:
         accepted_ideas:
           conditions:
-            - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen on mahdollista
-            - Yritä luoda ideoita, jotka voidaan toteuttaa. Tällä tavoin ne todennäköisesti hyväksytään jatkoon.
-          description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita ja ne hyväksytään jatkoon.
+          - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen
+            on mahdollista
+          - Yritä luoda ideoita, jotka voidaan toteuttaa. Tällä tavoin ne todennäköisesti
+            hyväksytään jatkoon.
+          description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita
+            ja ne hyväksytään jatkoon.
           description_another: Tällä käyttäjällä on %{score} jatkoon hyväksyttyä ideaa.
           description_own: Olet saanut %{score} ideaa hyväksyttyä jatkoon.
           name: Jatkoon hyväksytyt ideat
-          next_level_in: Saa vielä %{score} ideaa hyväksyttyä jatkoon noustaksesi seuraavalle tasolle!
-          unearned_another: Tällä käyttäjällä ei ole vielä yhtään jatkoon hyväksyttyä ideaa.
+          next_level_in: Saa vielä %{score} ideaa hyväksyttyä jatkoon noustaksesi
+            seuraavalle tasolle!
+          unearned_another: Tällä käyttäjällä ei ole vielä yhtään jatkoon hyväksyttyä
+            ideaa.
           unearned_own: Sinulla ei ole vielä jatkoon hyväksyttyjä ideoita.
         ideas:
           conditions:
-            - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen on mahdollista
-            - Luo uusi idea
+          - Valitse kiinnostuksesi mukaan osallistumistila, jossa ideoiden jättäminen
+            on mahdollista
+          - Luo uusi idea
           description: Tämä kunniamerkki myönnetään, kun luot aktiivisesti uusia ideoita.
           description_another: Tämä käyttäjä on luonut %{score} ideaa.
           description_own: Olet luonut %{score} ideaa.
@@ -257,9 +339,6 @@ fi:
         exports:
           comments: Kommentit
           ideas: Ideat
-        models:
-          idea:
-            name: Idea
         idea_answers:
           form:
             accepted: Hyväksytty jatkoon
@@ -278,10 +357,13 @@ fi:
             title: Päivitä ideaa
             update: Päivitä
           form:
-            attachment_legend: "Lisää idealle liite"
-            image_legend: "Valitse idealle kuva"
+            attachment_legend: Lisää idealle liite
+            image_legend: Valitse idealle kuva
             select_a_category: Valitse idealle ensisijainen teema
             select_a_sub_category: Valitse idealle alateema
+            select_a_sub_taxonomy: Select a sub taconomy
+            select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+            select_a_taxonomy: Select a taxonomy
           index:
             actions: Toiminnot
             cancel: Peruuta
@@ -304,6 +386,7 @@ fi:
           publish_answers:
             number_of_ideas: Julkaistaan %{number} vastausta ideoille.
             select_a_idea: Valitse idea
+            select_an_idea: Select an idea
           show:
             amendments_count: Muutosten lukumäärä
             area_scope: Alue
@@ -316,28 +399,32 @@ fi:
             comments_positive_count: Puolesta
             created_at: Luonnin ajankohta
             documents: Asiakirjat
+            ideas: Ideat
             link: Linkki
             photos: Kuvat
-            show_email: Näytä sähköpostiosoite
-            ideas: Ideat
             ranking: "%{ranking} / %{total}"
-          update_category:
-            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
-            select_a_category: Valitse teema
-            select_a_idea: Valitse idea
-            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}: %{ideas}.'
+            show_email: Näytä sähköpostiosoite
+            votes_count: Comments count
           update_area_scope:
             invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
             select_a_idea: Valitse idea
             select_a_scope: Valitse alue
-            success: 'Seuraavien ideoiden alueen päivitys onnistui %{subject_name}: %{ideas}.'
+            success: 'Seuraavien ideoiden alueen päivitys onnistui %{subject_name}:
+              %{ideas}.'
+          update_category:
+            invalid: 'Näillä ideoilla oli jo teema %{subject_name}: %{ideas}.'
+            select_a_category: Valitse teema
+            select_a_idea: Valitse idea
+            success: 'Seuraavien ideoiden teeman päivitys onnistui %{subject_name}:
+              %{ideas}.'
         ideas_imports:
           create:
             invalid: Ideoiden tuominen epäonnistui
             success: "%{number} idean tuonti onnistui"
           new:
             create: Tuo ideoita
-            no_components: Tässä osallistumistilassa ei ole muita ehdotuskomponentteja ideoiden tuomiseksi.
+            no_components: Tässä osallistumistilassa ei ole muita ehdotuskomponentteja
+              ideoiden tuomiseksi.
             select_component: Valitse komponentti
             select_states: Tarkista tuotavien ideoiden tilat
         ideas_merges:
@@ -348,12 +435,18 @@ fi:
           create:
             invalid: Valittujen ideoiden jakaminen epäonnistui.
             success: Ideat jaettiin onnistuneesti uusiksi ideoiksi.
+        models:
+          idea:
+            name: Idea
       admin_log:
         idea:
-          answer: "%{user_name} vastasi ideaan %{resource_name} osallistumistilassa %{space_name}"
+          answer: "%{user_name} vastasi ideaan %{resource_name} osallistumistilassa
+            %{space_name}"
           create: "%{user_name} loi idean %{resource_name} osallistumistilaan %{space_name}"
-          publish_answer: "%{user_name} julkaisi vastauksen idealle %{resource_name} osallistumistilassa %{space_name}"
-          update: "%{user_name} päivitti ideaa %{resource_name} osallistumistilassa %{space_name}"
+          publish_answer: "%{user_name} julkaisi vastauksen idealle %{resource_name}
+            osallistumistilassa %{space_name}"
+          update: "%{user_name} päivitti ideaa %{resource_name} osallistumistilassa
+            %{space_name}"
       answers:
         accepted: Hyväksytty jatkoon
         evaluating: Arvioitavana
@@ -361,6 +454,10 @@ fi:
         rejected: Ei jatkoon
         withdrawn: Peruutettu
       application_helper:
+        activity_filter_values:
+          all: All
+          my_favorites: My favorites
+          my_ideas: My ideas
         filter_category_values:
           all: Kaikki
         filter_origin_values:
@@ -388,28 +485,13 @@ fi:
       destroy_draft:
         error: Luonnoksen poisto epäonnistui.
         success: Luonnoksen poisto onnistui.
-      idea_l:
-        card_label: "Idea: %{title}"
       idea_g:
-        card_label: "Idea: %{title}"
-      last_activity:
-        idea_updated_html: "<span>Idea päivitetty osoitteessa %{link}</span>"
-        new_idea_at_html: "<span>Uusi idea %{link}</span>"
-      models:
-        idea:
-          fields:
-            area_scope: Alue
-            category: Teema
-            comments: Kommentit
-            id: ID
-            official_idea: Virallinen idea
-            published_answer: Julkaistu vastaus
-            published_at: Julkaisuaika
-            scope: Teema
-            state: Arviointi
-            title: Nimi
-      new:
-        limit_reached: Et voi luoda uusia ideoita, koska olet ylittänyt rajan.
+        card_label: 'Idea: %{title}'
+      idea_g_cell:
+        card_wrapper:
+          card_label: Card label
+      idea_l:
+        card_label: 'Idea: %{title}'
       ideas:
         compare:
           continue: Jatka
@@ -420,8 +502,8 @@ fi:
           title: Viimeistele ideasi
         count:
           ideas_count:
-            one: "Löytyi %{count} idea"
-            other: "Löytyi %{count} ideaa"
+            one: Löytyi %{count} idea
+            other: Löytyi %{count} ideaa
         edit:
           back: Palaa edelliselle sivulle
           send: Tallenna
@@ -429,25 +511,30 @@ fi:
         edit_draft:
           discard: Peruuta tämä luonnos
           discard_confirmation: Haluatko varmasti peruuttaa tämän idealuonnoksen?
-          draft_announcement_html: <p>Tämä on keskeneräinen idealuonnos. Sinun on julkaistava luonnos, jotta se tulee näkyviin sivustolle.</p><p>Sinulla voi olla vain yksi keskeneräinen idea kerrallaan.</p>
+          draft_announcement_html: "<p>Tämä on keskeneräinen idealuonnos. Sinun on
+            julkaistava luonnos, jotta se tulee näkyviin sivustolle.</p><p>Sinulla
+            voi olla vain yksi keskeneräinen idea kerrallaan.</p>"
           send: Esikatsele
           title: Muokkaa idealuonnosta
         edit_view:
+          cancel: Peruuta
           discard: Peruuta tämä luonnos
           discard_confirmation: Haluatko varmasti peruuttaa tämän idealuonnoksen?
-          cancel: Peruuta
           save: Tallenna keskeneräisenä
           sign_in: Kirjaudu sisään
-          sign_in_before_submitting: Ennen idean jättämistä sinun tulee kirjautua sisään
-          you_can_invite_others: Mikäli haluatte jättää idean porukalla, voi kutsua muita idean tekijöiksi idean jättämisen jälkeen
+          sign_in_before_submitting: Ennen idean jättämistä sinun tulee kirjautua
+            sisään
+          you_can_invite_others: Mikäli haluatte jättää idean porukalla, voi kutsua
+            muita idean tekijöiksi idean jättämisen jälkeen
         filters:
           activity: Oma toiminta
           all: Kaikki
           all_area_scopes: Kaikki alueet
           all_categories: Kaikki teemat
           all_states: Kaikki
-          area_scope: Alue
+          all_taxonomies: All
           amendment_type: Tyyppi
+          area_scope: Alue
           category: Teema
           keyword: Hakusana
           my_favorites: Näytä omat suosikkisi
@@ -467,26 +554,43 @@ fi:
           add_attachment: Lisää liite
           add_image: Lisää kuva
           address_lookup_button: Etsi
-          attachment_legend: "Lisää idealle liite"
+          attachment_legend: Lisää idealle liite
           characters_min: "(vähintään %count% merkkiä vaaditaan)"
           characters_used: "%count%/%total% merkkiä käytetty"
           close_modal: Sulje ikkuna
           edit_attachment: Muuta liitettä
           edit_image: Muuta kuvaa
-          files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Kuville ja liitteille tulee lisätä nimet.
-          files_info_images: Voit lisätä idealle kuvan, joka näkyy idean yhteydessä. Kuvalle tulee lisätä nimet.
-          files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja liitteille tulee lisätä nimet.
+          files_info_attachments: Voit lisätä idealle yhden kuvan, joka näkyy idean
+            yhteydessä. Kuville ja liitteille tulee lisätä nimet.
+          files_info_images: Voit lisätä idealle kuvan, joka näkyy idean yhteydessä.
+            Kuvalle tulee lisätä nimet.
+          files_info_images_and_attachments: Voit lisätä idealle yhden kuvan, joka
+            näkyy idean yhteydessä. Tämän lisäksi voit lisätä liitteiksi kuvia tai
+            muita tiedostoja, jotka auttavat havainnollistamaan ideaa. Kuville ja
+            liitteille tulee lisätä nimet.
           image_added: Kuva lisätty
-          image_legend: "Lisää idealle kuva"
+          image_legend: Lisää idealle kuva
           remove_attachment: Poista liite
           remove_attachment_confirm: Haluatko varmasti poistaa idealta liitteen?
           required_fields_text: Pakolliset kentät on merkitty *-merkillä.
           reset_field: Tyhjennä kenttä
           select_a_category: Valitse idealle ensisijainen teema
           select_a_sub_category: Valitse idealle alateema
+          select_a_sub_taxonomy: Select a sub taconomy
+          select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+          select_a_taxonomy: Select a taxonomy
           show_areas_info_text: Tarkista, mitkä kaupunginosat kuuluvat eri suurpiireihin
           show_categories_info_text: Katso, mitä teemat pitävät sisällään
           show_terms_info_text: Tutustu kriteereihin
+        idea:
+          creation_date: 'Julkaisuaika: %{date}'
+          view_idea: Näytä idea
+        idea_aside:
+          flag: Ilmianna idea
+          print: Tulosta idea
+          share: Jaa idea
+          show_comments: Katso idean kommentit
+          show_on_map: Katso idea kartalla
         idea_attributes:
           attributes:
             address: Sijainti
@@ -495,21 +599,42 @@ fi:
             id: Numero (ID)
             published_at: Julkaisuaika
           title: Tiedot
+        idea_controls:
+          edit_idea: Muokkaa ideaa
+          manage_idea: Hallinnoi ideaa
+          withdraw_confirmation_html: Haluatko varmasti peruuttaa tämän idean?<br><br><strong>Tätä
+            toimintoa ei voi peruuttaa!</strong>
+          withdraw_idea: Peruuta idea
+        idea_full:
+          changes_at_title: Muutokset nimessä
+          comments: Kommentit
+          edit_idea: Muokkaa ideaa
+          show_versions: Näytä versiohistoria
+          subtitle: Idea
+        idea_map:
+          title: Idea kartalla
+        ideas:
+          empty: Ei vielä ideoita
+          empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
         index:
-          description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös itse tuoda ajatuksesi kuuluviin!
-          draft_idea_title: Sinulla on keskeneräinen idea!
+          description: Tutustu muiden ideoihin kartalta ja ideakorteista. Voit myös
+            itse tuoda ajatuksesi kuuluviin!
           draft_idea_continue: Jatka ideaasi
-          draft_idea_description: Olet aikaisemmin tallentanut idean keskeneräisenä. Voit nyt jatkaa sen kirjoittamista.
+          draft_idea_description: Olet aikaisemmin tallentanut idean keskeneräisenä.
+            Voit nyt jatkaa sen kirjoittamista.
+          draft_idea_title: Sinulla on keskeneräinen idea!
           leave_your_idea: Käy jättämässä oma ideasi!
           new_idea: Uusi idea
-          title: Tutustu ideoihin
           see_all_withdrawn: Näytä kaikki peruutetut ideat
           show_list: Näytä tulokset listana
           show_map: Näytä tulokset kartalla
           subtitle: Etsi ja tutki ideoita!
+          title: Tutustu ideoihin
         map:
           dynamic:
             skip_button: Ohita kartta
+        map_template:
+          view_idea: Näytä idea
         new:
           back: Palaa edelliselle sivulle
           get_help: Siirry ohjeisiin
@@ -526,63 +651,46 @@ fi:
           recent: Viimeisimmät
           with_more_authors: Eniten laatijoita
         preview:
-          description: Tarkasta ensin, miltä ideasi näyttää, kun se julkaistaan sivustolla. Mikäli haluat tehdä muutoksia, voit siirtyä takaisin muokkausnäkymään. Jos olet tyytyväinen ideaasi, julkaise se!
+          description: Tarkasta ensin, miltä ideasi näyttää, kun se julkaistaan sivustolla.
+            Mikäli haluat tehdä muutoksia, voit siirtyä takaisin muokkausnäkymään.
+            Jos olet tyytyväinen ideaasi, julkaise se!
+          idea_edit_before_minutes:
+            one: Voit muokata tätä ideaa ensimmäisen minuutin kuluttua idean julkaisemisesta.
+              Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
+            other: Voit muokata tätä ideaa ensimmäisten %{count} minuutin aikana idean
+              julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan
+              ideaa.
           modify: Muokkaa ideaa
           not_published: Ideaasi ei ole vielä julkaistu
-          not_published_description: Ideasi on tallennettu keskeneräisenä luonnoksena. Se pitää julkaista, jotta se tulee näkyviin sivustolle.
-          idea_edit_before_minutes:
-            one: Voit muokata tätä ideaa ensimmäisen minuutin kuluttua idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
-            other: Voit muokata tätä ideaa ensimmäisten %{count} minuutin aikana idean julkaisemisesta. Kun tämä aikaikkuna sulkeutuu, et pysty muokkaamaan ideaa.
+          not_published_description: Ideasi on tallennettu keskeneräisenä luonnoksena.
+            Se pitää julkaista, jotta se tulee näkyviin sivustolle.
           publish: Julkaise
           title: Esikatsele ideaasi
-        idea:
-          creation_date: 'Julkaisuaika: %{date}'
-          view_idea: Näytä idea
-        idea_aside:
-          share: Jaa idea
-          show_comments: Katso idean kommentit
-          show_on_map: Katso idea kartalla
-          print: Tulosta idea
-          flag: Ilmianna idea
-        idea_controls:
-          edit_idea: Muokkaa ideaa
-          manage_idea: Hallinnoi ideaa
-          withdraw_confirmation_html: Haluatko varmasti peruuttaa tämän idean?<br><br><strong>Tätä toimintoa ei voi peruuttaa!</strong>
-          withdraw_idea: Peruuta idea
-        idea_full:
-          changes_at_title: Muutokset nimessä
-          comments: Kommentit
-          edit_idea: Muokkaa ideaa
-          show_versions: Näytä versiohistoria
-          subtitle: Idea
-        idea_map:
-          title: Idea kartalla
-        ideas:
-          empty: Ei vielä ideoita
-          empty_filters: Ideoita ei löytynyt valituilla hakuehdoilla
-        map_template:
-          view_idea: Näytä idea
         show:
           answer: Vastaa
           back_to: Takaisin
           back_to_list: Näytä muut ideat
           changes_at_title: Muutokset kohteessa "%{title}"
           feedback_title: Kiitos idean jättämisestä!
-          link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen muutoksesta
-          link_to_promoted_emendation_text: Näytä hylätty muutos.
-          link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
-          link_to_idea_from_emendation_text: Näytä idea
           idea_accepted_reason: Tämä idea hyväksyttiin jatkoon
           idea_in_evaluation_reason: Tätä ideaa arvioidaan
           idea_rejected_reason: Tämä idea ei päässyt jatkoon
+          link_to_idea_from_emendation_help_text: Tämä on hylätty muutos
+          link_to_idea_from_emendation_text: Näytä idea
+          link_to_promoted_emendation_help_text: Tämä idea on peräisin toisen ehdotuksen
+            muutoksesta
+          link_to_promoted_emendation_text: Näytä hylätty muutos.
           read_less: Vähemmän
           read_more: Lue lisää
           report: Ilmoita
-          withdraw_btn_hint: Jos muutat mieltäsi, voit perua ideasi, mikäli se ei ole saanut kannatusta. Ideaa ei poisteta, se näkyy peruutettujen ideoiden luettelossa.
+          withdraw_btn_hint: Jos muutat mieltäsi, voit perua ideasi, mikäli se ei
+            ole saanut kannatusta. Ideaa ei poisteta, se näkyy peruutettujen ideoiden
+            luettelossa.
           withdraw_confirmation: Haluatko varmasti peruuttaa tämän idean?
           withdraw_idea: Peruuta idea
         tags:
-          changed_from: "(muutettu nimestä <u>%{previous_name}</u> hallintakäyttäjän toimesta)"
+          changed_from: "(muutettu nimestä <u>%{previous_name}</u> hallintakäyttäjän
+            toimesta)"
         wizard_steps:
           see_steps: näytä vaiheet
           step_1: Luo ideasi
@@ -593,10 +701,15 @@ fi:
       ideas_picker:
         choose_ideas: Valitse ideat
         close: Sulje
-        more_ideas: Ideoita on vielä %{number} kpl lisää. Muuta hakuehtoja löytääksesi ne.
-        no_ideas: Hakuehtosi eivät vastaa yhtään ideaa tai yhtään ideaa ei vielä ole olemassa.
+        more_ideas: Ideoita on vielä %{number} kpl lisää. Muuta hakuehtoja löytääksesi
+          ne.
+        no_ideas: Hakuehtosi eivät vastaa yhtään ideaa tai yhtään ideaa ei vielä ole
+          olemassa.
       ideas_picker_field:
         ideas: Ideat
+      ideas_picker_field_cell:
+        field_label:
+          ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Ehdotukseen liitetyt ideat
         choose_idea: Valitse idea
@@ -606,11 +719,17 @@ fi:
           all: Kaikki
           all_area_scopes: Kaikki alueet
           all_categories: Kaikki teemat
+          all_taxonomies: All taxonomies
           area_scope: Alue
           category: Teema
           close_modal: Sulje ikkuna
           filter: Suodata
           filter_by: Suodata
+          filters:
+            activity: Activity
+            reset: Reset
+            search: Search
+            title: Title
           my_favorites: Näytä omat suosikkisi
           my_ideas: Näytä omat ideasi
           origin: Alkuperä
@@ -619,12 +738,53 @@ fi:
           state: Arviointi
           title: Etsi ideoita
           unfold: Avaa
+        filters_small_view:
+          filters:
+            close_modal: Close modal
+            filter: Filter
+            filter_by: Filter by
+            unfold: Unfold
+        idea:
+          remove_idea: Remove idea
+          show_idea_link: Show idea link
+        ideas:
+          choose_idea: Choose idea
+          chosen_idea: Chosen idea
+          remove_idea: Remove idea
         pcs_html: "<span>%{number}</span> kpl"
         remove_idea: Poista idea
+        show:
+          attached_ideas_number: Attached ideas number
+          pcs_html: Pcs html
         show_idea_link: Näytä ideasivu
+      ideas_picker_inline_cell:
+        activity_filter_values:
+          filters:
+            all: All
+            my_favorites: My favorites
+            my_ideas: My ideas
       info:
         show:
           back: Palaa edelliselle sivulle
+      last_activity:
+        idea_updated_html: "<span>Idea päivitetty osoitteessa %{link}</span>"
+        new_idea_at_html: "<span>Uusi idea %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Alue
+            category: Teema
+            comments: Kommentit
+            id: ID
+            official_idea: Virallinen idea
+            published_answer: Julkaistu vastaus
+            published_at: Julkaisuaika
+            scope: Teema
+            state: Arviointi
+            taxonomies: Taxonomies
+            title: Nimi
+      new:
+        limit_reached: Et voi luoda uusia ideoita, koska olet ylittänyt rajan.
       publish:
         error: Idean julkaisu epäonnistui.
         success: Idean julkaisu onnistui.
@@ -637,10 +797,10 @@ fi:
         error: Idealuonnoksen tallennus epäonnistui.
         success: Idealuonnoksen päivitys onnistui.
       versions:
-        index:
-          title: Versiot
         ideas:
           back_to_resource: Takaisin ideaan
+        index:
+          title: Versiot
       withdraw:
         errors:
           has_supports: Tätä ideaa ei voi peruuttaa, koska sitä on jo tuettu.
@@ -662,6 +822,7 @@ fi:
         ideas_count: Ideat
     participatory_spaces:
       highlighted_ideas:
+        last: Last ideas
         see_all: Näytä kaikki (%{count})
     plans:
       section_types:
@@ -670,13 +831,13 @@ fi:
     resource_links:
       copied_from_component:
         idea_idea: Liittyvät ideat
-      included_projects:
-        project_result: Liitetyt tulokset
       included_ideas:
         idea_plan: Liitetyt yhteiskehittämisvaiheen ehdotukset
         idea_project: Liitetyt äänestettävät ehdotukset
         idea_result: Liitetyt hankkeet
         project_idea: Liitetyt ideat
+      included_projects:
+        project_result: Liitetyt tulokset
     statistics:
       ideas_accepted: Jatkoon hyväksyttyä ideaa
       ideas_count: Ideaa

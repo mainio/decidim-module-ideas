@@ -4,14 +4,13 @@
       <p class="h3"><%= t(".filters.title") %></p>
     </div>
   </div>
-
   <div class="row">
     <div class="columns mediumlarge-6 large-8">
       <% if current_user %>
         <div class="filters__section activity_collection_radio_buttons_filter">
           <fieldset>
             <legend class="mini-title"><%= t(".filters.activity") %></legend>
-            <% activity_filter_values.each do |value|%>
+            <% activity_filter_values.each do |value| %>
               <label>
                 <%= form.radio_button :activity, value[0], label: false, checked: value[0] == "all" %>
                 <%= value[1] %>
@@ -29,23 +28,19 @@
   </div>
 
   <div class="row">
-    <% if component.settings.area_scope_parent_id && Decidim::Scope.exists?(component.settings.area_scope_parent_id) %>
+    <% filter_ideas_taxonomy_values.each do |filter, values| %>
       <div class="columns mediumlarge-6 large-4">
-        <div class="filters__section area_scope_id_filter">
+        <div class="filters__section taxonomy_id_filter">
           <fieldset>
-            <legend class="mini-title"><%= t(".filters.area_scope") %></legend>
-            <%= area_scopes_picker_field(form, :area_scope_id, root: false, options: { label: false, include_blank: t(".filters.all_area_scopes") }) %>
-          </fieldset>
-        </div>
-      </div>
-    <% end %>
-    <% if component.categories.any? %>
-      <div class="columns mediumlarge-6 large-4">
-        <div class="filters__section category_id_filter">
-          <fieldset>
-            <legend class="mini-title"><%= t(".filters.category") %></legend>
-            <%= form.select(:category_id, filter_ideas_categories_values, label: false, include_blank: t(".filters.all_categories")) %>
-          </fieldset>
+            <legend class="mini-title"><%= translated_attribute(filter.name) %></legend>
+            <%= select_tag(
+              "filter[with_any_taxonomies][]",
+              options_for_select(values, params.dig(:filter, :with_any_taxonomies)),
+              id: "filter_taxonomy_#{filter.id}",
+              include_blank: t(".all_taxonomies"),
+              "aria-label": translated_attribute(filter.name),
+              data: { disable_dynamic_change: true }
+            ) %>
         </div>
       </div>
     <% end %>

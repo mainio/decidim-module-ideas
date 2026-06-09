@@ -65,8 +65,7 @@ module Decidim
             form.current_user,
             title: title_with_hashtags,
             body: body_with_hashtags,
-            category: form.category,
-            area_scope: form.area_scope,
+            taxonomizations: form.taxonomizations,
             address: form.address,
             latitude: form.latitude,
             longitude: form.longitude

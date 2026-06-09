@@ -128,58 +128,25 @@ describe "UserFiltersIdeas" do
     end
   end
 
-  describe "area" do
-    let!(:idea) { create(:idea, component:, title:) }
-    let!(:second_idea) { create(:idea, component:, title: second_title) }
-    let!(:third_idea) { create(:idea, component:, title: third_title) }
+  describe "taxonomy filter" do
+    include_context "with idea taxonomy filter"
+
+    let!(:idea) { create(:idea, component:, title:, category: false, area_scope: false, taxonomies: [taxonomy]) }
+    let!(:second_idea) { create(:idea, component:, title: second_title, category: false, area_scope: false, taxonomies: [other_taxonomy]) }
+    let!(:third_idea) { create(:idea, component:, title: third_title, category: false, area_scope: false, taxonomies: [another_taxonomy]) }
 
     before do
-      component[:settings]["global"]["area_scope_parent_id"] = area_scope_parent.id
-      component.save!
-      Decidim::Ideas::Idea.update(idea.id, area_scope: area_scope_parent.children.first)
-      Decidim::Ideas::Idea.update(second_idea.id, area_scope: area_scope_parent.children.second)
-      Decidim::Ideas::Idea.update(third_idea.id, area_scope: area_scope_parent.children.third)
       visit current_path
+      select translated(taxonomy.name), from: "filter[with_any_taxonomies][]"
+      perform_search
     end
 
-    describe "filter selected" do
-      before do
-        select area_scope_parent.children.first.name["en"], from: "filter[with_any_area_scope]"
-        perform_search
-      end
+    it_behaves_like "has clear filters button"
 
-      it_behaves_like "has clear filters button"
-
-      it "shows ideas in the selected area" do
-        expect(page).to have_content(idea.title)
-        expect(page).to have_no_content(second_idea.title)
-        expect(page).to have_no_content(third_idea.title)
-      end
-    end
-  end
-
-  describe "category" do
-    let!(:idea) { create(:idea, category:, component:, title:) }
-    let!(:second_idea) { create(:idea, category: second_category, component:, title: second_title) }
-    let!(:third_idea) { create(:idea, category: third_category, component:, title: third_title) }
-    let(:category) { create(:category, participatory_space: component.participatory_space) }
-    let(:second_category) { create(:category, participatory_space: component.participatory_space) }
-    let(:third_category) { create(:category, participatory_space: component.participatory_space) }
-
-    describe "category selected" do
-      before do
-        visit current_path
-        select category.name["en"], from: "filter[with_category]"
-        perform_search
-      end
-
-      it_behaves_like "has clear filters button"
-
-      it "shows ideas in the selected theme" do
-        expect(page).to have_content(idea.title)
-        expect(page).to have_no_content(second_idea.title)
-        expect(page).to have_no_content(third_idea.title)
-      end
+    it "shows ideas with the selected taxonomy" do
+      expect(page).to have_content(idea.title)
+      expect(page).to have_no_content(second_idea.title)
+      expect(page).to have_no_content(third_idea.title)
     end
   end
 

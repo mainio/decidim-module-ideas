@@ -50,37 +50,23 @@
           </div>
         </div>
       </div>
-
-      <div class="component__show_grid-item">
-        <% if idea.area_scope %>
+      <% idea.taxonomies.each do |taxonomy| %>
+        <div class="component__show_grid-item">
           <div class="card-section">
             <div class="row column">
-              <span class="component__show-title"><%= t("models.idea.fields.area_scope", scope: "decidim.ideas") %></span>
+              <span class="component__show-title">
+                <%= translated_attribute(taxonomy.parent&.name) %>
+              </span>
               <div class="flex items-center gap-x-2 mt-2">
                 <%= icon "price-tag-3-line", class: "fill-gray" %>
                 <p class="component__show-icon-text">
-                  <%= translated_attribute(idea.area_scope.name) %>
-                </p>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="component__show_grid-item">
-        <% if idea.category.present? %>
-          <div class="card-section">
-            <div class="row column">
-              <span class="component__show-title"><%= t("models.idea.fields.category", scope: "decidim.ideas") %></span>
-              <div class="flex items-center gap-x-2 mt-2">
-                <%= icon "price-tag-3-line", class: "fill-gray" %>
-                <p class="component__show-icon-text">
-                  <%= translated_attribute(idea.category.name) %>
+                  <%= translated_attribute(taxonomy.name) %>
                 </p>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
 
       <div class="card-section">
         <div class="row column" data-amendments>

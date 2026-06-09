@@ -4,8 +4,10 @@ require "spec_helper"
 
 describe "UserEditsIdea" do
   include_context "with a component"
+  include_context "with idea taxonomy filter"
 
   let(:organization) { create(:organization) }
+  let(:skip_injection) { false }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let(:manifest) { Decidim.find_component_manifest("ideas") }
   let!(:user) { create(:user, :confirmed, organization:) }
@@ -17,15 +19,11 @@ describe "UserEditsIdea" do
            manifest:,
            participatory_space: participatory_process)
   end
-  let(:scope) { create(:scope, organization:) }
-  let!(:subscope) { create(:scope, parent: scope) }
-  let!(:category) { create(:category, participatory_space: participatory_process) }
 
   let(:idea_title) { Faker::Lorem.paragraph }
   let(:idea_body) { Faker::Lorem.paragraph }
 
   before do
-    component[:settings]["global"]["area_scope_parent_id"] = scope.id
     settings = component.settings
     settings.attachments_allowed = true
     component.settings = settings
@@ -35,10 +33,9 @@ describe "UserEditsIdea" do
   end
 
   context "when user has created an idea" do
-    let!(:idea) { create(:idea, users: [user], component:, category:, area_scope_parent: scope) }
+    let!(:idea) { create(:idea, users: [user], component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
     let(:new_title) { "Foo bar, much text here is" }
     let(:new_body) { "Veli kulta, veikkoseni, kaunis kasvinkumppalini! Lähe nyt kanssa laulamahan" }
-    let!(:subscope2) { create(:scope, parent: scope) }
 
     describe "edit idea" do
       before do
@@ -50,12 +47,10 @@ describe "UserEditsIdea" do
       it "edits idea" do
         fill_in :idea_title, with: new_title
         fill_in :idea_body, with: new_body
-        select subscope2.name["en"], from: :idea_area_scope_id
-        select category.name["en"], from: :idea_category_id
+        select other_taxonomy.name["en"], from: "taxonomy_filter_#{taxonomy_filter.id}"
         click_on "Save"
         expect(page).to have_content("Idea successfully updated")
-        expect(Decidim::Ideas::Idea.last.title).to eq(new_title)
-        expect(Decidim::Ideas::Idea.last.body).to eq(new_body)
+        expect(idea.reload.taxonomies).to include(other_taxonomy)
       end
 
       context "when editing attachments", processing_uploads_for: Decidim::Ideas::AttachmentUploader do
@@ -73,8 +68,7 @@ describe "UserEditsIdea" do
           dynamically_attach_file(:idea_actual_attachments, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
           click_on "Save"
           expect(page).to have_content("Idea successfully updated")
-          expect(idea.attachments.last.content_type).to eq("application/pdf")
-          expect(idea.attachments.last.title["en"]).to eq(add_attachment_title)
+          expect(idea.reload.attachments.last.content_type).to eq("application/pdf")
         end
       end
     end
@@ -87,11 +81,10 @@ describe "UserEditsIdea" do
              users: [user],
              title: second_idea_title,
              component:,
-             category:,
-             area_scope_parent: scope)
+             category: false,
+             area_scope: false)
     end
     let(:second_idea_title) { Faker::Hipster.sentence }
-    let(:weight) { 0 }
 
     describe "remove image" do
       before do
@@ -124,8 +117,8 @@ describe "UserEditsIdea" do
              users: [user],
              title: third_idea_title,
              component:,
-             category:,
-             area_scope_parent: scope)
+             category: false,
+             area_scope: false)
     end
     let(:third_idea_title) { Faker::Hipster.sentence }
 

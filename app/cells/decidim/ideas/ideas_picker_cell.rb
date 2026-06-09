@@ -8,7 +8,7 @@ module Decidim
     class IdeasPickerCell < Decidim::ViewModel
       include Decidim::ComponentPathHelper
 
-      delegate :current_user, to: :controller
+      delegate :current_user, :current_organization, to: :controller
 
       MAX_IDEAS = 1000
 
@@ -23,8 +23,8 @@ module Decidim
       alias component model
 
       def filtered?
-        search_activity.present? || search_area.present? ||
-          search_category.present? || search_text.present?
+        search_activity.present? || search_taxonomies(params).present? ||
+          search_text.present?
       end
 
       def picker_path
@@ -43,12 +43,11 @@ module Decidim
         params[:activity]
       end
 
-      def search_area
-        params[:area_scope]
-      end
-
-      def search_category
-        params[:category]
+      def search_taxonomies(params)
+        params.keys
+              .select { |k| k.to_s.start_with?("with_taxonomy_filter_") }
+              .filter_map { |k| params[k].presence }
+              .flatten
       end
 
       def more_ideas?
@@ -78,18 +77,21 @@ module Decidim
       end
 
       def filtered_ideas_query
-        params = {
-          component: idea_components,
-          current_user:,
+        search_params = {
           search_text:,
           activity: search_activity,
-          area_scope_id: search_area,
-          category_id: search_category,
+          taxonomy_ids: search_taxonomies(params),
           state: "accepted"
         }
 
-        search = Decidim::Ideas::IdeaSearch.new(params)
-        search.results.only_amendables.published.not_hidden.order(id: :asc)
+        options = {
+          component: idea_components.first,
+          organization: current_organization,
+          current_user:
+        }
+
+        search = Decidim::Ideas::IdeaSearch.new(Decidim::Ideas::Idea.all, search_params, options)
+        search.result.only_amendables.published.not_hidden.order(id: :asc)
       end
 
       def idea_components
@@ -97,16 +99,24 @@ module Decidim
       end
 
       def ideas
-        @ideas ||= Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
-                          &.only_amendables
-                          &.published
-                          &.not_hidden
-                          &.accepted
-                          &.order(id: :asc)
+        @ideas ||= ideas_scope
       end
 
       def ideas_collection_name
         Decidim::Ideas::Idea.model_name.human(count: 2)
+      end
+
+      private
+
+      def ideas_scope
+        scope = Decidim.find_resource_manifest(:ideas).try(:resource_scope, component)
+        return unless scope
+
+        scope.only_amendables
+             .published
+             .not_hidden
+             .accepted
+             .order(id: :asc)
       end
     end
   end

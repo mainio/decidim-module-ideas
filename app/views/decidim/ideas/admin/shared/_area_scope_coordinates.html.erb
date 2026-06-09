@@ -1,7 +1,7 @@
 <div class="area-scope-coordinates ml-4 help-text">
   <% if parent %>
     <%= render partial: "decidim/ideas/admin/shared/area_scope_coordinates_fields", locals: {
-      scopes: parent.children,
+      taxonomies: parent.taxonomies,
       input_name_prefix: input_name_prefix,
       value: value
     } %>

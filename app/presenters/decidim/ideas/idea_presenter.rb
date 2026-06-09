@@ -23,12 +23,6 @@ module Decidim
         link_to title(html_escape: true), idea_path
       end
 
-      # Render the idea title
-      #
-      # links - should render hashtags as links?
-      # extras - should include extra hashtags?
-      #
-      # Returns a String.
       def title(links: false, extras: true, html_escape: false)
         text = idea.title
         text = decidim_html_escape(text) if html_escape
@@ -56,16 +50,10 @@ module Decidim
         text
       end
 
-      def area_scope_name
-        return unless idea.area_scope
+      def taxonomy_names
+        return [] unless idea.taxonomies.any?
 
-        translated_attribute(idea.area_scope.name)
-      end
-
-      def category_name
-        return unless idea.category
-
-        translated_attribute(idea.category.name)
+        idea.taxonomies.map { |t| translated_attribute(t.name) }
       end
 
       def published_date
@@ -74,9 +62,6 @@ module Decidim
         I18n.l(idea.published_at.to_date, format: :decidim_short)
       end
 
-      # Returns the idea versions, hiding not published answers
-      #
-      # Returns an Array.
       def versions
         version_state_published = false
         pending_state_change = nil

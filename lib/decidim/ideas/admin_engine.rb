@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "decidim/ideas/admin_filter"
+
 module Decidim
   module Ideas
     # This is the engine that runs on the public interface of `decidim-ideas`.
@@ -12,9 +14,7 @@ module Decidim
       routes do
         resources :ideas, only: [:show, :index, :new, :create, :edit, :update] do
           collection do
-            post :update_category
             post :publish_answers
-            post :update_area_scope
             resource :ideas_merge, only: [:create]
             resource :ideas_split, only: [:create]
             resource :valuation_assignment, only: [:create, :destroy]
@@ -52,6 +52,10 @@ module Decidim
           )
           Decidim::Admin::SettingsHelper.include Decidim::Ideas::Admin::ComponentSettings
         end
+      end
+
+      initializer "decidim_ideas_admin.register_admin_filter", before: :finisher_hook do
+        Decidim::Ideas::AdminFilter.register_filter!
       end
     end
   end

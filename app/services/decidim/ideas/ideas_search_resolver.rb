@@ -16,7 +16,7 @@ module Decidim
                  .published
                  .not_hidden
                  .only_amendables
-                 .includes(:category, :component, :area_scope)
+                 .includes(:taxonomies, :component)
 
         add_filter_keys(filter)
         if order

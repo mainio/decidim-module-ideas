@@ -15,9 +15,7 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          idea_limit:
-        }
+        { idea_limit: }
       end
     end
 
@@ -27,9 +25,7 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          idea_length:
-        }
+        { idea_length: }
       end
     end
 
@@ -43,17 +39,13 @@ FactoryBot.define do
 
     trait :with_geocoding_enabled do
       settings do
-        {
-          geocoding_enabled: true
-        }
+        { geocoding_enabled: true }
       end
     end
 
     trait :with_attachments_allowed do
       settings do
-        {
-          attachments_allowed: true
-        }
+        { attachments_allowed: true }
       end
     end
 
@@ -63,41 +55,31 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          threshold_per_idea:
-        }
+        { threshold_per_idea: }
       end
     end
 
     trait :with_can_accumulate_supports_beyond_threshold do
       settings do
-        {
-          can_accumulate_supports_beyond_threshold: true
-        }
+        { can_accumulate_supports_beyond_threshold: true }
       end
     end
 
     trait :with_amendments_enabled do
       settings do
-        {
-          amendments_enabled: true
-        }
+        { amendments_enabled: true }
       end
     end
 
     trait :with_comments_disabled do
       settings do
-        {
-          comments_enabled: false
-        }
+        { comments_enabled: false }
       end
     end
 
     trait :with_card_image_allowed do
       settings do
-        {
-          allow_image: true
-        }
+        { allow_image: true }
       end
     end
 
@@ -140,12 +122,28 @@ FactoryBot.define do
     end
   end
 
+  factory :idea_taxonomy_filter, class: "Decidim::TaxonomyFilter" do
+    transient do
+      organization { create(:organization) }
+    end
+
+    root_taxonomy { create(:taxonomy, organization: organization) }
+
+    after :create do |filter, evaluator|
+      5.times do
+        child = create(:taxonomy, parent: filter.root_taxonomy, organization: evaluator.organization)
+        create(:taxonomy_filter_item, taxonomy_filter: filter, taxonomy_item: child)
+      end
+    end
+  end
+
   factory :idea, class: "Decidim::Ideas::Idea" do
     transient do
       users { nil }
       # user_groups correspondence to users is by sorting order
       user_groups { [] }
       skip_injection { false }
+      taxonomies { [] }
       area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
     end
 
@@ -173,8 +171,16 @@ FactoryBot.define do
 
         idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank? && idea.category != false
       end
-
       idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank? && idea.area_scope != false
+    end
+
+    after(:create) do |idea, evaluator|
+      evaluator.taxonomies.each do |taxonomy|
+        idea.taxonomizations.find_or_create_by(taxonomy: taxonomy)
+      end
+      # Reload the idea to ensure the taxonomies association is not cached
+      # as empty before the after(:create) callback runs.
+      idea.reload if evaluator.taxonomies.any?
     end
 
     trait :published do
@@ -257,6 +263,19 @@ FactoryBot.define do
         idea.attachments << create(:ideas_attachment, :with_pdf, attached_to: idea)
       end
     end
+
+    trait :with_taxonomies do
+      transient do
+        taxonomy_filter { create(:idea_taxonomy_filter, organization: component.organization) }
+      end
+
+      after(:create) do |idea, evaluator|
+        taxonomies = evaluator.taxonomy_filter.taxonomies.values.flat_map { |node| node[:taxonomy] }.sample(2)
+        taxonomies.each do |taxonomy|
+          idea.taxonomizations.find_or_create_by(taxonomy: taxonomy)
+        end
+      end
+    end
   end
 
   factory :idea_amendment, class: "Decidim::Amendment" do
@@ -272,7 +291,7 @@ FactoryBot.define do
     weight { 0 }
     attached_to { build(:participatory_process) }
     content_type { "image/jpeg" }
-    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") } # Keep after attached_to
+    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
     file_size { 108_908 }
 
     trait :with_image do

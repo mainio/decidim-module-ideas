@@ -17,6 +17,7 @@ module Decidim
     autoload :FormBuilderDisabled, "decidim/ideas/form_builder_disabled"
     autoload :IdeaSerializer, "decidim/ideas/idea_serializer"
     autoload :MutationExtensions, "decidim/ideas/mutation_extensions"
+    autoload :Seeds, "decidim/ideas/seeds"
 
     include ActiveSupport::Configurable
 

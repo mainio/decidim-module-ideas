@@ -15,11 +15,8 @@ module Decidim
 
           allow! if permission_action.subject == :idea && permission_action.action == :edit && admin_edition_is_available?
 
-          # Every user allowed by the space can update the category of the idea
-          allow! if permission_action.subject == :idea_category && permission_action.action == :update
-
-          # Every user allowed by the space can update the scope of the idea
-          allow! if permission_action.subject == :idea_scope && permission_action.action == :update
+          # Every user allowed by the space can update the taxonomy of the idea
+          allow! if permission_action.subject == :idea_taxonomy && permission_action.action == :update
 
           # Every user allowed by the space can import ideas from another_component
           allow! if permission_action.subject == :ideas && permission_action.action == :import

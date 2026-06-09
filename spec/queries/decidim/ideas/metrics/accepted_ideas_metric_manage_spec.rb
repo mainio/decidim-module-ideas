@@ -7,9 +7,16 @@ describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
   let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:component) { create(:idea_component, :published, participatory_space:) }
   let(:day) { Time.zone.yesterday }
-  let(:category) { create(:category, participatory_space:) }
-  let!(:accepted_ideas) { create_list(:idea, 3, :accepted, created_at: day, component:, category:) }
-  let!(:not_accepted_ideas) { create_list(:idea, 3, created_at: day, component:, category:) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+  let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
+  let(:other_taxonomy) { taxonomy_filter.root_taxonomy.children.second }
+
+  let!(:accepted_ideas) do
+    create_list(:idea, 3, :accepted, created_at: day, component:, category: false, area_scope: false, taxonomies: [taxonomy])
+  end
+  let!(:not_accepted_ideas) do
+    create_list(:idea, 3, created_at: day, component:, category: false, area_scope: false, taxonomies: [taxonomy])
+  end
 
   include_context "when managing metrics"
 
@@ -34,13 +41,36 @@ describe Decidim::Ideas::Metrics::AcceptedIdeasMetricManage do
     end
 
     it "updates metric records" do
-      # raise "#{category.id} -- #{accepted_ideas.first.category.id} -- #{accepted_ideas.second.category.id} -- #{not_accepted_ideas.first.category.id}"
-      create(:metric, metric_type: "accepted_ideas", day:, cumulative: 1, quantity: 1, organization:, category:, participatory_space:)
+      create(:metric, metric_type: "accepted_ideas", day:, cumulative: 1, quantity: 1,
+                      organization:, decidim_taxonomy_id: taxonomy.id, participatory_space:)
       registry = generate_metric_registry
 
       expect(Decidim::Metric.count).to eq(1)
       expect(registry.collect(&:cumulative)).to eq([3])
       expect(registry.collect(&:quantity)).to eq([3])
+    end
+
+    context "with multiple taxonomies" do
+      let!(:accepted_ideas_other_taxonomy) do
+        create_list(:idea, 2, :accepted, created_at: day, component:, category: false, area_scope: false, taxonomies: [other_taxonomy])
+      end
+
+      it "creates separate metric records per taxonomy" do
+        registry = generate_metric_registry
+
+        expect(registry.length).to eq(2)
+        expect(registry.collect(&:cumulative).sort).to eq([2, 3])
+      end
+
+      it "only counts accepted ideas per taxonomy" do
+        registry = generate_metric_registry
+
+        taxonomy_record = registry.find { |r| r.decidim_taxonomy_id == taxonomy.id }
+        other_taxonomy_record = registry.find { |r| r.decidim_taxonomy_id == other_taxonomy.id }
+
+        expect(taxonomy_record.cumulative).to eq(3)
+        expect(other_taxonomy_record.cumulative).to eq(2)
+      end
     end
   end
 end

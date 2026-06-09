@@ -4,13 +4,13 @@ require "spec_helper"
 
 describe "AdminFiltersIdeas" do
   include_context "when managing a component"
+  include_context "with idea taxonomy filter"
 
   let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let!(:component) { create(:idea_component, :with_creation_enabled, manifest:, participatory_space: participatory_process) }
   let(:manifest) { Decidim.find_component_manifest("ideas") }
   let(:user) { create(:user, :confirmed, :admin, :confirmed, organization:) }
-  let!(:parent_area_scope) { create(:scope, organization:) }
 
   let(:idea_title) { Faker::Lorem.sentence }
   let(:second_idea_title) { Faker::Hipster.sentence }
@@ -20,19 +20,17 @@ describe "AdminFiltersIdeas" do
   let(:titles) { [idea_title, second_idea_title, third_idea_title, fourth_idea_title, fifth_idea_title] }
 
   before do
-    component[:settings]["global"]["area_scope_parent_id"] = parent_area_scope.id
-    component.save!
     visit_component_admin
   end
 
   # rubocop:disable RSpec/NoExpectationExample
 
   describe "filter by state" do
-    let!(:idea) { create(:idea, title: idea_title, component:) }
-    let!(:second_idea) { create(:idea, :evaluating, title: second_idea_title, component:) }
-    let!(:third_idea) { create(:idea, :accepted, title: third_idea_title, component:) }
-    let!(:fourth_idea) { create(:idea, :rejected, title: fourth_idea_title, component:) }
-    let!(:fifth_idea) { create(:idea, :withdrawn, title: fifth_idea_title, component:) }
+    let!(:idea) { create(:idea, title: idea_title, component:, category: false, area_scope: false) }
+    let!(:second_idea) { create(:idea, :evaluating, title: second_idea_title, component:, category: false, area_scope: false) }
+    let!(:third_idea) { create(:idea, :accepted, title: third_idea_title, component:, category: false, area_scope: false) }
+    let!(:fourth_idea) { create(:idea, :rejected, title: fourth_idea_title, component:, category: false, area_scope: false) }
+    let!(:fifth_idea) { create(:idea, :withdrawn, title: fifth_idea_title, component:, category: false, area_scope: false) }
 
     before do
       click_on "Filter"
@@ -65,42 +63,20 @@ describe "AdminFiltersIdeas" do
     end
   end
 
-  describe "filter by area" do
-    let!(:idea) { create(:idea, area_scope:, title: idea_title, component:) }
-    let!(:second_idea) { create(:idea, area_scope: second_area_scope, title: second_idea_title, component:) }
-    let(:area_scope) { create(:scope, parent: parent_area_scope, organization:) }
-    let(:second_area_scope) { create(:scope, parent: parent_area_scope, organization:) }
+  describe "filter by taxonomy" do
+    let!(:idea) { create(:idea, title: idea_title, component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
+    let!(:second_idea) { create(:idea, title: second_idea_title, component:, category: false, area_scope: false, taxonomies: [other_taxonomy]) }
 
     before do
       visit current_path
       click_on "Filter"
-
-      within ".menu.submenu" do
-        find("a", text: "Area").hover
-      end
+      find("a", text: "Taxonomy").hover
+      find("a", text: "Root taxonomy").hover
     end
 
-    it "filters by area" do
-      click_on area_scope.name["en"]
-      hides_filtered([idea.title, second_idea.title], idea.title)
-    end
-  end
-
-  describe "filter by category" do
-    let!(:idea) { create(:idea, category:, title: idea_title, component:) }
-    let!(:second_idea) { create(:idea, category: second_category, title: second_idea_title, component:) }
-    let(:category) { create(:category, participatory_space: participatory_process) }
-    let(:second_category) { create(:category, participatory_space: participatory_process) }
-
-    before do
-      visit current_path
-      click_on "Filter"
-      find("a", text: "Category").hover
-    end
-
-    it "filters by category" do
-      click_on second_category.name["en"]
-      hides_filtered([idea.title, second_idea.title], second_idea.title)
+    it "filters by taxonomy" do
+      click_on taxonomy.name["en"]
+      hides_filtered([idea_title, second_idea_title], idea_title)
     end
   end
 

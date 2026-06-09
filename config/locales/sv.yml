@@ -3,10 +3,10 @@ sv:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Välj ett område för idén
         address: Lägg till ett valfritt grannskap för idén eller en mer specifik adress
         answer: Svara
         answered_at: Besvarad
+        area_scope_id: Välj ett område för idén
         automatic_hashtags: Hashtags läggs till automatiskt
         body: Idébeskrivning
         category_id: Välj ett tema för idén
@@ -24,18 +24,19 @@ sv:
       idea_answer:
         answer: Svar
         internal_state: Utvärdering
+      idea_attachment:
+        file: Bilagans fil
+        title: Bilagans titel
+      idea_image_attachment:
+        file: Bildfil
+        title: Bildtitel
       ideas_copy:
-        copy_ideas: Jag förstår att detta kommer att importera alla idéer från den valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
+        copy_ideas: Jag förstår att detta kommer att importera alla idéer från den
+          valda komponenten till den nuvarande och att denna åtgärd inte kan vändas.
         origin_component_id: Komponent för att kopiera idéer från
       ideas_import:
         import_ideas: Importera idéer
         keep_authors: Behåll originalförfattare
-      idea_attachment:
-        title: Bilagans titel
-        file: Bilagans fil
-      idea_image_attachment:
-        title: Bildtitel
-        file: Bildfil
     errors:
       models:
         idea:
@@ -69,6 +70,27 @@ sv:
       filters:
         area_scope_id_eq:
           label: Område
+        ideas:
+          state_eq:
+            label: State
+            values:
+              accepted: Accepted to the next step
+              evaluating: Evaluating
+              rejected: Not accepted to the next step
+              withdrawn: Withdrawn
+          state_null:
+            label: Status
+            values:
+              'true': Not answered
+          taxonomies_part_of_contains:
+            label: Taxonomy
+          valuator_role_ids_has:
+            label: Assigned to valuator
+          with_any_state:
+            label: Answered
+            values:
+              state_not_published: Not answered
+              state_published: Answered
         is_emendation_true:
           label: Typ
           values:
@@ -97,13 +119,15 @@ sv:
         settings:
           global:
             amendments_enabled: Ändringsförslag är möjliga
-            amendments_enabled_help: Om aktivt, konfigurera ändringsfunktioner till varje steg.
+            amendments_enabled_help: Om aktivt, konfigurera ändringsfunktioner till
+              varje steg.
             amendments_wizard_help_text: Hjälptext för guiden för ändringsförslag
-            area_scope_parent_id: Områdens överordnade omfattning
+            announcement: Meddelande
             area_scope_coordinates: Områdeskoordinater (latitud,longitud)
+            area_scope_parent_id: Områdens överordnade omfattning
+            area_taxonomy_filter_id: Area filter taxonomy
             areas_info_intro: Informationsintro för områden
             areas_info_text: Informationstext för områden
-            announcement: Meddelande
             attachments_allowed: Tillåt bilagor
             can_accumulate_supports_beyond_threshold: Kan samla in stöd bortom tröskeln
             categories_info_intro: Teman information intro
@@ -113,7 +137,8 @@ sv:
             default_map_center_coordinates: Standard kartcenter koordinater (latitud,longitud)
             geocoding_enabled: Geokodning aktiverad
             idea_answering_enabled: Svar på idéer aktiverat
-            idea_edit_before_minutes: Idéer kan redigeras av författare inom så här många minuter
+            idea_edit_before_minutes: Idéer kan redigeras av författare inom så här
+              många minuter
             idea_length: Maximal längd på idéns innehåll
             idea_limit: Idégräns per användare
             idea_listing_intro: Idé lista sida intro text
@@ -121,7 +146,11 @@ sv:
             image_allowed: Tillåt bild
             materials_text: Material text
             new_idea_help_text: Ny idéhjälptext
-            resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för varje idé
+            no_taxonomy_filters_found: No taxonomy filters found.
+            resources_permissions_enabled: Åtgärdsbehörigheter kan ställas in för
+              varje idé
+            taxonomy_filters: Select filters for the component
+            taxonomy_filters_add: Add filter
             terms_intro: Gränsvillkoren intro
             terms_text: Gränsvillkoren text
             threshold_per_idea: Tröskel per idé
@@ -129,14 +158,18 @@ sv:
             amendment_creation_enabled: Skapa ändringar är aktiverat
             amendment_creation_enabled_help: Deltagare kan ändra idéer.
             amendment_promotion_enabled: Annonsering av ändringar är aktiverat
-            amendment_promotion_enabled_help: Författare av ändringsidé kommer att kunna lägga fram det avvisade ändringsidén som en idé.
+            amendment_promotion_enabled_help: Författare av ändringsidé kommer att
+              kunna lägga fram det avvisade ändringsidén som en idé.
             amendment_reaction_enabled: Reagera på ändringar är aktiverat
-            amendment_reaction_enabled_help: Idéförfattarna kan anta eller avvisa deltagarnas ändringsidé.
+            amendment_reaction_enabled_help: Idéförfattarna kan anta eller avvisa
+              deltagarnas ändringsidé.
             amendments_visibility: Ändringens synlighet
             amendments_visibility_choices:
               all: Ändringsförslag är synliga för alla
               participants: Ändringsförslag är endast synliga för författarna
-            amendments_visibility_help: Om alternativet "Ändringsförslag visas endast för sina författare" är markerat måste deltagaren vara inloggad för att kunna se ändringarna.
+            amendments_visibility_help: Om alternativet "Ändringsförslag visas endast
+              för sina författare" är markerat måste deltagaren vara inloggad för
+              att kunna se ändringarna.
             announcement: Meddelande
             automatic_hashtags: Hashtags läggs till i alla idéer
             comments_blocked: Kommentarer blockerade
@@ -147,73 +180,112 @@ sv:
     events:
       ideas:
         creation_enabled:
-          email_intro: 'Nu kan du skapa nya idéer på %{participatory_space_title}! Börja delta på den här sidan:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}. Du kan sluta ta emot notifikationer vid föregående länk.
+          email_intro: 'Nu kan du skapa nya idéer på %{participatory_space_title}!
+            Börja delta på den här sidan:'
+          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}.
+            Du kan sluta ta emot notifikationer vid föregående länk.
           email_subject: Skapande av idéer aktiverat i %{participatory_space_title}
-          notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Du kan nu lägga fram <a href="%{resource_path}">nya
+            idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
         idea_accepted:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
-            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_intro: 'Din idé "%{resource_title}" kommer att gå vidare. Du kan
+              läsa svaret på den här sidan:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare
+              av %{resource_title}".
             email_subject: Din idé kommer att gå vidare
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a>
+              kommer att gå vidare.
           follower:
-            email_intro: 'Idén "%{resource_title}" kommer att gå vidare. Du kan läsa svaret på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
+            email_intro: 'Idén "%{resource_title}" kommer att gå vidare. Du kan läsa
+              svaret på den här sidan:'
+            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}".
+              Du kan sluta följa det från föregående länken.
             email_subject: En idé du följer kommer att gå vidare
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> kommer att gå vidare.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a>
+              kommer att gå vidare.
         idea_evaluating:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
-            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_intro: 'Din idé "%{resource_title}" utvärderas. Du kan söka efter
+              ett svar på den här sidan:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare
+              av %{resource_title}".
             email_subject: Din idé utvärderas
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a>
+              utvärderas för närvarande.
           follower:
-            email_intro: 'Idén "%{resource_title}" utvärderas. Du kan söka efter ett svar på den här sidan:'
-            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}". Du kan sluta följa det från föregående länken.
+            email_intro: 'Idén "%{resource_title}" utvärderas. Du kan söka efter ett
+              svar på den här sidan:'
+            email_outro: Du har fått den här meddelandet eftersom du följer "%{resource_title}".
+              Du kan sluta följa det från föregående länken.
             email_subject: En idé som du följer utvärderas
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> utvärderas för närvarande.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a>
+              utvärderas för närvarande.
         idea_mentioned:
-          email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i denna grupp</a> i kommentarerna.
-          email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+          email_intro: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_url}">i
+            denna grupp</a> i kommentarerna.
+          email_outro: Du har fått det här meddelandet eftersom du är en författare
+            av %{resource_title}".
           email_subject: Din idé "%{mentioned_idea_title}" har nämnts
-          notification_title: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_path}">i denna grupp</a> i kommentarerna.
+          notification_title: Din idé "%{mentioned_idea_title}" har nämnts <a href="%{resource_path}">i
+            denna grupp</a> i kommentarerna.
         idea_published:
-          email_intro: '%{author_name} %{author_nickname}, som du följer, har publicerat en ny idé som heter "%{resource_title}". Ta en titt och bidra:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{author_nickname}. Du kan sluta ta emot notifikationer vid föregående länk.
+          email_intro: '%{author_name} %{author_nickname}, som du följer, har publicerat
+            en ny idé som heter "%{resource_title}". Ta en titt och bidra:'
+          email_outro: Du har fått den här notifikationen eftersom du följer %{author_nickname}.
+            Du kan sluta ta emot notifikationer vid föregående länk.
           email_subject: Ny idé "%{resource_title}" av %{author_nickname}
-          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> publicerades av <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
+          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a>
+            publicerades av <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
         idea_published_for_space:
-          email_intro: Idén "%{resource_title}" har lagts till i "%{participatory_space_title}" som du följer.
-          email_outro: Du har fått det här meddelandet eftersom du följer "%{participatory_space_title}". Du kan sluta att ta emot meddelanden genom att följa föregående länk.
+          email_intro: Idén "%{resource_title}" har lagts till i "%{participatory_space_title}"
+            som du följer.
+          email_outro: Du har fått det här meddelandet eftersom du följer "%{participatory_space_title}".
+            Du kan sluta att ta emot meddelanden genom att följa föregående länk.
           email_subject: Ny idé "%{resource_title}" lades till %{participatory_space_title}
-          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> har lagts till i %{participatory_space_title}
+          notification_title: Idén <a href="%{resource_path}">%{resource_title}</a>
+            har lagts till i %{participatory_space_title}
         idea_rejected:
           affected_user:
-            email_intro: 'Din idé "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
-            email_outro: Du har fått det här meddelandet eftersom du är en författare av %{resource_title}".
+            email_intro: 'Din idé "%{resource_title}" går inte vidare. Du kan läsa
+              svaret på denna sida:'
+            email_outro: Du har fått det här meddelandet eftersom du är en författare
+              av %{resource_title}".
             email_subject: Din idé går inte vidare
-            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
+            notification_title: Din idé <a href="%{resource_path}">%{resource_title}</a>
+              går inte vidare.
           follower:
-            email_intro: 'Idén "%{resource_title}" går inte vidare. Du kan läsa svaret på denna sida:'
-            email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}". Klicka på länken ovan för att sluta följa det.
+            email_intro: 'Idén "%{resource_title}" går inte vidare. Du kan läsa svaret
+              på denna sida:'
+            email_outro: Du fick detta meddelande eftersom du följer objektet "%{resource_title}".
+              Klicka på länken ovan för att sluta följa det.
             email_subject: En idé du följer går inte vidare
-            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a> går inte vidare.
-        idea_update_category:
-          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
-          email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
-          email_subject: Temat för idén %{resource_title} har uppdaterats
-          notification_title: Temat för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
+            notification_title: Idén <a href="%{resource_path}">%{resource_title}</a>
+              går inte vidare.
         idea_update_area_scope:
-          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}", ta en titt på följande sida:'
-          email_outro: Du har fått det här meddelandet eftersom du är författare till idén.
+          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}",
+            ta en titt på följande sida:'
+          email_outro: Du har fått det här meddelandet eftersom du är författare till
+            idén.
           email_subject: Temat för idén %{resource_title} har uppdaterats
-          notification_title: Området för idén <a href="%{resource_path}">%{resource_title}</a> har uppdaterats av en administratör.
+          notification_title: Området för idén <a href="%{resource_path}">%{resource_title}</a>
+            har uppdaterats av en administratör.
+        idea_update_category:
+          email_intro: 'En administratör har uppdaterat temat för din idé "%{resource_title}",
+            ta en titt på följande sida:'
+          email_outro: Du har fått det här meddelandet eftersom du är författare till
+            idén.
+          email_subject: Temat för idén %{resource_title} har uppdaterats
+          notification_title: Temat för idén <a href="%{resource_path}">%{resource_title}</a>
+            har uppdaterats av en administratör.
         voting_enabled:
-          email_intro: 'Du kan stödja idéer i %{participatory_space_title}! Börja delta på den här sidan:'
-          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}. Du kan sluta ta emot notifikationer vid föregående länk.
+          email_intro: 'Du kan stödja idéer i %{participatory_space_title}! Börja
+            delta på den här sidan:'
+          email_outro: Du har fått den här notifikationen eftersom du följer %{participatory_space_title}.
+            Du kan sluta ta emot notifikationer vid föregående länk.
           email_subject: Idéstöd har startat för %{participatory_space_title}
-          notification_title: Du kan nu börja att <a href="%{resource_path}">stödja idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: Du kan nu börja att <a href="%{resource_path}">stödja
+            idéer</a> i <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
         idea: Idéer
@@ -221,9 +293,12 @@ sv:
       badges:
         accepted_ideas:
           conditions:
-            - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av intresse
-            - Försök att lägga fram idéer som kan genomföras. De har lättare att gå vidare.
-          description: Detta märke beviljas när du aktivt deltar med nya idéer som går vidare.
+          - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av
+            intresse
+          - Försök att lägga fram idéer som kan genomföras. De har lättare att gå
+            vidare.
+          description: Detta märke beviljas när du aktivt deltar med nya idéer som
+            går vidare.
           description_another: Denna deltagare hade %{score} idéer som gick vidare.
           description_own: Du fick %{score} idéer som gick vidare.
           name: Möjliga idéer
@@ -232,8 +307,9 @@ sv:
           unearned_own: Du fick inga idéer som gick vidare.
         ideas:
           conditions:
-            - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av intresse
-            - Skapa en ny idé
+          - Välj det deltagarutrymme där inlämning av idéer är aktiverat som är av
+            intresse
+          - Skapa en ny idé
           description: Du får detta märke när du aktivt deltar med nya idéer.
           description_another: Den här deltagare har skapat %{score} idéer.
           description_own: Du har skapat %{score} idéer.
@@ -257,9 +333,6 @@ sv:
         exports:
           comments: Kommentarer
           ideas: Idéer
-        models:
-          idea:
-            name: Idé
         idea_answers:
           form:
             accepted: Gick vidare
@@ -278,10 +351,13 @@ sv:
             title: Uppdatera idé
             update: Uppdatera
           form:
-            attachment_legend: "Lägg till en bilaga till idén"
-            image_legend: "Lägg till en bild för idén"
+            attachment_legend: Lägg till en bilaga till idén
+            image_legend: Lägg till en bild för idén
             select_a_category: Välj ett primärt tema för idén
             select_a_sub_category: Välj ett undertema för idén
+            select_a_sub_taxonomy: Select a sub taconomy
+            select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+            select_a_taxonomy: Select a taxonomy
           index:
             actions: Funktioner
             cancel: Avbryt
@@ -304,6 +380,7 @@ sv:
           publish_answers:
             number_of_ideas: Svaren på %{number} idéer kommer att publiceras.
             select_a_idea: Välj en idé
+            select_an_idea: Select an idea
           show:
             amendments_count: Antal ändringar
             area_scope: Område
@@ -316,28 +393,30 @@ sv:
             comments_positive_count: För
             created_at: Skapandedatum
             documents: Dokument
+            ideas: Idéer
             link: Länk
             photos: Bilder
-            show_email: Visa e-postadress
-            ideas: Idéer
             ranking: "%{ranking} av %{total}"
-          update_category:
-            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
-            select_a_category: Välj ett tema
-            select_a_idea: Välj en idé
-            success: 'Idéer som har uppdaterats till omfånget %{subject_name}: %{ideas}.'
+            show_email: Visa e-postadress
+            votes_count: Comments count
           update_area_scope:
             invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
             select_a_idea: Välj en idé
             select_a_scope: Välj ett område
             success: 'Idéer som har uppdaterats till området %{subject_name}: %{ideas}.'
+          update_category:
+            invalid: 'Dessa idéer hade redan omfånget %{subject_name}: %{ideas}.'
+            select_a_category: Välj ett tema
+            select_a_idea: Välj en idé
+            success: 'Idéer som har uppdaterats till omfånget %{subject_name}: %{ideas}.'
         ideas_imports:
           create:
             invalid: Det uppstod ett problem med att importera idéerna
             success: "%{number} idéer har importerats"
           new:
             create: Importera idéer
-            no_components: Det finns inga andra idékomponenter i detta deltagarutrymme att importera idéerna från.
+            no_components: Det finns inga andra idékomponenter i detta deltagarutrymme
+              att importera idéerna från.
             select_component: Var god välj en komponent
             select_states: Kontrollera tillstånden för de idéer som ska importeras
         ideas_merges:
@@ -348,11 +427,15 @@ sv:
           create:
             invalid: Det fanns ett fel att slå samman de valda idéerna.
             success: Idéerna har sammanfogats till en ny idé.
+        models:
+          idea:
+            name: Idé
       admin_log:
         idea:
           answer: "%{user_name} svarade på idén %{resource_name} på utrymmet %{space_name}"
           create: "%{user_name} skapade idén %{resource_name} på utrymmet %{space_name}"
-          publish_answer: "%{user_name} publicerade svaret på idén %{resource_name} i utrymmet %{space_name}"
+          publish_answer: "%{user_name} publicerade svaret på idén %{resource_name}
+            i utrymmet %{space_name}"
           update: "%{user_name} uppdaterade idén %{resource_name} på utrymmet %{space_name}"
       answers:
         accepted: Gick vidare
@@ -361,6 +444,10 @@ sv:
         rejected: Gick inte vidare
         withdrawn: Tillbakadragna
       application_helper:
+        activity_filter_values:
+          all: All
+          my_favorites: My favorites
+          my_ideas: My ideas
         filter_category_values:
           all: Alla
         filter_origin_values:
@@ -388,28 +475,13 @@ sv:
       destroy_draft:
         error: Det gick inte att förstöra utkastet.
         success: Utkast förstördes framgångsrikt.
-      idea_l:
-        card_label: "Idé: %{title}"
       idea_g:
-        card_label: "Idé: %{title}"
-      last_activity:
-        idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
-        new_idea_at_html: "<span>Ny idé på %{link}</span>"
-      models:
-        idea:
-          fields:
-            area_scope: Område
-            category: Tema
-            comments: Kommentarer
-            id: ID
-            official_idea: Officiell idé
-            published_answer: Publicerat svar
-            published_at: Publikationsdatum
-            scope: Tema
-            state: Utvärdering
-            title: Titel
-      new:
-        limit_reached: Du kan inte skapa nya idéer eftersom du har överskridit gränsen.
+        card_label: 'Idé: %{title}'
+      idea_g_cell:
+        card_wrapper:
+          card_label: Card label
+      idea_l:
+        card_label: 'Idé: %{title}'
       ideas:
         compare:
           continue: Fortsätt
@@ -420,8 +492,8 @@ sv:
           title: Komplettera din idé
         count:
           ideas_count:
-            one: "Hittade %{count} idé"
-            other: "Hittade %{count} idéer"
+            one: Hittade %{count} idé
+            other: Hittade %{count} idéer
         edit:
           back: Tillbaka till föregående sida
           send: Spara
@@ -429,25 +501,29 @@ sv:
         edit_draft:
           discard: Släng utkastet
           discard_confirmation: Är du säker på att du vill slänga detta utkast?
-          draft_announcement_html: <p>Detta är ett idéutkast. Du måste publicera utkastet för att det ska bli synligt på webbplatsen.</p><p>Du kan bara ha ett utkastidé åt gången.</p>
+          draft_announcement_html: "<p>Detta är ett idéutkast. Du måste publicera
+            utkastet för att det ska bli synligt på webbplatsen.</p><p>Du kan bara
+            ha ett utkastidé åt gången.</p>"
           send: Förhandsgranska
           title: Redigera idéutkast
         edit_view:
+          cancel: Avbryt
           discard: Släng utkastet
           discard_confirmation: Är du säker på att du vill slänga detta utkast?
-          cancel: Avbryt
           save: Spara som utkast
           sign_in: Logga in
           sign_in_before_submitting: Du måste logga in innan du skickar in en idé
-          you_can_invite_others: Om du skickar in en idé som grupp kan du bjuda in andra att samarbeta på idén
+          you_can_invite_others: Om du skickar in en idé som grupp kan du bjuda in
+            andra att samarbeta på idén
         filters:
           activity: Min aktivitet
           all: Alla
           all_area_scopes: Alla områden
           all_categories: Alla teman
           all_states: Alla
-          area_scope: Område
+          all_taxonomies: All
           amendment_type: Typ
+          area_scope: Område
           category: Tema
           keyword: Nyckelord
           my_favorites: Visa mina favoriter
@@ -467,26 +543,45 @@ sv:
           add_attachment: Lägg till bilagan
           add_image: Lägg till bilden
           address_lookup_button: Slå upp
-          attachment_legend: "Lägg till en bilaga till idén"
+          attachment_legend: Lägg till en bilaga till idén
           characters_min: "(minst %count% tecken krävs)"
           characters_used: "%count%/%total% tecken används"
           close_modal: Stäng fönstret
           edit_attachment: Ändra bilaga
           edit_image: Ändra bild
-          files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du behöver lägga till titlar till bilder och bilagor.
-          files_info_images: Du kan lägga till en bild till idén som kommer att visas med idén. Du måste lägga till en titel till bilden.
-          files_info_images_and_attachments: Du kan lägga till en bild till idén som kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till idén som hjälper till att visualisera idén. Du måste lägga till titlar till bilder och bilagor.
+          files_info_attachments: Du kan bifoga bilder eller filer till idén som hjälper
+            till att visualisera idén. Du behöver lägga till titlar till bilder och
+            bilagor.
+          files_info_images: Du kan lägga till en bild till idén som kommer att visas
+            med idén. Du måste lägga till en titel till bilden.
+          files_info_images_and_attachments: Du kan lägga till en bild till idén som
+            kommer att visas med idén. Dessutom kan du bifoga bilder eller filer till
+            idén som hjälper till att visualisera idén. Du måste lägga till titlar
+            till bilder och bilagor.
           image_added: Bilden tillagd
-          image_legend: "Lägg till en bild för idén"
+          image_legend: Lägg till en bild för idén
           remove_attachment: Ta bort bilagan
-          remove_attachment_confirm: Är du säker på att du vill ta bort bilagan från idén?
+          remove_attachment_confirm: Är du säker på att du vill ta bort bilagan från
+            idén?
           required_fields_text: Obligatoriska fält är markerade med *-tecknet.
           reset_field: Återställ fältet
           select_a_category: Välj ett primärt tema för idén
           select_a_sub_category: Välj ett undertema för idén
+          select_a_sub_taxonomy: Select a sub taconomy
+          select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+          select_a_taxonomy: Select a taxonomy
           show_areas_info_text: Kontrollera vilken stadsdel som tillhör olika stordistrikt
           show_categories_info_text: Kontrollera vad teman består av
           show_terms_info_text: Visa kriterier
+        idea:
+          creation_date: 'Skapat: %{date}'
+          view_idea: Visa idé
+        idea_aside:
+          flag: Uttryck idén
+          print: Skriv ut idén
+          share: Dela idén
+          show_comments: Visa idéens kommentarer
+          show_on_map: Visa idén på kartan
         idea_attributes:
           attributes:
             address: Plats
@@ -495,21 +590,42 @@ sv:
             id: Nummer (ID)
             published_at: Publiceringstiden
           title: Information
+        idea_controls:
+          edit_idea: Redigera idé
+          manage_idea: Hantera idé
+          withdraw_confirmation_html: Är du säker på att du vill dra tillbaka den
+            här idén?<br><br><strong> Den här åtgärden kan inte avbrytas!</strong>
+          withdraw_idea: Dra tillbaka idén
+        idea_full:
+          changes_at_title: Ändringar vid titel
+          comments: Kommentarer
+          edit_idea: Redigera idé
+          show_versions: Visa versionshistorik
+          subtitle: Idén
+        idea_map:
+          title: Idé på kartan
+        ideas:
+          empty: Det finns inga idéer ännu
+          empty_filters: Det finns ingen idé med dessa kriterier
         index:
-          description: Utforska idéer från andra på kartan och idékorten. Du kan också göra dina egna idéer hörda!
-          draft_idea_title: Du har ett idéutkast!
+          description: Utforska idéer från andra på kartan och idékorten. Du kan också
+            göra dina egna idéer hörda!
           draft_idea_continue: Fortsätt din idé
-          draft_idea_description: Du har tidigare sparat en idé som ett utkast. Du kan nu fortsätta skriva den.
+          draft_idea_description: Du har tidigare sparat en idé som ett utkast. Du
+            kan nu fortsätta skriva den.
+          draft_idea_title: Du har ett idéutkast!
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
-          title: Bläddra bland idéer
           see_all_withdrawn: Se alla tillbakadragna idéer
           show_list: Visa resultat som lista
           show_map: Visa resultat på kartan
           subtitle: Sök och utforska idéer!
+          title: Bläddra bland idéer
         map:
           dynamic:
             skip_button: Hoppa över karta
+        map_template:
+          view_idea: Visa idé
         new:
           back: Tillbaka till föregående sida
           get_help: Få hjälp
@@ -526,59 +642,41 @@ sv:
           recent: Nyaste
           with_more_authors: Med fler författare
         preview:
-          description: Kontrollera först hur din idé kommer att se ut när den publiceras på webbplatsen. Om du vill göra ändringar kan du gå tillbaka till redigeringsvyn. Om du är helt nöjd med idén, publicera den!
+          description: Kontrollera först hur din idé kommer att se ut när den publiceras
+            på webbplatsen. Om du vill göra ändringar kan du gå tillbaka till redigeringsvyn.
+            Om du är helt nöjd med idén, publicera den!
+          idea_edit_before_minutes:
+            one: Du kommer att kunna redigera den här idén under den första minuten
+              efter att idén har publicerats. När det tidsfönstret har passerat kommer
+              du inte att kunna redigera idén.
+            other: Du kommer att kunna redigera den här idén upp till %{count} minuter
+              efter att idén har publicerats. När det tidsfönstret passerat kommer
+              du inte att kunna redigera idén.
           modify: Ändra idén
           not_published: Din idé har ännu inte publicerats
-          not_published_description: Din idé har sparats som ett utkast. Idén måste publiceras för att den ska visas på webbplatsen.
-          idea_edit_before_minutes:
-            one: Du kommer att kunna redigera den här idén under den första minuten efter att idén har publicerats. När det tidsfönstret har passerat kommer du inte att kunna redigera idén.
-            other: Du kommer att kunna redigera den här idén upp till %{count} minuter efter att idén har publicerats. När det tidsfönstret passerat kommer du inte att kunna redigera idén.
+          not_published_description: Din idé har sparats som ett utkast. Idén måste
+            publiceras för att den ska visas på webbplatsen.
           publish: Publicera
           title: Förhandsgranska din idé
-        idea:
-          creation_date: 'Skapat: %{date}'
-          view_idea: Visa idé
-        idea_aside:
-          share: Dela idén
-          show_comments: Visa idéens kommentarer
-          show_on_map: Visa idén på kartan
-          print: Skriv ut idén
-          flag: Uttryck idén
-        idea_controls:
-          edit_idea: Redigera idé
-          manage_idea: Hantera idé
-          withdraw_confirmation_html: Är du säker på att du vill dra tillbaka den här idén?<br><br><strong> Den här åtgärden kan inte avbrytas!</strong>
-          withdraw_idea: Dra tillbaka idén
-        idea_full:
-          changes_at_title: Ändringar vid titel
-          comments: Kommentarer
-          edit_idea: Redigera idé
-          show_versions: Visa versionshistorik
-          subtitle: Idén
-        idea_map:
-          title: Idé på kartan
-        ideas:
-          empty: Det finns inga idéer ännu
-          empty_filters: Det finns ingen idé med dessa kriterier
-        map_template:
-          view_idea: Visa idé
         show:
           answer: Svara
           back_to: Tillbaka till
           back_to_list: Visa andra idéer
           changes_at_title: Ändring till %{title}
           feedback_title: Tack för att du skickade en idé!
-          link_to_promoted_emendation_help_text: Denna idé är ett annonserat ändringsförslag
-          link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
-          link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
-          link_to_idea_from_emendation_text: Se idén
           idea_accepted_reason: Denna idé gick vidare
           idea_in_evaluation_reason: Denna idé utvärderas
           idea_rejected_reason: Denna idé gick inte vidare
+          link_to_idea_from_emendation_help_text: Detta är ett avvisat ändringsidé
+          link_to_idea_from_emendation_text: Se idén
+          link_to_promoted_emendation_help_text: Denna idé är ett annonserat ändringsförslag
+          link_to_promoted_emendation_text: Visa det avvisade ändringsidén.
           read_less: Läs mindre
           read_more: Läs mer
           report: Rapportera
-          withdraw_btn_hint: Du kan dra tillbaka din idé om du ändrar dig, så länge som det inte har fått något stöd. Idén raderas inte utan kommer att visas i listan över idéer som dragits tillbaka.
+          withdraw_btn_hint: Du kan dra tillbaka din idé om du ändrar dig, så länge
+            som det inte har fått något stöd. Idén raderas inte utan kommer att visas
+            i listan över idéer som dragits tillbaka.
           withdraw_confirmation: Är du säker på att dra tillbaka denna idé?
           withdraw_idea: Dra tillbaka idé
         tags:
@@ -593,10 +691,14 @@ sv:
       ideas_picker:
         choose_ideas: Välj idéer
         close: Stäng
-        more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier för att hitta dem.
+        more_ideas: Det finns ytterligare %{number} idéer. Förfina dina sökkriterier
+          för att hitta dem.
         no_ideas: Inga idéer matchar dina sökkriterier eller det finns inga idéer.
       ideas_picker_field:
         ideas: Idéer
+      ideas_picker_field_cell:
+        field_label:
+          ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Idéer valda till förslaget
         choose_idea: Välj idén
@@ -606,11 +708,17 @@ sv:
           all: Alla
           all_area_scopes: Alla områden
           all_categories: Alla teman
+          all_taxonomies: All taxonomies
           area_scope: Område
           category: Tema
           close_modal: Stäng fönstret
           filter: Filtrera
           filter_by: Filtrera efter
+          filters:
+            activity: Activity
+            reset: Reset
+            search: Search
+            title: Title
           my_favorites: Visa mina favoriter
           my_ideas: Visa mina idéer
           origin: Ursprung
@@ -619,12 +727,53 @@ sv:
           state: Utvärdering
           title: Filtrera idéerna på kartan och i listan
           unfold: Öppna
+        filters_small_view:
+          filters:
+            close_modal: Close modal
+            filter: Filter
+            filter_by: Filter by
+            unfold: Unfold
+        idea:
+          remove_idea: Remove idea
+          show_idea_link: Show idea link
+        ideas:
+          choose_idea: Choose idea
+          chosen_idea: Chosen idea
+          remove_idea: Remove idea
         pcs_html: "<span>%{number}</span> st"
         remove_idea: Ta bort idén
+        show:
+          attached_ideas_number: Attached ideas number
+          pcs_html: Pcs html
         show_idea_link: Visa idé-sidan
+      ideas_picker_inline_cell:
+        activity_filter_values:
+          filters:
+            all: All
+            my_favorites: My favorites
+            my_ideas: My ideas
       info:
         show:
           back: Tillbaka till föregående sida
+      last_activity:
+        idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
+        new_idea_at_html: "<span>Ny idé på %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Område
+            category: Tema
+            comments: Kommentarer
+            id: ID
+            official_idea: Officiell idé
+            published_answer: Publicerat svar
+            published_at: Publikationsdatum
+            scope: Tema
+            state: Utvärdering
+            taxonomies: Taxonomies
+            title: Titel
+      new:
+        limit_reached: Du kan inte skapa nya idéer eftersom du har överskridit gränsen.
       publish:
         error: Det uppstod ett problem med att publicera idén.
         success: Idén har publicerats.
@@ -637,10 +786,10 @@ sv:
         error: Det uppstod ett problem med att spara idéutkastet.
         success: Idéutkastet har uppdaterats.
       versions:
-        index:
-          title: Versioner
         ideas:
           back_to_resource: Gå tillbaka till idé
+        index:
+          title: Versioner
       withdraw:
         errors:
           has_supports: Denna idé kan inte dras tillbaka eftersom den redan har stöd.
@@ -662,6 +811,7 @@ sv:
         ideas_count: Idéer
     participatory_spaces:
       highlighted_ideas:
+        last: Last ideas
         see_all: Visa alla (%{count})
     plans:
       section_types:
@@ -670,13 +820,13 @@ sv:
     resource_links:
       copied_from_component:
         idea_idea: Relaterade idéer
-      included_projects:
-        project_result: Relaterade projekt
       included_ideas:
         idea_plan: Relaterade gemensam utveckling förslag
         idea_project: Relaterade röstningsbara förslag
         idea_result: Relaterade projekt
         project_idea: Relaterade idéer
+      included_projects:
+        project_result: Relaterade projekt
     statistics:
       ideas_accepted: Godkända idéer
       ideas_count: Idéer

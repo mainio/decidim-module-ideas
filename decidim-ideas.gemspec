@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
 
-  spec.required_ruby_version = ">= 3.2"
+  spec.required_ruby_version = ">= 3.3"
 
   spec.summary = "Provides a module for ideation phase to Decidim."
   spec.description = "This module provides an easier user experience to collect ideas in participatory processes."

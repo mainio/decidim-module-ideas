@@ -6,7 +6,6 @@ module Decidim
       include Decidim::ApplicationHelper
       include ActionView::Helpers::FormTagHelper
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def search_ideas
         respond_to do |format|
           format.html do
@@ -17,14 +16,16 @@ module Decidim
             end
           end
           format.json do
-            query = Decidim
-                    .find_resource_manifest(:ideas)
-                    .try(:resource_scope, current_component)
-                    &.only_amendables
-                    &.not_hidden
-                    &.order(title: :asc)
-                    &.where("state IS NULL OR state != ?", "rejected")
-                    &.where&.not(published_at: nil)
+            scope = Decidim.find_resource_manifest(:ideas).try(:resource_scope, current_component)
+            query = if scope
+                      scope.only_amendables
+                           .not_hidden
+                           .order(title: :asc)
+                           .where("state IS NULL OR state != ?", "rejected")
+                           .where.not(published_at: nil)
+                    else
+                      Decidim::Ideas::Idea.none
+                    end
 
             # In case the search term starts with a hash character and contains
             # only numbers, the user wants to search with the ID.
@@ -50,7 +51,6 @@ module Decidim
           end
         end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     end
   end
 end

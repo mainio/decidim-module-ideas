@@ -46,3 +46,89 @@ task :development_app do
   install_module("development_app")
   seed_db("development_app")
 end
+
+desc "Migrate area_scope_coordinates and area_scope_parent_id to taxonomy equivalents"
+task migrate_area_coordinates: :environment do
+  updated = 0
+
+  Decidim::Component.where(manifest_name: "ideas").find_each do |component|
+    settings = component.attributes["settings"]["global"] || {}
+    old_parent_id = settings["area_scope_parent_id"]
+    coordinates = settings["area_scope_coordinates"]
+
+    next if old_parent_id.blank? && coordinates.blank?
+
+    organization = component.organization
+
+    # Migrate area_scope_parent_id to area_taxonomy_filter_id
+    if old_parent_id.present?
+      scope = defined?(Decidim::Scope) ? Decidim::Scope.find_by(id: old_parent_id) : nil
+
+      unless scope
+        puts "  WARNING: Scope #{old_parent_id} not found, cannot auto-migrate area_taxonomy_filter_id"
+        settings.delete("area_scope_parent_id")
+        next
+      end
+
+      taxonomy = Decidim::Taxonomy
+                 .where(decidim_organization_id: organization.id)
+                 .find { |t| t.name == scope.name }
+
+      unless taxonomy
+        puts "  WARNING: No taxonomy match for scope #{old_parent_id} (#{scope.name})"
+        settings.delete("area_scope_parent_id")
+        next
+      end
+
+      filter = Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.id) ||
+               Decidim::TaxonomyFilter.find_by(root_taxonomy_id: taxonomy.parent_id)
+
+      if filter
+        settings["area_taxonomy_filter_id"] = filter.id
+        puts "  Mapped area_scope_parent_id #{old_parent_id} => area_taxonomy_filter_id #{filter.id}"
+      else
+        puts "  WARNING: No TaxonomyFilter found for scope #{old_parent_id} (#{scope.name})"
+      end
+
+      settings.delete("area_scope_parent_id")
+    end
+
+    # Migrate area_scope_coordinates keys
+    if coordinates.present?
+      new_coordinates = {}
+      coordinates.each do |old_id, coords|
+        next if coords.blank?
+
+        scope = Decidim::Scope.find_by(id: old_id) if defined?(Decidim::Scope)
+
+        if scope
+          taxonomy = Decidim::Taxonomy
+                     .where(decidim_organization_id: organization.id)
+                     .find { |t| t.name == scope.name }
+
+          if taxonomy
+            new_coordinates[taxonomy.id.to_s] = coords
+            puts "  Mapped coordinate scope #{old_id} => taxonomy #{taxonomy.id}"
+          else
+            puts "  WARNING: No taxonomy match for coordinate scope #{old_id}"
+            new_coordinates[old_id] = coords
+          end
+        elsif Decidim::Taxonomy.exists?(id: old_id)
+          new_coordinates[old_id] = coords
+          puts "  ID #{old_id} is already a taxonomy ID, keeping as is"
+        else
+          puts "  WARNING: Cannot resolve coordinate ID #{old_id}, keeping as is"
+          new_coordinates[old_id] = coords
+        end
+      end
+
+      settings["area_scope_coordinates"] = new_coordinates
+    end
+
+    component.update!(settings: component.attributes["settings"].merge("global" => settings))
+    updated += 1
+    puts "Updated component #{component.id}"
+  end
+
+  puts "Done. Updated #{updated} components."
+end

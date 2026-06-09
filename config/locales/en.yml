@@ -3,10 +3,10 @@ en:
   activemodel:
     attributes:
       idea:
-        area_scope_id: Choose an area for the idea
         address: Add an optional neighbourhood for the idea or a more specific address
         answer: Answer
         answered_at: Answered at
+        area_scope_id: Choose an area for the idea
         automatic_hashtags: Hashtags automatically added
         body: Idea description
         category_id: Choose a theme for the idea
@@ -24,18 +24,19 @@ en:
       idea_answer:
         answer: Answer
         internal_state: Evaluation
+      idea_attachment:
+        file: Attachment file
+        title: Attachment title
+      idea_image_attachment:
+        file: Image file
+        title: Image title
       ideas_copy:
-        copy_ideas: I understand that this will import all ideas from the selected component to the current one and that this action can't be reversed.
+        copy_ideas: I understand that this will import all ideas from the selected
+          component to the current one and that this action can't be reversed.
         origin_component_id: Component to copy the ideas from
       ideas_import:
         import_ideas: Import ideas
         keep_authors: Keep original authors
-      idea_attachment:
-        title: Attachment title
-        file: Attachment file
-      idea_image_attachment:
-        title: Image title
-        file: Image file
     errors:
       models:
         idea:
@@ -69,6 +70,27 @@ en:
       filters:
         area_scope_id_eq:
           label: Area
+        ideas:
+          state_eq:
+            label: State
+            values:
+              accepted: Accepted to the next step
+              evaluating: Evaluating
+              rejected: Not accepted to the next step
+              withdrawn: Withdrawn
+          state_null:
+            label: Status
+            values:
+              'true': Not answered
+          taxonomies_part_of_contains:
+            label: Taxonomy
+          valuator_role_ids_has:
+            label: Assigned to valuator
+          with_any_state:
+            label: Answered
+            values:
+              state_not_published: Not answered
+              state_published: Answered
         is_emendation_true:
           label: Type
           values:
@@ -76,17 +98,6 @@ en:
             'true': Amendments
         search_placeholder:
           id_string_or_title_cont: Search %{collection} by ID or title.
-        state_eq:
-          label: State
-          values:
-            accepted: Accepted to the next step
-            evaluating: Evaluating
-            rejected: Not accepted to the next step
-            withdrawn: Withdrawn
-        state_null:
-          label: Status
-          values:
-            'true': Not answered
     components:
       ideas:
         actions:
@@ -97,15 +108,17 @@ en:
         settings:
           global:
             amendments_enabled: Amendments enabled
-            amendments_enabled_help: If active, configure Amendment features for each step.
+            amendments_enabled_help: If active, configure Amendment features for each
+              step.
             amendments_wizard_help_text: Amendments Wizard help text
-            area_scope_parent_id: Areas parent scope
+            announcement: Announcement
             area_scope_coordinates: Area scope coordinates (latitude,longitude)
+            area_taxonomy_filter_id: Area filter taxonomy
             areas_info_intro: Areas information intro
             areas_info_text: Areas information text
-            announcement: Announcement
             attachments_allowed: Allow attachments
-            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond threshold
+            can_accumulate_supports_beyond_threshold: Can accumulate supports beyond
+              threshold
             categories_info_intro: Themes information intro
             categories_info_text: Themes information text
             comments_enabled: Comments enabled
@@ -121,7 +134,10 @@ en:
             image_allowed: Allow image
             materials_text: Materials text
             new_idea_help_text: New idea help text
+            no_taxonomy_filters_found: No taxonomy filters found.
             resources_permissions_enabled: Actions permissions can be set for each idea
+            taxonomy_filters: Select filters for the component
+            taxonomy_filters_add: Add filter
             terms_intro: Terms intro
             terms_text: Terms text
             threshold_per_idea: Threshold per idea
@@ -195,25 +211,38 @@ en:
             email_subject: Your idea was not accepted to the next step
             notification_title: Your idea <a href="%{resource_path}">%{resource_title}</a> was not accepted to the next step.
           follower:
-            email_intro: 'The idea "%{resource_title}" was not accepted to the next step. You can read the answer on this page:'
-            email_outro: You have received this notification because you are following "%{resource_title}". You can unfollow it from the previous link.
+            email_intro: 'The idea "%{resource_title}" was not accepted to the next
+              step. You can read the answer on this page:'
+            email_outro: You have received this notification because you are following
+              "%{resource_title}". You can unfollow it from the previous link.
             email_subject: A idea you are following was not accepted to the next step
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea not accepted to the next step.
-        idea_update_category:
-          email_intro: 'An admin has updated the theme of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
-          email_subject: The %{resource_title} idea theme has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea theme has been updated by an admin.
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a>
+              idea not accepted to the next step.
         idea_update_area_scope:
-          email_intro: 'An admin has updated the area of your idea "%{resource_title}", check it out in this page:'
-          email_outro: You have received this notification because you are the author of the idea.
+          email_intro: 'An admin has updated the area of your idea "%{resource_title}",
+            check it out in this page:'
+          email_outro: You have received this notification because you are the author
+            of the idea.
           email_subject: The %{resource_title} idea area has been updated
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> idea area has been updated by an admin.
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a>
+            idea area has been updated by an admin.
+        idea_update_category:
+          email_intro: 'An admin has updated the theme of your idea "%{resource_title}",
+            check it out in this page:'
+          email_outro: You have received this notification because you are the author
+            of the idea.
+          email_subject: The %{resource_title} idea theme has been updated
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a>
+            idea theme has been updated by an admin.
         voting_enabled:
-          email_intro: 'You can support ideas in %{participatory_space_title}! Start participating in this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_intro: 'You can support ideas in %{participatory_space_title}! Start
+            participating in this page:'
+          email_outro: You have received this notification because you are following
+            %{participatory_space_title}. You can stop receiving notifications following
+            the previous link.
           email_subject: Idea support has started for %{participatory_space_title}
-          notification_title: You can now start <a href="%{resource_path}">supporting ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
+          notification_title: You can now start <a href="%{resource_path}">supporting
+            ideas</a> in <a href="%{participatory_space_url}">%{participatory_space_title}</a>
     filters:
       linked_classes:
         idea: Ideas
@@ -221,10 +250,14 @@ en:
       badges:
         accepted_ideas:
           conditions:
-          - Choose the participation space of your interest with submission for ideas enabled
-          - Try to make ideas that can be carried out. This way they are more likely to get accepted to the next step.
-          description: This badge is granted when you actively participate with new ideas and these are accepted to the next step.
-          description_another: This participant had %{score} ideas accepted to the next step.
+          - Choose the participation space of your interest with submission for ideas
+            enabled
+          - Try to make ideas that can be carried out. This way they are more likely
+            to get accepted to the next step.
+          description: This badge is granted when you actively participate with new
+            ideas and these are accepted to the next step.
+          description_another: This participant had %{score} ideas accepted to the
+            next step.
           description_own: You got %{score} ideas accepted to the next step.
           name: Possible ideas
           next_level_in: Get %{score} more ideas through to reach the next level!
@@ -232,9 +265,11 @@ en:
           unearned_own: You got no ideas that went through yet.
         ideas:
           conditions:
-          - Choose the participation space of your interest with submission for ideas enabled
+          - Choose the participation space of your interest with submission for ideas
+            enabled
           - Create a new idea
-          description: This badge is granted when you actively participate with new ideas.
+          description: This badge is granted when you actively participate with new
+            ideas.
           description_another: This participant has created %{score} ideas.
           description_own: You have created %{score} ideas.
           name: Ideas
@@ -257,9 +292,6 @@ en:
         exports:
           comments: Comments
           ideas: Ideas
-        models:
-          idea:
-            name: Idea
         idea_answers:
           form:
             accepted: Accepted to the next step
@@ -278,10 +310,11 @@ en:
             title: Update idea
             update: Update
           form:
-            attachment_legend: "Add an attachment for the idea"
-            image_legend: "Add an image for the idea"
-            select_a_category: Choose a primary theme for the idea
-            select_a_sub_category: Choose a subtheme for the idea
+            attachment_legend: Add an attachment for the idea
+            image_legend: Add an image for the idea
+            select_a_sub_taxonomy: Select a sub taconomy
+            select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+            select_a_taxonomy: Select a taxonomy
           index:
             actions: Actions
             cancel: Cancel
@@ -304,6 +337,7 @@ en:
           publish_answers:
             number_of_ideas: Answers for %{number} ideas will be published.
             select_a_idea: Please select an idea
+            select_an_idea: Select an idea
           show:
             amendments_count: Amendments count
             area_scope: Area
@@ -316,29 +350,30 @@ en:
             comments_positive_count: Favor
             created_at: Creation date
             documents: Documents
+            ideas: Ideas
             link: Link
             photos: Photos
-            show_email: Show email address
-            ideas: Ideas
             ranking: "%{ranking} of %{total}"
+            show_email: Show email address
             votes_count: Comments count
-          update_category:
-            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
-            select_a_category: Please select a theme
-            select_a_idea: Please select an idea
-            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
           update_area_scope:
             invalid: 'These ideas already had the %{subject_name} area: %{ideas}.'
             select_a_idea: Please select an idea
             select_a_scope: Please select an area
             success: 'Ideas successfully updated to the %{subject_name} area: %{ideas}.'
+          update_category:
+            invalid: 'These ideas already had the %{subject_name} theme: %{ideas}.'
+            select_a_category: Please select a theme
+            select_a_idea: Please select an idea
+            success: 'Ideas successfully updated to the %{subject_name} theme: %{ideas}.'
         ideas_imports:
           create:
             invalid: There was a problem importing the ideas
             success: "%{number} ideas successfully imported"
           new:
             create: Import ideas
-            no_components: There are no other idea components in this participatory space to import the ideas from.
+            no_components: There are no other idea components in this participatory
+              space to import the ideas from.
             select_component: Please select a component
             select_states: Check the status of the ideas to import
         ideas_merges:
@@ -349,12 +384,19 @@ en:
           create:
             invalid: There was a problem spliting the selected ideas.
             success: Successfully splitted the ideas into new ones.
+        models:
+          idea:
+            name: Idea
       admin_log:
         idea:
-          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name} space"
-          create: "%{user_name} created the %{resource_name} idea on the %{space_name} space"
-          publish_answer: "%{user_name} published the answer to %{resource_name} idea on the %{space_name} space"
-          update: "%{user_name} updated the %{resource_name} idea on the %{space_name} space"
+          answer: "%{user_name} answered the %{resource_name} idea on the %{space_name}
+            space"
+          create: "%{user_name} created the %{resource_name} idea on the %{space_name}
+            space"
+          publish_answer: "%{user_name} published the answer to %{resource_name} idea
+            on the %{space_name} space"
+          update: "%{user_name} updated the %{resource_name} idea on the %{space_name}
+            space"
       answers:
         accepted: Accepted to the next step
         evaluating: Evaluating
@@ -362,6 +404,10 @@ en:
         rejected: Not accepted to the next step
         withdrawn: Withdrawn
       application_helper:
+        activity_filter_values:
+          all: All
+          my_favorites: My favorites
+          my_ideas: My ideas
         filter_category_values:
           all: All
         filter_origin_values:
@@ -389,28 +435,13 @@ en:
       destroy_draft:
         error: Destroying the draft failed.
         success: Draft destroyed successfully.
-      idea_l:
-        card_label: "Idea: %{title}"
       idea_g:
-        card_label: "Idea: %{title}"
-      last_activity:
-        idea_updated_html: "<span>Idea updated at %{link}</span>"
-        new_idea_at_html: "<span>New idea at %{link}</span>"
-      models:
-        idea:
-          fields:
-            area_scope: Area
-            category: Theme
-            comments: Comments
-            id: ID
-            official_idea: Official idea
-            published_answer: Published answer
-            published_at: Published at
-            scope: Scope
-            state: Evaluation
-            title: Title
-      new:
-        limit_reached: You can't create new ideas since you've exceeded the limit.
+        card_label: 'Idea: %{title}'
+      idea_g_cell:
+        card_wrapper:
+          card_label: Card label
+      idea_l:
+        card_label: 'Idea: %{title}'
       ideas:
         compare:
           continue: Continue
@@ -421,8 +452,8 @@ en:
           title: Complete your idea
         count:
           ideas_count:
-            one: "Found %{count} idea"
-            other: "Found %{count} ideas"
+            one: Found %{count} idea
+            other: Found %{count} ideas
         edit:
           back: Back to previous page
           send: Save
@@ -430,25 +461,29 @@ en:
         edit_draft:
           discard: Discard this draft
           discard_confirmation: Are you sure you want to discard this idea draft?
-          draft_announcement_html: <p>This is an idea draft. You have to publish the draft for it to become visible on the website.</p><p>You can only have one draft idea at a time.</p>
+          draft_announcement_html: "<p>This is an idea draft. You have to publish
+            the draft for it to become visible on the website.</p><p>You can only
+            have one draft idea at a time.</p>"
           send: Preview
           title: Edit Idea Draft
         edit_view:
+          cancel: Cancel
           discard: Discard this draft
           discard_confirmation: Are you sure you want to discard this idea draft?
-          cancel: Cancel
           save: Save as draft
           sign_in: Sign in
           sign_in_before_submitting: You need to sign in before submitting an idea
-          you_can_invite_others: If you are submitting an idea as a group, you can invite others to collaborate on the idea
+          you_can_invite_others: If you are submitting an idea as a group, you can
+            invite others to collaborate on the idea
         filters:
           activity: My activity
           all: All
           all_area_scopes: All areas
           all_categories: All themes
           all_states: All
-          area_scope: Area
+          all_taxonomies: All
           amendment_type: Type
+          area_scope: Area
           category: Theme
           keyword: Hakusana
           my_favorites: Show my favourites
@@ -468,26 +503,45 @@ en:
           add_attachment: Add attachment
           add_image: Add image
           address_lookup_button: Lookup
-          attachment_legend: "Add an attachment for the idea"
+          attachment_legend: Add an attachment for the idea
           characters_min: "(at least %count% characters required)"
           characters_used: "%count%/%total% characters used"
           close_modal: Close window
           edit_attachment: Change attachment
           edit_image: Change image
-          files_info_attachments: You can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
-          files_info_images: You can add one image to the idea which will be displayed with the idea. You need to add a title to the image.
-          files_info_images_and_attachments: You can add one image to the idea which will be displayed with the idea. In addition, you can attach images or files to the idea that help to visualize the idea. You need to add titles to the images and attachments.
+          files_info_attachments: You can attach images or files to the idea that
+            help to visualize the idea. You need to add titles to the images and attachments.
+          files_info_images: You can add one image to the idea which will be displayed
+            with the idea. You need to add a title to the image.
+          files_info_images_and_attachments: You can add one image to the idea which
+            will be displayed with the idea. In addition, you can attach images or
+            files to the idea that help to visualize the idea. You need to add titles
+            to the images and attachments.
           image_added: Image added
-          image_legend: "Add an image for the idea"
+          image_legend: Add an image for the idea
           remove_attachment: Remove attachment
-          remove_attachment_confirm: Are you sure you want to remove the attachment from the idea?
+          remove_attachment_confirm: Are you sure you want to remove the attachment
+            from the idea?
           required_fields_text: Required fields are marked with the *-character.
           reset_field: Reset field
           select_a_category: Choose a primary theme for the idea
           select_a_sub_category: Choose a subtheme for the idea
-          show_areas_info_text: Check which neighborhood belong to different major districts
+          select_a_sub_taxonomy: Select a sub taconomy
+          select_a_sub_taxonomy_for: Sub-taxonomies for '%{taxonomy}'
+          select_a_taxonomy: Select a taxonomy
+          show_areas_info_text: Check which neighborhood belong to different major
+            districts
           show_categories_info_text: Check what the themes consist of
           show_terms_info_text: Show criteria
+        idea:
+          creation_date: 'Creation: %{date}'
+          view_idea: View idea
+        idea_aside:
+          flag: Report idea
+          print: Print idea
+          share: Share idea
+          show_comments: Show idea comments
+          show_on_map: Show idea on map
         idea_attributes:
           attributes:
             address: Location
@@ -496,21 +550,42 @@ en:
             id: Number (ID)
             published_at: Publish time
           title: Information
+        idea_controls:
+          edit_idea: Edit idea
+          manage_idea: Manage idea
+          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This
+            action cannot be cancelled!</strong>
+          withdraw_idea: Withdraw idea
+        idea_full:
+          changes_at_title: Changes at title
+          comments: Comments
+          edit_idea: Edit idea
+          show_versions: Show version history
+          subtitle: Idea
+        idea_map:
+          title: Idea on map
+        ideas:
+          empty: There are no ideas yet
+          empty_filters: There isn't any idea with this criteria
         index:
-          description: Explore ideas from others on the map and the idea cards. You can also make your own ideas heard!
-          draft_idea_title: You have an idea draft!
+          description: Explore ideas from others on the map and the idea cards. You
+            can also make your own ideas heard!
           draft_idea_continue: Continue your idea
-          draft_idea_description: You have previously saved an idea as a draft. You can now continue writing it.
+          draft_idea_description: You have previously saved an idea as a draft. You
+            can now continue writing it.
+          draft_idea_title: You have an idea draft!
           leave_your_idea: Submit your own idea!
           new_idea: New idea
-          title: Browse ideas
           see_all_withdrawn: See all withdrawn ideas
           show_list: Show results as list
           show_map: Show results on map
           subtitle: Search and discover ideas!
+          title: Browse ideas
         map:
           dynamic:
             skip_button: Skip map
+        map_template:
+          view_idea: View idea
         new:
           back: Back to previous page
           get_help: Get help
@@ -527,59 +602,41 @@ en:
           recent: Recent
           with_more_authors: With most authors
         preview:
-          description: Check first what your idea will look like when published on the site. If you want to make edits, you can go back to the editing view. If you are perfectly happy with the idea, publish it!
+          description: Check first what your idea will look like when published on
+            the site. If you want to make edits, you can go back to the editing view.
+            If you are perfectly happy with the idea, publish it!
+          idea_edit_before_minutes:
+            one: You will be able to edit this idea during the first minute after
+              the idea is published. Once this time window passes, you will not be
+              able to edit the idea.
+            other: You will be able to edit this idea during the first %{count} minutes
+              after the idea is published. Once this time window passes, you will
+              not be able to edit the idea.
           modify: Modify the idea
           not_published: Your idea has not yet been published
-          not_published_description: Your idea has been saved as a draft. It needs to be published for it to appear on the site.
-          idea_edit_before_minutes:
-            one: You will be able to edit this idea during the first minute after the idea is published. Once this time window passes, you will not be able to edit the idea.
-            other: You will be able to edit this idea during the first %{count} minutes after the idea is published. Once this time window passes, you will not be able to edit the idea.
+          not_published_description: Your idea has been saved as a draft. It needs
+            to be published for it to appear on the site.
           publish: Publish
           title: Preview your idea
-        idea:
-          creation_date: 'Creation: %{date}'
-          view_idea: View idea
-        idea_aside:
-          share: Share idea
-          show_comments: Show idea comments
-          show_on_map: Show idea on map
-          print: Print idea
-          flag: Report idea
-        idea_controls:
-          edit_idea: Edit idea
-          manage_idea: Manage idea
-          withdraw_confirmation_html: Are you sure you want to withdraw this idea?<br><br><strong>This action cannot be cancelled!</strong>
-          withdraw_idea: Withdraw idea
-        idea_full:
-          changes_at_title: Changes at title
-          comments: Comments
-          edit_idea: Edit idea
-          show_versions: Show version history
-          subtitle: Idea
-        idea_map:
-          title: Idea on map
-        ideas:
-          empty: There are no ideas yet
-          empty_filters: There isn't any idea with this criteria
-        map_template:
-          view_idea: View idea
         show:
           answer: Answer
           back_to: Back to
           back_to_list: See other ideas
           changes_at_title: Amendment to "%{title}"
           feedback_title: Thank you for submitting an idea!
-          link_to_promoted_emendation_help_text: This idea is a promoted emendation
-          link_to_promoted_emendation_text: See the rejected emendation.
-          link_to_idea_from_emendation_help_text: This is a rejected emendation
-          link_to_idea_from_emendation_text: See the Idea
           idea_accepted_reason: This idea was accepted to the next step
           idea_in_evaluation_reason: This idea is being evaluated
           idea_rejected_reason: This idea was not accepted to the next step
+          link_to_idea_from_emendation_help_text: This is a rejected emendation
+          link_to_idea_from_emendation_text: See the Idea
+          link_to_promoted_emendation_help_text: This idea is a promoted emendation
+          link_to_promoted_emendation_text: See the rejected emendation.
           read_less: Read less
           read_more: Read more
           report: Report
-          withdraw_btn_hint: You can withdraw your idea if you change your mind, as long as you have not received any support. The idea is not deleted, it will appear in the list of withdrawn ideas.
+          withdraw_btn_hint: You can withdraw your idea if you change your mind, as
+            long as you have not received any support. The idea is not deleted, it
+            will appear in the list of withdrawn ideas.
           withdraw_confirmation: Are you sure you want to withdraw this idea?
           withdraw_idea: Withdraw idea
         tags:
@@ -598,6 +655,9 @@ en:
         no_ideas: No ideas match your search criteria or there isn't any ideas.
       ideas_picker_field:
         ideas: Ideas
+      ideas_picker_field_cell:
+        field_label:
+          ideas: Ideas
       ideas_picker_inline:
         attached_ideas_number: Ideas attached to this proposal
         choose_idea: Select idea
@@ -607,11 +667,17 @@ en:
           all: All
           all_area_scopes: All areas
           all_categories: All themes
+          all_taxonomies: All taxonomies
           area_scope: Area
           category: Theme
           close_modal: Close modal
           filter: Filter
           filter_by: Filter by
+          filters:
+            activity: Activity
+            reset: Reset
+            search: Search
+            title: Title
           my_favorites: Show my favourites
           my_ideas: Show my ideas
           origin: Origin
@@ -620,12 +686,53 @@ en:
           state: Evaluation
           title: Filter the ideas on the map and in the list
           unfold: Unfold
+        filters_small_view:
+          filters:
+            close_modal: Close modal
+            filter: Filter
+            filter_by: Filter by
+            unfold: Unfold
+        idea:
+          remove_idea: Remove idea
+          show_idea_link: Show idea link
+        ideas:
+          choose_idea: Choose idea
+          chosen_idea: Chosen idea
+          remove_idea: Remove idea
         pcs_html: "<span>%{number}</span> pcs"
         remove_idea: Remove idea
+        show:
+          attached_ideas_number: Attached ideas number
+          pcs_html: Pcs html
         show_idea_link: Show idea page
+      ideas_picker_inline_cell:
+        activity_filter_values:
+          filters:
+            all: All
+            my_favorites: My favorites
+            my_ideas: My ideas
       info:
         show:
           back: Back to previous page
+      last_activity:
+        idea_updated_html: "<span>Idea updated at %{link}</span>"
+        new_idea_at_html: "<span>New idea at %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Area
+            category: Theme
+            comments: Comments
+            id: ID
+            official_idea: Official idea
+            published_answer: Published answer
+            published_at: Published at
+            scope: Scope
+            state: Evaluation
+            taxonomies: Taxonomies
+            title: Title
+      new:
+        limit_reached: You can't create new ideas since you've exceeded the limit.
       publish:
         error: There was a problem publishing the idea.
         success: Idea successfully published.
@@ -638,10 +745,10 @@ en:
         error: There was a problem saving the idea draft.
         success: Idea draft successfully updated.
       versions:
-        index:
-          title: Versions
         ideas:
           back_to_resource: Go back to idea
+        index:
+          title: Versions
       withdraw:
         errors:
           has_supports: This idea can not be withdrawn because it already has supports.
@@ -672,13 +779,13 @@ en:
     resource_links:
       copied_from_component:
         idea_idea: Related ideas
-      included_projects:
-        project_result: Related projects
       included_ideas:
         idea_plan: Related co-creation proposals
         idea_project: Related votable proposals
         idea_result: Related projects
         project_idea: Related ideas
+      included_projects:
+        project_result: Related projects
     statistics:
       ideas_accepted: Accepted ideas
       ideas_count: Ideas

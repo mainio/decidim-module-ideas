@@ -7,7 +7,9 @@ describe Decidim::Ideas::Admin::UpdateIdea do
 
   let(:command) { described_class.new(form, user, idea) }
   let(:form) { Decidim::Ideas::Admin::IdeaForm.new(idea_data) }
-  let!(:idea) { create(:idea, component:) }
+  let!(:idea) { create(:idea, component:, category: false, area_scope: false) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+  let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
   let(:idea_data) do
     {
       title: "A new testing idea",
@@ -16,15 +18,12 @@ describe Decidim::Ideas::Admin::UpdateIdea do
       latitude: 1.123,
       longitude: 2.345,
       perform_geocoding: false,
-      category_id: category.id,
-      area_scope_id: area_scope.id
+      taxonomy_ids: [taxonomy.id]
     }
   end
   let(:organization) { create(:organization, tos_version: Time.current) }
   let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:component) { create(:idea_component, participatory_space:) }
-  let(:category) { create(:category, participatory_space:) }
-  let(:area_scope) { create(:scope, organization:) }
   let(:user) { create(:user, :confirmed, :admin, organization:) }
 
   before do
@@ -32,6 +31,9 @@ describe Decidim::Ideas::Admin::UpdateIdea do
     allow(form).to receive(:current_component).and_return(component)
     allow(form).to receive(:component).and_return(component)
     allow(form).to receive(:current_user).and_return(user)
+    allow(form).to receive(:taxonomizations).and_return(
+      [Decidim::Taxonomization.new(taxonomy: taxonomy, taxonomizable: idea)]
+    )
   end
 
   it "broadcasts ok" do
@@ -47,7 +49,6 @@ describe Decidim::Ideas::Admin::UpdateIdea do
     expect(idea.address).to eq(idea_data[:address])
     expect(idea.latitude).to eq(idea_data[:latitude])
     expect(idea.longitude).to eq(idea_data[:longitude])
-    expect(idea.category.id).to eq(idea_data[:category_id])
-    expect(idea.area_scope.id).to eq(idea_data[:area_scope_id])
+    expect(idea.taxonomies).to include(taxonomy)
   end
 end

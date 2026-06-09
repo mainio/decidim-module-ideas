@@ -7,16 +7,12 @@ module Decidim
     describe IdeaSerializer do
       subject { described_class.new(idea) }
 
-      let(:idea) { create(:idea, component:) }
-      let!(:category) { create(:category, participatory_space: component.participatory_space) }
-      let!(:area_scope) { create(:scope, organization: component.participatory_space.organization) }
-      let(:participatory_process) { component.participatory_space }
       let(:component) { create(:idea_component) }
-
-      before do
-        idea.update(category:)
-        idea.update(area_scope:)
-      end
+      let(:participatory_process) { component.participatory_space }
+      let(:organization) { participatory_process.organization }
+      let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+      let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
+      let(:idea) { create(:idea, component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
 
       describe "#serialize" do
         let(:serialized) { subject.serialize }
@@ -38,14 +34,8 @@ module Decidim
           expect(serialized[:component][:id]).to eq(component.id)
         end
 
-        it "serializes the area scope" do
-          expect(serialized[:area_scope]).to include(id: area_scope.id)
-          expect(serialized[:area_scope]).to include(name: area_scope.name)
-        end
-
-        it "serializes the category" do
-          expect(serialized[:category]).to include(id: category.id)
-          expect(serialized[:category]).to include(name: category.name)
+        it "serializes the taxonomies" do
+          expect(serialized[:taxonomies]).to be_present
         end
 
         it "serializes the title" do
@@ -73,7 +63,7 @@ module Decidim
         end
 
         context "with proposal having an answer" do
-          let!(:idea) { create(:idea, :with_answer) }
+          let!(:idea) { create(:idea, :with_answer, category: false, area_scope: false) }
 
           it "serializes answer" do
             expect(serialized).to include(answer: idea.answer.reject { |k| k == "machine_translations" }.merge("es" => ""))
@@ -105,7 +95,8 @@ module Decidim
         end
 
         context "when the idea has coordinates" do
-          let(:idea) { create(:idea, :geocoded, component:) }
+          let(:geocoding_component) { create(:idea_component, :with_geocoding_enabled, participatory_space: participatory_process) }
+          let(:idea) { create(:idea, :geocoded, component: geocoding_component, category: false, area_scope: false) }
 
           it "serializes the coordinates" do
             expect(serialized[:coordinates]).to include(
@@ -116,7 +107,7 @@ module Decidim
           end
         end
 
-        context "when the area scope has coordinates defined in the component settings" do
+        context "when the taxonomy has coordinates defined in the component settings" do
           let(:coordinates) do
             {
               latitude: ::Faker::Address.latitude,
@@ -127,14 +118,15 @@ module Decidim
           before do
             component.update!(
               settings: {
+                area_taxonomy_filter_id: taxonomy_filter.id,
                 area_scope_coordinates: {
-                  area_scope.id.to_s => "#{coordinates[:latitude]},#{coordinates[:longitude]}"
+                  taxonomy.id.to_s => "#{coordinates[:latitude]},#{coordinates[:longitude]}"
                 }
               }
             )
           end
 
-          it "serializes the area scope coordinates" do
+          it "serializes the taxonomy coordinates" do
             expect(serialized[:coordinates]).to include(
               available: false,
               latitude: coordinates[:latitude],

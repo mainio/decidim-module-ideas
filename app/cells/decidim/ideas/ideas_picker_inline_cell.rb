@@ -87,19 +87,18 @@ module Decidim
         ]
       end
 
-      def filter_ideas_categories_values
-        organization = component.participatory_space.organization
+      def filter_ideas_taxonomy_values
+        filter_ids = component.settings.taxonomy_filters.map(&:to_i)
 
-        sorted_main_categories = component.participatory_space.categories.first_class.includes(:subcategories).sort_by do |category|
-          [category.weight, translated_attribute(category.name, organization)]
-        end
-
-        categories_values = []
-        sorted_main_categories.each do |category|
-          category_name = translated_attribute(category.name, organization)
-          categories_values << [category_name, category.id]
-        end
-        categories_values
+        Decidim::TaxonomyFilter
+          .where(id: filter_ids)
+          .includes(filter_items: :taxonomy_item)
+          .map do |filter|
+            values = filter.filter_items
+                           .sort_by { |item| translated_attribute(item.taxonomy_item.name) }
+                           .map { |item| [translated_attribute(item.taxonomy_item.name), item.taxonomy_item.id] }
+            [filter, values]
+          end
       end
 
       def current_locale

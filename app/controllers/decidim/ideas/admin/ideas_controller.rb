@@ -46,34 +46,6 @@ module Decidim
           end
         end
 
-        def update_category
-          enforce_permission_to :update, :idea_category
-
-          Admin::UpdateIdeaCategory.call(params[:category][:id], idea_ids) do
-            on(:invalid_category) do
-              flash[:error] = I18n.t(
-                "ideas.update_category.select_a_category",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash[:alert] = I18n.t(
-                "ideas.update_category.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_category) do
-              flash[:notice] = update_ideas_bulk_response_successful(@response, :category)
-              flash[:alert] = update_ideas_bulk_response_errored(@response, :category)
-            end
-            respond_to do |format|
-              format.js
-            end
-          end
-        end
-
         def publish_answers
           enforce_permission_to :publish_answers, :ideas
 
@@ -92,35 +64,6 @@ module Decidim
 
           respond_to do |format|
             format.js
-          end
-        end
-
-        def update_area_scope
-          enforce_permission_to :update, :idea_scope
-
-          Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
-            on(:invalid_scope) do
-              flash[:error] = t(
-                "ideas.update_scope.select_a_scope",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash[:alert] = t(
-                "ideas.update_scope.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_scope) do
-              flash[:notice] = update_ideas_bulk_response_successful(@response, :scope)
-              flash[:alert] = update_ideas_bulk_response_errored(@response, :scope)
-            end
-
-            respond_to do |format|
-              format.js
-            end
           end
         end
 
@@ -148,7 +91,7 @@ module Decidim
                               .only_amendables
                               .published
                               .not_hidden
-                              .includes(:amendable, :category, :component, :area_scope)
+                              .includes(:amendable, :taxonomies, :component)
         end
 
         def ideas
@@ -163,50 +106,8 @@ module Decidim
           @idea_ids ||= params[:idea_ids]
         end
 
-        def update_ideas_bulk_response_successful(response, subject)
-          return if response[:successful].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_area_scope.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
-        def update_ideas_bulk_response_errored(response, subject)
-          return if response[:errored].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_scope.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
         def idea_form_builder
-          Decidim::Ideas::Admin::FormBuilder
+          Decidim::Ideas::FormBuilder
         end
 
         def form_presenter

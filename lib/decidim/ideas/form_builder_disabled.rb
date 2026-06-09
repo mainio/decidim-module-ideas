@@ -9,25 +9,25 @@ module Decidim
       def select(attribute, choices, options = {}, html_options = {})
         html_options[:disabled] = true
 
-        super(attribute, choices, options, html_options)
+        super
       end
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
         options[:disabled] = true
 
-        super(method, options, checked_value, unchecked_value)
+        super
       end
 
       def radio_button(attribute, tag_value, options = {})
         options[:disabled] = true
 
-        super(attribute, tag_value, options)
+        super
       end
 
       def button(value = nil, options = {}, &)
         options[:disabled] = true
 
-        super(value, options, &)
+        super
       end
 
       private
@@ -35,7 +35,7 @@ module Decidim
       def field(attribute, options, html_options = nil, &)
         options[:disabled] = true unless html_options.is_a?(Hash) && html_options[:disabled] == true
 
-        super(attribute, options, html_options, &)
+        super
       end
     end
   end

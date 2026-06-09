@@ -1,15 +1,15 @@
 $(() => {
   const $coordinatesElement = $(".area_scope_coordinates_container");
 
-  const handleParentAreaScopeChange = (ev) => {
-    const scopeId = $(ev.target).val();
+  const handleParentTaxonomyFilterChange = (ev) => {
+    const filterId = $(ev.target).val();
     const updateUrl = $coordinatesElement.data("update-url");
     const settingName = $coordinatesElement.data("setting-name");
 
     $.ajax({
       method: "GET",
       url: updateUrl,
-      data: {parent_scope_id: scopeId, setting_name: settingName}// eslint-disable-line camelcase
+      data: { taxonomy_filter_id: filterId, setting_name: settingName }// eslint-disable-line camelcase
     }).done((data) => {
       $(".area-scope-coordinates", $coordinatesElement).replaceWith(data);
     });
@@ -25,7 +25,7 @@ $(() => {
 
   $(document).on(
     "change",
-    "select[name='component[settings][area_scope_parent_id]']",
-    handleParentAreaScopeChange
+    "select[name='component[settings][area_taxonomy_filter_id]']",
+    handleParentTaxonomyFilterChange
   );
 });
