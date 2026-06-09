@@ -1,6 +1,26 @@
 ((exports) => {
   const $ = exports.$; // eslint-disable-line
 
+  const hideAllSubTaxonomies = (select) => {
+    const $filterGroup = $(select).closest("[data-filter-group]");
+    $filterGroup.find("[data-parent-taxonomy]").each((_i, div) => {
+      $(div).addClass("hidden");
+      $(div).find("select").val("");
+    });
+  };
+
+  const showSubTaxonomy = (select) => {
+    const selectedValue = $(select).val();
+    if (!selectedValue) { 
+      return
+    };
+
+    const $subDiv = $(`#sub_taxonomy_${selectedValue}`);
+    if ($subDiv.length) {
+      $subDiv.removeClass("hidden");
+    }
+  };
+
   const bindTaxonomySelectors = () => {
     $("[data-taxonomy-filter]").each((_i, select) => {
       // pre-populate parent if a child is already selected (edit mode)
@@ -19,24 +39,6 @@
         showSubTaxonomy(ev.target);
       });
     });
-  };
-
-  const hideAllSubTaxonomies = (select) => {
-    const $filterGroup = $(select).closest("[data-filter-group]");
-    $filterGroup.find("[data-parent-taxonomy]").each((_i, div) => {
-      $(div).addClass("hidden");
-      $(div).find("select").val("");
-    });
-  };
-
-  const showSubTaxonomy = (select) => {
-    const selectedValue = $(select).val();
-    if (!selectedValue) return;
-
-    const $subDiv = $(`#sub_taxonomy_${selectedValue}`);
-    if ($subDiv.length) {
-      $subDiv.removeClass("hidden");
-    }
   };
 
   const uploadModalCorrection = () => {

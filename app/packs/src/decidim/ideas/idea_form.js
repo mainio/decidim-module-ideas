@@ -3,10 +3,8 @@ import "src/decidim/ideas/info_modals";
 
 ((exports) => {
   const $ = exports.$; // eslint-disable-line
-
   // Defines whether the user can exit the view without a warning or not
   let canExit = false;
-
   const DEFAULT_MESSAGES = {
     charactersUsed: "%count%/%total% characters used",
     charactersMin: "(at least %count characters required)"
@@ -91,7 +89,6 @@ import "src/decidim/ideas/info_modals";
     $submits.
       off("click.decidim.ideas.form").
       on("click.decidim.ideas.form", (ev) => {
-        // Tell the backend which submit button was pressed (save or preview)
         let $btn = $(ev.target);
         if (!$btn.is("button")) {
           $btn = $btn.closest("button");
@@ -162,14 +159,11 @@ import "src/decidim/ideas/info_modals";
       });
     }
 
-    // Prevent the form submit event on keydown event in the address field
     $address.on("keydown.decidim.ideas", (ev) => {
       if (ev.keyCode === 13) {
         ev.preventDefault();
       }
     });
-    // Perform lookup only on the keyup event so that we will not perform
-    // multiple searches if enter is kept down.
     $address.on("keyup.decidim.ideas", (ev) => {
       if (ev.keyCode === 13) {
         performCoordinatesLookup();
@@ -183,8 +177,6 @@ import "src/decidim/ideas/info_modals";
       }
     });
 
-    // When we receive coordinates from the map, update the relevant coordinate
-    // fields and perform address lookup.
     $address.on("coordinates.decidim.ideas", (_ev, coordinates) => {
       $latitude.val(coordinates.lat).attr("value", coordinates.lat);
       $longitude.val(coordinates.lng).attr("value", coordinates.lng);
@@ -200,7 +192,6 @@ import "src/decidim/ideas/info_modals";
       $longitude.val(coordinates.lng).attr("value", coordinates.lng);
     });
 
-    // Listen for the autocompletion event from Tribute
     $address.on("tribute-replaced", (ev) => {
       const selected = ev.detail.item.original;
       if (selected.coordinates) {
@@ -220,7 +211,6 @@ import "src/decidim/ideas/info_modals";
       ev.preventDefault();
       performCoordinatesLookup();
     });
-
     if ($latitude.val() && $latitude.val().length > 0 && $longitude.val() && $longitude.val().length > 0) {
       $map.trigger("coordinates.decidim.ideas", [{
         lat: $latitude.val(),
@@ -239,8 +229,9 @@ import "src/decidim/ideas/info_modals";
 
   const showSubTaxonomy = (select) => {
     const selectedValue = $(select).val();
-    if (!selectedValue) return;
-
+    if (!selectedValue) {
+      return
+    };
     const $subDiv = $(`#sub_taxonomy_${selectedValue}`);
     if ($subDiv.length) {
       $subDiv.removeClass("hidden");
@@ -249,7 +240,6 @@ import "src/decidim/ideas/info_modals";
 
   const bindSubcategoryInputs = () => {
     $("[data-taxonomy-filter]").each((_i, select) => {
-      // pre-populate parent if a child is selected in this filter group
       const $filterGroup = $(select).closest("[data-filter-group]");
       const $subDivs = $filterGroup.find("[data-parent-taxonomy]");
       
@@ -257,7 +247,6 @@ import "src/decidim/ideas/info_modals";
         const parentId = $(div).data("parent-taxonomy");
         const childVal = $(div).find("select").val();
         if (childVal) {
-          // set the parent select to the parent taxonomy id
           $(select).val(parentId);
           $(div).removeClass("hidden");
         }
@@ -284,10 +273,6 @@ import "src/decidim/ideas/info_modals";
       if (canExit) {
         return;
       }
-
-      // Confirm exit. Setting this to an empty string would not work in
-      // Firefox (although it should according to the spec), so we set it to
-      // `true` instead.
       ev.returnValue = true;
     });
   };
