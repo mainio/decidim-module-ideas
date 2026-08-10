@@ -10,14 +10,13 @@ module Decidim
       #
       # attributes        - The Hash of attributes to create the Idea with.
       # author            - An Authorable the will be the first coauthor of the Idea.
-      # user_group_author - A User Group to, optionally, set it as the author too.
       # action_user       - The User to be used as the user who is creating the Idea in the traceability logs.
       #
       # Returns a Idea.
-      def create(attributes:, author:, action_user:, user_group_author: nil)
+      def create(attributes:, author:, action_user:)
         Decidim.traceability.perform_action!(:create, Idea, action_user, visibility: "all") do
           idea = Idea.new(attributes)
-          idea.add_coauthor(author, user_group: user_group_author)
+          idea.add_coauthor(author)
           idea.save!
           idea
         end
@@ -36,7 +35,7 @@ module Decidim
         Decidim.traceability.perform_action!(:create, Idea, action_user, visibility: "all") do
           idea = Idea.new(attributes)
           original_idea.coauthorships.each do |coauthorship|
-            idea.add_coauthor(coauthorship.author, user_group: coauthorship.user_group)
+            idea.add_coauthor(coauthorship.author)
           end
           idea.save!
           idea
@@ -49,15 +48,13 @@ module Decidim
       #
       # original_idea     - The Idea to be used as base to create the new one.
       # author            - An Authorable the will be the first coauthor of the Idea.
-      # user_group_author - A User Group to, optionally, set it as the author too.
       # action_user       - The User to be used as the user who is creating the idea in the traceability logs.
       # extra_attributes  - A Hash of attributes to create the new idea, will overwrite the original ones.
       # skip_link         - Whether to skip linking the two ideas or not (default false).
       #
       # Returns a Idea
       #
-      # rubocop:disable Metrics/ParameterLists
-      def copy(original_idea, author:, action_user:, user_group_author: nil, extra_attributes: {}, skip_link: false)
+      def copy(original_idea, author:, action_user:, extra_attributes: {}, skip_link: false)
         origin_attributes = original_idea.attributes.except(
           "id",
           "created_at",
@@ -81,7 +78,6 @@ module Decidim
                  create(
                    attributes: origin_attributes,
                    author:,
-                   user_group_author:,
                    action_user:
                  )
                end
@@ -92,8 +88,6 @@ module Decidim
 
         idea
       end
-      # rubocop:enable Metrics/ParameterLists
-
       module_function :copy
 
       def copy_attachments(original_idea, idea)

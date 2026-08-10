@@ -77,12 +77,6 @@ module Decidim
              .joins(:coauthorships)
              .where.not(decidim_coauthorships: { decidim_author_type: "Decidim::Organization" })
       }
-      scope :user_group_origin, lambda {
-        where.not(coauthorships_count: 0)
-             .joins(:coauthorships)
-             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
-             .where.not(decidim_coauthorships: { decidim_user_group_id: nil })
-      }
 
       scope :with_availability, lambda { |availability_key|
         case availability_key

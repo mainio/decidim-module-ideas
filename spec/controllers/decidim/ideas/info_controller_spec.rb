@@ -3,8 +3,6 @@
 require "spec_helper"
 
 describe Decidim::Ideas::InfoController do
-  routes { Decidim::Ideas::Engine.routes }
-
   let(:organization) { component.organization }
   let(:component) { create(:idea_component, settings:) }
   let(:settings) { {} }

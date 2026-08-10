@@ -37,7 +37,10 @@ describe "AdminManagesIdeaComponent" do
     let(:max_body_length) { rand(500..1500) }
 
     before do
-      find(".action-icon--configure", match: :first).click
+      find("button[data-target='actions-component-#{component.id}']").click
+      within "#actions-component-#{component.id}" do
+        click_on "Configure"
+      end
     end
 
     it "updates component's settings" do
@@ -54,7 +57,10 @@ describe "AdminManagesIdeaComponent" do
 
   describe "delete" do
     it "deletes component" do
-      find(".action-icon--delete").click
+      find("button[data-target='actions-component-#{component.id}']").click
+      within "#actions-component-#{component.id}" do
+        click_on "Move to trash"
+      end
       find("[data-confirm-ok]").click
       expect(page).to have_content("Component successfully deleted")
     end

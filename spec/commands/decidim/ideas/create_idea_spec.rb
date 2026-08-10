@@ -85,16 +85,4 @@ describe Decidim::Ideas::CreateIdea do
       end
     end
   end
-
-  context "with user group" do
-    let(:idea_limit) { 1 }
-    let!(:user) { create(:user_group, organization:) }
-    let!(:idea) { create(:idea, :accepted, component:, users: [user], category: false, area_scope: false) }
-
-    it "broadcasts invalid" do
-      expect { subject }.to broadcast(:invalid)
-      expect(Decidim::Ideas::Idea.count).to eq(1)
-      expect(form.errors.full_messages).to include("You can't create new ideas since you've exceeded the limit.")
-    end
-  end
 end

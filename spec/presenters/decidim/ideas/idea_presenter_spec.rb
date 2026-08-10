@@ -46,28 +46,6 @@ describe Decidim::Ideas::IdeaPresenter do
         expect(subject).to include(escaped_html(idea.title))
       end
     end
-
-    context "with hashtags" do
-      subject { presenter.title }
-
-      let(:idea) { create(:idea, title: title_with_hashtags, component:) }
-      let(:title) { "Idea title with #decidim hashtag" }
-      let(:title_with_hashtags) { Decidim::ContentProcessor.parse_with_processor(:hashtag, title, current_organization: organization).rewrite }
-
-      it "presents the hashtags" do
-        expect(subject).to eq(title)
-      end
-
-      context "with links" do
-        subject { presenter.title(links: true) }
-
-        it "adds the links to the hashtags" do
-          expect(subject).to eq(
-            %(Idea title with <a target="_blank" class="text-secondary underline" rel="noopener" data-external-link="false" href="/search?term=%23decidim">#decidim</a> hashtag)
-          )
-        end
-      end
-    end
   end
 
   describe "#id_and_title" do

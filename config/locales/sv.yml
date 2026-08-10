@@ -7,7 +7,6 @@ sv:
         answer: Svara
         answered_at: Besvarad
         area_scope_id: Välj ett område för idén
-        automatic_hashtags: Hashtags läggs till automatiskt
         body: Idébeskrivning
         category_id: Välj ett tema för idén
         decidim_category_id: Välj ett tema för idén
@@ -17,10 +16,8 @@ sv:
         perform_geocoding: Hämta kartpunkten baserat på adressen
         state: Utvärdering
         sub_category_id: Välj ett undertema för idén
-        suggested_hashtags: Föreslagna hashtags
         terms_agreed: Jag har läst kriterier
         title: Idé namn
-        user_group_id: Skapa idé som
       idea_answer:
         answer: Svar
         internal_state: Utvärdering
@@ -171,12 +168,10 @@ sv:
               för sina författare" är markerat måste deltagaren vara inloggad för
               att kunna se ändringarna.
             announcement: Meddelande
-            automatic_hashtags: Hashtags läggs till i alla idéer
             comments_blocked: Kommentarer blockerade
             creation_enabled: Skapande av idéer aktiverat
             idea_answering_enabled: Svar på idéer aktiverat
             publish_answers_immediately: Publicera idésvar omedelbart
-            suggested_hashtags: Förslag på hashtags för nya idéer till deltagare
     events:
       ideas:
         creation_enabled:
@@ -453,7 +448,6 @@ sv:
         filter_origin_values:
           all: Alla
           participants: Deltagare
-          user_groups: Grupper
         filter_state_values:
           accepted: Gick vidare
           all: Alla

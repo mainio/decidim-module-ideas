@@ -12,7 +12,6 @@ module Decidim
           unless method_defined?(:settings_attribute_input_orig_ideas)
             alias_method :settings_attribute_input_orig_ideas, :settings_attribute_input
 
-            # rubocop:disable Rails/HelperInstanceVariable
             def settings_attribute_input(form, attribute, name, i18n_scope, options = {})
               case attribute.type
               when :idea_area_taxonomy_filter

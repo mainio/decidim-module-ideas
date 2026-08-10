@@ -3,7 +3,6 @@
 module Decidim
   module Ideas
     class IdeasController < Decidim::Ideas::ApplicationController
-      helper IdeaWizardHelper
       helper Decidim::Ideas::IdeasFormHelper
 
       include Decidim::ApplicationHelper
@@ -227,9 +226,7 @@ module Decidim
       end
 
       def default_filter_origin_params
-        filter_origin_params = %w(participants)
-        filter_origin_params << "user_group" if current_organization.user_groups_enabled?
-        filter_origin_params
+        %w(participants)
       end
 
       def idea_draft

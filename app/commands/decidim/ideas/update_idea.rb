@@ -6,7 +6,6 @@ module Decidim
     class UpdateIdea < Decidim::Command
       include ::Decidim::Ideas::AttachmentMethods
       include ::Decidim::Ideas::ImageMethods
-      include HashtagsMethods
 
       # Public: Initializes the command.
       #
@@ -71,7 +70,7 @@ module Decidim
         PaperTrail.request(enabled: false) do
           @idea.update(attributes)
           @idea.coauthorships.clear
-          @idea.add_coauthor(current_user, user_group:)
+          @idea.add_coauthor(current_user)
         end
       end
 
@@ -83,13 +82,13 @@ module Decidim
           visibility: "public-only"
         )
         @idea.coauthorships.clear
-        @idea.add_coauthor(current_user, user_group:)
+        @idea.add_coauthor(current_user)
       end
 
       def attributes
         {
-          title: title_with_hashtags,
-          body: body_with_hashtags,
+          title: Decidim::ContentProcessor.parse(form.title, current_organization: form.current_organization).rewrite,
+          body: Decidim::ContentProcessor.parse_with_processor(:inline_images, form.body, current_organization: form.current_organization).rewrite,
           taxonomizations: form.taxonomizations,
           # area_scope: form&.area_scope,
           # category: form&.category,
@@ -104,15 +103,7 @@ module Decidim
 
         return false if idea_limit.zero?
 
-        if user_group
-          user_group_ideas.count >= idea_limit
-        else
-          current_user_ideas.count >= idea_limit
-        end
-      end
-
-      def user_group
-        @user_group ||= Decidim::UserGroup.find_by(organization:, id: form.user_group_id)
+        current_user_ideas.count >= idea_limit
       end
 
       def organization
@@ -121,10 +112,6 @@ module Decidim
 
       def current_user_ideas
         Idea.from_author(current_user).where(component: form.current_component).published.where.not(id: idea.id).except_withdrawn
-      end
-
-      def user_group_ideas
-        Idea.from_user_group(user_group).where(component: form.current_component).published.where.not(id: idea.id).except_withdrawn
       end
     end
   end

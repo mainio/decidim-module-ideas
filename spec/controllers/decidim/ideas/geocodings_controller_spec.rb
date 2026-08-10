@@ -3,8 +3,6 @@
 require "spec_helper"
 
 describe Decidim::Ideas::GeocodingsController do
-  routes { Decidim::Ideas::Engine.routes }
-
   let(:user) { create(:user, :confirmed, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component, :with_creation_enabled) }

@@ -7,7 +7,6 @@ en:
         answer: Answer
         answered_at: Answered at
         area_scope_id: Choose an area for the idea
-        automatic_hashtags: Hashtags automatically added
         body: Idea description
         category_id: Choose a theme for the idea
         decidim_category_id: Choose a theme for the idea
@@ -17,10 +16,8 @@ en:
         perform_geocoding: Fetch the map point based on the address
         state: Evaluation
         sub_category_id: Choose a subtheme for the idea
-        suggested_hashtags: Suggested hashtags
         terms_agreed: I have read the criteria
         title: Idea title
-        user_group_id: Create idea as
       idea_answer:
         answer: Answer
         internal_state: Evaluation
@@ -154,12 +151,10 @@ en:
               participants: Amendments are visible only to their authors
             amendments_visibility_help: If the option "Amendments are visible only to their authors" is selected, participant must be logged in to see the amendments made.
             announcement: Announcement
-            automatic_hashtags: Hashtags added to all ideas
             comments_blocked: Comments blocked
             creation_enabled: Idea creation enabled
             idea_answering_enabled: Idea answering enabled
             publish_answers_immediately: Publish idea answers immediately
-            suggested_hashtags: Hashtags suggested to participants for new ideas
     events:
       ideas:
         creation_enabled:
@@ -413,7 +408,6 @@ en:
         filter_origin_values:
           all: All
           participants: Participants
-          user_groups: Groups
         filter_state_values:
           accepted: Accepted to the next step
           all: All

@@ -7,7 +7,6 @@ fi:
         answer: Vastaus
         answered_at: Vastausaika
         area_scope_id: Valitse idealle alue
-        automatic_hashtags: Automaattisesti lisättävät aihetunnisteet (hashtag)
         body: Idean kuvaus
         category_id: Valitse idealle teema
         decidim_category_id: Valitse idealle teema
@@ -17,10 +16,8 @@ fi:
         perform_geocoding: Hae karttapiste osoitteen perusteella
         state: Arviointi
         sub_category_id: Valitse idealle alateema
-        suggested_hashtags: Ehdotetut aihetunnisteet (hashtag)
         terms_agreed: Olen lukenut kriteerit
         title: Idean nimi
-        user_group_id: Luo idea käyttäjänä
       idea_answer:
         answer: Vastaus
         internal_state: Arviointi
@@ -172,14 +169,11 @@ fi:
               niiden laatijoille" on määritetty, osallistujien tulee kirjautua sisään
               nähdäkseen tehdyt muutokset.
             announcement: Ilmoitus
-            automatic_hashtags: Aihetunnisteet (hashtag), jotka lisätään kaikkiin
               ehdotuksiin
             comments_blocked: Kommentointi estetty
             creation_enabled: Idean luominen käytössä
             idea_answering_enabled: Ideaan vastaaminen käytössä
             publish_answers_immediately: Julkaise ideoiden vastaukset heti
-            suggested_hashtags: Käyttäjille ehdotettavat aihetunnisteet (hashtag)
-              uusille ehdotuksille
     events:
       ideas:
         creation_enabled:
@@ -463,7 +457,6 @@ fi:
         filter_origin_values:
           all: Kaikki
           participants: Osallistujat
-          user_groups: Ryhmät
         filter_state_values:
           accepted: Hyväksytty jatkoon
           all: Kaikki

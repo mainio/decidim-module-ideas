@@ -20,10 +20,9 @@ describe Decidim::Ideas::IdeaBuilder do
   let(:component) { create(:idea_component) }
   let(:author) { create(:user, :confirmed, organization:) }
   let(:action_user) { author }
-  let(:user_group_author) { nil }
 
   describe "#create" do
-    subject { described_class.create(attributes:, author:, action_user:, user_group_author:) }
+    subject { described_class.create(attributes:, author:, action_user:) }
 
     it "creates a new idea" do
       expect(subject).to be_a(Decidim::Ideas::Idea)
@@ -38,7 +37,7 @@ describe Decidim::Ideas::IdeaBuilder do
   end
 
   describe "#copy" do
-    subject { described_class.copy(original_idea, author:, action_user:, user_group_author:) }
+    subject { described_class.copy(original_idea, author:, action_user:) }
 
     let(:original_idea) { create(:idea, **attributes, category: false, area_scope: false, taxonomies: [taxonomy]) }
 

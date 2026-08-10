@@ -5,8 +5,6 @@ require "spec_helper"
 module Decidim
   module Ideas
     describe IdeasController do
-      routes { Decidim::Ideas::Engine.routes }
-
       let(:user) { create(:user, :confirmed, organization: component.organization) }
 
       let(:idea_params) do

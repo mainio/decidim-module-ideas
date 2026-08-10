@@ -85,13 +85,6 @@ describe Decidim::Ideas::Idea do
         end
       end
 
-      context "when idea is from user group and user is admin" do
-        let(:user_group) { create(:user_group, :verified, users: [author], organization: author.organization) }
-        let(:idea) { create(:idea, component:, updated_at: Time.current, users: [author], user_groups: [user_group]) }
-
-        it { is_expected.to be_editable_by(author) }
-      end
-
       context "when user is not the author" do
         let(:idea) { create(:idea, component:, updated_at: Time.current) }
 

@@ -21,15 +21,6 @@ module Decidim
             expect(subject).to include(first_author)
             expect(subject).to include(second_author)
           end
-
-          context "with user group" do
-            let!(:second_author) { create(:user_group, organization:) }
-
-            it "returns authors" do
-              expect(subject).to include(first_author)
-              expect(subject).to include(second_author)
-            end
-          end
         end
 
         describe "idea_complete_state" do

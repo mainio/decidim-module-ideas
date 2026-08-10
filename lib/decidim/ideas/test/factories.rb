@@ -83,23 +83,6 @@ FactoryBot.define do
       end
     end
 
-    trait :with_extra_hashtags do
-      transient do
-        automatic_hashtags { "AutoHashtag AnotherAutoHashtag" }
-        suggested_hashtags { "SuggestedHashtag AnotherSuggestedHashtag" }
-      end
-
-      step_settings do
-        {
-          participatory_space.active_step.id => {
-            automatic_hashtags:,
-            suggested_hashtags:,
-            creation_enabled: true
-          }
-        }
-      end
-    end
-
     trait :without_publish_answers_immediately do
       step_settings do
         {
@@ -140,8 +123,6 @@ FactoryBot.define do
   factory :idea, class: "Decidim::Ideas::Idea" do
     transient do
       users { nil }
-      # user_groups correspondence to users is by sorting order
-      user_groups { [] }
       skip_injection { false }
       taxonomies { [] }
       area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
@@ -164,9 +145,8 @@ FactoryBot.define do
     after(:build) do |idea, evaluator|
       if idea.component
         users = evaluator.users || [create(:user, :confirmed, organization: idea.component.participatory_space.organization)]
-        users.each_with_index do |user, idx|
-          user_group = evaluator.user_groups[idx]
-          idea.coauthorships.build(author: user, user_group:)
+        users.each_with_index do |user, _idx|
+          idea.coauthorships.build(author: user)
         end
 
         idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank? && idea.category != false

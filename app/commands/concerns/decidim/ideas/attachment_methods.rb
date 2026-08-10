@@ -9,7 +9,7 @@ module Decidim
       private
 
       def build_attachment
-        attachments = @form.add_actual_attachments.compact_blank
+        attachments = @form.add_documents.compact_blank
         # Array is [signed_id, title, signed_id, title, ...]
         attachments.each_slice(2).with_index do |(signed_id, title), ind|
           next if signed_id.blank?
@@ -35,19 +35,19 @@ module Decidim
       def attachment_removed?
         return false unless attachment_allowed?
 
-        @form.remove_actual_attachments
+        @form.remove_documents
       end
 
       def attachment_present?
         return false unless attachment_allowed?
 
-        @form.add_actual_attachments.compact_blank.present?
+        @form.add_documents.compact_blank.present?
       end
 
       def attachment_file_uploaded?
         return false unless attachment_present?
 
-        attachments = @form.add_actual_attachments.compact_blank
+        attachments = @form.add_documents.compact_blank
         signed_id = attachments.first
         signed_id.present? && ActiveStorage::Blob.find_signed(signed_id).present?
       rescue ActiveSupport::MessageVerifier::InvalidSignature

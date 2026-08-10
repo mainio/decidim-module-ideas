@@ -3,8 +3,6 @@
 require "spec_helper"
 
 describe Decidim::Ideas::Admin::IdeaAnswersController do
-  routes { Decidim::Ideas::AdminEngine.routes }
-
   let(:user) { create(:user, :confirmed, :admin, organization: participatory_space.organization) }
   let(:participatory_space) { create(:participatory_process, organization: create(:organization, tos_version: Time.current)) }
   let(:component) { create(:idea_component, participatory_space:) }

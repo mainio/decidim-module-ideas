@@ -7,8 +7,6 @@ module Decidim
       # in order to use them in select forms for Ideas.
       #
       module IdeasHelper
-        include Decidim::UserGroupHelper
-
         def coauthor_presenters_for(idea)
           idea.authors.map do |identity|
             if identity.is_a?(Decidim::Organization)

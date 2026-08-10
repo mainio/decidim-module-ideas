@@ -7,7 +7,7 @@ module Decidim
       private
 
       def build_image
-        images = @form.add_images.compact_blank
+        images = @form.add_photos.compact_blank
         signed_id = images[0]
         title = images[1].to_s
         blob = ActiveStorage::Blob.find_signed(signed_id)
@@ -31,13 +31,13 @@ module Decidim
       def image_removed?
         return false unless image_allowed?
 
-        @form.remove_images
+        @form.remove_photos
       end
 
       def image_present?
         return false unless image_allowed?
 
-        @form.add_images.compact_blank.present?
+        @form.add_photos.compact_blank.present?
       end
 
       def create_image

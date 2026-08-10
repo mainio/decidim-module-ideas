@@ -8,30 +8,29 @@ module Decidim
           Decidim::Ideas::Idea.find(id)
         end
 
-        # Public: Generates a select field with the valuators of the given participatory space.
+        # Public: Generates a select field with the evaluators of the given participatory space.
         #
         # participatory_space - A participatory space instance.
         # prompt - An i18n string to show as prompt
         #
         # Returns a String.
-        def bulk_valuators_select(participatory_space, prompt)
-          options_for_select = find_valuators_for_select(participatory_space)
-          select(:valuator_role, :id, options_for_select, prompt:)
+        def bulk_evaluators_select(participatory_space, prompt)
+          options_for_select = find_evaluators_for_select(participatory_space)
+          select(:evaluator_role, :id, options_for_select, prompt:)
         end
 
-        # Internal: A method to cache to queries to find the valuators for the
+        # Internal: A method to cache to queries to find the evaluators for the
         # current space.
-        # rubocop:disable Rails/HelperInstanceVariable
-        def find_valuators_for_select(participatory_space)
-          return @valuators_for_select if @valuators_for_select
+        def find_evaluators_for_select(participatory_space)
+          return @evaluators_for_select if @evaluators_for_select
 
-          valuator_roles = participatory_space.user_roles(:valuator)
-          valuators = Decidim::User.where(id: valuator_roles.pluck(:decidim_user_id)).to_a
+          evaluator_roles = participatory_space.user_roles(:evaluator)
+          evaluators = Decidim::User.where(id: evaluator_roles.pluck(:decidim_user_id)).to_a
 
-          @valuators_for_select = valuator_roles.map do |role|
-            valuator = valuators.find { |user| user.id == role.decidim_user_id }
+          @evaluators_for_select = evaluator_roles.map do |role|
+            evaluator = evaluators.find { |user| user.id == role.decidim_user_id }
 
-            [valuator.name, role.id]
+            [evaluator.name, role.id]
           end
         end
         # rubocop:enable Rails/HelperInstanceVariable

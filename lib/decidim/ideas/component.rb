@@ -56,10 +56,8 @@ Decidim.register_component(:ideas) do |component|
     settings.attribute :amendment_promotion_enabled, type: :boolean, default: true
     settings.attribute :amendments_visibility,
                        type: :enum, default: "all",
-                       choices: -> { Decidim.config.amendments_visibility_options }
+                       choices: ->(_) { Decidim.config.amendments_visibility_options }
     settings.attribute :announcement, type: :text, translated: true, editor: true
-    settings.attribute :automatic_hashtags, type: :text, editor: false, required: false
-    settings.attribute :suggested_hashtags, type: :text, editor: false, required: false
   end
 
   component.register_resource(:idea) do |resource|

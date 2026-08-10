@@ -34,7 +34,7 @@ describe "AdminFiltersIdeas" do
 
     before do
       click_on "Filter"
-      find("a", text: "State").hover
+      find("a", text: "State").click
     end
 
     it "shows unanswered ideas" do
@@ -70,8 +70,8 @@ describe "AdminFiltersIdeas" do
     before do
       visit current_path
       click_on "Filter"
-      find("a", text: "Taxonomy").hover
-      find("a", text: "Root taxonomy").hover
+      find("a", text: "Taxonomy").click
+      find("a", text: "Root taxonomy").click
     end
 
     it "filters by taxonomy" do

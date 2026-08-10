@@ -15,13 +15,6 @@
 .idea-form-container{
   margin-top: 2rem;
 
-  .mentions__container,
-  .hashtags__container{
-    span.form-error{
-      color: $input-error-color;
-    }
-  }
-
   .ideas-form-text{
     margin-bottom: 3rem;
   }

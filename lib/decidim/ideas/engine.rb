@@ -82,20 +82,14 @@ module Decidim
         Decidim::Gamification.register_badge(:ideas) do |badge|
           badge.levels = [1, 5, 10, 30, 60]
 
-          badge.valid_for = [:user, :user_group]
+          badge.valid_for = [:user]
 
           badge.reset = lambda { |model|
             case model
             when User
               Decidim::Coauthorship.where(
                 coauthorable_type: "Decidim::Ideas::Idea",
-                author: model,
-                user_group: nil
-              ).count
-            when UserGroup
-              Decidim::Coauthorship.where(
-                coauthorable_type: "Decidim::Ideas::Idea",
-                user_group: model
+                author: model
               ).count
             end
           }
@@ -104,57 +98,19 @@ module Decidim
         Decidim::Gamification.register_badge(:accepted_ideas) do |badge|
           badge.levels = [1, 5, 15, 30, 50]
 
-          badge.valid_for = [:user, :user_group]
+          badge.valid_for = [:user]
 
           badge.reset = lambda { |model|
             idea_ids = case model
                        when User
                          Decidim::Coauthorship.where(
                            coauthorable_type: "Decidim::Ideas::Idea",
-                           author: model,
-                           user_group: nil
-                         ).select(:coauthorable_id)
-                       when UserGroup
-                         Decidim::Coauthorship.where(
-                           coauthorable_type: "Decidim::Ideas::Idea",
-                           user_group: model
+                           author: model
                          ).select(:coauthorable_id)
                        end
 
             Decidim::Ideas::Idea.where(id: idea_ids).accepted.count
           }
-        end
-      end
-
-      initializer "decidim_ideas.register_metrics" do
-        Decidim.metrics_registry.register(:ideas) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Ideas::Metrics::IdeasMetricManage"
-
-          metric_registry.settings do |settings|
-            settings.attribute :highlighted, type: :boolean, default: true
-            settings.attribute :scopes, type: :array, default: %w(home participatory_process)
-            settings.attribute :weight, type: :integer, default: 2
-            settings.attribute :stat_block, type: :string, default: "medium"
-          end
-        end
-
-        Decidim.metrics_registry.register(:accepted_ideas) do |metric_registry|
-          metric_registry.manager_class = "Decidim::Ideas::Metrics::AcceptedIdeasMetricManage"
-
-          metric_registry.settings do |settings|
-            settings.attribute :highlighted, type: :boolean, default: false
-            settings.attribute :scopes, type: :array, default: %w(home participatory_process)
-            settings.attribute :weight, type: :integer, default: 3
-            settings.attribute :stat_block, type: :string, default: "small"
-          end
-        end
-
-        Decidim.metrics_operation.register(:participants, :ideas) do |metric_operation|
-          metric_operation.manager_class = "Decidim::Ideas::Metrics::IdeaParticipantsMetricMeasure"
-        end
-
-        Decidim.metrics_operation.register(:followers, :ideas) do |metric_operation|
-          metric_operation.manager_class = "Decidim::Ideas::Metrics::IdeaFollowersMetricMeasure"
         end
       end
 

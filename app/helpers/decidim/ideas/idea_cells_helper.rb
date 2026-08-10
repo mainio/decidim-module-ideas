@@ -48,7 +48,6 @@ module Decidim
         model.component
       end
 
-      # rubocop:disable Rails/HelperInstanceVariable
       def from_context
         @options[:from]
       end

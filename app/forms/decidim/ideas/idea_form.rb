@@ -9,21 +9,19 @@ module Decidim
 
       mimic :idea
 
-      attribute :user_group_id, Integer
       attribute :title, String
       attribute :body, String
       attribute :terms_agreed, Boolean
       attribute :address, String
       attribute :latitude, Float
       attribute :longitude, Float
-      attribute :suggested_hashtags, [String]
 
       # The attachment attribute is needed for the form builder.
       attribute :attachment, Decidim::AttachmentForm
-      attachments_attribute :images
-      attachments_attribute :actual_attachments
-      attribute :remove_images, Boolean, default: false
-      attribute :remove_actual_attachments, Boolean, default: false
+      attachments_attribute :photos
+      attachments_attribute :documents
+      attribute :remove_photos, Boolean, default: false
+      attribute :remove_documents, Boolean, default: false
 
       validates :terms_agreed, presence: true
       validates :title, presence: true, idea_length: {
@@ -42,14 +40,11 @@ module Decidim
       alias organization current_organization
 
       def map_model(model)
-        self.images = [model.image].compact
-        self.actual_attachments = model.actual_attachments
-
-        self.suggested_hashtags = Decidim::ContentRenderers::HashtagRenderer.new(model.body).extra_hashtags.map(&:name).map(&:downcase)
+        self.photos = [model.image].compact
+        self.documents = model.actual_attachments
 
         self.terms_agreed = true unless model.new_record?
 
-        self.user_group_id = model.user_groups.first&.id
         self.taxonomies = model.taxonomies.pluck(:id) if model.taxonomies.any?
       end
 
@@ -86,29 +81,8 @@ module Decidim
         current_component.settings.geocoding_enabled?
       end
 
-      def extra_hashtags
-        @extra_hashtags ||= (component_automatic_hashtags + suggested_hashtags).uniq
-      end
-
-      def suggested_hashtags
-        downcased_suggested_hashtags = Array(attributes["suggested_hashtags"]&.map(&:downcase)).to_set
-        component_suggested_hashtags.select { |hashtag| downcased_suggested_hashtags.member?(hashtag.downcase) }
-      end
-
-      def suggested_hashtag_checked?(hashtag)
-        suggested_hashtags.member?(hashtag)
-      end
-
       def areas_enabled?
         current_component.settings.geocoding_enabled?
-      end
-
-      def component_automatic_hashtags
-        @component_automatic_hashtags ||= ordered_hashtag_list(current_component.current_settings.automatic_hashtags)
-      end
-
-      def component_suggested_hashtags
-        @component_suggested_hashtags ||= ordered_hashtag_list(current_component.current_settings.suggested_hashtags)
       end
 
       private
@@ -118,10 +92,6 @@ module Decidim
 
         length = current_component.settings.idea_length
         errors.add(:body, :too_long, count: length) if body.length > length
-      end
-
-      def ordered_hashtag_list(string)
-        string.to_s.split.compact_blank.uniq.sort_by(&:parameterize)
       end
     end
   end

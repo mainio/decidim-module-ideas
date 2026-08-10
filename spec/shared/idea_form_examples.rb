@@ -21,15 +21,13 @@ shared_examples "a idea form" do |options|
     end
   end
   let(:author) { create(:user, :confirmed, organization:) }
-  let(:user_group) { create(:user_group, :confirmed, :verified, users: [author], organization:) }
-  let(:user_group_id) { user_group.id }
   let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
   let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
   let(:latitude) { 40.1234 }
   let(:longitude) { 2.1234 }
   let(:has_address) { false }
   let(:address) { nil }
-  let(:suggested_hashtags) { [] }
+
   let(:attachment_params) { nil }
   let(:meeting_as_author) { false }
   let(:params) do
@@ -41,8 +39,7 @@ shared_examples "a idea form" do |options|
       address:,
       has_address:,
       meeting_as_author:,
-      attachment: attachment_params,
-      suggested_hashtags:
+      attachment: attachment_params
     }
   end
 
@@ -184,14 +181,6 @@ shared_examples "a idea form" do |options|
     end
   end
 
-  if options && options[:user_group_check]
-    it "properly maps user group id from model" do
-      idea = create(:idea, component:, users: [author], user_groups: [user_group], category: false, area_scope: false)
-
-      expect(described_class.from_model(idea).user_group_id).to eq(user_group_id)
-    end
-  end
-
   context "when the attachment is present" do
     let(:attachment_params) do
       {
@@ -201,52 +190,6 @@ shared_examples "a idea form" do |options|
     end
 
     it { is_expected.to be_valid }
-  end
-
-  describe "#extra_hashtags" do
-    subject { form.extra_hashtags }
-
-    let(:component) do
-      create(
-        :idea_component,
-        :with_extra_hashtags,
-        participatory_space:,
-        suggested_hashtags: component_suggested_hashtags,
-        automatic_hashtags: component_automatic_hashtags
-      )
-    end
-    let(:component_automatic_hashtags) { "" }
-    let(:component_suggested_hashtags) { "" }
-
-    it { is_expected.to eq([]) }
-
-    context "when there are auto hashtags" do
-      let(:component_automatic_hashtags) { "HashtagAuto1 HashtagAuto2" }
-
-      it { is_expected.to eq(%w(HashtagAuto1 HashtagAuto2)) }
-    end
-
-    context "when there are some suggested hashtags checked" do
-      let(:component_suggested_hashtags) { "HashtagSuggested1 HashtagSuggested2 HashtagSuggested3" }
-      let(:suggested_hashtags) { %w(HashtagSuggested1 HashtagSuggested2) }
-
-      it { is_expected.to eq(%w(HashtagSuggested1 HashtagSuggested2)) }
-    end
-
-    context "when there are invalid suggested hashtags checked" do
-      let(:component_suggested_hashtags) { "HashtagSuggested1 HashtagSuggested2" }
-      let(:suggested_hashtags) { %w(HashtagSuggested1 HashtagSuggested3) }
-
-      it { is_expected.to eq(%w(HashtagSuggested1)) }
-    end
-
-    context "when there are both suggested and auto hashtags" do
-      let(:component_automatic_hashtags) { "HashtagAuto1 HashtagAuto2" }
-      let(:component_suggested_hashtags) { "HashtagSuggested1 HashtagSuggested2" }
-      let(:suggested_hashtags) { %w(HashtagSuggested2) }
-
-      it { is_expected.to eq(%w(HashtagAuto1 HashtagAuto2 HashtagSuggested2)) }
-    end
   end
 end
 

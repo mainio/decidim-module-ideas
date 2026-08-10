@@ -9,7 +9,6 @@ module Decidim
         include ::Decidim::Ideas::ImageMethods
 
         include GalleryMethods
-        include HashtagsMethods
 
         # Public: Initializes the command.
         #
@@ -60,14 +59,9 @@ module Decidim
           @idea = Decidim::Ideas::IdeaBuilder.create(
             attributes:,
             author: @current_user,
-            user_group_author: user_group,
             action_user: form.current_user
           )
           @attached_to = @idea
-        end
-
-        def user_group
-          @user_group ||= Decidim::UserGroup.find_by(organization:, id: form.user_group_id)
         end
 
         def organization
@@ -76,8 +70,8 @@ module Decidim
 
         def attributes
           {
-            title: title_with_hashtags,
-            body: body_with_hashtags,
+            title: Decidim::ContentProcessor.parse(form.title, current_organization: form.current_organization).rewrite,
+            body: Decidim::ContentProcessor.parse_with_processor(:inline_images, form.body, current_organization: form.current_organization).rewrite,
             taxonomizations: form.taxonomizations,
             # area_scope: form.area_scope,
             component: form.component,

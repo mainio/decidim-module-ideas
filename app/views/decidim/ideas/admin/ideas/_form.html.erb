@@ -1,43 +1,14 @@
 <div class="form__wrapper">
   <div class="card pt-4">
     <div class="card-section">
-      <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-        <div class="row column hashtags__container">
-          <%= user_group_select_field form, :user_group_id %>
-        </div>
-      <% end %>
-
-      <div class="row column hashtags__container pb-4">
-        <%= form.text_field :title, class: "js-hashtags", hashtaggable: true, value: form_presenter.title(extras: false).strip %>
+      <div class="row column pb-4">
+        <%= form.text_field :title, value: form_presenter.title(extras: false).strip, data: { controller: "character-counter" } %>
       </div>
 
-      <div class="row column hashtags__container">
+      <div class="row column">
         <%= text_editor_for_idea_body(form) %>
       </div>
 
-      <% if @form.component_automatic_hashtags.any? %>
-        <div class="field">
-          <%= form.label :automatic_hashtags %>
-          <div class="checkboxes hashtags">
-            <% @form.component_automatic_hashtags.each do |hashtag| %>
-              <label>
-                <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
-              </label>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
-      <% if @form.component_suggested_hashtags.any? %>
-        <div class="field">
-          <%= form.label :suggested_hashtags %>
-          <div class="checkboxes hashtags">
-            <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
-              option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
-            end %>
-          </div>
-        </div>
-      <% end %>
       <% if @form.taxonomy_filters&.any? %>
         <% @form.taxonomy_filters.each do |filter| %>
           <div data-filter-group="<%= filter.id %>">
@@ -93,7 +64,7 @@
 
       <% if component_settings.image_allowed? %>
         <div class="row column">
-          <%= form.attachment :images,
+          <%= form.attachment :photos,
             multiple: false,
             titled: true,
             label: t("decidim.ideas.ideas.form.add_image"),
@@ -107,7 +78,7 @@
 
       <% if component_settings.attachments_allowed? %>
         <div class="row column">
-          <%= form.attachment :actual_attachments,
+          <%= form.attachment :documents,
             multiple: false,
             titled: true,
             label: t("decidim.ideas.ideas.form.add_attachment"),

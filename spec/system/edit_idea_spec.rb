@@ -57,7 +57,7 @@ describe "UserEditsIdea" do
         let(:add_attachment_title) { Faker::Hipster.sentence }
 
         it "adds image" do
-          dynamically_attach_file(:idea_images, Decidim::Dev.asset("avatar.jpg"), title: add_attachment_title)
+          dynamically_attach_file(:idea_photos, Decidim::Dev.asset("avatar.jpg"), title: add_attachment_title)
           click_on "Save"
           expect(page).to have_content("Idea successfully updated")
           expect(idea.attachments.last.content_type).to eq("image/jpeg")
@@ -65,7 +65,7 @@ describe "UserEditsIdea" do
         end
 
         it "adds document" do
-          dynamically_attach_file(:idea_actual_attachments, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
+          dynamically_attach_file(:idea_documents, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
           click_on "Save"
           expect(page).to have_content("Idea successfully updated")
           expect(idea.reload.attachments.last.content_type).to eq("application/pdf")

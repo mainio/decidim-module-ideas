@@ -57,7 +57,6 @@ module Decidim
         @display_taxonomy_filters ||= filter_ideas_taxonomy_values.any?
       end
 
-      # rubocop:disable Rails/HelperInstanceVariable
       def taxonomies
         @taxonomies ||= @idea.taxonomies
       end

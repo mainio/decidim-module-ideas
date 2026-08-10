@@ -8,22 +8,12 @@
   </div>
 </div>
 
-<% if current_organization.user_groups_enabled? && user_signed_in? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= user_group_select_field form, :user_group_id %>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<div class="field hashtags__container">
+<div class="field">
   <%= form.plain_label :title %>
 
   <div class="row">
     <div class="columns large-8">
-      <%= form.text_field :title, class: "js-hashtags", label: false, hashtaggable: true, value: form_presenter.title %>
+      <%= form.text_field :title, value: form_presenter.title(extras: false).strip, data: { controller: "character-counter" } %>
     </div>
     <div class="columns large-4">
       <div id="idea_title_character_counter" class="field-info"></div>
@@ -45,34 +35,10 @@
   <%= form.hidden_field :terms_agreed %>
 <% end %>
 
-<div class="field hashtags__container">
+<div class="field">
   <%= text_editor_for_idea_body(form) %>
   <div id="idea_body_character_counter" class="field-info text-right"></div>
 </div>
-
-<% if @form.component_automatic_hashtags.any? %>
-  <div class="field">
-    <%= form.label :automatic_hashtags %>
-    <div class="checkboxes hashtags">
-      <% @form.component_automatic_hashtags.each do |hashtag| %>
-        <label>
-          <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
-        </label>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<% if @form.component_suggested_hashtags.any? %>
-  <div class="field">
-    <%= form.label :suggested_hashtags %>
-    <div class="checkboxes hashtags">
-      <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
-        option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
-      end %>
-    </div>
-  </div>
-<% end %>
 
 <% if component_settings.geocoding_enabled? %>
   <%= form.plain_label :address, show_required: false %>
@@ -160,7 +126,7 @@
 
 <% if component_settings.image_allowed? %>
   <div class="field attachment-button">
-    <%= form.attachment :images,
+    <%= form.attachment :photos,
       multiple: false,
       titled: true,
       label: t(".add_image"),
@@ -173,7 +139,7 @@
 
 <% if component_settings.attachments_allowed? %>
   <div class="field attachment-button">
-    <%= form.attachment :actual_attachments,
+    <%= form.attachment :documents,
       multiple: false,
       titled: true,
       label: t(".add_attachment"),

@@ -21,7 +21,7 @@ describe "GlobalSearch" do
     end
 
     find("input#input-search").native.send_keys :enter
-    expect(page).to have_content("1 Results for the search")
+    expect(page).to have_content("1 results for the search")
     expect(page).to have_content(idea_title)
     expect(page).to have_no_content(second_idea_title)
   end

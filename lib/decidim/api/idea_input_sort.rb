@@ -4,7 +4,7 @@ module Decidim
   module Ideas
     class IdeaInputSort < Decidim::Core::BaseInputSort
       include Decidim::Core::HasPublishableInputSort
-      include Decidim::Core::HasEndorsableInputSort
+      include Decidim::Core::HasLikeableInputSort
 
       graphql_name "IdeaSort"
       description "A type used for sorting ideas"

@@ -36,12 +36,18 @@ describe "AdminCreatesIdea" do
     end
 
     it "unreports" do
-      find(".action-icon--unreport").click
+      find("button[aria-controls='actions-moderation-#{moderation.id}']").click
+      within("#actions-moderation-#{moderation.id}") do
+        click_link "Undo the report"
+      end
       expect(page).to have_content("Resource successfully unreported")
     end
 
     it "hides" do
-      find(".action-icon--hide").click
+      find("button[aria-controls='actions-moderation-#{moderation.id}']").click
+      within("#actions-moderation-#{moderation.id}") do
+        click_link "Hide"
+      end
       expect(page).to have_content("Resource successfully hidden")
       expect(Decidim::Ideas::Idea.find(idea.id).hidden?).to be(true)
     end

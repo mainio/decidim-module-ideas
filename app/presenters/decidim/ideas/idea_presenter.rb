@@ -27,7 +27,7 @@ module Decidim
         text = idea.title
         text = decidim_html_escape(text) if html_escape
 
-        renderer = Decidim::ContentRenderers::HashtagRenderer.new(text)
+        renderer = Decidim::ContentRenderers::BlobRenderer.new(text)
         renderer.render(links:, extras:).html_safe
       end
 
@@ -43,7 +43,7 @@ module Decidim
           text = strip_tags(text).strip
         end
 
-        renderer = Decidim::ContentRenderers::HashtagRenderer.new(text)
+        renderer = Decidim::ContentRenderers::BlobRenderer.new(text)
         text = renderer.render(links:, extras:).html_safe
 
         text = Decidim::ContentRenderers::LinkRenderer.new(text).render if links

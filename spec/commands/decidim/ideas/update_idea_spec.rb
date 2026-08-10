@@ -62,13 +62,4 @@ describe Decidim::Ideas::UpdateIdea do
       expect { subject }.to broadcast(:ok)
     end
   end
-
-  context "with usergroup" do
-    let(:component) { create(:idea_component, :with_idea_limit, participatory_space:) }
-    let!(:user) { create(:user_group, organization:) }
-
-    it "broadcasts ok" do
-      expect { subject }.to broadcast(:ok)
-    end
-  end
 end
