@@ -88,7 +88,7 @@ module Decidim
       #
       # Returns nothing.
       def area_scopes_picker_filter(form, name, options: {}, html_options: {})
-        area_scopes_picker_field(form, name, options: options, html_options: html_options)
+        area_scopes_picker_field(form, name, options:, html_options:)
       end
 
       private

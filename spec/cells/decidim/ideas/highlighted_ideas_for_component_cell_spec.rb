@@ -37,7 +37,7 @@ describe Decidim::Ideas::HighlightedIdeasForComponentCell, type: :cell do
       let(:amount) { 6 }
 
       before do
-        allow(Decidim::Ideas.config).to receive(:participatory_space_highlighted_ideas_limit).and_return(amount)
+        allow(Decidim::Ideas).to receive(:participatory_space_highlighted_ideas_limit).and_return(amount)
       end
 
       it "shows the configured amount of ideas" do

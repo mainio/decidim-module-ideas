@@ -41,7 +41,7 @@ module Decidim
         @ideas_to_render ||= ideas.includes(
           [:amendable, :taxonomies, :component]
         ).limit(
-          Decidim::Ideas.config.participatory_space_highlighted_ideas_limit
+          Decidim::Ideas.participatory_space_highlighted_ideas_limit
         )
       end
 

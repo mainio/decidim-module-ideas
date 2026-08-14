@@ -201,7 +201,7 @@ module Decidim
           @amendable.add_coauthor(@current_user)
 
           @attached_to = @amendable
-          @amendable.image.destroy! if @amendable.image.present?
+          (@amendable.image.presence&.destroy!)
           if emendation.image.present?
             @image = Decidim::Ideas::Attachment.create!(
               attached_to: @amendable, # Keep first

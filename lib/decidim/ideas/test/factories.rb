@@ -110,7 +110,7 @@ FactoryBot.define do
       organization { create(:organization) }
     end
 
-    root_taxonomy { create(:taxonomy, organization: organization) }
+    root_taxonomy { create(:taxonomy, organization:) }
 
     after :create do |filter, evaluator|
       5.times do
@@ -156,7 +156,7 @@ FactoryBot.define do
 
     after(:create) do |idea, evaluator|
       evaluator.taxonomies.each do |taxonomy|
-        idea.taxonomizations.find_or_create_by(taxonomy: taxonomy)
+        idea.taxonomizations.find_or_create_by(taxonomy:)
       end
       # Reload the idea to ensure the taxonomies association is not cached
       # as empty before the after(:create) callback runs.
@@ -252,7 +252,7 @@ FactoryBot.define do
       after(:create) do |idea, evaluator|
         taxonomies = evaluator.taxonomy_filter.taxonomies.values.flat_map { |node| node[:taxonomy] }.sample(2)
         taxonomies.each do |taxonomy|
-          idea.taxonomizations.find_or_create_by(taxonomy: taxonomy)
+          idea.taxonomizations.find_or_create_by(taxonomy:)
         end
       end
     end

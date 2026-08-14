@@ -153,7 +153,7 @@ module Decidim
           "withdrawn" => ""
         }.each do |state, expected_class|
           it "returns '#{expected_class}' for state '#{state}'" do
-            idea = double("idea", state: state)
+            idea = double("idea", state:)
             helper.instance_variable_set(:@idea, idea)
             expect(helper.idea_reason_callout_class).to eq(expected_class)
           end

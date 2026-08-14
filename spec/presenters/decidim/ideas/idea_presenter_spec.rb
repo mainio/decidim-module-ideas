@@ -10,7 +10,7 @@ describe Decidim::Ideas::IdeaPresenter do
   let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:component) { create(:idea_component, participatory_space:) }
 
-  let(:idea_link) { "/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{idea.id}" }
+  let(:idea_link) { "/en/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{idea.id}" }
 
   describe "#idea_path" do
     subject { presenter.idea_path }

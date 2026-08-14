@@ -173,7 +173,7 @@ module Decidim
           it "redirects to amendable" do
             get :show, params: params.merge(id: emendation.id)
             expect(response).to have_http_status(:found)
-            expect(subject).to redirect_to("/processes/#{component.participatory_space.slug}/f/#{component.id}/ideas/#{amendable.id}")
+            expect(subject).to redirect_to("/en/processes/#{component.participatory_space.slug}/f/#{component.id}/ideas/#{amendable.id}")
           end
         end
 

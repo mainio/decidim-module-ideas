@@ -19,31 +19,10 @@ module Decidim
     autoload :MutationExtensions, "decidim/ideas/mutation_extensions"
     autoload :Seeds, "decidim/ideas/seeds"
 
-    include ActiveSupport::Configurable
-
-    # Public Setting that defines the similarity minimum value to consider two
-    # ideas similar. Defaults to 0.25.
-    config_accessor :similarity_threshold do
-      0.25
-    end
-
-    # Public Setting that defines how many similar ideas will be shown.
-    # Defaults to 10.
-    config_accessor :similarity_limit do
-      10
-    end
-
-    # Public Setting that defines how many ideas will be shown in the
-    # participatory_space_highlighted_elements view hook
-    config_accessor :participatory_space_highlighted_ideas_limit do
-      4
-    end
-
-    # Public Setting that defines how many ideas will be shown in the
-    # process_group_highlighted_elements view hook
-    config_accessor :process_group_highlighted_ideas_limit do
-      3
-    end
+    mattr_accessor :similarity_threshold, default: 0.25
+    mattr_accessor :similarity_limit, default: 10
+    mattr_accessor :participatory_space_highlighted_ideas_limit, default: 4
+    mattr_accessor :process_group_highlighted_ideas_limit, default: 3
   end
 
   module ContentParsers

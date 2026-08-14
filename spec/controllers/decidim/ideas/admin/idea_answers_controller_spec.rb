@@ -30,7 +30,7 @@ describe Decidim::Ideas::Admin::IdeaAnswersController do
     it "redirects to the ideas path" do
       post(:update, params:)
       expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to("/processes/#{participatory_space.slug}/f/#{component.id}/ideas")
+      expect(response).to redirect_to("/en/processes/#{participatory_space.slug}/f/#{component.id}/ideas")
     end
 
     context "when the answer is not provided and status is rejected" do

@@ -28,7 +28,7 @@ module Decidim
               groups[parent.id] ||= { taxonomy: parent, children: {} }
               groups[parent.id][:children][id] = node
             else
-              groups[id] ||= { taxonomy: taxonomy, children: {} }
+              groups[id] ||= { taxonomy:, children: {} }
             end
           end
           groups

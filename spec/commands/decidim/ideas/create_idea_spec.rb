@@ -33,7 +33,7 @@ describe Decidim::Ideas::CreateIdea do
     allow(form).to receive(:component).and_return(component)
     allow(form).to receive(:current_user).and_return(user)
     allow(form).to receive(:taxonomizations).and_return(
-      [Decidim::Taxonomization.new(taxonomy: taxonomy)]
+      [Decidim::Taxonomization.new(taxonomy:)]
     )
     allow(form).to receive(:area_scope).and_return(nil)
     allow(form).to receive(:category).and_return(nil)

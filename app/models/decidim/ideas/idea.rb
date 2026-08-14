@@ -356,13 +356,13 @@ module Decidim
 
       # method for sort_link by number of comments
       ransacker :commentable_comments_count do
-        query = <<-SQL.squish
-        (SELECT COUNT(decidim_comments_comments.id)
-         FROM decidim_comments_comments
-         WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
-         AND decidim_comments_comments.decidim_commentable_type = 'Decidim::Ideas::Idea'
-         GROUP BY decidim_comments_comments.decidim_commentable_id
-         )
+        query = <<~SQL.squish
+          (SELECT COUNT(decidim_comments_comments.id)
+           FROM decidim_comments_comments
+           WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
+           AND decidim_comments_comments.decidim_commentable_type = 'Decidim::Ideas::Idea'
+           GROUP BY decidim_comments_comments.decidim_commentable_id
+           )
         SQL
         Arel.sql(query)
       end
@@ -389,14 +389,14 @@ module Decidim
       end
 
       ransacker :is_emendation do |_parent|
-        query = <<-SQL.squish
-        (
-          SELECT EXISTS (
-            SELECT 1 FROM decidim_amendments
-            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
-            AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+        query = <<~SQL.squish
+          (
+            SELECT EXISTS (
+              SELECT 1 FROM decidim_amendments
+              WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
+              AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+            )
           )
-        )
         SQL
         Arel.sql(query)
       end

@@ -102,7 +102,7 @@ module Decidim
         return if taxonomy_ids.empty?
 
         taxonomy_id = taxonomy_ids.sample
-        idea.taxonomizations.find_or_create_by(taxonomy_id: taxonomy_id)
+        idea.taxonomizations.find_or_create_by(taxonomy_id:)
       end
 
       def taxonomy_filters

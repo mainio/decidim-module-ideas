@@ -21,7 +21,6 @@ module Decidim
           end
 
           it "renders the list of evaluators correctly" do
-            puts subject
             [first_role, second_role].each do |role|
               expect(subject).to have_css("select#evaluator_role_id option[value='#{role.id}']")
             end

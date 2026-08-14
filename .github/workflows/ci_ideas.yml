@@ -16,8 +16,12 @@ jobs:
     name: Build test application
     uses: mainio/gha-decidim-module/.github/workflows/build_app.yml@main
     secrets: inherit
+    with:
+      image-processor: vips
   main:
     needs: build_app
     name: Tests
     uses: mainio/gha-decidim-module/.github/workflows/ci_rspec.yml@main
     secrets: inherit
+    with:
+      image-processor: vips

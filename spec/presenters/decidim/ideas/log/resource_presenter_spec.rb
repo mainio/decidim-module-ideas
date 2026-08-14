@@ -15,7 +15,7 @@ describe Decidim::Ideas::Log::ResourcePresenter, type: :helper do
 
     it "presents a link to the resource" do
       expect(subject).to eq(
-        %(<a class="logs__log__resource" href="/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{resource.id}">Resource presenter idea</a>)
+        %(<a class="logs__log__resource" href="/en/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{resource.id}">Resource presenter idea</a>)
       )
     end
 
