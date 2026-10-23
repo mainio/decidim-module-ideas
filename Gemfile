@@ -29,10 +29,6 @@ group :development, :test do
   gem "decidim-initiatives", DECIDIM_VERSION
   gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "main"
   gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "main"
-
-  # Fix issue with simplecov-cobertura
-  # See: https://github.com/jessebs/simplecov-cobertura/pull/44
-  gem "rexml", "3.4.1"
 end
 
 group :development do
