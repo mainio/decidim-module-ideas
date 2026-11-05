@@ -14,6 +14,7 @@ module Decidim
         helper Ideas::Admin::IdeaBulkActionsHelper
 
         def show
+          enforce_permission_to(:read, :idea, idea:)
           @answer_form = form(Admin::IdeaAnswerForm).from_model(idea)
         end
 

@@ -41,12 +41,15 @@ module Decidim
         @component_manifest ||= Decidim.find_component_manifest("ideas")
       end
 
+      # Disable unnecessary rubocop rule
+      # rubocop:disable Decidim/OrganizationScopedFinder
       def component
         @component ||= begin
           comp = Decidim::Component.find_by(id: params[:id])
-          comp if comp && comp.organization == current_organization
+          comp if comp&.organization == current_organization
         end
       end
+      # rubocop:enable Decidim/OrganizationScopedFinder
 
       def settings_manifest
         @settings_manifest ||= begin
@@ -55,12 +58,15 @@ module Decidim
         end
       end
 
+      # Disable unnecessary rubocop rule
+      # rubocop:disable Decidim/OrganizationScopedFinder
       def taxonomy_filter_parent
         @taxonomy_filter_parent ||= begin
-          filter = Decidim::TaxonomyFilter.find_by(id: params[:taxonomy_filter_id])
-          filter if filter && filter.organization == current_organization
+          filter = Decidim::TaxonomyFilter.for(current_organization).find_by(id: params[:taxonomy_filter_id])
+          filter
         end
       end
+      # rubocop:enable Decidim/OrganizationScopedFinder
     end
   end
 end

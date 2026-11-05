@@ -23,6 +23,7 @@ module Decidim
       before_action :edit_form, only: [:edit_draft, :edit]
 
       def index
+        enforce_permission_to :read, :idea
         base_query = search.result.published
         @ideas = base_query.includes(:taxonomies, :amendable, :component)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
@@ -35,12 +36,18 @@ module Decidim
         end
       end
 
-      def complete; end
+      def complete
+        enforce_permission_to(:edit, :idea, idea: @idea)
+      end
 
-      def compare; end
+      def compare
+        enforce_permission_to(:read, :idea)
+      end
 
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
+
+        enforce_permission_to(:read, :idea, idea: @idea)
 
         if @idea.emendation?
           return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path if @idea.amendable
@@ -52,6 +59,8 @@ module Decidim
       end
 
       def new
+        enforce_permission_to(:create, :idea) if user_signed_in?
+
         if idea_draft.present?
           redirect_to edit_draft_idea_path(
             idea_draft,
@@ -96,9 +105,13 @@ module Decidim
         end
       end
 
-      def preview; end
+      def preview
+        enforce_permission_to(:read, :idea, idea: @idea)
+      end
 
       def publish
+        enforce_permission_to(:edit, :idea, idea: @idea)
+
         PublishIdea.call(@idea, current_user) do
           on(:ok) do
             flash[:notice] = I18n.t("ideas.publish.success", scope: "decidim")

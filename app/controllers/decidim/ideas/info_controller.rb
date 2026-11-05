@@ -6,6 +6,7 @@ module Decidim
       include Decidim::ApplicationHelper
 
       def show
+        enforce_permission_to(:read, :idea)
         @intro, @text =
           case params[:section]
           when "terms"

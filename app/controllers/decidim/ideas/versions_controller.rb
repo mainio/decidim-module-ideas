@@ -8,6 +8,10 @@ module Decidim
       include Decidim::ApplicationHelper
       include Decidim::ResourceVersionsConcern
 
+      helper_method :versioned_resource
+
+      private
+
       def versioned_resource
         @versioned_resource ||=
           present(Idea.where(component: current_component).find(params[:idea_id]))

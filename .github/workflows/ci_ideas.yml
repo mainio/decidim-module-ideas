@@ -7,6 +7,10 @@ on:
       - release/*
   pull_request:
 
+env:
+  CI: "true"
+  CODECOV: "true"
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -16,12 +20,8 @@ jobs:
     name: Build test application
     uses: mainio/gha-decidim-module/.github/workflows/build_app.yml@main
     secrets: inherit
-    with:
-      image-processor: vips
   main:
     needs: build_app
     name: Tests
     uses: mainio/gha-decidim-module/.github/workflows/ci_rspec.yml@main
     secrets: inherit
-    with:
-      image-processor: vips
