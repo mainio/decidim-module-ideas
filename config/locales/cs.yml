@@ -471,6 +471,28 @@ cs:
       destroy_draft:
         error: Zničení návrhu selhalo.
         success: Návrh byl úspěšně zničen.
+      idea_l:
+        card_label: "Nápad: %{title}"
+      idea_m:
+        card_label: "Nápad: %{title}"
+      last_activity:
+        idea_updated_html: "<span>Nápad aktualizován na %{link}</span>"
+        new_idea_at_html: "<span>Nový nápad v %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Oblast
+            category: Téma
+            comments: Komentáře
+            id: ID
+            official_idea: Oficiální nápad
+            published_answer: Publikovaná odpověď
+            published_at: Publikováno v
+            scope: Oblast působnosti
+            state: Hodnocení
+            title: Název
+      new:
+        limit_reached: Nové nápady nelze vytvořit, protože jste překročili limit.
       idea_g:
         card_label: 'Nápad: %{title}'
       idea_g_cell:
@@ -614,8 +636,8 @@ cs:
           leave_your_idea: Odešlete vlastní nápad!
           new_idea: Nový nápad
           see_all_withdrawn: Zobrazit všechny stažené nápady
-          show_list: Show results as list
-          show_map: Show results on map
+          show_list: Zobrazit výsledky jako seznam
+          show_map: Zobrazit výsledky na mapě
           subtitle: Hledat a objevovat nápady!
           title: Procházet nápady
           view_idea: Zobrazit nápad

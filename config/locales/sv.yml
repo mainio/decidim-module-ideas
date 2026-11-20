@@ -475,6 +475,27 @@ sv:
         card_wrapper:
           card_label: Card label
       idea_l:
+        card_label: "Idea: %{title}"
+      idea_m:
+        card_label: "Idé: %{title}"
+      last_activity:
+        idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
+        new_idea_at_html: "<span>Ny idé på %{link}</span>"
+      models:
+        idea:
+          fields:
+            area_scope: Område
+            category: Tema
+            comments: Kommentarer
+            id: ID
+            official_idea: Officiell idé
+            published_answer: Publicerat svar
+            published_at: Publikationsdatum
+            scope: Tema
+            state: Utvärdering
+            title: Titel
+      new:
+        limit_reached: Du kan inte skapa nya idéer eftersom du har överskridit gränsen.
         card_label: 'Idé: %{title}'
       ideas:
         compare:
@@ -519,7 +540,7 @@ sv:
           amendment_type: Typ
           area_scope: Område
           category: Tema
-          keyword: Nyckelord
+          keyword: Hakusana
           my_favorites: Visa mina favoriter
           my_ideas: Visa mina idéer
           origin: Ursprung
@@ -611,8 +632,8 @@ sv:
           leave_your_idea: Skicka in din egen idé!
           new_idea: Ny idé
           see_all_withdrawn: Se alla tillbakadragna idéer
-          show_list: Visa resultat som lista
-          show_map: Visa resultat på kartan
+          show_list: Show results as list
+          show_map: Show results on map
           subtitle: Sök och utforska idéer!
           title: Bläddra bland idéer
         map:
