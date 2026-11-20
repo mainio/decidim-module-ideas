@@ -476,8 +476,6 @@ sv:
           card_label: Card label
       idea_l:
         card_label: "Idea: %{title}"
-      idea_m:
-        card_label: "Idé: %{title}"
       last_activity:
         idea_updated_html: "<span>Idé uppdaterad på %{link}</span>"
         new_idea_at_html: "<span>Ny idé på %{link}</span>"
