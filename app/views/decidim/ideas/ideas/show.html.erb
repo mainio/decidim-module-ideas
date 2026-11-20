@@ -19,7 +19,7 @@ extra_admin_link(
   :create,
   :idea_answer,
   { idea: @idea },
-  { name: t(".answer"), icon: "comment-square" }
+  { name: t(".answer"), icon: "question-answer-line" }
 )
 %>
 
@@ -29,7 +29,7 @@ extra_admin_link(
 
 <div class="row column back-link">
   <%= link_to ideas_path, class: "action-link" do %>
-    <%= icon "arrow-left", role: "img", "aria-hidden": true %>
+    <%= icon "arrow-left-line", role: "img", "aria-hidden": true %>
     <span><%= t(".back_to_list") %></span>
   <% end %>
 </div>

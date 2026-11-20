@@ -9,9 +9,14 @@ module Decidim
     # view hook.
     class HighlightedIdeasForComponentCell < Decidim::ViewModel
       include Decidim::ComponentPathHelper
+      include Decidim::CardHelper
 
       def show
-        render unless ideas_count.zero?
+        render unless items_blank?
+      end
+
+      def items_blank?
+        ideas_count.zero?
       end
 
       private
@@ -22,11 +27,21 @@ module Decidim
                                        .order_randomly((rand * 2) - 1)
       end
 
+      def single_component?
+        @single_component ||= model.is_a?(Decidim::Component)
+      end
+
+      def decidim_ideas
+        return unless single_component?
+
+        Decidim::EngineRouter.main_proxy(model)
+      end
+
       def ideas_to_render
         @ideas_to_render ||= ideas.includes(
-          [:amendable, :category, :component, :area_scope]
+          [:amendable, :taxonomies, :component]
         ).limit(
-          Decidim::Ideas.config.participatory_space_highlighted_ideas_limit
+          Decidim::Ideas.participatory_space_highlighted_ideas_limit
         )
       end
 

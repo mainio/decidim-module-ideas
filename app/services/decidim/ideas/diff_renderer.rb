@@ -34,7 +34,7 @@ module Decidim
 
         diff.update(
           attribute => {
-            type: type,
+            type:,
             label: I18n.t(attribute, scope: i18n_scope),
             old_value: values[0],
             new_value: values[1]
@@ -94,7 +94,7 @@ module Decidim
 
         diff.update(
           attribute => {
-            type: type,
+            type:,
             label: I18n.t(attribute, scope: i18n_scope),
             old_value: old_scope ? translated_attribute(old_scope.name) : "",
             new_value: new_scope ? translated_attribute(new_scope.name) : ""

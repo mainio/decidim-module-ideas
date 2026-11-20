@@ -19,14 +19,14 @@ gem "decidim-favorites", github: "mainio/decidim-module-favorites", branch: "mai
 gem "decidim-feedback", github: "mainio/decidim-module-feedback", branch: "main"
 
 gem "bootsnap", "~> 1.4"
+gem "faker", "~> 3.2.2"
 gem "puma", ">= 5.6.2"
-
-gem "faker", "~> 2.14"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
+  gem "decidim-initiatives", DECIDIM_VERSION
   gem "decidim-plans", github: "mainio/decidim-module-plans", branch: "main"
   gem "decidim-tags", github: "mainio/decidim-module-tags", branch: "main"
 end
@@ -34,8 +34,5 @@ end
 group :development do
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
-  gem "rubocop-faker"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
   gem "web-console", "~> 4.2"
 end

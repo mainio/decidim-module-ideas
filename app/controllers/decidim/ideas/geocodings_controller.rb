@@ -37,7 +37,7 @@ module Decidim
         if address.present?
           render json: {
             success: true,
-            result: { address: address }
+            result: { address: }
           }
         else
           render json: {

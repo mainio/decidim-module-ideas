@@ -21,3 +21,8 @@ spec/decidim_dummy_app
 
 # default development application
 development_app
+
+# fast seeds in here for dev app
+.rbenv-vars
+
+config/i18n-tasks.yml

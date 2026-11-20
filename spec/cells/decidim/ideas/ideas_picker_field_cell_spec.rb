@@ -11,7 +11,7 @@ describe Decidim::Ideas::IdeasPickerFieldCell, type: :cell do
 
   let(:my_cell) { cell("decidim/ideas/ideas_picker_field", form) }
 
-  let(:record) { OpenStruct.new(ideas: ideas) }
+  let(:record) { OpenStruct.new(ideas:) }
   let(:form) { Decidim::FormBuilder.new(:record, record, template, {}) }
   let(:template_class) do
     Class.new(ActionView::Base) do
@@ -23,8 +23,8 @@ describe Decidim::Ideas::IdeasPickerFieldCell, type: :cell do
   let(:template) { template_class.new(ActionView::LookupContext.new(ActionController::Base.view_paths), {}, controller) }
 
   let(:participatory_space) { create(:participatory_process, :with_steps) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
-  let!(:ideas) { create_list(:idea, 30, component: component) }
+  let(:component) { create(:idea_component, participatory_space:) }
+  let!(:ideas) { create_list(:idea, 30, component:) }
 
   before do
     allow(controller).to receive(:current_participatory_space).and_return(participatory_space)

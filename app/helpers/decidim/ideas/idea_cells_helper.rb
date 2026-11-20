@@ -29,7 +29,7 @@ module Decidim
       end
 
       def ideas_controller?
-        context[:controller].class.to_s == "Decidim::Ideas::IdeasController"
+        context[:controller].instance_of?(::Decidim::Ideas::IdeasController)
       end
 
       def index_action?
@@ -48,7 +48,6 @@ module Decidim
         model.component
       end
 
-      # rubocop:disable Rails/HelperInstanceVariable
       def from_context
         @options[:from]
       end

@@ -7,7 +7,7 @@ FactoryBot.define do
   factory :idea_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :ideas).i18n_name }
     manifest_name { :ideas }
-    participatory_space { create(:participatory_process, :with_steps, organization: organization) }
+    participatory_space { create(:participatory_process, :with_steps, organization:) }
 
     trait :with_idea_limit do
       transient do
@@ -15,9 +15,7 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          idea_limit: idea_limit
-        }
+        { idea_limit: }
       end
     end
 
@@ -27,9 +25,7 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          idea_length: idea_length
-        }
+        { idea_length: }
       end
     end
 
@@ -43,17 +39,13 @@ FactoryBot.define do
 
     trait :with_geocoding_enabled do
       settings do
-        {
-          geocoding_enabled: true
-        }
+        { geocoding_enabled: true }
       end
     end
 
     trait :with_attachments_allowed do
       settings do
-        {
-          attachments_allowed: true
-        }
+        { attachments_allowed: true }
       end
     end
 
@@ -63,58 +55,31 @@ FactoryBot.define do
       end
 
       settings do
-        {
-          threshold_per_idea: threshold_per_idea
-        }
+        { threshold_per_idea: }
       end
     end
 
     trait :with_can_accumulate_supports_beyond_threshold do
       settings do
-        {
-          can_accumulate_supports_beyond_threshold: true
-        }
+        { can_accumulate_supports_beyond_threshold: true }
       end
     end
 
     trait :with_amendments_enabled do
       settings do
-        {
-          amendments_enabled: true
-        }
+        { amendments_enabled: true }
       end
     end
 
     trait :with_comments_disabled do
       settings do
-        {
-          comments_enabled: false
-        }
+        { comments_enabled: false }
       end
     end
 
     trait :with_card_image_allowed do
       settings do
-        {
-          allow_image: true
-        }
-      end
-    end
-
-    trait :with_extra_hashtags do
-      transient do
-        automatic_hashtags { "AutoHashtag AnotherAutoHashtag" }
-        suggested_hashtags { "SuggestedHashtag AnotherSuggestedHashtag" }
-      end
-
-      step_settings do
-        {
-          participatory_space.active_step.id => {
-            automatic_hashtags: automatic_hashtags,
-            suggested_hashtags: suggested_hashtags,
-            creation_enabled: true
-          }
-        }
+        { allow_image: true }
       end
     end
 
@@ -132,7 +97,7 @@ FactoryBot.define do
   factory :area_scope_parent, class: "Decidim::Scope" do
     name { Decidim::Faker::Localized.literal(generate(:scope_name)) }
     code { generate(:scope_code) }
-    scope_type { create(:scope_type, organization: organization) }
+    scope_type { create(:scope_type, organization:) }
     organization { parent ? parent.organization : build(:organization) }
 
     after :create do |area_scope|
@@ -140,12 +105,26 @@ FactoryBot.define do
     end
   end
 
+  factory :idea_taxonomy_filter, class: "Decidim::TaxonomyFilter" do
+    transient do
+      organization { create(:organization) }
+    end
+
+    root_taxonomy { create(:taxonomy, organization:) }
+
+    after :create do |filter, evaluator|
+      5.times do
+        child = create(:taxonomy, parent: filter.root_taxonomy, organization: evaluator.organization)
+        create(:taxonomy_filter_item, taxonomy_filter: filter, taxonomy_item: child)
+      end
+    end
+  end
+
   factory :idea, class: "Decidim::Ideas::Idea" do
     transient do
       users { nil }
-      # user_groups correspondence to users is by sorting order
-      user_groups { [] }
       skip_injection { false }
+      taxonomies { [] }
       area_scope_parent { create(:area_scope_parent, organization: component&.organization) }
     end
 
@@ -166,15 +145,22 @@ FactoryBot.define do
     after(:build) do |idea, evaluator|
       if idea.component
         users = evaluator.users || [create(:user, :confirmed, organization: idea.component.participatory_space.organization)]
-        users.each_with_index do |user, idx|
-          user_group = evaluator.user_groups[idx]
-          idea.coauthorships.build(author: user, user_group: user_group)
+        users.each_with_index do |user, _idx|
+          idea.coauthorships.build(author: user)
         end
 
         idea.category = create(:category, participatory_space: idea.component.participatory_space) if idea.category.blank? && idea.category != false
       end
-
       idea.area_scope = evaluator.area_scope_parent.children.sample if idea.area_scope.blank? && idea.area_scope != false
+    end
+
+    after(:create) do |idea, evaluator|
+      evaluator.taxonomies.each do |taxonomy|
+        idea.taxonomizations.find_or_create_by(taxonomy:)
+      end
+      # Reload the idea to ensure the taxonomies association is not cached
+      # as empty before the after(:create) callback runs.
+      idea.reload if evaluator.taxonomies.any?
     end
 
     trait :published do
@@ -257,6 +243,19 @@ FactoryBot.define do
         idea.attachments << create(:ideas_attachment, :with_pdf, attached_to: idea)
       end
     end
+
+    trait :with_taxonomies do
+      transient do
+        taxonomy_filter { create(:idea_taxonomy_filter, organization: component.organization) }
+      end
+
+      after(:create) do |idea, evaluator|
+        taxonomies = evaluator.taxonomy_filter.taxonomies.values.flat_map { |node| node[:taxonomy] }.sample(2)
+        taxonomies.each do |taxonomy|
+          idea.taxonomizations.find_or_create_by(taxonomy:)
+        end
+      end
+    end
   end
 
   factory :idea_amendment, class: "Decidim::Amendment" do
@@ -272,7 +271,7 @@ FactoryBot.define do
     weight { 0 }
     attached_to { build(:participatory_process) }
     content_type { "image/jpeg" }
-    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") } # Keep after attached_to
+    file { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
     file_size { 108_908 }
 
     trait :with_image do

@@ -93,7 +93,7 @@ module Decidim
             manifest.participatory_spaces.call(context[:current_organization]).public_spaces
           end
           components = Component.where(participatory_space: spaces).published
-          Decidim::Ideas::Idea.where(component: components).find_by(id: id)
+          Decidim::Ideas::Idea.where(component: components).find_by(id:)
         end
       end
     end

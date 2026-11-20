@@ -7,6 +7,7 @@ module Decidim
       include Decidim::Resourceable
       include Decidim::Coauthorable
       include Decidim::HasComponent
+      include Decidim::Taxonomizable
       include Decidim::Ideas::AreaScopable
       # include Decidim::ScopableResource
       include Decidim::HasReference
@@ -76,12 +77,6 @@ module Decidim
              .joins(:coauthorships)
              .where.not(decidim_coauthorships: { decidim_author_type: "Decidim::Organization" })
       }
-      scope :user_group_origin, lambda {
-        where.not(coauthorships_count: 0)
-             .joins(:coauthorships)
-             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
-             .where.not(decidim_coauthorships: { decidim_user_group_id: nil })
-      }
 
       scope :with_availability, lambda { |availability_key|
         case availability_key
@@ -137,7 +132,7 @@ module Decidim
       end
 
       def self.retrieve_ideas_for(component)
-        Decidim::Ideas::Idea.where(component: component)
+        Decidim::Ideas::Idea.where(component:)
                             .joins(:coauthorships)
                             .where(decidim_coauthorships: { decidim_author_type: "Decidim::UserBaseEntity" })
                             .not_hidden
@@ -158,18 +153,23 @@ module Decidim
         )
       end
 
+      def self.area_scope_coordinates_for(component)
+        component.settings.area_scope_coordinates.to_h do |scope_id, coords|
+          latlng = coords.split(",")
+          next [scope_id.to_s.to_i, nil] if latlng.length < 2
+
+          [scope_id.to_s.to_i, [latlng[0].to_f, latlng[1].to_f]]
+        end.compact
+      end
+
       def self.with_geocoded_area_scopes_for(component)
         # Fetch all the configured area scope coodinates and create a select
         # statement for each scope with its latitude and longitude in order to
         # combine this information with the base query.
-        scope_selects = component.settings.area_scope_coordinates.map do |scope_id, coords|
-          latlng = coords.split(",")
-          next if latlng.length < 2
+        scope_selects = area_scope_coordinates_for(component).map do |scope_id, coords|
+          "SELECT #{scope_id} AS scope_id, #{coords[0]} AS latitude, #{coords[1]} AS longitude"
+        end
 
-          lat = latlng[0].to_f
-          lng = latlng[1].to_f
-          "SELECT #{scope_id} AS scope_id, #{lat} AS latitude, #{lng} AS longitude"
-        end.compact
         # The empty select ensures there is always at least one row for the
         # scope locations so that it will not break even when it is not
         # configured correctly.
@@ -331,19 +331,38 @@ module Decidim
         Time.current < limit
       end
 
+      # Replicates the same data for a single idea as returned for a collection
+      # through the `#geocoded_data_for` method.
+      def geocoded_data
+        locale = I18n.locale.to_s
+        default_locale = I18n.default_locale.to_s
+
+        scope_coordinates = self.class.area_scope_coordinates_for(component)
+        idea_scope_coordinates = scope_coordinates[area_scope.id] || []
+
+        [
+          id,
+          title,
+          body,
+          address || area_scope.title[locale] || area_scope.title[default_locale],
+          latitude || idea_scope_coordinates[0],
+          longitude || idea_scope_coordinates[1]
+        ]
+      end
+
       # Create i18n ransackers for :title and :body.
       # Create the :search_text ransacker alias for searching from both of these.
       ransacker_text_multi :search_text, [:title, :body]
 
       # method for sort_link by number of comments
       ransacker :commentable_comments_count do
-        query = <<-SQL.squish
-        (SELECT COUNT(decidim_comments_comments.id)
-         FROM decidim_comments_comments
-         WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
-         AND decidim_comments_comments.decidim_commentable_type = 'Decidim::Ideas::Idea'
-         GROUP BY decidim_comments_comments.decidim_commentable_id
-         )
+        query = <<~SQL.squish
+          (SELECT COUNT(decidim_comments_comments.id)
+           FROM decidim_comments_comments
+           WHERE decidim_comments_comments.decidim_commentable_id = decidim_ideas_ideas.id
+           AND decidim_comments_comments.decidim_commentable_type = 'Decidim::Ideas::Idea'
+           GROUP BY decidim_comments_comments.decidim_commentable_id
+           )
         SQL
         Arel.sql(query)
       end
@@ -370,24 +389,20 @@ module Decidim
       end
 
       ransacker :is_emendation do |_parent|
-        query = <<-SQL.squish
-        (
-          SELECT EXISTS (
-            SELECT 1 FROM decidim_amendments
-            WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
-            AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+        query = <<~SQL.squish
+          (
+            SELECT EXISTS (
+              SELECT 1 FROM decidim_amendments
+              WHERE decidim_amendments.decidim_emendation_type = 'Decidim::Ideas::Idea'
+              AND decidim_amendments.decidim_emendation_id = decidim_ideas_ideas.id
+            )
           )
-        )
         SQL
         Arel.sql(query)
       end
 
       def self.ransack(params = {}, options = {})
         IdeaSearch.new(self, params, options)
-      end
-
-      def self.ransackable_scopes(_auth_object = nil)
-        [:with_availability, :with_any_state, :with_any_area_scope, :with_category]
       end
 
       def self.export_serializer
@@ -448,6 +463,21 @@ module Decidim
         PaperTrail.serializer.dump(final)
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+      def self.ransackable_scopes(_auth_object = nil)
+        [:with_any_state, :with_any_taxonomies]
+      end
+
+      def self.ransackable_attributes(_auth_object = nil)
+        %w(id title body search_text state state_published state_published_at
+           answered_at published_at created_at updated_at
+           decidim_component_id coauthorships_count
+           commentable_comments_count id_string is_emendation reference)
+      end
+
+      def self.ransackable_associations(_auth_object = nil)
+        %w(component taxonomies coauthorships attachments)
+      end
 
       private
 

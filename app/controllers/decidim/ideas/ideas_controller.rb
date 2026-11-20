@@ -3,17 +3,17 @@
 module Decidim
   module Ideas
     class IdeasController < Decidim::Ideas::ApplicationController
-      helper Decidim::WidgetUrlsHelper
-      helper IdeaWizardHelper
       helper Decidim::Ideas::IdeasFormHelper
 
       include Decidim::ApplicationHelper
       include FormFactory
+      include Flaggable
       include FilterResource
       include Decidim::Ideas::Orderable
       include Paginable
       include Decidim::Ideas::AttachedIdeasHelper
 
+      helper Decidim::Ideas::Admin::FilterableHelper
       helper_method :idea_form_builder, :form_presenter, :trigger_feedback?, :users_idea_limit_reached?
 
       before_action :authenticate_user!, only: [:create, :complete]
@@ -23,8 +23,9 @@ module Decidim
       before_action :edit_form, only: [:edit_draft, :edit]
 
       def index
+        enforce_permission_to :read, :idea
         base_query = search.result.published
-        @ideas = base_query.includes(:amendable, :category, :component, :area_scope)
+        @ideas = base_query.includes(:taxonomies, :amendable, :component)
         @geocoded_ideas = base_query.geocoded_data_for(current_component)
 
         @ideas = paginate(@ideas)
@@ -35,8 +36,18 @@ module Decidim
         end
       end
 
+      def complete
+        enforce_permission_to(:edit, :idea, idea: @idea)
+      end
+
+      def compare
+        enforce_permission_to(:read, :idea)
+      end
+
       def show
         raise ActionController::RoutingError, "Not Found" if @idea.blank? || !can_show_idea?
+
+        enforce_permission_to(:read, :idea, idea: @idea)
 
         if @idea.emendation?
           return redirect_to Decidim::ResourceLocatorPresenter.new(@idea.amendable).path if @idea.amendable
@@ -48,6 +59,8 @@ module Decidim
       end
 
       def new
+        enforce_permission_to(:create, :idea) if user_signed_in?
+
         if idea_draft.present?
           redirect_to edit_draft_idea_path(
             idea_draft,
@@ -58,6 +71,10 @@ module Decidim
           @idea ||= Idea.new(component: current_component)
           @form = form_idea_model
         end
+      end
+
+      def edit
+        enforce_permission_to :edit, :idea, idea: @idea
       end
 
       def create
@@ -81,16 +98,20 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.create.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.create.error", scope: "decidim")
 
             render :new
           end
         end
       end
 
-      def preview; end
+      def preview
+        enforce_permission_to(:read, :idea, idea: @idea)
+      end
 
       def publish
+        enforce_permission_to(:edit, :idea, idea: @idea)
+
         PublishIdea.call(@idea, current_user) do
           on(:ok) do
             flash[:notice] = I18n.t("ideas.publish.success", scope: "decidim")
@@ -99,7 +120,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.publish.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.publish.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -125,7 +146,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.update_draft.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.update_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
@@ -141,14 +162,10 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.destroy_draft.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.destroy_draft.error", scope: "decidim")
             render :edit_draft
           end
         end
-      end
-
-      def edit
-        enforce_permission_to :edit, :idea, idea: @idea
       end
 
       def update
@@ -162,7 +179,7 @@ module Decidim
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("ideas.update.error", scope: "decidim")
+            flash[:alert] = I18n.t("ideas.update.error", scope: "decidim")
             render :edit
           end
         end
@@ -199,14 +216,15 @@ module Decidim
       end
 
       def users_idea_limit_reached?
-        return false unless current_component&.settings&.idea_limit&.positive?
+        idea_limit = current_component&.settings&.idea_limit
+        return false unless idea_limit&.positive?
 
         users_idea_count = Idea.from_author(current_user).where(component: current_component).except_withdrawn
-        current_component.settings.idea_limit <= users_idea_count.count
+        idea_limit <= users_idea_count.count
       end
 
       def search_collection
-        Idea.where(component: current_component).not_hidden.with_availability(params[:filter].try(:[], :with_availability))
+        Idea.where(component: current_component).not_hidden.only_amendables.with_availability(params[:filter].try(:[], :with_availability))
       end
 
       def default_filter_params
@@ -214,17 +232,14 @@ module Decidim
           search_text_cont: "",
           with_any_origin: default_filter_origin_params,
           activity: "all",
-          with_any_area_scope: "",
-          with_category: "",
+          with_any_taxonomies: nil,
           with_any_state: %w(),
           type: "ideas"
         }
       end
 
       def default_filter_origin_params
-        filter_origin_params = %w(participants)
-        filter_origin_params << "user_group" if current_organization.user_groups_enabled?
-        filter_origin_params
+        %w(participants)
       end
 
       def idea_draft
@@ -275,12 +290,7 @@ module Decidim
       end
 
       def edit_form
-        form_image_model = form(ImageAttachmentForm).from_model(@idea.image)
-        form_attachment_model = form(AttachmentForm).from_model(@idea.actual_attachments.first)
         @form = form_idea_model
-        @form.image = form_image_model
-        @form.attachment = form_attachment_model
-        @form
       end
 
       def idea_creation_params

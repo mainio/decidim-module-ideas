@@ -13,7 +13,7 @@ describe Decidim::Ideas::IdeaActivityCell, type: :cell do
   let(:action_log) do
     create(
       :action_log,
-      action: action,
+      action:,
       resource: idea,
       organization: idea.organization,
       component: idea.component,
@@ -23,14 +23,14 @@ describe Decidim::Ideas::IdeaActivityCell, type: :cell do
 
   context "when rendering" do
     it "renders the card" do
-      expect(subject).to have_css("#action-#{action_log.id}")
+      expect(subject).to have_css("[data-activity]")
     end
 
     context "when action is update" do
       let(:action) { :update }
 
       it "renders the correct title" do
-        expect(subject).to have_css("#action-#{action_log.id}")
+        expect(subject).to have_css("[data-activity]")
         expect(subject).to have_content("Idea updated")
       end
     end
@@ -39,14 +39,14 @@ describe Decidim::Ideas::IdeaActivityCell, type: :cell do
       let(:action) { :create }
 
       it "renders the correct title" do
-        expect(subject).to have_css("#action-#{action_log.id}")
+        expect(subject).to have_css("[data-activity]")
         expect(subject).to have_content("New idea")
       end
     end
 
     context "when action is publish" do
       it "renders the correct title" do
-        expect(subject).to have_css("#action-#{action_log.id}")
+        expect(subject).to have_css("[data-activity]")
         expect(subject).to have_content("New idea")
       end
     end

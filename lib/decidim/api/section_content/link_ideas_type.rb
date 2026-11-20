@@ -16,7 +16,7 @@ module Decidim
           return nil unless object.body["idea_ids"].is_a?(Array)
 
           object.body["idea_ids"].map do |id|
-            Decidim::Ideas::Idea.find_by(id: id)
+            Decidim::Ideas::Idea.find_by(id:)
           end.compact
         end
       end

@@ -60,8 +60,8 @@ module Decidim
 
         def publish_event(event, event_class)
           Decidim::EventsManager.publish(
-            event: event,
-            event_class: event_class,
+            event:,
+            event_class:,
             resource: idea,
             affected_users: idea.notifiable_identities,
             followers: idea.followers - idea.notifiable_identities
@@ -71,11 +71,11 @@ module Decidim
         def increment_score
           if idea.accepted?
             idea.coauthorships.find_each do |coauthorship|
-              Decidim::Gamification.increment_score(coauthorship.user_group || coauthorship.author, :accepted_ideas)
+              Decidim::Gamification.increment_score(coauthorship.author, :accepted_ideas)
             end
           elsif initial_state == "accepted"
             idea.coauthorships.find_each do |coauthorship|
-              Decidim::Gamification.decrement_score(coauthorship.user_group || coauthorship.author, :accepted_ideas)
+              Decidim::Gamification.decrement_score(coauthorship.author, :accepted_ideas)
             end
           end
         end

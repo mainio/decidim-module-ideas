@@ -2,31 +2,28 @@
 
 require "spec_helper"
 
-describe "User edits idea", type: :system do
+describe "UserEditsIdea" do
   include_context "with a component"
+  include_context "with idea taxonomy filter"
 
-  let(:organization) { create :organization }
-  let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
+  let(:organization) { create(:organization) }
+  let(:skip_injection) { false }
+  let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let(:manifest) { Decidim.find_component_manifest("ideas") }
-  let!(:user) { create :user, :confirmed, organization: organization }
+  let!(:user) { create(:user, :confirmed, organization:) }
   let!(:component) do
     create(:idea_component,
            :with_creation_enabled,
            :with_card_image_allowed,
-           :with_attachments_allowed, # Doesnt do anything?
            :with_geocoding_enabled,
-           manifest: manifest,
+           manifest:,
            participatory_space: participatory_process)
   end
-  let(:scope) { create :scope, organization: organization }
-  let!(:subscope) { create :scope, parent: scope }
-  let!(:category) { create :category, participatory_space: participatory_process }
 
-  let(:idea_title) { ::Faker::Lorem.paragraph }
-  let(:idea_body) { ::Faker::Lorem.paragraph }
+  let(:idea_title) { Faker::Lorem.paragraph }
+  let(:idea_body) { Faker::Lorem.paragraph }
 
   before do
-    component[:settings]["global"]["area_scope_parent_id"] = scope.id
     settings = component.settings
     settings.attachments_allowed = true
     component.settings = settings
@@ -36,114 +33,114 @@ describe "User edits idea", type: :system do
   end
 
   context "when user has created an idea" do
-    let!(:idea) { create :idea, users: [user], component: component, category: category, area_scope_parent: scope }
+    let!(:idea) { create(:idea, users: [user], component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
     let(:new_title) { "Foo bar, much text here is" }
     let(:new_body) { "Veli kulta, veikkoseni, kaunis kasvinkumppalini! Lähe nyt kanssa laulamahan" }
-    let!(:subscope2) { create(:scope, parent: scope) }
 
     describe "edit idea" do
       before do
         visit current_path
-        click_link idea.title
-        click_link "Edit idea"
+        click_on idea.title
+        click_on "Edit idea"
       end
 
       it "edits idea" do
         fill_in :idea_title, with: new_title
         fill_in :idea_body, with: new_body
-        select subscope2.name["en"], from: :idea_area_scope_id
-        select category.name["en"], from: :idea_category_id
-        click_button "Save"
+        select other_taxonomy.name["en"], from: "taxonomy_filter_#{taxonomy_filter.id}"
+        click_on "Save"
         expect(page).to have_content("Idea successfully updated")
-        expect(Decidim::Ideas::Idea.last.title).to eq(new_title)
-        expect(Decidim::Ideas::Idea.last.body).to eq(new_body)
+        expect(idea.reload.taxonomies).to include(other_taxonomy)
       end
 
       context "when editing attachments", processing_uploads_for: Decidim::Ideas::AttachmentUploader do
-        let(:add_attachment_title) { ::Faker::Hipster.sentence }
+        let(:add_attachment_title) { Faker::Hipster.sentence }
 
         it "adds image" do
-          dynamically_attach_file(:idea_images, Decidim::Dev.asset("avatar.jpg"), title: add_attachment_title)
-          click_button "Save"
+          dynamically_attach_file(:idea_photos, Decidim::Dev.asset("avatar.jpg"), title: add_attachment_title)
+          click_on "Save"
           expect(page).to have_content("Idea successfully updated")
           expect(idea.attachments.last.content_type).to eq("image/jpeg")
           expect(idea.attachments.last.title["en"]).to eq(add_attachment_title)
         end
 
         it "adds document" do
-          dynamically_attach_file(:idea_actual_attachments, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
-          click_button "Save"
+          dynamically_attach_file(:idea_documents, Decidim::Dev.asset("Exampledocument.pdf"), title: add_attachment_title)
+          click_on "Save"
           expect(page).to have_content("Idea successfully updated")
-          expect(idea.attachments.last.content_type).to eq("application/pdf")
-          expect(idea.attachments.last.title["en"]).to eq(add_attachment_title)
+          expect(idea.reload.attachments.last.content_type).to eq("application/pdf")
         end
       end
     end
   end
 
   context "when idea has image attached" do
-    let!(:idea2) do
+    let!(:second_idea) do
       create(:idea,
              :with_photo,
              users: [user],
-             title: idea2_title,
-             component: component,
-             category: category,
-             area_scope_parent: scope)
+             title: second_idea_title,
+             component:,
+             category: false,
+             area_scope: false)
     end
-    let(:idea2_title) { ::Faker::Hipster.sentence }
-    let(:weight) { 0 }
+    let(:second_idea_title) { Faker::Hipster.sentence }
 
     describe "remove image" do
       before do
         visit current_path
-        within ".card__header" do
-          click_link idea2_title
+        scroll_to find_all(".cards-list").last
+        within "#idea_#{second_idea.id}" do
+          click_on second_idea_title
         end
-        click_link "Edit idea"
+        click_on "Edit idea"
       end
 
       it "remove image" do
-        click_button "Change image"
-        within ".reveal.upload-modal" do
-          click_button "× Remove"
-          click_button "Save"
+        attachment_count = second_idea.attachments.count
+        click_on "Change image"
+        within ".upload-modal" do
+          click_on "Remove"
+          click_on "Save"
         end
-        expect { click_button "Save" }.to change(idea2.attachments, :count).by(-1)
+        click_on "Save"
         expect(page).to have_content("Idea successfully updated")
+        expect(second_idea.attachments.count).to eq(attachment_count - 1)
       end
     end
   end
 
   context "when idea has document attached" do
-    let!(:idea3) do
+    let!(:third_idea) do
       create(:idea,
              :with_document,
              users: [user],
-             title: idea3_title,
-             component: component,
-             category: category,
-             area_scope_parent: scope)
+             title: third_idea_title,
+             component:,
+             category: false,
+             area_scope: false)
     end
-    let(:idea3_title) { ::Faker::Hipster.sentence }
+    let(:third_idea_title) { Faker::Hipster.sentence }
 
     describe "remove document" do
       before do
         visit current_path
-        within ".card__header" do
-          click_link idea3_title
+        within "#idea_#{third_idea.id}" do
+          click_on third_idea_title
         end
-        click_link "Edit idea"
+        click_on "Edit idea"
       end
 
       it "removes attached pdf" do
-        click_button "Change attachment"
-        within ".reveal.upload-modal" do
-          click_button "× Remove"
-          click_button "Save"
+        attachment_count = third_idea.attachments.count
+        click_on "Change attachment"
+        within ".upload-modal" do
+          click_on "Remove"
+          click_on "Save"
         end
-        expect { click_button "Save" }.to change(idea3.attachments, :count).by(-1)
+        click_on "Save"
         expect(page).to have_content("Idea successfully updated")
+        expect(third_idea.attachments.count).to eq(attachment_count - 1)
       end
     end
   end

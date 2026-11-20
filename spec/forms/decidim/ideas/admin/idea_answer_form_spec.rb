@@ -11,13 +11,13 @@ module Decidim
         let(:organization) { ideas_component.participatory_space.organization }
         let(:state) { "accepted" }
         let(:answer) { Decidim::Faker::Localized.sentence(word_count: 3) }
-        let(:ideas_component) { create :idea_component }
+        let(:ideas_component) { create(:idea_component) }
         let(:execution_period) { nil }
         let(:params) do
           {
             internal_state: state,
-            answer: answer,
-            execution_period: execution_period
+            answer:,
+            execution_period:
           }
         end
 

@@ -5,14 +5,7 @@ module Decidim
     # A cell to display when a idea has been published.
     class IdeaActivityCell < ActivityCell
       def title
-        key =
-          if action == "update"
-            "decidim.ideas.last_activity.idea_updated_html"
-          else
-            "decidim.ideas.last_activity.new_idea_at_html"
-          end
-
-        I18n.t(key, link: participatory_space_link)
+        action == "update" ? I18n.t("decidim.ideas.last_activity.idea_updated_html") : I18n.t("decidim.ideas.last_activity.new_idea_at_html")
       end
 
       def resource_link_text

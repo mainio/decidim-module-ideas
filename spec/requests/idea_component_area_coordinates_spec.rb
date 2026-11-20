@@ -2,16 +2,15 @@
 
 require "spec_helper"
 
-RSpec.describe "Idea component area coordinates", type: :request do
+RSpec.describe "IdeaComponentAreaCoordinates" do
   include Decidim::WardenTestHelpers
 
   subject { response.body }
 
-  let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+  let(:user) { create(:user, :confirmed, :admin, organization:) }
   let(:organization) { component.organization }
   let(:component) { create(:idea_component) }
-  let(:parent_scope) { create(:scope, organization: organization) }
-  let!(:scopes) { create_list(:scope, 10, parent: parent_scope, organization: organization) }
+  let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
 
   let(:decidim_admin) { Decidim::Admin::Engine.routes.url_helpers }
   let(:request_path) { decidim_admin.area_coordinates_ideas_component_setting_path(component) }
@@ -21,23 +20,23 @@ RSpec.describe "Idea component area coordinates", type: :request do
 
     get(
       request_path,
-      params: { parent_scope_id: parent_scope.id, setting_name: "area_scope_coordinates" },
+      params: { taxonomy_filter_id: taxonomy_filter.id, setting_name: "area_scope_coordinates" },
       headers: { "HOST" => organization.host }
     )
   end
 
-  it "renders the child scopes" do
-    scopes.each do |scope|
-      expect(subject).to have_escaped_html(translated(scope.name))
-      expect(subject).to match(/<input .*name="component\[settings\]\[area_scope_coordinates\]\[#{scope.id}\]".*>/)
+  it "renders the child taxonomies" do
+    taxonomy_filter.filter_items.each do |filter_item|
+      expect(subject).to have_escaped_html(translated(filter_item.taxonomy_item.name))
+      expect(subject).to match(/<input .*name="component\[settings\]\[area_scope_coordinates\]\[#{filter_item.taxonomy_item.id}\]".*>/)
     end
   end
 
   context "with a regular user" do
-    let(:user) { create(:user, :confirmed, organization: organization) }
+    let(:user) { create(:user, :confirmed, organization:) }
 
     it "redirects" do
-      expect(response.status).to be(302)
+      expect(response).to have_http_status(:found)
     end
   end
 

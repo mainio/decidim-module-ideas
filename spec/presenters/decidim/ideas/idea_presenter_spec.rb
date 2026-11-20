@@ -4,13 +4,13 @@ require "spec_helper"
 
 describe Decidim::Ideas::IdeaPresenter do
   let(:presenter) { described_class.new(idea) }
-  let(:idea) { create(:idea, component: component) }
+  let(:idea) { create(:idea, component:) }
 
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:idea_component, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:idea_component, participatory_space:) }
 
-  let(:idea_link) { "/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{idea.id}" }
+  let(:idea_link) { "/en/processes/#{participatory_space.slug}/f/#{component.id}/ideas/#{idea.id}" }
 
   describe "#idea_path" do
     subject { presenter.idea_path }
@@ -46,28 +46,6 @@ describe Decidim::Ideas::IdeaPresenter do
         expect(subject).to include(escaped_html(idea.title))
       end
     end
-
-    context "with hashtags" do
-      subject { presenter.title }
-
-      let(:idea) { create(:idea, title: title_with_hashtags, component: component) }
-      let(:title) { "Idea title with #decidim hashtag" }
-      let(:title_with_hashtags) { Decidim::ContentProcessor.parse_with_processor(:hashtag, title, current_organization: organization).rewrite }
-
-      it "presents the hashtags" do
-        expect(subject).to eq(title)
-      end
-
-      context "with links" do
-        subject { presenter.title(links: true) }
-
-        it "adds the links to the hashtags" do
-          expect(subject).to eq(
-            %(Idea title with <a target="_blank" class="hashtag-mention" rel="noopener" href="/search?term=%23decidim">#decidim</a> hashtag)
-          )
-        end
-      end
-    end
   end
 
   describe "#id_and_title" do
@@ -81,7 +59,7 @@ describe Decidim::Ideas::IdeaPresenter do
   describe "#body" do
     subject { presenter.body }
 
-    let(:idea) { create(:idea, body: body, component: component) }
+    let(:idea) { create(:idea, body:, component:) }
     let(:body) do
       <<~BODY
         This is the idea body.
@@ -133,34 +111,24 @@ describe Decidim::Ideas::IdeaPresenter do
     end
   end
 
-  describe "#area_scope_name" do
-    subject { presenter.area_scope_name }
+  describe "#taxonomy_names" do
+    subject { described_class.new(idea.reload).taxonomy_names }
 
-    it "displays the area scope name" do
-      expect(subject).to eq(translated(idea.area_scope.name))
-    end
+    context "when the idea has taxonomies" do
+      let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+      let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
+      let(:idea) { create(:idea, component:, category: false, area_scope: false, taxonomies: [taxonomy]) }
 
-    context "when the idea does not have an area scope" do
-      let(:idea) { create(:idea, area_scope: false, component: component) }
-
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns the taxonomy names" do
+        expect(subject).to eq([translated(taxonomy.name)])
       end
     end
-  end
 
-  describe "#category_name" do
-    subject { presenter.category_name }
+    context "when the idea has no taxonomies" do
+      let(:idea) { create(:idea, component:, category: false, area_scope: false) }
 
-    it "displays the area scope name" do
-      expect(subject).to eq(translated(idea.category.name))
-    end
-
-    context "when the idea does not have a category" do
-      let(:idea) { create(:idea, category: false, component: component) }
-
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns an empty array" do
+        expect(subject).to be_empty
       end
     end
   end
@@ -173,7 +141,7 @@ describe Decidim::Ideas::IdeaPresenter do
     end
 
     context "when the idea is not published" do
-      let(:idea) { create(:idea, :draft, component: component) }
+      let(:idea) { create(:idea, :draft, component:) }
 
       it "returns nil" do
         expect(subject).to be_nil
@@ -184,7 +152,7 @@ describe Decidim::Ideas::IdeaPresenter do
   describe "#versions", versioning: true do
     subject { presenter.versions }
 
-    let(:admin) { create(:user, :confirmed, :admin, organization: organization) }
+    let(:admin) { create(:user, :confirmed, :admin, organization:) }
 
     before do
       # Same update twice on purpose as it should not return duplicate changes.

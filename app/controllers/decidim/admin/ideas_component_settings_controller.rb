@@ -11,7 +11,7 @@ module Decidim
 
       def area_coordinates
         enforce_permission_to :create, :component
-        raise ActionController::RoutingError, "Not found" unless scope_parent
+        raise ActionController::RoutingError, "Not found" unless taxonomy_filter_parent
 
         setting_name = params[:setting_name]
         manifest = Decidim.find_component_manifest("ideas")
@@ -29,8 +29,8 @@ module Decidim
           partial: "decidim/ideas/admin/shared/area_scope_coordinates",
           locals: {
             input_name_prefix: "component[settings][#{setting_name}]",
-            value: value,
-            parent: scope_parent
+            value:,
+            parent: taxonomy_filter_parent
           }
         )
       end
@@ -41,12 +41,15 @@ module Decidim
         @component_manifest ||= Decidim.find_component_manifest("ideas")
       end
 
+      # Disable unnecessary rubocop rule
+      # rubocop:disable Decidim/OrganizationScopedFinder
       def component
         @component ||= begin
           comp = Decidim::Component.find_by(id: params[:id])
-          comp if comp && comp.organization == current_organization
+          comp if comp&.organization == current_organization
         end
       end
+      # rubocop:enable Decidim/OrganizationScopedFinder
 
       def settings_manifest
         @settings_manifest ||= begin
@@ -55,12 +58,15 @@ module Decidim
         end
       end
 
-      def scope_parent
-        @scope_parent ||= begin
-          scope = Decidim::Scope.find_by(id: params[:parent_scope_id])
-          scope if scope && scope.organization == current_organization
+      # Disable unnecessary rubocop rule
+      # rubocop:disable Decidim/OrganizationScopedFinder
+      def taxonomy_filter_parent
+        @taxonomy_filter_parent ||= begin
+          filter = Decidim::TaxonomyFilter.for(current_organization).find_by(id: params[:taxonomy_filter_id])
+          filter
         end
       end
+      # rubocop:enable Decidim/OrganizationScopedFinder
     end
   end
 end

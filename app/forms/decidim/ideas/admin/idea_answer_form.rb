@@ -6,6 +6,7 @@ module Decidim
       # A form object to be used when admin users want to answer a idea.
       class IdeaAnswerForm < Decidim::Form
         include TranslatableAttributes
+
         mimic :idea_answer
 
         translatable_attribute :answer, String

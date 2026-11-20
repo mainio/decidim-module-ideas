@@ -13,6 +13,8 @@ module Decidim
         end
 
         def ideas_picker
+          enforce_permission_to :read, :idea
+
           render :ideas_picker, layout: false
         end
       end

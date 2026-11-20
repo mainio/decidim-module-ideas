@@ -45,14 +45,6 @@ module Decidim
         address = reset(:address)
         latitude = reset(:latitude)
         longitude = reset(:longitude)
-        area_scope_id = reset(:area_scope_id)
-        category = @idea.category
-
-        if @idea.categorization
-          PaperTrail.request(enabled: false) do
-            @idea.categorization.destroy!
-          end
-        end
 
         Decidim.traceability.perform_action!(
           "publish",
@@ -61,13 +53,11 @@ module Decidim
           visibility: "public-only"
         ) do
           @idea.update(
-            title: title,
-            body: body,
-            address: address,
-            latitude: latitude,
-            longitude: longitude,
-            area_scope_id: area_scope_id,
-            category: category,
+            title:,
+            body:,
+            address:,
+            latitude:,
+            longitude:,
             published_at: Time.current
           )
         end
@@ -111,11 +101,7 @@ module Decidim
 
       def increment_scores
         @idea.coauthorships.find_each do |coauthorship|
-          if coauthorship.user_group
-            Decidim::Gamification.increment_score(coauthorship.user_group, :ideas)
-          else
-            Decidim::Gamification.increment_score(coauthorship.author, :ideas)
-          end
+          Decidim::Gamification.increment_score(coauthorship.author, :ideas)
         end
       end
     end

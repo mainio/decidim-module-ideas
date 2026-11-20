@@ -14,7 +14,7 @@ describe Decidim::Ideas::SectionTypeEdit::LinkIdeasInlineCell, type: :cell do
       "decidim/ideas/section_type_edit/link_ideas_inline",
       content,
       multilingual_answers: false,
-      context: { form: form, parent_form: parent_form, current_component: component }
+      context: { form:, parent_form:, current_component: component }
     )
   end
 
@@ -31,17 +31,18 @@ describe Decidim::Ideas::SectionTypeEdit::LinkIdeasInlineCell, type: :cell do
   let(:template) { template_class.new(ActionView::LookupContext.new(ActionController::Base.view_paths), {}, controller) }
 
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:plan_component, participatory_space: participatory_space) }
-  let(:section) { create(:section, section_type: "link_ideas", component: component) }
-  let(:plan) { create(:plan, component: component) }
-  let(:content) { create(:content, plan: plan, section: section, body: { idea_ids: ideas.map(&:id) }) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:plan_component, participatory_space:) }
+  let(:section) { create(:section, section_type: "link_ideas", component:) }
+  let(:plan) { create(:plan, component:) }
+  let(:content) { create(:content, plan:, section:, body: { idea_ids: ideas.map(&:id) }) }
 
-  let(:idea_component) { create(:idea_component, participatory_space: participatory_space) }
+  let(:idea_component) { create(:idea_component, participatory_space:) }
   let(:ideas) { create_list(:idea, 3, :accepted, component: idea_component) }
 
   before do
     allow(controller).to receive(:current_participatory_space).and_return(participatory_space)
+    allow(controller).to receive(:current_organization).and_return(organization)
   end
 
   it "displays the linked ideas" do
@@ -53,6 +54,34 @@ describe Decidim::Ideas::SectionTypeEdit::LinkIdeasInlineCell, type: :cell do
   it "renders the inputs toselect each idea" do
     ideas.each do |idea|
       expect(subject).to have_css("input[name='contents[#{section.id}][idea_ids][]'][value='#{idea.id}']", visible: :hidden)
+    end
+  end
+
+  context "when filtering by text" do
+    before do
+      allow(controller).to receive(:params).and_return(ActionController::Parameters.new(q: translated(ideas.first.title)))
+    end
+
+    it "renders only matching ideas" do
+      expect(subject).to have_content(strip_tags(translated(ideas.first.title)))
+    end
+  end
+
+  context "when filtering by taxonomy" do
+    let(:taxonomy_filter) { create(:idea_taxonomy_filter, organization:) }
+    let(:taxonomy) { taxonomy_filter.root_taxonomy.children.first }
+    let(:ideas) { create_list(:idea, 3, :accepted, component: idea_component, category: false, area_scope: false, taxonomies: [taxonomy]) }
+
+    before do
+      allow(controller).to receive(:params).and_return(
+        ActionController::Parameters.new("with_taxonomy_filter_#{taxonomy_filter.id}" => [taxonomy.id.to_s])
+      )
+    end
+
+    it "renders ideas with matching taxonomy" do
+      ideas.each do |idea|
+        expect(subject).to have_content(strip_tags(translated(idea.title)))
+      end
     end
   end
 end

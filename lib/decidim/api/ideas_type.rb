@@ -11,24 +11,24 @@ module Decidim
       field :ideas, Decidim::Ideas::IdeaType.connection_type, resolver: Decidim::Ideas::IdeasSearchResolver, description: "List all ideas", null: true
 
       field :idea, Decidim::Ideas::IdeaType, description: "Finds one idea", null: true do
-        argument :id, GraphQL::Types::ID, required: true
+        argument :id, GraphQL::Types::ID, description: "ID of the idea", required: true
       end
 
       def idea(id:)
-        IdeasTypeHelper.base_scope(object).find_by(id: id)
+        IdeasTypeHelper.base_scope(object).find_by(id:)
       end
     end
 
-    module IdeasTypeHelper
+    module IdeasTypeHelper # rubocop:disable GraphQL/ObjectDescription
       include Decidim::Core::NeedsApiFilterAndOrder
 
       def self.base_scope(component)
         Idea
-          .where(component: component)
+          .where(component:)
           .published
           .not_hidden
           .only_amendables
-          .includes(:category, :component, :area_scope)
+          .includes(:taxonomies, :component)
       end
     end
   end

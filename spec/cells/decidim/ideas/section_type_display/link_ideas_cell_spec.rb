@@ -12,13 +12,13 @@ describe Decidim::Ideas::SectionTypeDisplay::LinkIdeasCell, type: :cell do
   let(:my_cell) { cell("decidim/ideas/section_type_display/link_ideas", content) }
 
   let(:organization) { create(:organization, tos_version: Time.current) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:plan_component, participatory_space: participatory_space) }
-  let(:section) { create(:section, section_type: "link_ideas", component: component) }
-  let(:plan) { create(:plan, component: component) }
-  let(:content) { create(:content, plan: plan, section: section, body: { idea_ids: ideas.map(&:id) }) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:plan_component, participatory_space:) }
+  let(:section) { create(:section, section_type: "link_ideas", component:) }
+  let(:plan) { create(:plan, component:) }
+  let(:content) { create(:content, plan:, section:, body: { idea_ids: ideas.map(&:id) }) }
 
-  let(:idea_component) { create(:idea_component, participatory_space: participatory_space) }
+  let(:idea_component) { create(:idea_component, participatory_space:) }
   let(:ideas) { create_list(:idea, 3, :accepted, component: idea_component) }
 
   it "displays the linked ideas" do

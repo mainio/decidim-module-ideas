@@ -6,7 +6,6 @@ module Decidim
     class AmendIdea < Decidim::Command
       include ::Decidim::Ideas::AttachmentMethods
       include ::Decidim::Ideas::ImageMethods
-      include HashtagsMethods
 
       # Public: Initializes the command.
       #
@@ -17,7 +16,6 @@ module Decidim
         @form = form
         @current_user = current_user
         @amendable = idea
-        @user_group = Decidim::UserGroup.find_by(id: form.user_group_id)
       end
 
       # Executes the command. Broadcasts these events:
@@ -69,7 +67,7 @@ module Decidim
 
       private
 
-      attr_reader :form, :amendable, :amendment, :emendation, :current_user, :user_group, :image, :attachment
+      attr_reader :form, :amendable, :amendment, :emendation, :current_user, :image, :attachment
 
       def allowed_to_accept?
         amendable.editable_by?(current_user)
@@ -81,10 +79,9 @@ module Decidim
 
       def emendation_params
         {
-          title: title_with_hashtags,
-          body: body_with_hashtags,
-          category: form.category,
-          area_scope: form.area_scope,
+          title: Decidim::ContentProcessor.parse(form.title, current_organization: form.current_organization).rewrite,
+          body: Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization).rewrite,
+          taxonomizations: form.taxonomizations,
           address: form.address,
           latitude: form.latitude,
           longitude: form.longitude
@@ -107,7 +104,7 @@ module Decidim
           ) do
             emendation = amendable.class.new(amendable_params)
             emendation.component = amendable.component
-            emendation.add_author(current_user, user_group)
+            emendation.add_author(current_user)
             emendation.save!
 
             # When the emendation record is created with the author (which is
@@ -133,7 +130,7 @@ module Decidim
 
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
-                title: title,
+                title:,
                 file: amendable.image.file,
                 weight: 0
               )
@@ -149,7 +146,7 @@ module Decidim
 
               Decidim::Ideas::Attachment.create!(
                 attached_to: emendation, # Keep first
-                title: title,
+                title:,
                 file: amendable.actual_attachments.first.file,
                 weight: 1
               )
@@ -164,7 +161,7 @@ module Decidim
       def create_amendment!
         @amendment = Decidim::Amendment.create!(
           amender: current_user,
-          amendable: amendable,
+          amendable:,
           emendation: @emendation,
           state: "draft"
         )
@@ -201,10 +198,10 @@ module Decidim
             emendation_params.merge(pending_changes),
             visibility: "public-only"
           )
-          @amendable.add_coauthor(@current_user, user_group: @user_group)
+          @amendable.add_coauthor(@current_user)
 
           @attached_to = @amendable
-          @amendable.image.destroy! if @amendable.image.present?
+          (@amendable.image.presence&.destroy!)
           if emendation.image.present?
             @image = Decidim::Ideas::Attachment.create!(
               attached_to: @amendable, # Keep first

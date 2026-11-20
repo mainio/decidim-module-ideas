@@ -14,16 +14,20 @@ module Decidim
         helper Ideas::Admin::IdeaBulkActionsHelper
 
         def show
+          enforce_permission_to(:read, :idea, idea:)
           @answer_form = form(Admin::IdeaAnswerForm).from_model(idea)
         end
 
         def new
           enforce_permission_to :create, :idea
           @form = form(Admin::IdeaForm).from_params(
-            attachment: form(AttachmentForm).from_params({})
+            attachment: form(Decidim::AttachmentForm).from_params({})
           )
-          @form.image = form(Decidim::Ideas::ImageAttachmentForm).from_params({})
-          @form.attachment = form(Decidim::Ideas::AttachmentForm).from_params({})
+        end
+
+        def edit
+          enforce_permission_to(:edit, :idea, idea:)
+          @form = form(Admin::IdeaForm).from_model(idea)
         end
 
         def create
@@ -37,36 +41,8 @@ module Decidim
             end
 
             on(:invalid) do
-              flash.now[:alert] = I18n.t("ideas.create.invalid", scope: "decidim.ideas.admin")
+              flash[:alert] = I18n.t("ideas.create.invalid", scope: "decidim.ideas.admin")
               render action: "new"
-            end
-          end
-        end
-
-        def update_category
-          enforce_permission_to :update, :idea_category
-
-          Admin::UpdateIdeaCategory.call(params[:category][:id], idea_ids) do
-            on(:invalid_category) do
-              flash.now[:error] = I18n.t(
-                "ideas.update_category.select_a_category",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash.now[:alert] = I18n.t(
-                "ideas.update_category.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_category) do
-              flash.now[:notice] = update_ideas_bulk_response_successful(@response, :category)
-              flash.now[:alert] = update_ideas_bulk_response_errored(@response, :category)
-            end
-            respond_to do |format|
-              format.js
             end
           end
         end
@@ -76,14 +52,14 @@ module Decidim
 
           Decidim::Ideas::Admin::PublishAnswers.call(current_component, current_user, idea_ids) do
             on(:invalid) do
-              flash.now[:alert] = t(
+              flash[:alert] = t(
                 "ideas.publish_answers.select_an_idea",
                 scope: "decidim.ideas.admin"
               )
             end
 
             on(:ok) do
-              flash.now[:notice] = I18n.t("ideas.publish_answers.success", scope: "decidim")
+              flash[:notice] = I18n.t("ideas.publish_answers.success", scope: "decidim")
             end
           end
 
@@ -92,44 +68,8 @@ module Decidim
           end
         end
 
-        def update_area_scope
-          enforce_permission_to :update, :idea_scope
-
-          Admin::UpdateIdeaAreaScope.call(params[:area_scope_id], idea_ids) do
-            on(:invalid_scope) do
-              flash.now[:error] = t(
-                "ideas.update_scope.select_a_scope",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:invalid_idea_ids) do
-              flash.now[:alert] = t(
-                "ideas.update_scope.select_an_idea",
-                scope: "decidim.ideas.admin"
-              )
-            end
-
-            on(:update_ideas_scope) do
-              flash.now[:notice] = update_ideas_bulk_response_successful(@response, :scope)
-              flash.now[:alert] = update_ideas_bulk_response_errored(@response, :scope)
-            end
-
-            respond_to do |format|
-              format.js
-            end
-          end
-        end
-
-        def edit
-          enforce_permission_to :edit, :idea, idea: idea
-          @form = form(Admin::IdeaForm).from_model(idea)
-          @form.image = form(ImageAttachmentForm).from_model(idea.image)
-          @form.attachment = form(AttachmentForm).from_model(idea.actual_attachments.first)
-        end
-
         def update
-          enforce_permission_to :edit, :idea, idea: idea
+          enforce_permission_to(:edit, :idea, idea:)
 
           @form = form(Admin::IdeaForm).from_params(params)
           Admin::UpdateIdea.call(@form, current_user, @idea) do
@@ -139,7 +79,7 @@ module Decidim
             end
 
             on(:invalid) do
-              flash.now[:alert] = t("ideas.update.error", scope: "decidim")
+              flash[:alert] = t("ideas.update.error", scope: "decidim")
               render :edit
             end
           end
@@ -152,7 +92,7 @@ module Decidim
                               .only_amendables
                               .published
                               .not_hidden
-                              .includes(:amendable, :category, :component, :area_scope)
+                              .includes(:amendable, :taxonomies, :component)
         end
 
         def ideas
@@ -167,50 +107,8 @@ module Decidim
           @idea_ids ||= params[:idea_ids]
         end
 
-        def update_ideas_bulk_response_successful(response, subject)
-          return if response[:successful].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_area_scope.success",
-              subject_name: response[:subject_name],
-              ideas: response[:successful].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
-        def update_ideas_bulk_response_errored(response, subject)
-          return if response[:errored].blank?
-
-          case subject
-          when :category
-            t(
-              "ideas.update_category.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          when :scope
-            t(
-              "ideas.update_scope.invalid",
-              subject_name: response[:subject_name],
-              ideas: response[:errored].to_sentence,
-              scope: "decidim.ideas.admin"
-            )
-          end
-        end
-
         def idea_form_builder
-          Decidim::Ideas::Admin::FormBuilder
+          Decidim::Ideas::FormBuilder
         end
 
         def form_presenter

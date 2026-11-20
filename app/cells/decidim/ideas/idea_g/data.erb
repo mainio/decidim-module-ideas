@@ -1,0 +1,31 @@
+<div class="card__info">
+  <% if has_visible_area_scope?(model) %>
+    <div class="card__info__item">
+      <%= translated_attribute(area_scope.name) %>
+    </div>
+  <% end %>
+
+  <% if show_space? %>
+    <div class="card__info__item">
+      <%= participatory_space_title %>
+    </div>
+  <% end %>
+
+  <div class="card__info__item">
+    #<%= model.id %>
+  </div>
+</div>
+
+<div class="card__info">
+  <div class="card__info__item">
+    <%= creation_date_status %>
+  </div>
+
+  <% if has_taxonomies? %>
+    <% taxonomy_labels.each do |taxonomy| %>
+      <div class="card__info__item">
+        <%= taxonomy[:name] %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

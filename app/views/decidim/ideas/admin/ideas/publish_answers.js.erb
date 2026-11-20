@@ -1,4 +1,4 @@
-$("<%= escape_javascript(render partial: %q{js-callout}, locals: { css: %q{success}, text: flash.now[:notice] }) %>").appendTo(".callout-wrapper");
+$("<%= escape_javascript(render partial: %q{js-callout}, locals: { css: %q{success}, text: flash[:notice] }) %>").appendTo(".callout-wrapper");
 
 <% idea_ids.each do |id| %>
   $(".table-list [data-id='<%= id %>']")

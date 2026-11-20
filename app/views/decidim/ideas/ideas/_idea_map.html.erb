@@ -1,0 +1,7 @@
+<% if component_settings.geocoding_enabled? && idea.address.present? && idea.latitude.present? && idea.longitude.present? %>
+  <div id="idea_map" class="margin-top-3">
+    <h2><%= t(".title") %></h2>
+
+    <%= ideas_map ideas_data_for_map([idea.geocoded_data]), type: "resource-markers" %>
+  </div>
+<% end %>

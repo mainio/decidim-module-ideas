@@ -5,6 +5,7 @@ module Decidim
     module Admin
       module FilterableHelperOverride
         extend ActiveSupport::Concern
+
         included do
           # Builds a tree of links from Decidim::Admin::Filterable::filters_with_values
           def submenu_options_tree(i18n_ctx = nil)

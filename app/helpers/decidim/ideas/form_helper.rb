@@ -14,10 +14,10 @@ module Decidim
       # &block - The block to execute as content of the form.
       #
       # Returns a String.
-      def decidim_form_for(record, options = {}, &block)
+      def decidim_form_for(record, options = {}, &)
         options[:data] ||= {}
         options[:data].update(
-          abide: true,
+          :abide => true,
           "live-validate" => false,
           "validate-on-blur" => false,
           "validate-on" => "formSubmit"
@@ -34,13 +34,13 @@ module Decidim
         if record.is_a?(ActiveRecord::Base)
           object = record.is_a?(Array) ? record.last : record
           format = options[:format]
-          apply_form_for_options!(record, object, options) if object
+          apply_form_for_options!(record, options) if object
           options[:format] = format if format
         end
 
         output = ""
         output += base_error_messages(record).to_s
-        output += form_for(record, options, &block).to_s
+        output += form_for(record, options, &).to_s
 
         output.html_safe
       end

@@ -18,7 +18,7 @@ module Decidim
       private
 
       def card_size
-        "decidim/ideas/idea_m"
+        "decidim/ideas/idea_g"
       end
 
       def resource_path

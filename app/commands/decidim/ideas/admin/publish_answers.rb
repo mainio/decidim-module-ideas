@@ -43,7 +43,7 @@ module Decidim
           @ideas ||= Decidim::Ideas::Idea.published
                                          .answered
                                          .state_not_published
-                                         .where(component: component)
+                                         .where(component:)
                                          .where(id: idea_ids)
         end
 

@@ -8,22 +8,12 @@
   </div>
 </div>
 
-<% if current_organization.user_groups_enabled? && user_signed_in? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= user_group_select_field form, :user_group_id %>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<div class="field hashtags__container">
+<div class="field">
   <%= form.plain_label :title %>
 
   <div class="row">
     <div class="columns large-8">
-      <%= form.text_field :title, class: "js-hashtags", label: false, hashtaggable: true, value: form_presenter.title %>
+      <%= form.text_field :title, value: form_presenter.title(extras: false).strip, data: { controller: "character-counter" } %>
     </div>
     <div class="columns large-4">
       <div id="idea_title_character_counter" class="field-info"></div>
@@ -36,7 +26,7 @@
     <%= form.check_box :terms_agreed, required: true %>
     <div class="field-info field-info-with-icon">
       <%= link_to info_path("terms"), class: "info-modal-link" do %>
-        <%= icon "information", aria_hidden: true %>
+        <%= icon "information-line", aria_hidden: true %>
         <%= t(".show_terms_info_text") %>
       <% end %>
     </div>
@@ -45,54 +35,10 @@
   <%= form.hidden_field :terms_agreed %>
 <% end %>
 
-<div class="field hashtags__container">
+<div class="field">
   <%= text_editor_for_idea_body(form) %>
   <div id="idea_body_character_counter" class="field-info text-right"></div>
 </div>
-
-<% if @form.component_automatic_hashtags.any? %>
-  <div class="field">
-    <%= form.label :automatic_hashtags %>
-    <div class="checkboxes hashtags">
-      <% @form.component_automatic_hashtags.each do |hashtag| %>
-        <label>
-          <%= check_box_tag "", "", { checked: true }, { disabled: true } %>#<%= hashtag %>
-        </label>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<% if @form.component_suggested_hashtags.any? %>
-  <div class="field">
-    <%= form.label :suggested_hashtags %>
-    <div class="checkboxes hashtags">
-      <%= form.collection_check_boxes :suggested_hashtags, @form.component_suggested_hashtags.map {|hashtag| [hashtag.downcase, "##{hashtag}"]}, :first, :last do |option|
-        option.label { option.check_box(checked: @form.suggested_hashtag_checked?(option.value)) + option.text }
-      end %>
-    </div>
-  </div>
-<% end %>
-
-<% if component_settings.area_scope_parent_id && Decidim::Scope.exists?(component_settings.area_scope_parent_id) %>
-  <%= form.plain_label :area_scope_id %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= area_scopes_picker_field form, :area_scope_id, root: false, options: { label: false } %>
-      </div>
-    </div>
-    <div class="columns large-6">
-      <div class="field-info field-info-with-icon">
-        <%= link_to info_path("areas"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
-          <%= t(".show_areas_info_text") %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
 
 <% if component_settings.geocoding_enabled? %>
   <%= form.plain_label :address, show_required: false %>
@@ -102,7 +48,7 @@
       <div class="field" id="address_input">
         <div class="input-group">
           <span class="input-group-label">
-            <%= icon "map-marker", aria_hidden: true %>
+            <%= icon "map-pin-line", aria_hidden: true %>
           </span>
           <%= form.geocoding_field :address, label: false, class: "input-group-field", data: {
             "coordinates-url": geocoding_path,
@@ -126,42 +72,42 @@
   <%= idea_form_map "data-connected-input" => user_signed_in? ? "#idea_address" : nil %>
 <% end %>
 
-<% if @form.top_categories&.any? %>
-  <%= form.plain_label :category_id %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <div class="field">
-        <%= form.categories_select :category_id, @form.top_categories, disable_parents: false, label: false, prompt: t(".select_a_category") %>
+<% if @form.taxonomy_filters&.any? %>
+  <% @form.taxonomy_filters.each do |filter| %>
+    <div data-filter-group="<%= filter.id %>">
+      <div class="row column">
+        <label><%= translated_attribute(filter.name) %></label>
+        <%= select_tag(
+          "idea[taxonomies][]",
+          options_for_select(
+            grouped_filter_taxonomies(filter).map { |id, node| [translated_attribute(node[:taxonomy].name), id] },
+            @form.taxonomies
+          ),
+          prompt: t(".select_a_taxonomy"),
+          id: "taxonomy_filter_#{filter.id}",
+          data: { taxonomy_filter: filter.id }
+        ) %>
       </div>
-    </div>
-    <div class="columns large-6">
-      <div class="field-info field-info-with-icon">
-        <%= link_to info_path("categories"), class: "info-modal-link" do %>
-          <%= icon "information", aria_hidden: true %>
-          <%= t(".show_categories_info_text") %>
-        <% end %>
-      </div>
-    </div>
-  </div>
 
-  <div id="idea-subcategory">
-    <% @form.top_categories.each do |category| %>
-      <% next if category.subcategories.blank? %>
-
-      <div class="subcategories hide" data-parent="<%= category.id %>">
-        <%= form.plain_label :sub_category_id %>
-
-        <div class="row">
-          <div class="columns large-6">
-            <div class="field">
-              <%= form.categories_select :sub_category_id, category.subcategories, { disable_parents: false, label: false, include_blank: t(".select_a_sub_category") }, id: "sub_category_id_for_#{category.id}" %>
-            </div>
-          </div>
+      <% grouped_filter_taxonomies(filter).each do |id, node| %>
+        <% next if node[:children].blank? %>
+        <div class="row column hidden ml-4 pl-2" id="sub_taxonomy_<%= id %>" data-parent-taxonomy="<%= id %>">
+          <label class="text-sm text-gray-600">
+            <%= t(".select_a_sub_taxonomy_for", taxonomy: translated_attribute(node[:taxonomy].name)) %>
+          </label>
+          <%= select_tag(
+            "idea[taxonomies][]",
+            options_for_select(
+              node[:children].map { |child_id, child_node| [translated_attribute(child_node[:taxonomy].name), child_id] },
+              @form.taxonomies
+            ),
+            prompt: t(".select_a_sub_taxonomy"),
+            id: "sub_taxonomy_select_#{id}"
+          ) %>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
 
 <% if component_settings.image_allowed? || component_settings.attachments_allowed? %>
@@ -180,52 +126,30 @@
 
 <% if component_settings.image_allowed? %>
   <div class="field attachment-button">
-    <%= form.attachment :images,
+    <%= form.attachment :photos,
       multiple: false,
+      titled: true,
       label: t(".add_image"),
       button_label: t(".image_legend"),
       button_edit_label: t(".edit_image"),
       help_i18n_scope: "decidim.forms.file_help.image",
       extension_allowlist: Decidim::OrganizationSettings.for(current_organization).upload_allowed_file_extensions_image %>
   </div>
-
-  <div class="reveal" id="image-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".image_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
-  </div>
 <% end %>
 
 <% if component_settings.attachments_allowed? %>
   <div class="field attachment-button">
-    <%= form.attachment :actual_attachments,
+    <%= form.attachment :documents,
       multiple: false,
+      titled: true,
       label: t(".add_attachment"),
       button_label: t(".attachment_legend"),
       button_edit_label: t(".edit_attachment"),
       help_i18n_scope: "decidim.forms.file_help.file" %>
   </div>
-
-  <div class="reveal" id="attachment-modal" data-reveal>
-    <div class="reveal__header">
-      <h3 class="reveal__title"><%= t(".attachment_legend") %></h3>
-      <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-        type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row columns reveal__content"></div>
-  </div>
 <% end %>
 
-<%= javascript_pack_tag "decidim_ideas_idea_form" %>
+<%= append_javascript_pack_tag "decidim_ideas_idea_form" %>
 
 <%
 js_options = {
@@ -241,6 +165,32 @@ js_options = {
     DecidimIdeas.configure(<%== js_options.to_json %>);
     DecidimIdeas.bindCharacterCounter($("#idea_title"), $("#idea_title_character_counter"));
     DecidimIdeas.bindCharacterCounter($("#idea_body"), $("#idea_body_character_counter"));
+
+    // A hack to change the upload modal behavior as otherwise the single file
+    // upload would have incorrect input names which would cause an exception.
+    var attachmentButtons = document.querySelectorAll("button[data-upload]");
+    attachmentButtons.forEach(function(button) {
+      var modal = document.querySelector(`#${button.dataset.dialogOpen}`)
+      var files = document.querySelector(`[data-active-uploads=${button.dataset.dialogOpen}]`)
+      var options = JSON.parse(button.dataset.upload);
+      var attrName = `idea[${options.addAttribute}]`;
+
+      var saveButton = modal.querySelector("button[data-dropzone-save]");
+      saveButton.addEventListener("click", function() {
+        setTimeout(function() {
+          var idx = 0;
+          files.querySelectorAll(`input[type="hidden"][name="${attrName}"]`).forEach(function(input) {
+            if (input.value && input.value.match(/^[0-9]+$/)) {
+              input.setAttribute("name", `${attrName}[${idx}][id]`);
+            } else {
+              input.setAttribute("name", `${attrName}[${idx}][file]`);
+            }
+
+            idx += 1;
+          })
+        }, 0);
+      });
+    });
   });
   </script>
 <% end %>

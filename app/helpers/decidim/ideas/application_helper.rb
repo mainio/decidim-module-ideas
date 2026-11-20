@@ -5,7 +5,7 @@ module Decidim
     module ApplicationHelper
       include Decidim::Comments::CommentsHelper
       include PaginateHelper
-      include ::Decidim::EndorsableHelper
+      include ::Decidim::LikeableHelper
       include ::Decidim::FollowableHelper
       include ControlVersionHelper
       include Decidim::RichTextEditorHelper
@@ -61,8 +61,8 @@ module Decidim
       # Returns :text_area or :editor based on the organization' settings.
       def text_editor_for_idea_body(form)
         options = {
-          class: "js-hashtags mb-0",
-          hashtaggable: true,
+          class: "mb-0",
+          resource_mentionable: true,
           value: form_presenter.body(extras: false).strip
         }
 
@@ -75,7 +75,6 @@ module Decidim
         component_settings.idea_limit
       end
 
-      # rubocop:disable Rails/HelperInstanceVariable
       def form_has_address?
         @form.address.present? || @form.has_address?
       end

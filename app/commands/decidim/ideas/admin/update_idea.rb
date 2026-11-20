@@ -7,7 +7,6 @@ module Decidim
       class UpdateIdea < Decidim::Command
         include ::Decidim::Ideas::AttachmentMethods
         include ::Decidim::Ideas::ImageMethods
-        include HashtagsMethods
 
         # Public: Initializes the command.
         #
@@ -63,18 +62,13 @@ module Decidim
           Decidim.traceability.update!(
             idea,
             form.current_user,
-            title: title_with_hashtags,
-            body: body_with_hashtags,
-            category: form.category,
-            area_scope: form.area_scope,
+            title: Decidim::ContentProcessor.parse(form.title, current_organization: form.current_organization).rewrite,
+            body: Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization).rewrite,
+            taxonomizations: form.taxonomizations,
             address: form.address,
             latitude: form.latitude,
             longitude: form.longitude
           )
-        end
-
-        def user_group
-          @user_group ||= Decidim::UserGroup.find_by(organization: organization, id: form.user_group_id)
         end
 
         def organization
@@ -82,7 +76,7 @@ module Decidim
         end
 
         def update_idea_author
-          idea.add_coauthor(@current_user, user_group: user_group)
+          idea.add_coauthor(@current_user)
           idea.save!
           idea
         end

@@ -1,0 +1,30 @@
+<div class="attributes">
+  <h2 class="resource__aside__title"><%= t(".title") %></h2>
+
+  <div class="attributes__item">
+    <h3 class="attributes__item__name"><%= t(".attributes.id") %></h3>
+    <div class="attributes__item__value"><%= idea.id %></div>
+  </div>
+
+  <% leaf_taxonomies = idea.taxonomies.reject { |t| idea.taxonomies.any? { |other| other.parent_id == t.id } } %>
+  <% leaf_taxonomies.each do |taxonomy| %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= translated_attribute(taxonomy.parent&.name) %></h3>
+      <div class="attributes__item__value">
+        <%= translated_attribute(taxonomy.name) %>
+      </div>
+    </div>
+  <% end %>
+  <% if idea.published? %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.published_at") %></h3>
+      <div class="attributes__item__value"><%= l(idea.published_at.to_date, format: :decidim_short) %></div>
+    </div>
+  <% end %>
+  <% if component_settings.geocoding_enabled? && idea.address.present? %>
+    <div class="attributes__item">
+      <h3 class="attributes__item__name"><%= t(".attributes.address") %></h3>
+      <div class="attributes__item__value"><%= idea.address %></div>
+    </div>
+  <% end %>
+</div>

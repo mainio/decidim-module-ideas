@@ -4,22 +4,25 @@ module Decidim
   module Ideas
     class Permissions < Decidim::DefaultPermissions
       def permissions
+        return permission_action if permission_action.scope == :public && public_action_allowed?
         return permission_action unless user
 
         # Delegate the admin permission checks to the admin permissions class
         return Decidim::Ideas::Admin::Permissions.new(user, permission_action, context).permissions if permission_action.scope == :admin
         return permission_action if permission_action.scope != :public
 
-        if permission_action.subject == :idea
-          apply_idea_permissions(permission_action)
-        else
-          permission_action
-        end
+        apply_idea_permissions(permission_action) if permission_action.subject == :idea
 
         permission_action
       end
 
       private
+
+      def public_action_allowed?
+        return false unless permission_action.subject == :idea && permission_action.action == :read
+
+        allow!
+      end
 
       def apply_idea_permissions(permission_action)
         case permission_action.action
@@ -32,7 +35,7 @@ module Decidim
         when :amend
           can_create_amendment?
         when :report
-          true
+          allow!
         end
       end
 
